@@ -1,0 +1,248 @@
+<div class="task-headers d-flex align-items-center justify-content-between">
+    <div class="task-header-left d-flex gap-24 align-items-center">
+        <span>
+            {{totalPages || 0}} task(s) in List
+        </span>
+        <div class="search ml-3" *ngIf="this.logedInUser != 'Weighbridge operator'">
+            <button class="common-btn status-btn" [matMenuTriggerFor]="filter2">
+                {{sortByName ? sortByName : 'All'}} <svg class="ml-2" width="12" height="8" viewBox="0 0 12 8" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+
+            </button>
+            <mat-menu #filter2="matMenu">
+                <button mat-menu-item (click)="sortByValueOrders('')">All</button>
+        
+                  <div *ngFor="let sortby of status">
+                      <button mat-menu-item (click)="sortByValueOrders(sortby.statusName)">{{sortby.statusName ? sortby.statusName : this.filter}}</button>
+            
+                  </div>
+              </mat-menu>
+        </div>
+    </div>
+    <button class="common-btn mr-4" [matMenuTriggerFor]="filter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+                d="M8.74998 16.8437V10.8726V16.8437ZM8.74998 16.8437L8.73553 16.8533L8.74998 16.875H8.77602V16.8576L11.25 15.2078V10.8726L8.74998 16.8437ZM17.9917 3.87987L17.9919 3.88026C18.0898 4.0965 18.1218 4.33679 18.084 4.57113C18.0462 4.80547 17.9402 5.02348 17.7793 5.19795L17.779 5.19831L17.7732 5.20484L17.7727 5.20534L12.481 10.8548L12.4739 10.8624V10.8726V15.2078C12.474 15.4094 12.4242 15.608 12.3291 15.7857C12.2339 15.9635 12.0963 16.115 11.9285 16.2268L11.9285 16.2268L9.42851 17.8939C9.42851 17.8939 9.4285 17.8939 9.4285 17.8939C9.24414 18.0167 9.02991 18.0872 8.80865 18.0978C8.58738 18.1085 8.36738 18.0588 8.17211 17.9542C7.97683 17.8496 7.8136 17.694 7.69982 17.504C7.58604 17.3139 7.52597 17.0965 7.52602 16.875V10.8726V10.8624L7.51899 10.8548L2.22781 5.20509L2.22179 5.19831L2.2216 5.1981C2.06229 5.02278 1.95728 4.805 1.91931 4.57117C1.88134 4.33735 1.91204 4.09753 2.00768 3.8808C2.10333 3.66408 2.25981 3.47977 2.45815 3.35024C2.65648 3.2207 2.88814 3.1515 3.12503 3.15103L16.875 3.15103L16.8751 3.15103C17.1122 3.14967 17.3444 3.21804 17.543 3.34762C17.7415 3.47721 17.8975 3.66229 17.9917 3.87987ZM11.608 10.0397L11.6081 10.0397L16.894 4.39279L16.935 4.34895H16.875H3.12498H3.06489L3.10598 4.3928L8.39348 10.0358L8.3935 10.0358C8.60643 10.2623 8.72465 10.5617 8.72394 10.8726V10.8726V16.875V16.9237L8.76443 16.8967L11.2644 15.2295L11.276 15.2217V15.2078V10.8727C11.2767 10.5629 11.3954 10.2651 11.608 10.0397Z"
+                fill="#475569" stroke="#475569" stroke-width="0.0520833" />
+        </svg>
+
+    </button>
+    <mat-menu #filter="matMenu">
+        <div *ngFor="let sortby of sortList">
+            <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+  
+        </div>
+    </mat-menu>
+
+</div>
+<div class="masterScreen-content-table taskTable">
+    <!-- <ag-grid-angular style="width: 100%; height: 600px;" class="ag-theme-material" [rowData]="rowData"
+        [columnDefs]="columnDefs" (rowClicked)="onRowClicked($event)">
+   
+    </ag-grid-angular> -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" *ngFor="let item of orderKeys">
+                    <ng-container *ngIf="item !== 'CheckBox' && item !== 'more'">
+                        {{ item }}
+                    </ng-container>
+                    <ng-container *ngIf="item == 'CheckBox' && this.logedInUser !=  'Admin'">
+                     
+                        <input type="checkbox" name="" id="" [(ngModel)]="allChecked" (change)="toggleAll()">
+                   
+                    </ng-container>
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody class="body-content">
+            <tr *ngFor="let orders of filteredTasksList;index as j" >
+                <td *ngFor="let key of orderKeys; index as i" (click)="viewOrders(j,orders)">
+                    <ng-container *ngIf="key === 'CheckBox' && this.logedInUser !=  'Admin'" >
+                        <!-- Template for CheckBox -->
+                        <!-- <mat-checkbox  [checked]="orders[key]"></mat-checkbox> -->
+              <input type="checkbox" name="" id="" [(ngModel)]="orders.checked" (change)="updateMasterCheckbox($event,orders)" (click)="$event.stopPropagation()" >
+{{filteredTasksList.checked}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Collection date'">
+                        <!-- Template for Collection date -->
+                        {{(orders.orderDate | date:'dd/MM/yyy') || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Mov Doc No.'">
+                        <!-- Template for Mov Doc No. -->
+                        {{orders.orderNo || '--'}}
+                    </ng-container>
+                    
+                    <ng-container *ngIf="key === 'Supplier'">
+                        <!-- Template for Supplier -->
+                        {{orders.consignorName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Consignee'">
+                        <!-- Template for Consignee -->
+                        {{orders.consigneeName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Vehicle'">
+                        <!-- Template for Vehicle -->
+                        {{orders.truckNumber || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Pickup trailer no'">
+                        <!-- Template for Pickup trailer no -->
+                        {{orders.pickupTrailerNo || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Trailer'">
+                        <!-- Template for Trailer -->
+                        {{orders.trailerNumber || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Driver'">
+                        <!-- Template for Driver -->
+                        {{orders.driverName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Product'">
+                        <!-- Template for Product -->
+                        {{orders.materialType || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Product quantity'">
+                        <!-- Template for Product quantity -->
+                        {{orders.quantity || '--'}} {{orders.quantity ? 'kg' : ''}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Net weight'">
+                        <!-- Template for Net weight -->
+                        {{orders.netWeight || '--'}} {{orders.netWeight ? 'kg' : ''}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Shunter driver'">
+                        <!-- Template for Shunter driver -->
+                        {{orders.shunterDriverName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Bin no'">
+                        <!-- Template for Bin no -->
+                        {{orders.binNumber || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Ticket no'">
+                        <!-- Template for Bin no -->
+                        {{orders.weighbridgeTicketno || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Operator'">
+                        <!-- Template for Bin no -->
+                        {{orders.weighBridgeOperator || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Quality check'">
+                        <!-- Template for Quality check -->
+
+                        <div [ngClass]="{
+                            'pending': orders.qualityCheckStatus === null,
+                            'completed': orders.qualityCheckStatus === 'Completed',
+                            'Intransit': orders.qualityCheckStatus === 'In Transit',
+                            'drafts': orders.qualityCheckStatus === 'Draft',
+                            'weighed': orders.qualityCheckStatus === 'Weighed',
+                            'ReachedSite':orders.qualityCheckStatus === 'Reached Site',
+                            'tipped':orders.qualityCheckStatus === 'Tipped',
+                            'material-in-Transit':orders.qualityCheckStatus === 'Material in transit',
+                            'BinAssigned':orders.qualityCheckStatus === 'Bin Assigned',
+                            'assigned':orders.qualityCheckStatus === 'Assigned',
+                            'Arrived':orders.qualityCheckStatus === 'Arrived',
+                            'driver-in-transit':orders.qualityCheckStatus === 'Driver in transit',
+                            'driver-arrived':orders.qualityCheckStatus === 'Driver arrived',
+                            'Collected':orders.qualityCheckStatus === 'Collected',
+                            'load-in-transit':orders.qualityCheckStatus === 'Load in transit',
+                            'load-arrived':orders.qualityCheckStatus === 'Load arrived',
+                            'material-arrived':orders.qualityCheckStatus === 'Material arrived',
+                            'bin-assigned':orders.qualityCheckStatus === 'Bin assigned',
+                            'sign-off':orders.qualityCheckStatus === 'Signed off',
+                            'material-intake':orders.qualityCheckStatus === 'Material intake',
+                            'material-verified':orders.qualityCheckStatus === 'Material verified',
+                            'Checked':orders.qualityCheckStatus === 'Checked'
+                          }">
+                        {{orders.qualityCheckStatus ? orders.qualityCheckStatus : 'Pending'}}
+
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Progress'">
+                        <!-- Template for Progress -->
+                         <div class="statusCls" [ngClass]="{
+                            'pending': orders.status === 'Pending',
+                            'completed': orders.status === 'Completed',
+                            'Intransit': orders.status === 'In Transit',
+                            'drafts': orders.status === 'Draft',
+                            'weighed': orders.status === 'Weighed',
+                            'ReachedSite':orders.status === 'Reached Site',
+                            'tipped':orders.status === 'Tipped',
+                            'tipping':orders.status === 'Tipping',
+                            'material-in-Transit':orders.status === 'Material in transit',
+                            'BinAssigned':orders.status === 'Bin Assigned',
+                            'assigned':orders.status === 'Assigned',
+                            'Arrived':orders.status === 'Arrived',
+                            'driver-in-transit':orders.status === 'Driver in transit',
+                            'driver-arrived':orders.status === 'Driver arrived',
+                            'Collected':orders.status === 'Collected',
+                            'load-in-transit':orders.status === 'Load in transit',
+                            'load-arrived':orders.status === 'Load arrived',
+                            'material-arrived':orders.status === 'Material arrived',
+                            'bin-assigned':orders.status === 'Bin assigned',
+                            'signed-off':orders.status === 'Signed off',
+                'sign-off':orders?.status === 'Sign off',
+                            'material-intake':orders.status === 'Material intake',
+                            'material-verified':orders.status === 'Material verified',
+                            'Checked':orders.status === 'Checked'
+                          }">
+                        {{orders.status || '--'}}
+                         </div>
+                    </ng-container>
+                    <!-- <ng-container *ngIf="key === 'more'">
+                        <p>more</p>
+                    </ng-container> -->
+                </td>
+
+
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="filteredTasksList?.length === 0">
+        <div class="mb-2">
+            <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" width="47" height="47" rx="23.5" fill="#006CB7" fill-opacity="0.2" />
+                <g clip-path="url(#clip0_2447_15692)">
+                    <path d="M25 16H33" stroke="#005AAA" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M25 20H30" stroke="#005AAA" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M25 26H33" stroke="#005AAA" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M25 30H30" stroke="#005AAA" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path
+                        d="M15 16C15 15.7348 15.1054 15.4804 15.2929 15.2929C15.4804 15.1054 15.7348 15 16 15H20C20.2652 15 20.5196 15.1054 20.7071 15.2929C20.8946 15.4804 21 15.7348 21 16V20C21 20.2652 20.8946 20.5196 20.7071 20.7071C20.5196 20.8946 20.2652 21 20 21H16C15.7348 21 15.4804 20.8946 15.2929 20.7071C15.1054 20.5196 15 20.2652 15 20V16Z"
+                        stroke="#005AAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M15 26C15 25.7348 15.1054 25.4804 15.2929 25.2929C15.4804 25.1054 15.7348 25 16 25H20C20.2652 25 20.5196 25.1054 20.7071 25.2929C20.8946 25.4804 21 25.7348 21 26V30C21 30.2652 20.8946 30.5196 20.7071 30.7071C20.5196 30.8946 20.2652 31 20 31H16C15.7348 31 15.4804 30.8946 15.2929 30.7071C15.1054 30.5196 15 30.2652 15 30V26Z"
+                        stroke="#005AAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_2447_15692">
+                        <rect width="24" height="24" fill="white" transform="translate(12 11)" />
+                    </clipPath>
+                </defs>
+            </svg>
+
+        </div>
+        <div class="noRecordText">
+            You don’t have any task
+        </div>
+
+        <p>You will be notified once the truck comes for arrival</p>
+
+    </div>
+
+    <app-custom-paginator 
+  [length]="totalPages" 
+  [pageSizeOptions]="[10,25, 50,75, 100]" 
+  [showFirstLastButtons]="true" 
+  [currentIndex] = currentPage
+  (pageChange)="onPageChange($event)">
+</app-custom-paginator>
+</div>

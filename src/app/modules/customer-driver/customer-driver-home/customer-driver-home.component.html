@@ -1,0 +1,102 @@
+<div class="CustomerDrivers-header d-flex justify-content-between align-items-center">
+    <div class="CustomerDriver-head-left d-flex gap-24 align-items-center">
+      <span>
+          {{totalCustomerDriver}} Customer Driver(s) in List
+      </span>
+      <div class="search ml-3">
+          <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search customer driver">
+              <input type="search" matInput placeholder="Search customer driver"
+                   aria-label="Search" (keyup)="filteredUsersList($event)" [(ngModel)]="searchValue">
+              <mat-icon matPrefix>search</mat-icon>
+              <button class="common-btn" *ngIf="searchValue" matSuffix aria-label="Clear" (click)="clear()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M12 4L4 12" stroke="#1E293B" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 4L12 12" stroke="#1E293B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+          </mat-form-field>
+      </div>
+  </div>
+  <div class="CustomerDriver-head-right d-flex align-items-center gap-24">
+    <div class="border-less-input">
+      <button type="button" class="common-btn status-btn mr-2 d-flex justify-content-between align-items-center" [matMenuTriggerFor]="filter2">
+        <p class="sortedByCls">{{ avalStatus }}</p>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    
+      <mat-menu #filter2="matMenu">
+        <button mat-menu-item (click)="statusSetoption('')">All</button>
+        <button mat-menu-item (click)="statusSetoption('Active')">Active</button>
+        <button mat-menu-item (click)="statusSetoption('Inactive')">Inactive</button>
+      </mat-menu>
+    </div>
+      <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn" [matMenuTriggerFor]="filter" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <g clip-path="url(#clip0_478_6335)">
+                  <path
+                      d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+                      fill="#475569" />
+              </g>
+              <defs>
+                  <clipPath id="clip0_478_6335">
+                      <rect width="20" height="20" fill="white" />
+                  </clipPath>
+              </defs>
+          </svg>
+          <p class="m-0 sortedByCls ml-2">Sort by</p>
+      </button>
+      <mat-menu #filter="matMenu">
+          <div *ngFor="let sortby of sortList">
+            <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+          </div>
+      </mat-menu>
+      <button type="button" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn"
+       (click)="addCustomerDriver()" *ngIf="permissions?.createAccess">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+              <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+          Add Customer Driver</button>
+  </div>
+</div>
+<div class="masterScreen-content-table">
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Mapping ID</th>
+          <th scope="col">Customer Name</th>
+          <th scope="col">Driver Name</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of customerDriverList; index as i" (click)="viewCustomerDriver(i,item)">
+          <td class="hide-col">{{item.cD_Mapping_ID ? item.cD_Mapping_ID : '-'}}</td>
+          <td>{{item.customerName ? item.customerName : '-'}}</td>
+          <td>{{item.driverFullName ? item.driverFullName : '-'}}</td>
+          <td>
+            <div class="isActive" *ngIf="item.deleted == false">
+              Active
+            </div>
+            <div class="notrActive" *ngIf="item.deleted == true">
+              Inactive
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <app-custom-paginator 
+      [length]="totalPages" 
+      [pageSizeOptions]="[10,25, 50,75, 100]" 
+      [showFirstLastButtons]="true" 
+      (pageChange)="onPageChange($event)">
+    </app-custom-paginator>
+    </table>
+    <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="customerDriverList?.length === 0">
+      <img src="./assets/images/Asset-empty.png" alt="no record found" />
+      <p class="emptyMsg">No customer driver mappings found.</p>
+    </div>
+</div>

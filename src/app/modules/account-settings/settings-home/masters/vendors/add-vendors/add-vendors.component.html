@@ -1,0 +1,174 @@
+<form [formGroup]="vendorsForm" (ngSubmit)="savevendors()">
+    <div class="addVendors-container">
+        <div class="addVendors-header">
+            <h4 class="mb-0">{{vendorName}} haulier</h4>
+
+            <button type="button" class="common-btn" (click)="close()"><svg xmlns="http://www.w3.org/2000/svg"
+                    width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M15 5L5 15" stroke="#334155" stroke-width="1.25" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M5 5L15 15" stroke="#334155" stroke-width="1.25" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></button>
+        </div>
+
+        <div class="addVendors-content d-flex flex-wrap pt-3">
+            <div class="w-100 d-flex flex-column mb-2 col-md-12 pb-12">
+                <mat-label>Name <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="vendorsName">
+                </mat-form-field>
+            </div>
+            <div class="w-100 d-flex flex-column col-md-6 pb-12">
+                <mat-label>Email <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="email">
+                </mat-form-field>
+            </div>
+            <div class="w-100 d-flex flex-column col-md-6 pb-12">
+                <mat-label>Mobile <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="mobile" appNumberOnly>
+                </mat-form-field> -->
+                <div class="d-flex" style="gap:10px">
+                    <mat-form-field class="volume-field w-25" appearance="outline">
+                        <input type="text" placeholder="+44" [formControl]="prefixmobile" matInput
+                            (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="auto1">
+                        <mat-autocomplete #auto1="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredTel | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="" formControlName="mobile" appNumberOnly>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="w-100 d-flex flex-column col-md-6 pb-12">
+                <mat-label>City <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                      <!-- <mat-select  formControlName="city">
+                                        <mat-option *ngFor="let item of citys" [value]="item">{{item}}</mat-option>
+                                    </mat-select> -->
+                                    <input matInput  formControlName="city" readonly>
+                </mat-form-field>
+            </div>
+            <div class="w-100 d-flex flex-column col-md-6 pb-12">
+                <mat-label>State <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                      <!-- <mat-select  formControlName="state">
+                                        <mat-option *ngFor="let item of states" [value]="item">{{item}}</mat-option>
+                                    </mat-select> -->
+                                    <input matInput  formControlName="state" readonly>
+                </mat-form-field>
+            </div>
+            <!-- <div class="w-100 d-flex flex-column col-md-6 pb-12">
+                <mat-label>County <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="county">
+                </mat-form-field>
+            </div> -->
+            <div class="w-100 d-flex flex-column col-md-12 pb-12">
+                <mat-label>Country <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                      <!-- <mat-select  formControlName="country">
+                                        <mat-option *ngFor="let item of countries" [value]="item.code">{{item.countryName}}</mat-option>
+                                    </mat-select> -->
+
+                                    <input matInput  formControlName="country" readonly>
+                </mat-form-field>
+            </div>
+            <div class="w-100 d-flex flex-column col-md-12 pb-12">
+                <mat-label>Address <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="address">
+                </mat-form-field>
+            </div>
+            <div class="w-100 d-flex flex-column col-md-12 pb-12">
+                <mat-label>Postal Code <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <!-- <input matInput placeholder="" formControlName="postalCode"> -->
+                      <!-- <mat-select  formControlName="postalCode">
+                                        <mat-option *ngFor="let item of zipCodes" [value]="item">{{item}}</mat-option>
+                                    </mat-select> -->
+                                    <input
+                                    type="text"
+                                    matInput
+                                    (keypress)="getZipCode($event)"
+                                    [matAutocomplete]="auto"
+                                    formControlName="postalCode"
+                                  />
+                                  <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option  *ngFor="let item of zipCodes"  [value]="item.postalCode" (click)="getStateCountryCity(item)">
+                                        <!-- {{item.zip}} -->
+                                        {{item.postalCode}}  | {{item.city}}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="vendors-footer d-flex justify-content-end align-items-center  gap-8">
+        <button class="cancleBtn" type="button" (click)="close()">Cancel</button>
+        <button class="saveBtn bgColorCls" type="submit">{{saveBtnText}}</button>
+    </div>
+</form>

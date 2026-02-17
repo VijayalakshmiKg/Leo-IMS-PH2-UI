@@ -1,0 +1,210 @@
+<div class="addTrailer-container">
+    <form [formGroup]="TrailerForm">
+        <div class="addTrailer-header d-flex justify-content-between align-items-center  ">
+            <button class="cancel-btn common-btn" type="button" (click)="back()">
+                Cancel
+            </button>
+
+            <h4 class="mb-0">{{this.TrailerServ.editTrailerRecord ? 'Edit':'New'}} trailer</h4>
+
+            <button class="addBtn-users bgColorCls" type="button" [matMenuTriggerFor]="menu" *ngIf="this.TrailerServ.editTrailerRecord == null else Edit">
+                <div class="saveText">
+                    Add
+                </div>
+
+                <div class="dropDownIcon">
+                    <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="button" (click)="onSubmitandClose()">Add and close</button>
+                <button mat-menu-item type="button" (click)="onSubmitandAddAnother()">Save and add another</button>
+            </mat-menu>
+       
+
+
+            <ng-template #Edit>
+                <button class="addBtn-users bgColorCls" type="button" mat-button *ngIf="this.TrailerServ.editTrailerRecord" (click)="onSubmitandClose()" >
+                    Update
+                </button>
+            </ng-template>
+
+
+           
+        </div>
+
+
+        <div class="container">
+
+            <div class="homeAddContainer  mt-3">
+
+                <div>
+                    <h4 class="mb-0">Trailer Details</h4>
+                </div>
+
+                <div class="addTrailer-bodyContent mt-0">
+                    <div class="form-container">
+
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>Trailer number  <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="trailerNumber" (input)="avoidSpecialChar()">
+                                </mat-form-field>
+                               
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field " >
+                                <mat-label>Make   <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select  formControlName="trailerMake">
+                                        <mat-option *ngFor="let item of vehicleMakes" [value]="item">{{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                              
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>License plate <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="licensePlate" (input)="avoidSpecialChar()">
+                                </mat-form-field>
+                              
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-field">
+
+                                <mat-label>Trailer type <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="trailerType">
+                                        <mat-option *ngFor="let item of trailerType"
+                                            [value]="item.trailertypename">{{item.trailertypename}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-row">
+                            <div class="form-field">
+
+                                <mat-label>Axle count</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="axleCount">
+                                        <mat-option *ngFor="let item of axleCount" [value]="item.axilId">{{item.description}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div> -->
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>Weight Level <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="weightLevel" appNumberOnly>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <!-- <div class="form-field">
+                                <mat-label>Temperature </mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="temperature" appNumberOnly>
+                                    <div matSuffix class="suffixTextCls">
+                                        °C
+                                    </div>
+                                </mat-form-field>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="homeAddContainer  mt-3">
+
+                <div>
+                    <h4 class="mb-0">Trailer dimension details</h4>
+                </div>
+
+                <div class="addTrailer-bodyContent mt-0">
+                    <div class="form-container">
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>Width  <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="width" appNumberOnly >
+                                    <div matSuffix class="suffixTextCls">
+                                        {{unit}}
+                                    </div>
+                                </mat-form-field>
+                               
+                            </div>
+                            <div class="form-field">
+                                <mat-label>Height  <sup class="requiredFieldCls">*</sup> </mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="height" appNumberOnly >
+                                    <div matSuffix class="suffixTextCls">
+                                        {{unit}}
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-field">
+                                <mat-label>Length   <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="length" appNumberOnly >
+                                    <div matSuffix class="suffixTextCls">
+                                        {{unit}}
+                                    </div>
+                                </mat-form-field>
+                              
+                            </div>
+                            <div class="form-field">
+                                <mat-label>Interior volume  <sup class="requiredFieldCls">*</sup> </mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="interiorVolume" appNumberOnly >
+                                    <div matSuffix class="suffixTextCls">
+                                        ft³
+                                    </div>
+                                </mat-form-field>
+                               
+                            </div>
+                            <div class="form-field">
+                                <mat-label>Cargo volume  <sup class="requiredFieldCls">*</sup> </mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="cargoVolume" appNumberOnly >
+                                    <div matSuffix class="suffixTextCls">
+                                        {{unit}}
+                                    </div>
+                                </mat-form-field>
+                               
+                            </div>
+                            <div class="form-field">
+                                <mat-label>Bed length   <sup class="requiredFieldCls">*</sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="bedLength" appNumberOnly >
+                                    <div matSuffix class="suffixTextCls">
+                                        {{unit}}
+                                    </div>
+                                </mat-form-field>
+                              
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> -->
+
+        </div>
+    </form>
+</div>

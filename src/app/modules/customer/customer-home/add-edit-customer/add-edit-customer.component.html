@@ -1,0 +1,191 @@
+<div class="addCustomers-container h-100">
+    <form [formGroup]="customerForm">
+        <div class="addCustomers-header d-flex justify-content-between align-items-center  ">
+            <button class="cancel-btn common-btn" type="button" (click)="back()">
+                Cancel
+            </button>
+
+            <h4 class="mb-0">{{this.customerServ.editCustomerRecord ? 'Edit':'New'}} customer</h4>
+
+            <button class="addBtn-users bgColorCls" type="button" [matMenuTriggerFor]="menu"
+                *ngIf="this.customerServ.editCustomerRecord == null else Edit" 
+                [disabled]="emailExits || phoneNumberExits || customerCodeExits">
+                <div class="saveText">
+                    {{saveBtnText}}
+                </div>
+
+                <div class="dropDownIcon">
+                    <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="submit" (click)="onSubmitandClose()">Add and close</button>
+                <button mat-menu-item type="submit" (click)="onSubmitandAddAnother()">Save and add another</button>
+            </mat-menu>
+            <ng-template #Edit>
+                <button class="addBtn-users bgColorCls" type="button" mat-button (click)="onSubmitandClose()">
+                    Update
+                </button>
+            </ng-template>
+        </div>
+
+        <div class="container">
+            <div class="  addCustomers-bodyContent">
+                <div class="form-container">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <mat-label>Customer name <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" formControlName="customerName" appLettersOnly>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>Customer code <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" type="text" formControlName="customerCode" 
+                                    (keydown)="allowOnlyNumbersLettersAndHyphen($event)"
+                                    (blur)="checkalreadyExitsForCustomerCode()">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <mat-label>Email <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" type="email" formControlName="email"
+                                    (blur)="checkalreadyExitsForEmail()">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>Phone number <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" type="tel" formControlName="phoneNumber"
+                                    (blur)="checkalreadyExitsForPhone()">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field-full">
+                            <mat-label>Address <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <textarea matInput placeholder="" formControlName="address" rows="3"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <mat-label>Zip code <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" formControlName="zipCode" 
+                                    [matAutocomplete]="autoZip" (keyup)="getZipCode($event)">
+                                <mat-autocomplete #autoZip="matAutocomplete">
+                                    <mat-option *ngFor="let zip of zipCodes" [value]="zip.zipcode"
+                                        (onSelectionChange)="getStateCountryCity(zip)">
+                                        {{zip.zipcode}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>City <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" formControlName="city">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <mat-label>State</mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" formControlName="state">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>Country <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <mat-select formControlName="country">
+                                    <mat-option *ngFor="let country of countries" [value]="country.countryName">
+                                        {{country.countryName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field-full">
+                            <mat-label>Status</mat-label>
+                            <div class="d-flex gap-24 mt-2">
+                                <div class="custom-radio">
+                                    <input type="radio" id="active" name="status" [value]="'Active'"
+                                        [(ngModel)]="customerStatus" [ngModelOptions]="{standalone: true}">
+                                    <label for="active">Active</label>
+                                </div>
+                                <div class="custom-radio">
+                                    <input type="radio" id="inactive" name="status" [value]="'Inactive'"
+                                        [(ngModel)]="customerStatus" [ngModelOptions]="{standalone: true}">
+                                    <label for="inactive">Inactive</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

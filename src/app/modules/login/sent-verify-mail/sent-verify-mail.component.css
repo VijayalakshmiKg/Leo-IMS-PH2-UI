@@ -1,0 +1,53 @@
+.logo {
+    padding-top: 53px;
+    padding-left: 48px;
+    justify-content: start;
+    display: flex;
+}
+
+.sentVerifyMail-content {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: calc(100vh - 300px);
+    flex-direction: column;
+}
+
+.subject-content {
+    margin-top: 56px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* width: 432px; */
+}
+
+.subject-content h6 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.subject-content p {
+    color: var(--Slate-500, #64748B);
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 56px;
+}
+
+.resendEmail h5 {
+    color: var(--Slate-700, #334155);
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.resendEmail a {
+    color: var(--primary-col, #006CB7);
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+}

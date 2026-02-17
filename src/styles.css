@@ -1,0 +1,506 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-material.css';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: BlinkMacSystemFont;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.cursor_cls {
+  cursor: pointer;
+}
+
+/* Font family */
+
+@font-face {
+  font-family: BlinkMacSystemFont;
+  src: url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Light.woff2') format('woff2'),
+    url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: BlinkMacSystemFont;
+  src: url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Regular.woff2') format('woff2'),
+    url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: BlinkMacSystemFont;
+  src: url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Medium.woff2') format('woff2'),
+    url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: BlinkMacSystemFont;
+  src: url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Semibold.woff2') format('woff2'),
+    url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: BlinkMacSystemFont;
+  src: url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Bold.woff2') format('woff2'),
+    url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: BlinkMacSystemFont;
+  src: url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Black.woff2') format('woff2'),
+    url('assets/fonts/BlinkMacSystemFont/BlinkMacSystemFont-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+/*===================== Scroll-bar  ====================*/
+
+::-webkit-scrollbar {
+  width: 4px;
+  overflow-y: scroll;
+  background: #eef6f6;
+  box-shadow: inset 0 0 4px #707070;
+}
+::-webkit-scrollbar {
+  height: 4px; /* Reduced scrollbar height */
+}
+::-webkit-scrollbar-thumb {
+  background: #007AFF;
+  border-radius: 10px;
+  width: 4px;
+}
+
+::-webkit-scrollbar-corner {
+  width: 4px;
+  overflow-x: scroll;
+  background: #eef6f6;
+  box-shadow: inset 0 0 4px #707070;
+}
+
+/* mat-list menu*/
+.mat-list-base {
+  padding-top: 0px !important;
+  display: block;
+  -webkit-tap-highlight-color: transparent;
+  display: flex !important;
+}
+
+.mat-list-base .mat-list-option {
+  color: #FFF;
+  height: 40px;
+  font-family: BlinkMacSystemFont !important;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.mat-list-option:hover,
+.mat-list-option:focus,
+.mat-nav-list .mat-list-item:hover,
+.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:hover,
+.mat-action-list .mat-list-item:focus {
+  background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30));
+}
+
+.mat-list-single-selected-option,
+.mat-list-single-selected-option:hover,
+.mat-list-single-selected-option:focus {
+  background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30));
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content-reverse,
+.mat-list-base .mat-list-option .mat-list-item-content-reverse {
+  display: flex;
+  align-items: center;
+  padding: 0 10px !important;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+
+.mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+.mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+.mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+.mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text {
+  padding-left: 0;
+  padding-right: 0px !important;
+}
+
+.common-btn {
+  border: none;
+  background: transparent;
+}
+
+.requiredField {
+  color: red;
+}
+
+.cancelBtn {
+  display: flex;
+  padding: 6px 27px;
+  ;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--Light-theme-Rest-Border-Default-Border, #D1D1D1);
+  background: var(--Light-theme-Rest-Background-Default-Background, #FFF);
+  color: var(--light-theme-rest-foreground-default-foreground-242424, #242424);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.continueBtn {
+  display: flex;
+  padding: 6px 27px;
+  ;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--Light-theme-Rest-Border-Default-Border, #006CB7);
+  
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* masters start */
+
+.masterScreen-header {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+  background: #F9F9FB;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.masterScreen-header span {
+  color: var(--Slate-700, #334155);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.masterScreen-header button {
+  border-radius: 4px;
+  
+  color: var(--White, #FFF);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 4px 12px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.masterScreen-content-table {
+  padding: 16px;
+  overflow: auto;
+  padding-bottom: 40px;
+}
+
+
+.masterScreen-content-table .table th {
+  border-top: 0px solid #dee2e6 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  color: var(--Slate-700, #334155);
+  font-family: BlinkMacSystemFont !important;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-bottom: 10px;
+  padding-top: 0px !important;
+  text-wrap: nowrap;
+}
+
+.masterScreen-content-table .table td {
+  border-top: 0px solid #dee2e6 !important;
+  color: var(--Slate-600, #475569);
+  font-family: BlinkMacSystemFont !important;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  align-content: center;
+  text-wrap: nowrap;
+  cursor: pointer;
+}
+
+
+.masterScreen-content-table .table tbody tr:hover {
+  background: #F9F9FB;
+}
+
+.masterScreen-content-table .table .action-cell {
+  text-align: right;
+  display: flex;
+  justify-content: end;
+  gap: 7px;
+}
+
+.masterScreen-content-table .table .action-cell .icon {
+  visibility: hidden;
+  /* Keeps space reserved but hides icons */
+}
+
+.masterScreen-content-table .table tbody tr:hover .action-cell .icon {
+  visibility: visible;
+  /* Shows icons on hover */
+}
+
+.noMasterRecords {
+  color: #334155;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.06px;
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  text-align: center;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* masters end */
+
+
+input:disabled {
+  opacity: 0.5;
+}
+
+/* inputs text css */
+
+span.mat-select-min-line {
+  color: var(--Slate-600, #475569);
+  font-family: BlinkMacSystemFont !important;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+input.mat-input-element {
+  margin-top: -0.0625em;
+  color: var(--Slate-600, #475569);
+  font-family: BlinkMacSystemFont !important;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+textarea.mat-input-element {
+  padding: 2px 0;
+  margin: -2px 0;
+  color: var(--Slate-600, #475569);
+  font-family: BlinkMacSystemFont !important;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+/* inputs text end */
+
+/* Delete Popup */
+::ng-deep .deletePopup .mat-dialog-container {
+  display: block;
+  padding: 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow: auto;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  max-height: inherit;
+}
+
+/* Check Box */
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #283892 !important;
+}
+
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+  background: #283892 !important;
+}
+
+.mat-checkbox-inner-container {
+  display: inline-block;
+  height: 16px;
+  line-height: 0;
+  margin: auto;
+  margin-right: 8px;
+  order: 0;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 16px;
+  flex-shrink: 0;
+  border-radius: 4px !important;
+  border: 0px solid var(--Grey-Grey_50, #B3B3B3) !important;
+  background: var(--Grey-Grey_10, #F9F9F9) !important;
+}
+.mat-checkbox-layout {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: inherit;
+  align-items: baseline;
+  vertical-align: middle;
+  display: inline-flex;
+  white-space: nowrap;
+  margin-bottom: 0 !important;
+}
+
+
+/* Background color */
+.bgColorCls {
+  background-color: #283892;
+  border: none;
+}
+
+/* toggle */
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #4CD964 !important;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #FFF !important;
+}
+.mat-slide-toggle.mat-checked .mat-ripple-element {
+  background-color: #4CD964 !important;
+}
+
+/* For mandatory field (*) */
+.text-dange {
+  color: red;
+}
+
+/* sort menu */
+::ng-deep .sortMenu .mat-menu-item {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 38px;
+  height: 38px !important;
+  padding: 0 16px;
+  text-align: left;
+  text-decoration: none;
+  max-width: 100%;
+  position: relative;
+}
+
+/* more menu */
+::ng-deep .moreMenu .mat-menu-item {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 38px;
+  height: 38px !important;
+  padding: 0 16px;
+  text-align: left;
+  text-decoration: none;
+  max-width: 100%;
+  position: relative;
+}
+
+/* drop down */
+.mat-option-text {
+  display: inline-block;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: BlinkMacSystemFont;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* mat-menu */
+.mat-menu-item {
+  background: transparent;
+  color: rgba(0, 0, 0, .87);
+  color: var(--Slate-700, #334155);
+  font-family: BlinkMacSystemFont !important;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: 36px !important;
+}
+
+/* For hiding arrow icons in num field */
+/* For Chrome, Edge, Safari */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

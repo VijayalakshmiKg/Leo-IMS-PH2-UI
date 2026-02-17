@@ -1,0 +1,119 @@
+<div class="profile-home-container">
+    <div class="profile-home-header">
+        <button class="edit-btn bgColorCls" type="button" (click)="editProfile()">Edit</button>
+    </div>
+
+    <div class="profile-content">
+        <div>
+            <h4 class="mb-0">Primary Contact</h4>
+            <div class="profile-text-contents" *ngIf="this.profileRecord">
+                <div class="d-flex mb-1 align-items-center gap-12">
+                    <span class="noProfile common-btn mb-0"
+                          *ngIf="!this.profileRecord?.employeeProfilePhoto?.[0]?.url; else profileFound">
+                      {{ this.profileRecord?.firstName?.[0] | uppercase }}
+                      {{ this.profileRecord?.lastName?.[0] | uppercase }}
+                    </span>
+                  
+                    <ng-template #profileFound>
+                      <img [src]="this.profileRecord?.employeeProfilePhoto?.[0]?.url" alt="Profile Picture">
+                    </ng-template>
+                  
+                    <div class="nameProfile">
+                      {{ this.profileRecord?.firstName }} {{ this.profileRecord?.lastName }}
+                    </div>
+                  </div>
+
+                <div class="d-flex align-items-center">
+                    <label>First name</label>
+                    <p class="mb-0">{{this.profileRecord?.firstName || '-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Last name</label>
+                    <p class="mb-0">{{this.profileRecord?.lastName || '-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Email address</label>
+                    <p class="mb-0">{{this.profileRecord?.email || '-'}}</p>
+                </div>
+
+                <div class="blue-indication">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="20" height="20" rx="10" fill="#5253AE" />
+                        <rect x="1.25" y="1.25" width="17.5" height="17.5" rx="8.75" fill="black"
+                            fill-opacity="0.0241" />
+                        <rect x="0.625" y="0.625" width="18.75" height="18.75" rx="9.375" stroke="black"
+                            stroke-opacity="0.0241" stroke-width="1.25" />
+                        <path
+                            d="M8.43994 4.99756C8.43994 4.7876 8.48145 4.5874 8.56445 4.39697C8.64746 4.20654 8.75977 4.04053 8.90137 3.89893C9.04297 3.75732 9.20654 3.64502 9.39209 3.56201C9.58252 3.479 9.78516 3.4375 10 3.4375C10.21 3.4375 10.4102 3.479 10.6006 3.56201C10.791 3.64502 10.957 3.75732 11.0986 3.89893C11.2402 4.04053 11.3525 4.20654 11.4355 4.39697C11.5186 4.5874 11.5601 4.7876 11.5601 4.99756C11.5601 5.2124 11.5186 5.41504 11.4355 5.60547C11.3525 5.7959 11.2402 5.96191 11.0986 6.10352C10.957 6.24512 10.791 6.35742 10.6006 6.44043C10.415 6.52344 10.2148 6.56494 10 6.56494C9.78516 6.56494 9.58252 6.52344 9.39209 6.44043C9.20654 6.35742 9.04297 6.24512 8.90137 6.10352C8.75977 5.96191 8.64746 5.7959 8.56445 5.60547C8.48145 5.41504 8.43994 5.2124 8.43994 4.99756ZM8.74756 15.0024V10C8.74756 9.8291 8.7793 9.66797 8.84277 9.5166C8.91113 9.36523 9.00146 9.2334 9.11377 9.12109C9.23096 9.00391 9.36523 8.91357 9.5166 8.8501C9.66797 8.78174 9.8291 8.74756 10 8.74756C10.1709 8.74756 10.332 8.78174 10.4834 8.8501C10.6348 8.91357 10.7666 9.00391 10.8789 9.12109C10.9961 9.2334 11.0864 9.36523 11.1499 9.5166C11.2183 9.66797 11.2524 9.8291 11.2524 10V15.0024C11.2524 15.1733 11.2183 15.3345 11.1499 15.4858C11.0864 15.6372 10.9961 15.769 10.8789 15.8813C10.7666 15.9937 10.6348 16.084 10.4834 16.1523C10.332 16.2158 10.1709 16.2476 10 16.2476C9.8291 16.2476 9.66797 16.2158 9.5166 16.1523C9.36523 16.084 9.23096 15.9937 9.11377 15.8813C9.00146 15.769 8.91113 15.6372 8.84277 15.4858C8.7793 15.3345 8.74756 15.1733 8.74756 15.0024Z"
+                            fill="white" />
+                    </svg>
+
+
+                    Your email associated to create this organization
+
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <label>Mobile</label>
+                    <p class="mb-0">{{this.profileRecord?.mobileNumberCountryCode}} {{(this.profileRecord?.mobileNumber | faxNumber) ? (this.profileRecord?.mobileNumber | faxNumber) :'-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Work phone</label>
+                    <p class="mb-0">{{this.profileRecord?.phoneCountryCode}} {{(this.profileRecord?.phoneNumber | faxNumber) ? (this.profileRecord?.phoneNumber | faxNumber) :'-'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="mb-0">Organization information</h4>
+            <div class="profile-text-contents">
+                <div class="d-flex align-items-center">
+                    <label>Display name</label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.displayName || '-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Organization name</label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.organizationName || '-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Mobile</label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.organizationMobileNumberCountryCode}} {{(this.profileRecord?.employeeAddressmodel?.organizationMobileNumber | faxNumber) ? (this.profileRecord?.employeeAddressmodel?.organizationMobileNumber | faxNumber):'-'}}
+                    </p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Telephone</label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.organizationPhoneCountryCode}} {{(this.profileRecord?.employeeAddressmodel?.organzitionPhoneNumber | faxNumber)? (this.profileRecord?.employeeAddressmodel?.organzitionPhoneNumber | faxNumber):'-'}}
+                    </p>
+                </div>
+                <!-- <div class="d-flex align-items-center">
+                    <label>Fax number</label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.organizationFaxNumber || '-'}}</p>
+                </div> -->
+                <div class="d-flex align-items-center">
+                    <label>Organization Address </label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.organizationAdr || '-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Billing Address</label>
+                    <p class="mb-0">{{this.profileRecord?.employeeAddressmodel?.organizationBillingAdr || '-'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="mb-0">Time zone</h4>
+            <div class="profile-text-contents">
+                <div class="d-flex align-items-center">
+                    <label>Time zone</label>
+                    <p class="mb-0">{{this.profileRecord?.timezone || '-'}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label>Date format</label>
+                    <p class="mb-0">{{this.profileRecord?.dateFormat || '-'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

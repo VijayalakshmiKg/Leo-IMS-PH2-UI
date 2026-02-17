@@ -1,0 +1,1221 @@
+<div class="template-header d-flex justify-content-between align-items-center">
+  <div class="template-head-left d-flex gap-24 align-items-center">
+    <span>
+      {{plannerTaskList.length}} task(s) in List
+    </span>
+    
+    <!-- Selected Template Display with Close Button -->
+    <div class="selected-template-display" *ngIf="selectedTemplate && getCheckedTasks().length === 0">
+      <div class="selected-template-chip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.5 3.5C1.5 2.67157 2.17157 2 3 2H6L7.5 3.5H12.5C13.3284 3.5 14 4.17157 14 5V12.5C14 13.3284 13.3284 14 12.5 14H3C2.17157 14 1.5 13.3284 1.5 12.5V3.5Z" stroke="currentColor" stroke-width="1" fill="none"/>
+          <path d="M8 6.5V10.5M6 8.5L8 10.5L10 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="template-name">{{selectedTemplate.label || selectedTemplate.name}}</span>
+        <button type="button" class="template-close-btn" (click)="clearSelectedTemplate()" title="Remove template">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="import-template-dropdown" (clickOutside)="closeTemplateDropdown()" *ngIf="getCheckedTasks().length === 0 && !selectedTemplate">
+      <button type="button" class="importBtnCls" (click)="toggleTemplateDropdown()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Folder outline -->
+          <path d="M1.5 3.5C1.5 2.67157 2.17157 2 3 2H6L7.5 3.5H12.5C13.3284 3.5 14 4.17157 14 5V12.5C14 13.3284 13.3284 14 12.5 14H3C2.17157 14 1.5 13.3284 1.5 12.5V3.5Z" stroke="currentColor" stroke-width="1" fill="none"/>
+          <!-- Down arrow inside folder -->
+          <path d="M8 6.5V10.5M6 8.5L8 10.5L10 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Import template</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      
+      <!-- Template Dropdown Menu -->
+      <div class="template-dropdown-menu" *ngIf="showTemplateDropdown">
+        <!-- Search Input -->
+        <div class="template-search-container">
+          <input 
+            type="text" 
+            class="template-search-input" 
+            placeholder="Search Templates"
+            [(ngModel)]="searchTemplate"
+            (click)="$event.stopPropagation()">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="currentColor"/>
+          </svg>
+        </div>
+        
+        <!-- Template Options -->
+        <div class="template-options">
+          <!-- Debug: Show count -->
+          <div *ngIf="templateOptions.length === 0" class="no-templates">
+            No templates available
+          </div>
+          <div 
+            class="template-option" 
+            *ngFor="let option of filteredTemplateOptions" 
+            (click)="selectTemplate(option)">
+            <input 
+              type="radio" 
+              [id]="'template_' + option.id" 
+              [name]="'templateRadio'" 
+              [value]="option.value"
+              [checked]="selectedTemplate && selectedTemplate.value === option.value"
+              (click)="$event.stopPropagation()">
+            <label [for]="'template_' + option.id" class="template-label">
+              {{option.label || option.name}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="planner-sheet-dropdown" (clickOutside)="closePlannerSheetDropdown()" *ngIf="getCheckedTasks().length === 0 && !selectedTemplate">
+      <button type="button" class="importBtnCls" (click)="togglePlannerSheetDropdown()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 3.5C2 2.67157 2.67157 2 3.5 2H12.5C13.3284 2 14 2.67157 14 3.5V12.5C14 13.3284 13.3284 14 12.5 14H3.5C2.67157 14 2 13.3284 2 12.5V3.5Z" stroke="currentColor" stroke-width="1" fill="none"/>
+          <path d="M2 5.5H14M5.5 2V5.5M10.5 2V5.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <span>Select Planner Sheet</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      
+      <!-- Planner Sheet Dropdown Menu -->
+      <div class="planner-dropdown-menu" *ngIf="showPlannerSheetDropdown">
+        <!-- Search Input -->
+        <div class="template-search-container">
+          <input 
+            type="text" 
+            class="template-search-input" 
+            placeholder="Search Planner Sheets"
+            [(ngModel)]="searchPlannerSheet"
+            (click)="$event.stopPropagation()">
+          <svg class="search-icon1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="currentColor"/>
+          </svg>
+        </div>
+        
+        <!-- Planner Sheet Options -->
+        <div class="template-options">
+          <div 
+            class="template-option" 
+            *ngFor="let option of filteredPlannerSheetOptions; trackBy: trackByPlannerSheetId" 
+            (click)="togglePlannerSheetSelection(option)">
+            <input 
+              type="checkbox" 
+              [id]="'plannerSheet_' + option.id" 
+              [value]="option.value"
+              [checked]="isPlannerSheetAlreadyOpen(option.id)"
+              (change)="$event.stopPropagation()"
+              (click)="$event.stopPropagation()">
+            <label [for]="'plannerSheet_' + option.id" class="template-label">
+              {{option.label}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Refresh Button -->
+    <div class="refresh-container" *ngIf="getCheckedTasks().length === 0">
+      <button type="button" class="importBtnCls refresh-btn" (click)="refreshPlannerData()" [disabled]="isRefreshing" [title]="isRefreshing ? 'Refreshing...' : 'Refresh data'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" [class.spinning]="isRefreshing">
+          <path d="M14 8A6 6 0 1 1 8 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M8 2V5L11 3.5L8 2Z" fill="currentColor"/>
+        </svg>
+        <span>{{ isRefreshing ? '..' : '' }}</span>
+      </button>
+    </div>
+
+    <div class="view-changes" *ngIf="getCheckedTasks().length === 0">
+      <button type="button" class="importBtnCls" (click)="viewChanges()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 3C4.5 3 1.73 5.11 1 8c.73 2.89 3.5 5 7 5s6.27-2.11 7-5c-.73-2.89-3.5-5-7-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 10a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>View changes</span>
+      </button>
+    </div>
+    
+    <div class="live-status" *ngIf="getCheckedTasks().length === 0">
+      <button type="button" class="importBtnCls" (click)="toggleLiveStatus()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="8" cy="8" r="3" fill="currentColor"/>
+        </svg>
+        <span>Live status</span>
+      </button>
+    </div>
+    
+    <div class="search-customers" *ngIf="getCheckedTasks().length === 0">
+      <div class="search-input-wrapper">
+        <input 
+          type="text" 
+          class="search-customers-input" 
+          placeholder="Search Customers"
+          [(ngModel)]="customerSearchText"
+          (input)="onCustomerSearch()"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()">
+        <svg class="search-input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14.0001 14.0001L11.1001 11.1001" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    
+   <!-- <div class="date-picker-container" *ngIf="getCheckedTasks().length === 0">
+      <mat-form-field class="date-picker-field" appearance="outline">
+        <mat-label>Select Date</mat-label>
+        <input matInput 
+               [matDatepicker]="picker" 
+               [(ngModel)]="selectedDate"
+               (dateChange)="onDateChange($event)"
+               readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 1v4M5 1v4M2 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+-->
+    <div class="sort-by-container" style="display: none;">
+      <button class="importBtnCls sort-by-btn" (click)="toggleSortOptions()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Sort by</span>
+      </button>
+      <div class="sort-dropdown" [class.show]="showSortDropdown">
+        <div class="sort-option" *ngFor="let option of sortOptions" 
+             (click)="selectSortOption(option)"
+             [class.selected]="selectedSort === option.value">
+          <input type="radio" 
+                 [id]="'sort-' + option.id" 
+                 [value]="option.value" 
+                 [checked]="selectedSort === option.value"
+                 name="sortOption">
+          <label [for]="'sort-' + option.id">{{ option.label }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="manage-columns-container" *ngIf="getCheckedTasks().length === 0">
+      <button class="importBtnCls manage-columns-btn" (click)="toggleColumnManager()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Manage Columns</span>
+      </button>
+    </div>
+
+    <div class="filter-by-container" style="display: none;">
+      <button class="importBtnCls filter-by-btn" (click)="toggleFilterPanel()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 2h14l-6 7v4l-2 1V9L1 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Filter by</span>
+      </button>
+    </div>
+
+    <!-- Row Actions (show when rows are checked) -->
+    <div class="row-actions-container" *ngIf="getCheckedTasks().length > 0">
+      <div class="action-buttons">
+        <button class="action-btn assign-btn" (click)="assignSelectedTasks()" *ngIf="!hasSelectedAssignedTasks()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM2 14c0-3 2.5-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Assign task</span>
+        </button>
+        
+        <button class="action-btn duplicate-btn" (click)="duplicateSelectedTasks()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4h8a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 10V4a2 2 0 012-2h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Duplicate row</span>
+        </button>
+        
+        <button class="action-btn delete-btn" (click)="deleteSelectedTasks()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4h12M5.5 4V2.5A1.5 1.5 0 017 1h2a1.5 1.5 0 011.5 1.5V4m3 0v9a2 2 0 01-2 2H4.5a2 2 0 01-2-2V4h11z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Delete row</span>
+        </button>
+        
+        <!-- View Timeline and View Documents buttons (only for completed tasks) -->
+        <button class="action-btn timeline-btn" 
+                *ngIf="hasSelectedCompletedTasks()" 
+                (click)="viewTimelineForSelected()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 4v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>View Timeline</span>
+        </button>
+        
+        <button class="action-btn documents-btn" 
+                *ngIf="hasSelectedCompletedTasks()" 
+                (click)="viewDocumentsForSelected()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 2v12a1 1 0 001 1h6a1 1 0 001-1V4.828a2 2 0 00-.586-1.414L9.586 1.586A2 2 0 008.172 1H5a1 1 0 00-1 1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6h4M6 8h4M6 10h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>View Documents</span>
+        </button>
+        
+        <span class="selected-count">{{getCheckedTasks().length}} selected</span>
+      </div>
+    </div>
+
+    <div class="create-task-container" *ngIf="getCheckedTasks().length === 0">
+      <div class="create-task-btn-group">
+        <button class="create-task-main-btn" (click)="createNormalTask()">
+          Create task
+        </button>
+        <button class="create-task-dropdown-btn" (click)="toggleCreateTaskOptions()">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="create-task-dropdown" [class.show]="showCreateTaskDropdown">
+        <div class="create-task-option" (click)="createNormalTask()">
+          <span>Normal Task</span>
+        </div>
+        <div class="create-task-option" (click)="createChangeoverTask()">
+          <span>Changeover Task</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="template-head-right d-flex align-items-center gap-24">
+    
+    <!-- Export Report Button -->
+    <button type="button" class="exportBtnCls" [matMenuTriggerFor]="exportMenu" 
+            *ngIf="plannerTaskList.length > 0 && getCheckedTasks().length === 0">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 10v2a2 2 0 002 2h8a2 2 0 002-2v-2M8 2v8m0 0l3-3m-3 3L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Export Report</span>
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <mat-menu #exportMenu="matMenu" class="export-dropdown-menu">
+      <button mat-menu-item (click)="exportToExcel()" class="export-menu-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+          <path d="M8 1V10M8 10L11 7M8 10L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M1 12V13C1 13.5304 1.21071 14.0391 1.58579 14.4142C1.96086 14.7893 2.46957 15 3 15H13C13.5304 15 14.0391 14.7893 14.4142 14.4142C14.7893 14.0391 15 13.5304 15 13V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Export as Excel</span>
+      </button>
+      <button mat-menu-item (click)="exportToCSV()" class="export-menu-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+          <path d="M8 1V10M8 10L11 7M8 10L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M1 12V13C1 13.5304 1.21071 14.0391 1.58579 14.4142C1.96086 14.7893 2.46957 15 3 15H13C13.5304 15 14.0391 14.7893 14.4142 14.4142C14.7893 14.0391 15 13.5304 15 13V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Export as CSV</span>
+      </button>
+    </mat-menu>
+ 
+  </div>
+</div>
+
+<!-- Filter Panel Overlay -->
+<div class="filter-overlay" [class.show]="showFilterPanel" (click)="closeFilterPanel()"></div>
+
+<!-- Right Side Filter Panel -->
+<div class="filter-panel" [class.show]="showFilterPanel">
+  <!-- Filter Header -->
+  <div class="filter-header">
+    <h3 class="filter-title">Filter by</h3>
+    <button class="filter-close-btn" (click)="closeFilterPanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Filter Content -->
+  <div class="filter-content">
+    <!-- Left Side - Filter Categories -->
+    <div class="filter-categories">
+      <div class="filter-category" 
+           *ngFor="let category of filterCategories" 
+           [class.active]="selectedCategory === category.key"
+           (click)="selectCategory(category.key)">
+        <span class="category-name">{{ category.label }}</span>
+        <span class="category-count" *ngIf="getFilterCount(category.key) > 0">{{ getFilterCount(category.key) }}</span>
+      </div>
+    </div>
+
+    <!-- Right Side - Filter Options -->
+    <div class="filter-options">
+      <!-- Search Box -->
+      <div class="filter-search">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="left: 10px;top: 50%;">
+            <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="m13 13 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <input type="text" 
+                 class="search-input" 
+                 placeholder="Search here" 
+                 [(ngModel)]="filterSearchText"
+                 (input)="onFilterSearch()">
+        </div>
+        <button class="clear-all-btn" (click)="clearCategoryFilters()" *ngIf="getFilterCount(selectedCategory) > 0">
+          Clear all
+        </button>
+      </div>
+
+      <!-- Filter Values List -->
+      <div class="filter-values">
+        <div class="filter-value-item" 
+             *ngFor="let item of getFilteredValues()" 
+             (click)="toggleCategoryFilterValue(item)">
+          <input type="checkbox" 
+                 [id]="'filter-' + item.id" 
+                 [checked]="isCategoryValueSelected(item.value)"
+                 (change)="toggleCategoryFilterValue(item)">
+          <label [for]="'filter-' + item.id" class="filter-value-label">
+            <span class="value-text">{{ item.label }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Footer -->
+  <div class="filter-footer">
+    <button class="filter-cancel-btn" (click)="cancelFilters()">Cancel</button>
+    <button class="filter-apply-btn" (click)="applyFilters()">Apply filters</button>
+  </div>
+</div>
+
+<!-- View Changes Panel -->
+<div class="view-changes-overlay" *ngIf="showViewChanges" (click)="closeViewChanges()"></div>
+<div class="view-changes-panel" [class.show]="showViewChanges">
+  <!-- Header -->
+  <div class="view-changes-header">
+    <h3>View Changes</h3>
+    <button class="close-btn" (click)="closeViewChanges()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="view-changes-content">
+    <!-- Left Side - Column Names -->
+    <div class="column-list-section">
+      <div class="column-item" 
+           *ngFor="let column of viewChangesColumns" 
+           [class.selected]="selectedViewColumn === column.key"
+           (click)="selectViewColumn(column.key)">
+        <span class="column-name">{{column.label}}</span>
+        <span class="selected-count" *ngIf="getSelectedCount(column.key) > 0">
+          ({{getSelectedCount(column.key)}})
+        </span>
+      </div>
+    </div>
+
+    <!-- Right Side - Date Picker and Cards -->
+    <div class="changes-content-section">
+      <!-- Date Picker -->
+      <div class="changes-date-picker">
+        <mat-form-field appearance="outline" class="date-field">
+          <mat-label>Select Date</mat-label>
+          <input matInput [matDatepicker]="changesPicker" 
+                 [(ngModel)]="selectedChangesDate"
+                 (dateChange)="onChangesDateChange()"
+                 readonly>
+          <mat-datepicker-toggle matSuffix [for]="changesPicker"></mat-datepicker-toggle>
+          <mat-datepicker #changesPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- Changes Cards or No Changes Message -->
+      <div class="changes-cards-container">
+         
+        <div class="changes-cards" *ngIf="getColumnDistinctValues(selectedViewColumn).length > 0">
+          <div class="change-card" *ngFor="let value of getColumnDistinctValues(selectedViewColumn); let i = index">
+           
+            <div class="card-content">
+              <div class="card-header">
+                 <div class="card-number">
+              {{(i + 1).toString().padStart(2, '0')}}
+            </div>
+                <div class="card-info">
+                  <h4 class="card-title">{{value}}</h4>
+                  <p class="card-subtitle">{{selectedViewColumn}} • {{selectedViewColumn}} data • ({{getTaskCountForValue(selectedViewColumn, value)}} tasks)</p>
+                </div>
+              </div>
+              <div class="card-changes">
+                <div class="change-section">
+                  <span class="change-label">Default</span>
+                  <span class="change-value">{{getDefaultValue(selectedViewColumn, value)}}</span>
+                </div>
+                <div class="change-icon">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Horizontal arrow -->
+                    <path d="M3 10h14M14 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                     
+                  </svg>
+                </div>
+                <div class="change-section">
+                  <span class="change-label">Changed</span>
+                  <span class="change-value">{{getChangedValue(selectedViewColumn, value)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- No Changes Message -->
+        <div class="no-changes" *ngIf="getColumnDistinctValues(selectedViewColumn).length === 0">
+          <div class="no-changes-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="#9ca3af" stroke-width="2" fill="none"/>
+              <path d="M16 24h16M24 16v16" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p>No changes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="view-changes-footer">
+    <button class="cancel-btn" (click)="closeViewChanges()">Cancel</button>
+  </div>
+</div>
+
+<div class="masterScreen-content-table templateTable" [class.empty-table]="plannerTaskList?.length === 0" [class.show-column-manager]="showColumnManager">
+  <!-- Column Manager Panel -->
+  <div class="table-controls">
+    <div class="column-manager-panel" *ngIf="showColumnManager">
+      <div class="column-manager-header">
+        <h4>Manage Columns</h4>
+        <button type="button" class="close-btn" (click)="toggleColumnManager()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="column-list">
+        <div class="column-item" *ngFor="let col of tableColumns; let i = index" 
+             draggable="true" 
+             (dragstart)="onColumnDragStart(col.key, $event)"
+             (dragover)="onColumnDragOver($event)"
+             (drop)="onColumnDrop(i, $event)">
+          <input type="checkbox" 
+                 [checked]="col.visible" 
+                 (change)="toggleColumnVisibility(col.key)">
+          <span class="column-name">{{col.label}}</span>
+          <div class="drag-handle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <circle cx="3" cy="3" r="1" fill="#9ca3af"/>
+              <circle cx="9" cy="3" r="1" fill="#9ca3af"/>
+              <circle cx="3" cy="9" r="1" fill="#9ca3af"/>
+              <circle cx="9" cy="9" r="1" fill="#9ca3af"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table advanced-table">
+    <thead>
+      <tr>
+        <th class="checkbox-column">
+          <input type="checkbox" [(ngModel)]="allChecked" (change)="toggleAll()">
+        </th>
+        <th *ngFor="let col of getVisibleColumns()" 
+            class="advanced-header" 
+            [style.width.px]="col.width"
+            [style.min-width.px]="col.width"
+            [title]="col.fullLabel || col.label">
+          
+          <!-- Column Header Content -->
+          <div class="header-content">
+            <span class="column-title" [title]="col.fullLabel || col.label">{{col.label}}</span>
+            
+            <!-- Sort Indicator and Filter Icon -->
+            <div class="header-controls">
+              <div class="sort-controls" *ngIf="col.sortable">
+                <button class="sort-btn" (click)="toggleColumnSort(col.key)">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" 
+                       [class.sort-asc]="columnSorts[col.key] === 'asc'"
+                       [class.sort-desc]="columnSorts[col.key] === 'desc'">
+                    <path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Filter Icon -->
+              <div class="column-filter-icon" 
+                   *ngIf="col.filterable" 
+                   (click)="toggleColumnFilterPopup(col.key, $event)"
+                   #filterTrigger>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" 
+                     [class.active]="activeColumnFilters && activeColumnFilters[col.key] && activeColumnFilters[col.key].length > 0">
+                  <path d="M0 1h12L7.5 5.5V9.5L4.5 7.5V5.5L0 1z" 
+                        stroke="currentColor" stroke-width="1" 
+                        fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            
+            <!-- Column Resize Handle -->
+            <div class="resize-handle" 
+                 (mousedown)="startResize(col.key, $event)">
+            </div>
+          </div>
+          
+
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of getFilteredAndSortedTasks(); index as i"
+          (dragover)="onRowDragOver(i, $event)"
+          (dragenter)="onRowDragEnter(i, $event)"
+          (dragleave)="onRowDragLeave($event)"
+          (drop)="onRowDrop(i, $event)"
+          [class.dragging]="isDraggedRow(i)"
+          [class.drop-target]="isDropTarget(i)">
+        <td class="checkbox-column">
+          <div class="checkbox-drag-wrapper">
+            <div class="drag-handle" 
+                 title="Drag to reorder row"
+                 draggable="true"
+                 (dragstart)="onRowDragStart(i, $event)"
+                 (dragend)="onRowDragEnd($event)">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="3" cy="2" r="1" fill="#9ca3af"/>
+                <circle cx="9" cy="2" r="1" fill="#9ca3af"/>
+                <circle cx="3" cy="6" r="1" fill="#9ca3af"/>
+                <circle cx="9" cy="6" r="1" fill="#9ca3af"/>
+                <circle cx="3" cy="10" r="1" fill="#9ca3af"/>
+                <circle cx="9" cy="10" r="1" fill="#9ca3af"/>
+              </svg>
+            </div>
+            <input type="checkbox" [(ngModel)]="task.checked" (change)="updateMasterCheckbox($event)">
+          </div>
+        </td>
+        
+        <!-- Dynamic Column Cells -->
+        <td *ngFor="let col of getVisibleColumns()" 
+            class="editable-cell dynamic-cell" 
+            [ngClass]="{'non-editable-cell': isNonEditableColumn(col.key) || (col.key === 'status' && (task.taskID || task.TaskID || task.taskId))}"
+            [style.width.px]="col.width"
+            [style.min-width.px]="col.width"
+            (dblclick)="!isNonEditableColumn(col.key) && !(col.key === 'status' && (task.taskID || task.TaskID || task.taskId)) && startEdit(i, col.key, $event)">
+          
+          <!-- Text Input for NO column -->
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && col.key === 'no'" 
+                 type="text"
+                 [(ngModel)]="task[col.key]" 
+                 (blur)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input"
+                 #cellInput>
+          
+          <!-- Time Input for time columns -->
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isTimeColumn(col.key)" 
+                 type="time"
+                 [(ngModel)]="task[col.key]" 
+                 (blur)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input"
+                 #cellInput>
+          
+          <!-- DateTime Input for scheduledTime column -->
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isDateTimeColumn(col.key)" 
+                 type="datetime-local"
+                 [(ngModel)]="task[col.key]" 
+                 (change)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input datetime-input"
+                 #cellInput>
+          
+          <!-- Text Input for text columns (changeoverMessage, notes) -->
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isTextColumn(col.key)" 
+                 type="text"
+                 [(ngModel)]="task[col.key]" 
+                 (blur)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input"
+                 placeholder="Enter {{col.label}}"
+                 #cellInput>
+          
+          <!-- Product Est Weight - Input with Unit Dropdown -->
+          <div *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isWeightColumn(col.key)" class="weight-input-container">
+            <input type="number" 
+                   [(ngModel)]="task.productEstWeightValue" 
+                   (blur)="stopEdit()" 
+                   (keyup.enter)="stopEdit()" 
+                   (keyup.escape)="cancelEdit()"
+                   class="cell-input weight-value-input"
+                   placeholder="0"
+                   #cellInput>
+            <select [(ngModel)]="task.weightUnit" 
+                    (blur)="stopEdit()" 
+                    (change)="stopEdit()"
+                    class="cell-select weight-unit-select">
+              <option value="">Unit</option>
+              <option *ngFor="let unit of weightUnitOptions" [value]="unit.value">{{unit.name}}</option>
+            </select>
+          </div>
+          
+          <!-- Dropdown for other columns -->
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && col.key !== 'no' && !isTimeColumn(col.key) && !isDateTimeColumn(col.key) && !isTextColumn(col.key) && !isWeightColumn(col.key)" 
+                  [(ngModel)]="task[col.key]" 
+                  (ngModelChange)="onDropdownChange(task, col.key, $event)"
+                  (blur)="stopEdit()" 
+                  (keyup.enter)="stopEdit()" 
+                  (keyup.escape)="cancelEdit()"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select {{col.label}}</option>
+            <option *ngFor="let option of getColumnOptions(col.key)" [value]="option">
+              {{col.key === 'status' ? (option | titlecase) : option}}
+            </option>
+          </select>
+          
+          <!-- Display Value - with cell drag and drop support -->
+          <div class="cell-drag-area"
+               *ngIf="!(editingCell.rowIndex === i && editingCell.field === col.key)"
+               [class.cell-dragging]="isDraggedCell(i, col.key)"
+               [class.cell-drop-target]="isCellDropTarget(i, col.key)"
+               [class.cell-draggable]="!isNonEditableColumn(col.key) && col.key !== 'no' && task[col.key] && task[col.key] !== '-'"
+               [attr.draggable]="!isNonEditableColumn(col.key) && col.key !== 'no' && task[col.key] && task[col.key] !== '-'"
+               [title]="getCellTooltip(col.key, task[col.key])"
+               (dragstart)="onCellDragStart(i, col.key, task[col.key], $event)"
+               (dragover)="onCellDragOver(i, col.key, $event)"
+               (dragenter)="onCellDragEnter(i, col.key, $event)"
+               (dragleave)="onCellDragLeave($event)"
+               (dragend)="onCellDragEnd($event)"
+               (drop)="onCellDrop(i, col.key, $event)">
+            <!-- Cell drag indicator icon (shows on hover for draggable cells) -->
+            <span class="cell-drag-icon" *ngIf="!isNonEditableColumn(col.key) && col.key !== 'no' && task[col.key] && task[col.key] !== '-'">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="3" cy="2" r="1" fill="currentColor"/>
+                <circle cx="7" cy="2" r="1" fill="currentColor"/>
+                <circle cx="3" cy="5" r="1" fill="currentColor"/>
+                <circle cx="7" cy="5" r="1" fill="currentColor"/>
+                <circle cx="3" cy="8" r="1" fill="currentColor"/>
+                <circle cx="7" cy="8" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <!-- Planner Column - Show Initials -->
+            <div *ngIf="col.key === 'planner' && task[col.key]" class="planner-initials">
+              {{getPlannerInitials(task[col.key])}}
+            </div>
+            <!-- Status Column -->
+            <span *ngIf="col.key === 'status'" [ngClass]="task[col.key] ? getStatusClass(task[col.key]) : ''">
+              {{(task[col.key] | titlecase) || '-'}}
+            </span>
+            <!-- Product Est Weight Column - Show value with unit -->
+            <span *ngIf="col.key === 'productEstWeight'">
+              {{task.productEstWeightValue ? (task.productEstWeightValue + ' ' + (task.weightUnit || '')) : (task[col.key] || '-')}}
+            </span>
+            <!-- Scheduled Time Column - Show formatted date/time -->
+            <span *ngIf="col.key === 'scheduledTime'">
+              {{task[col.key] ? formatDateTime(task[col.key]) : '-'}}
+            </span>
+            <!-- Other Columns -->
+            <span *ngIf="col.key !== 'planner' && col.key !== 'status' && col.key !== 'productEstWeight' && col.key !== 'scheduledTime'">
+              {{task[col.key] || '-'}}
+            </span>
+            <!-- Empty Planner -->
+            <span *ngIf="col.key === 'planner' && !task[col.key]">-</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+<div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="plannerTaskList?.length === 0">
+    <div class="mb-2">
+      <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.5" width="47" height="47" rx="23.5" fill="#EFEBFE" />
+        <g clip-path="url(#clip0_853_135022)">
+          <path
+            d="M15.5 16C15.5 15.7348 15.6054 15.4804 15.7929 15.2929C15.9804 15.1054 16.2348 15 16.5 15H30.5C30.7652 15 31.0196 15.1054 31.2071 15.2929C31.3946 15.4804 31.5 15.7348 31.5 16V18C31.5 18.2652 31.3946 18.5196 31.2071 18.7071C31.0196 18.8946 30.7652 19 30.5 19H16.5C16.2348 19 15.9804 18.8946 15.7929 18.7071C15.6054 18.5196 15.5 18.2652 15.5 18V16Z"
+            stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M15.5 24C15.5 23.7348 15.6054 23.4804 15.7929 23.2929C15.9804 23.1054 16.2348 23 16.5 23H20.5C20.7652 23 21.0196 23.1054 21.2071 23.2929C21.3946 23.4804 21.5 23.7348 21.5 24V30C21.5 30.2652 21.3946 30.5196 21.2071 30.7071C21.0196 30.8946 20.7652 31 20.5 31H16.5C16.2348 31 15.9804 30.8946 15.7929 30.7071C15.6054 30.5196 15.5 30.2652 15.5 30V24Z"
+            stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.5 23H31.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.5 27H31.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.5 31H31.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <defs>
+          <clipPath id="clip0_853_135022">
+            <rect width="24" height="24" fill="white" transform="translate(11.5 11)" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+    <div class="noRecordText">
+      Import templates to create tasks for driver
+    </div> 
+  </div>
+ 
+
+
+
+<!-- Import Excel Modal - TODO: Add import functionality -->
+<!-- <app-import-excel-modal 
+  *ngIf="showImportModal" 
+  (closeModalEvent)="closeImportModal()"
+  (importCompleted)="onImportCompleted($event)">
+</app-import-excel-modal> -->
+
+<!-- Timeline Modal -->
+<div class="timeline-modal-overlay" [class.show]="showTimelineModal" (click)="closeTimelineModal()">
+  <div class="timeline-modal" (click)="$event.stopPropagation()">
+    <div class="timeline-modal-header">
+      <h3>View Task timeline</h3>
+      <button class="close-btn" (click)="closeTimelineModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="timeline-modal-content">
+      <!-- Task Info Section -->
+      <div class="task-info-section" *ngIf="selectedTimelineTask">
+        <div class="task-info-header">
+          <h4>{{selectedTimelineTask.customer}}</h4>
+          <span class="task-status" [ngClass]="getStatusClass(selectedTimelineTask.status)">{{selectedTimelineTask.status | titlecase}}</span>
+        </div>
+        <div class="task-details">
+          <div class="detail-item">
+            <span class="label">Order :</span>
+            <span class="value">{{selectedTimelineTask.no}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Driver name :</span>
+            <span class="value">{{selectedTimelineTask.driverName}}</span>
+          </div>
+        </div>
+        
+        <!-- Time Details -->
+        <div class="time-details">
+          <div class="time-item">
+            <div class="time-label">Created time</div>
+            <div class="time-value">{{selectedTimelineTask.createdTime || '21/11/2025, 10:00 PM'}}</div>
+          </div>
+          <div class="time-item">
+            <div class="time-label">Scheduled time</div>
+            <div class="time-value">{{selectedTimelineTask.scheduledTime || '22/11/2025, 9:00 AM'}}</div>
+          </div>
+          <div class="time-item">
+            <div class="time-label">Collection time</div>
+            <div class="time-value">{{selectedTimelineTask.collectionTime || '22/11/2025, 7:00 AM'}}</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Timeline Section -->
+      <div class="timeline-section">
+        <h4>Timeline details</h4>
+        <div class="timeline-items">
+          <div class="timeline-item" *ngFor="let item of timelineItems" [class]="item.status.toLowerCase()">
+            <div class="timeline-icon">
+              <div class="status-dot" [ngClass]="'status-' + item.status.toLowerCase().replace(' ', '-')"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-status">{{item.status}}</div>
+              <div class="timeline-time">{{item.time}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Cancel Button -->
+      <div class="modal-footer">
+        <button class="cancel-btn" (click)="closeTimelineModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Column Filter Popup -->
+<div class="column-filter-popup" 
+     *ngIf="showColumnFilterPopup" 
+     (click)="$event.stopPropagation()"
+     [style.z-index]="'10001'">
+  <div class="filter-popup-header">
+    <h4>Filter: {{getColumnLabel(showColumnFilterPopup)}}</h4>
+    <button class="close-btn" (click)="closeColumnFilterPopup()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="filter-popup-content">
+    <!-- Search Box -->
+    <div class="filter-search">
+      <input type="text" 
+             placeholder="Search values..."
+             [(ngModel)]="columnFilterSearch[showColumnFilterPopup]"
+             class="filter-search-input">
+    </div>
+    
+    <!-- Select All / Clear All -->
+    <div class="filter-actions">
+      <button class="filter-action-btn" (click)="selectAllFilterValues(showColumnFilterPopup)">
+        Select All
+      </button>
+      <button class="filter-action-btn" (click)="clearAllFilterValues(showColumnFilterPopup)">
+        Clear All
+      </button>
+    </div>
+    
+    <!-- Values List -->
+    <div class="filter-values-list">
+      <div class="filter-value-item" 
+           *ngFor="let value of getFilteredDistinctValues(showColumnFilterPopup)">
+        <label class="filter-checkbox-label">
+          <input type="checkbox" 
+                 [checked]="isValueSelected(showColumnFilterPopup, value)"
+                 (change)="toggleFilterValue(showColumnFilterPopup, value)">
+          <span class="checkmark"></span>
+          <span class="value-text">{{value}}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  <div class="filter-popup-footer">
+    <button class="filter-btn cancel-btn" (click)="cancelColumnFilter()">Cancel</button>
+    <button class="filter-btn apply-btn" (click)="applyColumnFilters()">Apply</button>
+  </div>
+</div>
+
+<!-- Documents Modal - Positioned to avoid parent container z-index conflicts -->
+<div class="documents-modal-overlay" 
+     [class.show]="showDocumentsModal" 
+     (click)="closeDocumentsModal()"
+     [style.position]="'fixed'"
+     [style.z-index]="'2147483647'"
+     [style.top]="'0'"
+     [style.left]="'0'"
+     [style.right]="'0'"
+     [style.bottom]="'0'">
+  <div class="documents-modal" 
+       (click)="$event.stopPropagation()"
+       [style.z-index]="'2147483647'">
+    <div class="documents-modal-header"
+         [style.z-index]="'2147483647'">
+      <h3>View Documents</h3>
+      <button class="close-btn" (click)="closeDocumentsModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="documents-modal-content">
+      <!-- Task Info Section -->
+      <div class="task-info-section" *ngIf="selectedDocumentsTask">
+        <div class="task-info-header">
+          <h4>{{selectedDocumentsTask.customer}}</h4>
+          <span class="task-status" [ngClass]="getStatusClass(selectedDocumentsTask.status)">{{selectedDocumentsTask.status | titlecase}}</span>
+        </div>
+        <div class="task-details">
+          <div class="detail-item">
+            <span class="label">Order :</span>
+            <span class="value">{{selectedDocumentsTask.no}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Office mobile :</span>
+            <span class="value">{{selectedDocumentsTask.officeMobile || '(5,571 kg)'}}</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="label">{{selectedDocumentsTask.driverName || 'Alexander'}}</span>
+        </div>
+        
+        <!-- Time Details -->
+        <div class="time-details">
+          <div class="time-item">
+            <div class="time-label">Created time</div>
+            <div class="time-value">{{selectedDocumentsTask.createdTime || '21/11/2025, 10:00 PM'}}</div>
+          </div>
+          <div class="time-item">
+            <div class="time-label">Scheduled time</div>
+            <div class="time-value">{{selectedDocumentsTask.scheduledTime || '22/11/2025, 9:00 AM'}}</div>
+          </div>
+          <div class="time-item">
+            <div class="time-label">Collection time</div>
+            <div class="time-value">{{selectedDocumentsTask.collectionTime || '22/11/2025, 7:00 AM'}}</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Documents Section -->
+      <div class="documents-section">
+        <h4>Documents attached by the driver</h4>
+        <div class="documents-list">
+          <div class="document-item" *ngFor="let doc of documentsList">
+            <div class="document-info">
+              <div class="document-name">{{doc.name}}</div>
+              <div class="document-details">
+                <span class="file-type">{{doc.type}}</span>
+                <span class="separator">•</span>
+                <span class="file-date">{{doc.date}}</span>
+              </div>
+            </div>
+            <button class="view-image-btn" (click)="viewImage(doc)">
+              View Image
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button class="cancel-btn" (click)="closeDocumentsModal()">Cancel</button>
+        <button class="download-btn" (click)="downloadImages()">Download Images</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Validation Error Modal -->
+<div class="validation-error-modal-overlay" 
+     [class.show]="showValidationErrorModal" 
+     (click)="closeValidationErrorModal()">
+  <div class="validation-error-modal" (click)="$event.stopPropagation()">
+    <div class="validation-error-modal-header">
+      <div class="error-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#DC2626" stroke-width="2"/>
+          <path d="M12 8V12" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 16H12.01" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>{{validationErrorTitle}}</h3>
+      <button class="close-btn" (click)="closeValidationErrorModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="validation-error-modal-content">
+      <p class="error-description">The following validation errors occurred. Please fix these issues and try again:</p>
+      
+      <div class="error-list">
+        <div class="error-item" *ngFor="let error of validationErrors">
+          <div class="error-field">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5.333V8M8 10.667H8.007M14 8C14 11.314 11.314 14 8 14C4.686 14 2 11.314 2 8C2 4.686 4.686 2 8 2C11.314 2 14 4.686 14 8Z" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="field-name">{{error.field}}</span>
+          </div>
+          <ul class="error-messages">
+            <li *ngFor="let message of error.messages">{{message}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="validation-error-modal-footer">
+      <button class="btn-close" (click)="closeValidationErrorModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Planner Paginator -->
+<app-planner-paginator
+  #plannerPaginator
+  [length]="length"
+  [pageSizeOptions]="[10, 25, 50]"
+  [showFirstLastButtons]="true"
+  (pageChange)="onPageChange($event)"
+  (sheetSelected)="onSheetSelected($event)"
+  (sheetAdded)="onSheetAdded($event)"
+  (sheetSaved)="onSheetSaved($event)"
+  (sheetClosed)="onSheetClosed($event)"
+  (sheetDeleted)="onSheetDeleted($event)">
+</app-planner-paginator>
+
+<!-- Live Status Sidebar -->
+<div class="live-status-overlay" *ngIf="showLiveStatusSidebar" (click)="closeLiveStatusSidebar()"></div>
+<div class="live-status-sidebar" [class.open]="showLiveStatusSidebar">
+  <div class="live-status-header">
+    <div class="header-top">
+      <h3>View live status</h3>
+      <button class="close-btn" (click)="closeLiveStatusSidebar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="search-box">
+      <input type="text" 
+             [(ngModel)]="liveStatusSearchText" 
+             placeholder="BDS1848" 
+             class="search-input">
+      <button *ngIf="liveStatusSearchText" class="clear-btn" (click)="clearLiveStatusSearch()">Clear all</button>
+    </div>
+    
+    <div class="month-navigation">
+      <button class="nav-btn" (click)="previousMonth()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span class="month-label">{{ currentLiveStatusMonth }}  -  {{ currentLiveStatusYear }}</span>
+      <button class="nav-btn" (click)="nextMonth()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <div class="live-status-content">
+    <div class="status-card" *ngFor="let task of plannerTaskList.slice(0, 10)">
+      <!-- Driver Header -->
+      <div class="driver-header">
+        <div class="driver-avatar">
+          <img [src]="task.driverImage || 'assets/images/avatar.jpg'" alt="Driver">
+        </div>
+        <div class="driver-info">
+          <h4>{{ task.driverName || 'Alexander' }}</h4>
+          <span class="shift-label">Day shift</span>
+        </div>
+        <span class="status-badge" [ngClass]="task.status === 'completed' ? 'free' : 'busy'">
+          {{ task.status === 'completed' ? 'Free' : 'Busy' }}
+        </span>
+      </div>
+      
+      <!-- Card Grid -->
+      <div class="card-grid">
+        <div class="grid-item">
+          <span class="grid-label">Vehicle</span>
+          <span class="grid-value">{{ task.vehicle || 'BDS1SMR' }}</span>
+        </div>
+        <div class="grid-item">
+          <span class="grid-label">Trailer</span>
+          <span class="grid-value">{{ task.trailerIn || '680' }}</span>
+        </div>
+        <div class="grid-item">
+          <span class="grid-label">Est Time</span>
+          <span class="grid-value">{{ task.scheduledTime || '07:00 PM' }}</span>
+        </div>
+        <div class="grid-item">
+          <span class="grid-label">Status</span>
+          <span class="grid-value status-text" [ngClass]="task.status === 'completed' ? 'free' : 'busy'">
+            {{ task.status === 'completed' ? 'Free' : 'Busy' }}
+          </span>
+        </div>
+      </div>
+      
+      <!-- Availability Section -->
+      <div class="availability-section">
+        <div class="availability-row">
+          <span class="availability-label">Vehicle available at <strong>{{ task.vehicleAvailableAt || '8:30 PM' }}</strong></span>
+        </div>
+        <div class="availability-row">
+          <span class="availability-label">Trailer available at <strong>{{ task.trailerAvailableAt || '9:30 PM' }}</strong></span>
+        </div>
+        <div class="availability-row">
+          <span class="availability-label">Driver available at <strong>{{ task.driverAvailableAt || '9:30 PM' }}</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="live-status-footer">
+    <button class="cancel-btn" (click)="closeLiveStatusSidebar()">Cancel</button>
+  </div>
+</div>
+
+<!-- Save Planner Sheet Dialog -->
+<div class="save-planner-dialog-overlay" *ngIf="showSavePlannerDialog" (click)="cancelSavePlannerSheet()">
+  <div class="save-planner-dialog" (click)="$event.stopPropagation()">
+    <div class="save-planner-dialog-header">
+      <h4>Save Planner Sheet</h4>
+      <button class="close-btn" (click)="cancelSavePlannerSheet()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="save-planner-dialog-content">
+      <div class="form-group">
+        <label for="plannerSheetName">Planner Sheet Name <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="plannerSheetName"
+          [(ngModel)]="newPlannerSheetName" 
+          (keyup.enter)="confirmSavePlannerSheet()"
+          (keyup.escape)="cancelSavePlannerSheet()"
+          (input)="onSheetNameInput()"
+          placeholder="Enter planner sheet name"
+          class="form-control"
+          [class.input-error]="plannerSheetNameError"
+          autofocus>
+        <div class="error-message" *ngIf="plannerSheetNameError">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 4.5V7.5M7 9.5H7.005M13 7C13 10.3137 10.3137 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7Z" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{{plannerSheetNameError}}</span>
+        </div>
+      </div>
+      
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="isPlannerSheetActive"
+            class="checkbox-input">
+          <span class="checkbox-text">Mark this planner sheet as active</span>
+        </label>
+        <p class="help-text">Active sheets will be displayed in the main dashboard view</p>
+      </div>
+    </div>
+    
+    <div class="save-planner-dialog-footer">
+      <button class="btn-cancel" (click)="cancelSavePlannerSheet(); $event.stopPropagation()">Cancel</button>
+      <button class="btn-save" (click)="confirmSavePlannerSheet(); $event.stopPropagation()" [disabled]="!newPlannerSheetName?.trim()">
+        Save Planner Sheet
+      </button>
+    </div>
+  </div>
+</div>
+

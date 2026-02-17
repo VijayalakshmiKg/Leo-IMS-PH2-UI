@@ -1,0 +1,359 @@
+<form [formGroup]="profileForm">
+
+    <div class="edit-profile">
+        <div class="edit-Profile-header">
+            <button class="cancle-btn" type="button" (click)="cancle()">Cancel</button>
+            <button class="save-btn bgColorCls" type="submit" (click)="updateUserProfile()">Save</button>
+        </div>
+
+        <div class="edit-profile-content" *ngIf="profileData">
+            <div class="profile-Upload mb-3">
+                <div class="d-flex mb-1 align-items-center  ">
+                    <div class="profile-img-content" *ngIf="profile == null; else profileFound">
+                        <span class="noProfile common-btn">
+                            {{this.profileForm.value.firstName?.slice(0, 1)}}{{this.profileForm.value.lastName?.slice(0,
+                            1)}}
+                        </span>
+
+                        <button class="noProfile common-btn uploadBtn" type="button" id="noProfile">
+                            <label for="fileUpload">upload</label>
+                        </button>
+                    </div>
+
+                    <ng-template #profileFound>
+                        <div class="hasProfile">
+                            <img [src]="profile" alt="Profile Image" class="profile-image">
+
+                            <button class="imgBtnUpload common-btn" type="button" id="noProfile"
+                                (click)="deleteProfile('profile')">
+                                <label>
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_923_20018)">
+                                            <path
+                                                d="M16.6667 5C16.8791 5.00024 17.0834 5.08157 17.2379 5.22737C17.3923 5.37318 17.4852 5.57246 17.4977 5.7845C17.5101 5.99653 17.4412 6.20532 17.3048 6.36819C17.1685 6.53107 16.9751 6.63575 16.7642 6.66083L16.6667 6.66667H16.5992L15.8334 15.8333C15.8334 16.471 15.5898 17.0846 15.1523 17.5485C14.7149 18.0125 14.1166 18.2918 13.4801 18.3292L13.3334 18.3333H6.66672C5.33505 18.3333 4.24672 17.2925 4.17339 16.0417L4.16922 15.9025L3.40005 6.66667H3.33339C3.12099 6.66643 2.91669 6.5851 2.76225 6.43929C2.6078 6.29349 2.51486 6.09421 2.50241 5.88217C2.48996 5.67014 2.55895 5.46135 2.69527 5.29847C2.8316 5.1356 3.02497 5.03092 3.23589 5.00583L3.33339 5H16.6667Z"
+                                                fill="white" />
+                                            <path
+                                                d="M11.667 1.6665C12.109 1.6665 12.5329 1.8421 12.8455 2.15466C13.1581 2.46722 13.3337 2.89114 13.3337 3.33317C13.3334 3.54557 13.2521 3.74986 13.1063 3.90431C12.9605 4.05876 12.7612 4.1517 12.5492 4.16415C12.3371 4.17659 12.1283 4.10761 11.9655 3.97128C11.8026 3.83496 11.6979 3.64158 11.6728 3.43067L11.667 3.33317H8.33366L8.32783 3.43067C8.30274 3.64158 8.19806 3.83496 8.03519 3.97128C7.87231 4.10761 7.66352 4.17659 7.45149 4.16415C7.23945 4.1517 7.04017 4.05876 6.89437 3.90431C6.74856 3.74986 6.66723 3.54557 6.66699 3.33317C6.66686 2.91269 6.82566 2.5077 7.11157 2.19938C7.39748 1.89106 7.78936 1.70221 8.20866 1.67067L8.33366 1.6665H11.667Z"
+                                                fill="white" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_923_20018">
+                                                <rect width="20" height="20" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+
+                                </label>
+                            </button>
+                        </div>
+                    </ng-template>
+
+
+
+                    <div class="nameProfile ml-3">
+                        {{this.profileForm.value.firstName}} {{this.profileForm.value.lastName}}
+                    </div>
+                </div>
+
+                <input type="file" id="fileUpload" (change)="addprofileImg($event)" [(ngModel)]="selectedFile"
+                    style="display: none;" [ngModelOptions]="{standalone: true}" />
+                <div class="d-flex gap-6 align-items-center">
+                    <p class="mb-0">Preferred Image Dimensions: 240 x 240 pixels</p>
+                    <span class="circle"></span>
+                    <p class="mb-0">Maximum File Size: 1MB</p>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>First name <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                    fill="#FF1F00" />
+                            </svg>
+                        </span></mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="firstName" appLettersOnly>
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Last name <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                    fill="#FF1F00" />
+                            </svg>
+                        </span></mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="lastName" appLettersOnly>
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Email address <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                    fill="#FF1F00" />
+                            </svg>
+                        </span></mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Mobile <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                    fill="#FF1F00" />
+                            </svg>
+                        </span></mat-label>
+                    <div class="d-flex mobileNumberCls">
+                        <mat-form-field class="volume-field w-25" appearance="outline">
+                            <input type="text" placeholder="+44" [formControl]="premobileNumber" matInput
+                                (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="autoMobile">
+                            <mat-autocomplete #autoMobile="matAutocomplete">
+                                <mat-option *ngFor="let option of mobileCode | async" [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="volume-field w-75">
+                            <input matInput formControlName="mobileNumber" placeholder appNumberOnly />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Work phone</mat-label>
+                    <div class="d-flex mobileNumberCls">
+                        <mat-form-field class="volume-field w-25" appearance="outline">
+                            <input type="text" placeholder="+44" [formControl]="preworkPhone" matInput
+                                (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="autoPhone">
+                            <mat-autocomplete #autoPhone="matAutocomplete">
+                                <mat-option *ngFor="let option of phonecode | async" [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="volume-field w-75">
+                            <input matInput formControlName="workPhone" placeholder appNumberOnly />
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="workPhone" appNumberOnly>
+                    </mat-form-field> -->
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <h4 class="">Organization Information</h4>
+
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Display name </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="displayName">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Organization name </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="organizationName">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Mobile </mat-label>
+                    <div class="d-flex mobileNumberCls">
+                        <mat-form-field class="volume-field w-25" appearance="outline">
+                            <input type="text" placeholder="+44" [formControl]="preorgMobile" matInput
+                                (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="autoOrgMobile">
+                            <mat-autocomplete #autoOrgMobile="matAutocomplete">
+                                <mat-option *ngFor="let option of orgmobileCode | async" [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="volume-field w-75">
+                            <input matInput formControlName="orgMobile" placeholder appNumberOnly />
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="orgMobile" appNumberOnly>
+                    </mat-form-field> -->
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Work phone </mat-label>
+                    <div class="d-flex mobileNumberCls">
+                        <mat-form-field class="volume-field w-25" appearance="outline">
+                            <input type="text" placeholder="+44" [formControl]="preorgWorkPhone" matInput
+                                (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="autoOrgPhone">
+                            <mat-autocomplete #autoOrgPhone="matAutocomplete">
+                                <mat-option *ngFor="let option of orgPhonecode | async" [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="volume-field w-75">
+                            <input matInput formControlName="orgWorkPhone" placeholder appNumberOnly />
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="orgWorkPhone" appNumberOnly>
+                    </mat-form-field> -->
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <h6 class="">Organization address </h6>
+
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Address line 1</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="orgAddressLine1"
+                            (keyup)="sameAsOrganizationAddress()">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Address line 2 </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="orgAddressLine2"
+                            (keyup)="sameAsOrganizationAddress()">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>City</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="orgCity">
+                        <!-- <mat-select formControlName="orgCity" (selectionChange)="sameAsOrganizationAddress()">
+                        <mat-option *ngFor="let data of citys" [value]="data">{{data}}</mat-option>
+                    </mat-select> -->
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>State/Province </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="orgState">
+                        <!-- <mat-select (selectionChange)="sameAsOrganizationAddress()">
+                        <mat-option *ngFor="let data of states" [value]="data">{{data}}</mat-option>
+                    </mat-select> -->
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Zip/Postal code</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input type="text" matInput (keyup)="getZipCode($event)" [matAutocomplete]="ZipCode"
+                            formControlName="orgZipCode" />
+                        <mat-autocomplete #ZipCode="matAutocomplete">
+                            <mat-option *ngFor="let item of zipCodes" [value]="item.postalCode"
+                                (click)="getStateCountryCity(item)" >
+                                {{item.postalCode}} | {{item.city}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Country </mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="orgCountry" readonly>
+                        <!-- <mat-select formControlName="orgCountry">
+                            <mat-option *ngFor="let item of countries"
+                                [value]="item.code">{{item.countryName}}</mat-option>
+                        </mat-select> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <h6 class="">Billing address
+
+                    <mat-checkbox formControlName="sameAsOrganization" class="ml-2"
+                        (change)="sameAsOrganizationAddress()"><mat-label>Copy as organization
+                            address</mat-label></mat-checkbox>
+
+                </h6>
+
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Address line 1</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="billingAddressLine1">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Address line 2 </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="billingAddressLine2">
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>City </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="billingCity">
+                        <!-- <input matInput placeholder="" > -->
+                        <!-- <mat-select formControlName="billingCity">
+                            <mat-option *ngFor="let data of citys" [value]="data">{{data}}</mat-option>
+                        </mat-select> -->
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>State/Province</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="billingState">
+                        <!-- <mat-select formControlName="billingState">
+                        <mat-option *ngFor="let data of states" [value]="data">{{data}}</mat-option>
+                    </mat-select> -->
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Zip/Postal code</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input type="text" matInput (keyup)="billingZipCode($event)" [matAutocomplete]="Orgauto"
+                            formControlName="billingZipCode" />
+                        <mat-autocomplete #Orgauto="matAutocomplete">
+                            <mat-option *ngFor="let item of billingzipCodes" [value]="item.postalCode"
+                                (click)="billingStateCountryCity(item)">
+                                {{item.postalCode}} | {{item.city}}
+                            </mat-option>
+                        </mat-autocomplete>
+
+                    </mat-form-field>
+                </div>
+                <div class="w-100 d-flex flex-column mb-2 col-6">
+                    <mat-label>Country</mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput placeholder="" formControlName="billingCountry">
+                        <!-- <mat-select formControlName="billingCountry">
+                            <mat-option *ngFor="let item of billingcountries"
+                                [value]="item.code">{{item.countryName}}</mat-option>
+                        </mat-select> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <h4 class="">Time zone</h4>
+
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Time zone </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <!-- <input matInput placeholder="" formControlName="timezone"> -->
+                        <mat-select formControlName="timezone">
+                            <mat-option *ngFor="let data of timeZones" [value]="data">{{data}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="w-100 d-flex flex-column mb-2 col-12">
+                    <mat-label>Date format </mat-label>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <!-- <input matInput placeholder="" formControlName="dateFormat"> -->
+                        <mat-select formControlName="dateFormat">
+                            <mat-option *ngFor="let data of dateFormats" [value]="data">{{data}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

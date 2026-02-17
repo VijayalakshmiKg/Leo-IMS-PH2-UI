@@ -1,0 +1,401 @@
+
+<div class="orders-header d-flex justify-content-between align-items-center">
+    <div class="orders-head-left d-flex gap-24 align-items-center">
+      <span>
+          {{totalRecords}}  Mov doc(s) in List
+      </span>
+     
+      <div class="search ml-3" *ngIf="this.logedInUser != 'Weighbridge operator' && this.logedInUser != 'Plant Site Manager'  ">
+        <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn" [matMenuTriggerFor]="filter2" type="button">
+          <p class="m-0 sortedByCls ml-2">{{sortByName ? sortByName : 'All'}}</p>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            
+      </button>
+      <mat-menu #filter2="matMenu">
+        <button mat-menu-item (click)="sortByValueOrders('')">All</button>
+
+          <div *ngFor="let sortby of status">
+              <button mat-menu-item (click)="sortByValueOrders(sortby.statusName)">{{sortby.statusName ? sortby.statusName : this.filter}}</button>
+    
+          </div>
+      </mat-menu>
+      </div>
+  </div>
+  <div class="orders-head-right d-flex align-items-center gap-24">
+    
+    <!-- <button class="common-btn">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2443_49425)">
+            <path d="M3.33398 4.99998C3.33398 4.55795 3.50958 4.13403 3.82214 3.82147C4.1347 3.50891 4.55862 3.33331 5.00065 3.33331H15.0007C15.4427 3.33331 15.8666 3.50891 16.1792 3.82147C16.4917 4.13403 16.6673 4.55795 16.6673 4.99998V15C16.6673 15.442 16.4917 15.8659 16.1792 16.1785C15.8666 16.4911 15.4427 16.6666 15.0007 16.6666H5.00065C4.55862 16.6666 4.1347 16.4911 3.82214 16.1785C3.50958 15.8659 3.33398 15.442 3.33398 15V4.99998Z" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 3.33331V16.6666" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_2443_49425">
+            <rect width="20" height="20" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+            
+    </button>
+    <button class="common-btn">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.75144 16.8437V10.8727V16.8437ZM8.75144 16.8437L8.73699 16.8534L8.75144 16.875H8.77748V16.8577L11.2514 15.2078V10.8727L8.75144 16.8437ZM17.9932 3.8799L17.9933 3.88029C18.0913 4.09653 18.1233 4.33682 18.0855 4.57116C18.0477 4.8055 17.9417 5.02351 17.7807 5.19798L17.7804 5.19834L17.7746 5.20487L17.7742 5.20537L12.4824 10.8549L12.4754 10.8624V10.8727V15.2078C12.4754 15.4095 12.4257 15.608 12.3305 15.7857C12.2354 15.9635 12.0978 16.115 11.93 16.2268L11.93 16.2268L9.42998 17.894C9.42997 17.894 9.42997 17.894 9.42996 17.894C9.2456 18.0168 9.03137 18.0872 8.81011 18.0979C8.58885 18.1085 8.36885 18.0589 8.17357 17.9543C7.9783 17.8497 7.81507 17.6941 7.70128 17.504C7.5875 17.3139 7.52743 17.0965 7.52748 16.875V10.8727V10.8624L7.52045 10.8549L2.22928 5.20512L2.22325 5.19834L2.22306 5.19813C2.06375 5.02281 1.95874 4.80503 1.92077 4.5712C1.8828 4.33738 1.9135 4.09756 2.00915 3.88083C2.1048 3.66411 2.26128 3.4798 2.45961 3.35027C2.65794 3.22073 2.88961 3.15153 3.1265 3.15106L16.8764 3.15106L16.8766 3.15106C17.1137 3.1497 17.3459 3.21807 17.5444 3.34765C17.743 3.47724 17.899 3.66232 17.9932 3.8799ZM11.6094 10.0398L11.6095 10.0397L16.8955 4.39282L16.9365 4.34898H16.8764H3.12644H3.06636L3.10744 4.39283L8.39494 10.0358L8.39497 10.0358C8.60789 10.2623 8.72611 10.5617 8.7254 10.8726V10.8727V16.875V16.9237L8.76589 16.8967L11.2659 15.2295L11.2775 15.2218V15.2078V10.8727C11.2782 10.563 11.3969 10.2651 11.6094 10.0398Z" fill="#475569" stroke="#475569" stroke-width="0.0520833"/>
+            </svg>
+            
+    </button>
+    <button class="common-btn">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2443_49437)">
+            <path d="M3.33398 14.167V15.8337C3.33398 16.2757 3.50958 16.6996 3.82214 17.0122C4.1347 17.3247 4.55862 17.5003 5.00065 17.5003H15.0007C15.4427 17.5003 15.8666 17.3247 16.1792 17.0122C16.4917 16.6996 16.6673 16.2757 16.6673 15.8337V14.167" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5.83398 9.16699L10.0007 13.3337L14.1673 9.16699" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 3.3335V13.3335" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_2443_49437">
+            <rect width="20" height="20" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+            
+    </button>
+    <button class="common-btn">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2443_49449)">
+            <path d="M3.33398 14.167V15.8337C3.33398 16.2757 3.50958 16.6996 3.82214 17.0122C4.1347 17.3247 4.55862 17.5003 5.00065 17.5003H15.0007C15.4427 17.5003 15.8666 17.3247 16.1792 17.0122C16.4917 16.6996 16.6673 16.2757 16.6673 15.8337V14.167" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5.83398 7.50018L10.0007 3.33352L14.1673 7.50018" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 13.3337V3.33368" stroke="#475569" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_2443_49449">
+            <rect width="20" height="20" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+            
+    </button> -->
+
+    <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn" [matMenuTriggerFor]="filter" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <g clip-path="url(#clip0_478_6335)">
+              <path
+                  d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+                  fill="#475569" />
+          </g>
+          <defs>
+              <clipPath id="clip0_478_6335">
+                  <rect width="20" height="20" fill="white" />
+              </clipPath>
+          </defs>
+      </svg>
+      <p class="m-0 sortedByCls ml-2">Sort by</p>
+  </button>
+  <mat-menu #filter="matMenu">
+      <div *ngFor="let sortby of sortList">
+          <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+
+      </div>
+  </mat-menu>
+
+      <button type="button" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn" (click)="addOrders()" *ngIf="this.logedInUser== 'Transportation Manager' && 'permissions?.createAccess'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+              <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+          Create mov doc </button>
+  </div>
+  </div>
+
+
+  <div class="delete-header" *ngIf="this.allTemplateId.length > 0">
+    <button class="deleteBtn" type="button" (click)="deleteTemplates()" *ngIf="permissions?.deleteAccess">
+        Delete Mov Doc
+    </button>
+
+    <div class="d-flex gap-8 align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none">
+            <circle cx="3.5" cy="4" r="3.5" fill="#5253AE"/>
+          </svg>
+          <p class="mb-0">{{allTemplateId.length}} Selected</p>
+    </div>
+  </div>
+
+     <div class="masterScreen-content-table">
+
+      <table class="table ">
+        <thead>
+            <tr>
+                <th scope="col" *ngFor="let item of orderKeys">
+                    <ng-container *ngIf="item !== 'CheckBox' && item !== 'more'">
+                        {{ item }}
+                    </ng-container>
+                    <ng-container *ngIf="item == 'CheckBox'">
+                     
+                        <input type="checkbox" name="" id="" [(ngModel)]="allChecked" (change)="toggleAll()">
+                   
+                    </ng-container>
+
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody class="body-content">
+            <tr *ngFor="let orders of ordersList;index as j" >
+                <td *ngFor="let key of orderKeys; index as i" (click)="viewOrders(j,orders,$event)">
+                    <ng-container *ngIf="key === 'CheckBox'">
+                        <!-- Template for CheckBox -->
+                        <!-- <mat-checkbox  [checked]="orders[key]"></mat-checkbox> -->
+              <input type="checkbox" name="" id="" [(ngModel)]="orders.checked" (change)="updateMasterCheckbox($event)" (click)="$event.stopPropagation()" >
+
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Collection date'">
+                      <!-- Template for Collection date -->
+                      {{ (orders.collectionDate || orders.collectiondate  | date:'dd/MM/yyy') || '--'}}
+                  </ng-container>
+                    <ng-container *ngIf="key === 'Mov Doc No.'">
+                        <!-- Template for Mov Doc No. -->
+                        {{orders.orderNo || '--'}}
+                    </ng-container>
+                    
+                    <ng-container *ngIf="key === 'Mov doc date'">
+                        <!-- Template for Collection date -->
+                        {{orders.orderDate | date:'dd/MM/yyy'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Supplier'">
+                        <!-- Template for Supplier -->
+                        {{orders.consignorName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Consignee'">
+                        <!-- Template for Consignee -->
+                        {{orders.consigneeName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Vehicle'">
+                        <!-- Template for Vehicle -->
+                        {{orders.truckNumber || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Pickup trailer no'">
+                        <!-- Template for Pickup trailer no -->
+                        {{orders.pickupTrailerNo || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Trailer'">
+                        <!-- Template for Trailer -->
+                        {{orders.trailerNumber || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Driver'">
+                        <!-- Template for Driver -->
+                        {{orders.driverName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Product'">
+                        <!-- Template for Product -->
+                        {{orders.materialType || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Product quantity'">
+                        <!-- Template for Material quantity -->
+                        {{orders.quantity || '--'}} {{orders.quantity ? 'kg' : ''}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Net weight'">
+                        <!-- Template for Net weight -->
+                        {{orders.netWeight || '--'}} {{orders.netWeight ? 'kg' : ''}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Shunter driver'">
+                        <!-- Template for Shunter driver -->
+                        {{orders.shunterDriverName || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Bin no'">
+                        <!-- Template for Bin no -->
+                        {{orders.binNumber || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Quality check'">
+                        <!-- Template for Quality check -->
+                        <div class="statusCls" [ngClass]="{
+                            'pending': orders.qualityCheckStatus === 'Pending',                            
+                            'Checked':orders.qualityCheckStatus === 'Checked'
+                          }">
+                          {{orders.qualityCheckStatus || '--'}}
+                         </div>
+                        
+                    </ng-container>
+                    <!-- <ng-container *ngIf="key === 'Mov Doc No.'">
+                        {{orders.movementdocNo || '--'}}
+                    </ng-container> -->
+                    <ng-container *ngIf="key === 'Operator'">
+                        <!-- Template for Quality check -->
+                        {{orders.weighBridgeOperator || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Ticket no'">
+                        <!-- Template for Quality check -->
+                        {{orders.weighbridgeTicketno || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Time tipped'">
+                        <!-- Template for Quality check -->
+                        {{(orders.timeTippped || orders.timeTippped | date:'dd/MM/yyy hh:mm a') || '--'}}
+                    </ng-container>
+                    <ng-container *ngIf="key === 'Progress'">
+                        <!-- Template for Progress -->
+                         <div class="statusCls" [ngClass]="{
+                            'pending': orders.status === 'Pending',
+                            'completed': orders.status === 'Completed',
+                            'Intransit': orders.status === 'In Transit',
+                            'drafts': orders.status === 'Draft',
+                            'weighed': orders.status === 'Weighed',
+                            'materialDelivered': orders.status === 'Material Delivered',
+                            'ReachedSite':orders.status === 'Reached Site',
+                            'tipped':orders.status === 'Tipped',
+                            'material-in-Transit':orders.status === 'Material in transit',
+                            'BinAssigned':orders.status === 'Bin Assigned',
+                            'assigned':orders.status === 'Assigned',
+                            'Arrived':orders.status === 'Arrived',
+                            'driver-in-transit':orders.status === 'Driver in transit',
+                            'driver-arrived':orders.status === 'Driver arrived',
+                            'Collected':orders.status === 'Collected',
+                            'load-in-transit':orders.status === 'Load in transit',
+                            'load-arrived':orders.status === 'Load arrived',
+                            'material-arrived':orders.status === 'Material arrived',
+                            'bin-assigned':orders.status === 'Bin assigned',
+                            'signed-off':orders.status === 'Signed off',
+                            'sign-off':orders?.status === 'Sign off',
+
+                            'material-verified':orders.status === 'Material verified',
+                            'Checked':orders.status === 'Checked'
+                          }">
+                        {{orders.status || '--'}}
+                         </div>
+                    </ng-container>
+                    <ng-container *ngIf="key === 'more'">
+                      <button  class="common-btn" (click)="$event.stopPropagation()" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+                      <mat-menu #menu="matMenu">
+                        <button (click)="editOrders(j,ordersList)" mat-menu-item class="menuBtns"> <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_2818_30768)">
+                          <path d="M11.3333 2.0004C11.5084 1.82531 11.7163 1.68642 11.9451 1.59165C12.1738 1.49689 12.419 1.44812 12.6666 1.44812C12.9143 1.44812 13.1595 1.49689 13.3882 1.59165C13.617 1.68642 13.8249 1.82531 14 2.0004C14.1751 2.1755 14.314 2.38337 14.4087 2.61214C14.5035 2.84092 14.5523 3.08612 14.5523 3.33374C14.5523 3.58136 14.5035 3.82656 14.4087 4.05533C14.314 4.28411 14.1751 4.49198 14 4.66707L4.99998 13.6671L1.33331 14.6671L2.33331 11.0004L11.3333 2.0004Z" fill="white" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </g>
+                          <defs>
+                          <clipPath id="clip0_2818_30768">
+                          <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)"/>
+                          </clipPath>
+                          </defs>
+                          </svg>
+                           Edit Mov Doc</button>
+                        <button (click)="viewOrders(j,ordersList)" mat-menu-item class="menuBtns"> <svg width="20" class="mr-2" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13 7C13 8.65685 11.6569 10 10 10C8.34315 10 7 8.65685 7 7C7 5.34315 8.34315 4 10 4C11.6569 4 13 5.34315 13 7Z" stroke="#6B6B6B"/>
+                          <path d="M18.1887 5.9343C18.5769 6.4056 18.771 6.6412 18.771 7C18.771 7.3588 18.5769 7.5944 18.1887 8.0657C16.7686 9.7899 13.6364 13 10.0007 13C6.36501 13 3.2328 9.7899 1.81271 8.0657C1.42455 7.5944 1.23047 7.3588 1.23047 7C1.23047 6.6412 1.42455 6.4056 1.81271 5.9343C3.2328 4.21014 6.36501 1 10.0007 1C13.6364 1 16.7686 4.21014 18.1887 5.9343Z" stroke="#6B6B6B"/>
+                          </svg>
+                           View Mov Doc</button>
+                        <button *ngIf="this.logedInUser == 'Transportation Manager'" (click)="deleteParticularOrder(ordersList.orderID)" mat-menu-item class="menuBtns"> <svg width="18" class="mr-2" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_5564_104506)">
+                          <path d="M7.875 6.75H6.75V13.5H7.875V6.75Z" fill="#6B6B6B"/>
+                          <path d="M11.25 6.75H10.125V13.5H11.25V6.75Z" fill="#6B6B6B"/>
+                          <path d="M2.25 3.375V4.5H3.375V15.75C3.375 16.0484 3.49353 16.3345 3.7045 16.5455C3.91548 16.7565 4.20163 16.875 4.5 16.875H13.5C13.7984 16.875 14.0845 16.7565 14.2955 16.5455C14.5065 16.3345 14.625 16.0484 14.625 15.75V4.5H15.75V3.375H2.25ZM4.5 15.75V4.5H13.5V15.75H4.5Z" fill="#6B6B6B"/>
+                          <path d="M11.25 1.125H6.75V2.25H11.25V1.125Z" fill="#6B6B6B"/>
+                          </g>
+                          <defs>
+                          <clipPath id="clip0_5564_104506">
+                          <rect width="18" height="18" fill="white"/>
+                          </clipPath>
+                          </defs>
+                          </svg>
+                          
+                          
+                          
+                          
+                           Delete Mov Doc</button>
+                        <!-- <button mat-menu-item class="menuBtns">
+                          <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_2818_25200)">
+                              <path d="M0 0.000244141H16V16.0002H0V0.000244141Z" fill="white"/>
+                              <path d="M10.6666 0.66687H2.66665C1.92998 0.66687 1.33331 1.26354 1.33331 2.0002V11.3335H2.66665V2.0002H10.6666V0.66687ZM12.6666 3.33354H5.33331C4.59665 3.33354 3.99998 3.9302 3.99998 4.66687V14.0002C3.99998 14.7369 4.59665 15.3335 5.33331 15.3335H12.6666C13.4033 15.3335 14 14.7369 14 14.0002V4.66687C14 3.9302 13.4033 3.33354 12.6666 3.33354ZM12.6666 14.0002H5.33331V4.66687H12.6666V14.0002Z" fill="#464855"/>
+                              </g>
+                              <defs>
+                              <clipPath id="clip0_2818_25200">
+                              <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)"/>
+                              </clipPath>
+                              </defs>
+                              </svg>
+                              
+                            Duplicate order</button>
+                        <button mat-menu-item class="menuBtns"><svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_2818_29698)">
+                          <path d="M0 0.000244141H16V16.0002H0V0.000244141Z" fill="white"/>
+                          <path d="M2 12.667C2 13.0206 2.14048 13.3597 2.39052 13.6098C2.64057 13.8598 2.97971 14.0003 3.33333 14.0003C3.68696 14.0003 4.02609 13.8598 4.27614 13.6098C4.52619 13.3597 4.66667 13.0206 4.66667 12.667C4.66667 12.3133 4.52619 11.9742 4.27614 11.7241C4.02609 11.4741 3.68696 11.3336 3.33333 11.3336C2.97971 11.3336 2.64057 11.4741 2.39052 11.7241C2.14048 11.9742 2 12.3133 2 12.667Z" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M12.6666 4.66691C13.0203 4.66691 13.3594 4.52643 13.6095 4.27639C13.8595 4.02634 14 3.6872 14 3.33358C14 2.97996 13.8595 2.64082 13.6095 2.39077C13.3594 2.14072 13.0203 2.00024 12.6666 2.00024C12.313 2.00024 11.9739 2.14072 11.7238 2.39077C11.4738 2.64082 11.3333 2.97996 11.3333 3.33358C11.3333 3.6872 11.4738 4.02634 11.7238 4.27639C11.9739 4.52643 12.313 4.66691 12.6666 4.66691Z" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M7.33331 12.667H11C11.6188 12.667 12.2123 12.4211 12.6499 11.9835C13.0875 11.5459 13.3333 10.9525 13.3333 10.3336C13.3333 9.71478 13.0875 9.12129 12.6499 8.6837C12.2123 8.24612 11.6188 8.00028 11 8.00028H5.66665C5.04781 8.00028 4.45432 7.75445 4.01673 7.31687C3.57915 6.87928 3.33331 6.28579 3.33331 5.66695C3.33331 5.04811 3.57915 4.45462 4.01673 4.01704C4.45432 3.57945 5.04781 3.33362 5.66665 3.33362H8.66665" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </g>
+                          <defs>
+                          <clipPath id="clip0_2818_29698">
+                          <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)"/>
+                          </clipPath>
+                          </defs>
+                          </svg>
+                           Open in tracking</button> 
+                       <button mat-menu-item class="menuBtns" (click)="deleteOrdersList(i,template.orderID)">
+                          <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_2818_30206)">
+                              <path d="M13.5 3.00024H11.25V2.25024C11.25 1.78612 11.0656 1.341 10.7374 1.01281C10.4092 0.684619 9.96413 0.500244 9.5 0.500244H6.5C6.03587 0.500244 5.59075 0.684619 5.26256 1.01281C4.93437 1.341 4.75 1.78612 4.75 2.25024V3.00024H2.5C2.30109 3.00024 2.11032 3.07926 1.96967 3.21991C1.82902 3.36057 1.75 3.55133 1.75 3.75024C1.75 3.94916 1.82902 4.13992 1.96967 4.28057C2.11032 4.42123 2.30109 4.50024 2.5 4.50024H2.75V13.0002C2.75 13.3318 2.8817 13.6497 3.11612 13.8841C3.35054 14.1185 3.66848 14.2502 4 14.2502H12C12.3315 14.2502 12.6495 14.1185 12.8839 13.8841C13.1183 13.6497 13.25 13.3318 13.25 13.0002V4.50024H13.5C13.6989 4.50024 13.8897 4.42123 14.0303 4.28057C14.171 4.13992 14.25 3.94916 14.25 3.75024C14.25 3.55133 14.171 3.36057 14.0303 3.21991C13.8897 3.07926 13.6989 3.00024 13.5 3.00024ZM6.25 2.25024C6.25 2.18394 6.27634 2.12035 6.32322 2.07347C6.37011 2.02658 6.4337 2.00024 6.5 2.00024H9.5C9.5663 2.00024 9.62989 2.02658 9.67678 2.07347C9.72366 2.12035 9.75 2.18394 9.75 2.25024V3.00024H6.25V2.25024ZM11.75 12.7502H4.25V4.50024H11.75V12.7502ZM7.25 6.50024V10.5002C7.25 10.6992 7.17098 10.8899 7.03033 11.0306C6.88968 11.1712 6.69891 11.2502 6.5 11.2502C6.30109 11.2502 6.11032 11.1712 5.96967 11.0306C5.82902 10.8899 5.75 10.6992 5.75 10.5002V6.50024C5.75 6.30133 5.82902 6.11057 5.96967 5.96991C6.11032 5.82926 6.30109 5.75024 6.5 5.75024C6.69891 5.75024 6.88968 5.82926 7.03033 5.96991C7.17098 6.11057 7.25 6.30133 7.25 6.50024ZM10.25 6.50024V10.5002C10.25 10.6992 10.171 10.8899 10.0303 11.0306C9.88968 11.1712 9.69891 11.2502 9.5 11.2502C9.30109 11.2502 9.11032 11.1712 8.96967 11.0306C8.82902 10.8899 8.75 10.6992 8.75 10.5002V6.50024C8.75 6.30133 8.82902 6.11057 8.96967 5.96991C9.11032 5.82926 9.30109 5.75024 9.5 5.75024C9.69891 5.75024 9.88968 5.82926 10.0303 5.96991C10.171 6.11057 10.25 6.30133 10.25 6.50024Z" fill="#475569"/>
+                              </g>
+                              <defs>
+                              <clipPath id="clip0_2818_30206">
+                              <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)"/>
+                              </clipPath>
+                              </defs>
+                              </svg>
+                               Delete order</button>  -->
+                      </mat-menu>
+                    </ng-container>
+                </td>
+
+
+
+            </tr>
+        </tbody>
+    </table>
+      <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="ordersList?.length === 0">
+        <div class="mb-2">
+          <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" width="47" height="47" rx="23.5" fill="#EFEBFE"/>
+            <g clip-path="url(#clip0_4411_76469)">
+            <path d="M17 18C17 19.0609 17.4214 20.0783 18.1716 20.8284C18.9217 21.5786 19.9391 22 21 22C22.0609 22 23.0783 21.5786 23.8284 20.8284C24.5786 20.0783 25 19.0609 25 18C25 16.9391 24.5786 15.9217 23.8284 15.1716C23.0783 14.4214 22.0609 14 21 14C19.9391 14 18.9217 14.4214 18.1716 15.1716C17.4214 15.9217 17 16.9391 17 18Z" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 32V30C15 28.9391 15.4214 27.9217 16.1716 27.1716C16.9217 26.4214 17.9391 26 19 26H23C24.0609 26 25.0783 26.4214 25.8284 27.1716C26.5786 27.9217 27 28.9391 27 30V32" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M28 14.1289C28.8604 14.3492 29.623 14.8496 30.1676 15.5512C30.7122 16.2528 31.0078 17.1157 31.0078 18.0039C31.0078 18.8921 30.7122 19.755 30.1676 20.4566C29.623 21.1582 28.8604 21.6586 28 21.8789" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M33 31.9984V29.9984C32.9949 29.1156 32.6979 28.2592 32.1553 27.5628C31.6126 26.8664 30.8548 26.3691 30 26.1484" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_4411_76469">
+            <rect width="24" height="24" fill="white" transform="translate(12 11)"/>
+            </clipPath>
+            </defs>
+            </svg>
+            
+                 
+        </div>
+        <div class="noRecordText">
+          You don't have any movement documents!
+        </div>
+
+        <p  *ngIf="this.logedInUser == 'Transportation Manager'">Create a new movement document to assign a task for the driver</p>
+
+        <button type="button" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn" (click)="addOrders()" *ngIf="this.logedInUser == 'Transportation Manager'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+                <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            Create Mov Doc</button>
+      </div>
+      <app-custom-paginator 
+  [length]=totalPages 
+  [pageSizeOptions]="[10,25,50,75, 100]" 
+  [showFirstLastButtons]="true" 
+  (pageChange)="onPageChange($event)"
+  [currentIndex] = currentPage
+  >
+</app-custom-paginator>
+</div>
+
+
+  
+  
+

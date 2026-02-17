@@ -1,0 +1,315 @@
+<div class="reports-header d-flex justify-content-between align-items-center">
+  <div class="reports-head-left d-flex gap-24 align-items-center">
+    <span>
+      {{reportList?.length || 0}} reports(s) in List
+    </span>
+    <div class="search ml-3">
+      <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Searchreports">
+        <input type="search" matInput placeholder="Search reports" aria-label="Search"
+          (keyup)="filteredUsersList($event)">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div class="reports-head-right d-flex align-items-center gap-24">
+    <div>
+      <button class="common-btn d-flex  mr-3 mt-1 " [matMenuTriggerFor]="menu">
+        <div class="pr-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+            <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z"
+              stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="clalanter-text pr-1 mt-1" *ngIf="SelectedDate !='custom'">
+          {{SelectedDate == '' ? "Day" : SelectedDate}}
+        </div>
+        <div class="clalanter-text pr-1 mt-1" *ngIf="SelectedDate =='custom'">
+          {{twoSelectedDate}}
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+      </button>
+      <mat-menu #menu="matMenu" class="dateMenu">
+        <button mat-menu-item (click)="switchModeForOrders('Day')">
+          <span>Day</span>
+        </button>
+        <button mat-menu-item (click)="switchModeForOrders('Week')">
+          <span>Week</span>
+        </button>
+        <button mat-menu-item (click)="switchModeForOrders('Month')">
+          <span>Month</span>
+        </button>
+        <button mat-menu-item (click)="pickers.open()">
+          <mat-datepicker #pickers></mat-datepicker>
+          <span>
+            <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+            Select Date
+          </span>
+          <input class="date-time-picker" autocomplete="nope" [matDatepicker]="pickers"
+            (dateChange)="changeDateEvent($event)">
+        </button>
+        <button mat-menu-item (click)="picker.open()" (click)="switchModeForOrders('custom')">
+          <span>
+            <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+            From - To Date
+          </span>
+          <form action="" [formGroup]="reportsForm">
+            <mat-date-range-input [rangePicker]="picker" formGroupName="dateRange">
+              <input matStartDate placeholder="Start date" formControlName="fromDate">
+              <input matEndDate placeholder="End date" formControlName="toDate">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </form>
+        </button>
+      </mat-menu>
+    </div>
+    <form *ngIf="false" [formGroup]="reportsForm" (ngSubmit)="onSubmit()"
+      class="reports-head-right d-flex align-items-center gap-24">
+      <div>
+        <mat-form-field appearance="fill" hidden>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker" formGroupName="dateRange">
+            <input matStartDate placeholder="Start date" formControlName="fromDate">
+            <input matEndDate placeholder="End date" formControlName="toDate">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <!-- Button to open the date picker -->
+        <button class="common-btn datePickerBtn " (click)="picker.open()"> {{ getDateRangeDisplay() || 'Filter by date'
+          }} <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M3.33301 8.33337H16.6663M9.99967 5.83337V3.33337M5.83301 5.83337V3.33337M14.1663 5.83337V3.33337M4.16634 16.6667H15.833C16.054 16.6667 16.266 16.5789 16.4223 16.4226C16.5785 16.2663 16.6663 16.0544 16.6663 15.8334V5.83337C16.6663 5.61236 16.5785 5.4004 16.4223 5.24412C16.266 5.08784 16.054 5.00004 15.833 5.00004H4.16634C3.94533 5.00004 3.73337 5.08784 3.57709 5.24412C3.42081 5.4004 3.33301 5.61236 3.33301 5.83337V15.8334C3.33301 16.0544 3.42081 16.2663 3.57709 16.4226C3.73337 16.5789 3.94533 16.6667 4.16634 16.6667ZM6.66634 10.8334H6.67467V10.8417H6.66634V10.8334ZM9.99967 10.8334H10.008V10.8417H9.99967V10.8334ZM13.333 10.8334H13.3413V10.8417H13.333V10.8334ZM6.66634 14.1667H6.67467V14.175H6.66634V14.1667ZM9.99967 14.1667H10.008V14.175H9.99967V14.1667ZM13.333 14.1667H13.3413V14.175H13.333V14.1667Z"
+              stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <button mat-button [matMenuTriggerFor]="type" class="sortSelectedText">
+      {{ filterType || 'All' }}
+      <svg width="16" class="ml-1" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 5.99999L8 9.99999L12 5.99999" stroke="#6B6B6B" stroke-width="1.33331" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <mat-menu #type="matMenu" class="sortByTextCls">
+      <button mat-menu-item (click)="setSortBy('')" type="button">All</button>
+      <button mat-menu-item (click)="setSortBy('Medcalf J & E Ltd')" type="button">Medcalf J & E Ltd</button>
+      <button mat-menu-item (click)="setSortBy('ABC Meat shop')" type="button">ABC Meat shop</button>
+      <button mat-menu-item (click)="setSortBy('Newman Abattoir')" type="button">Newman Abattoir</button>
+      <!-- <button mat-menu-item (click)="setSortBy('Paid payment')" type="button">Paid payment</button>
+        <button mat-menu-item (click)="setSortBy('Ledger')" type="button">Ledger</button> -->
+    </mat-menu>
+    <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn"
+      [matMenuTriggerFor]="filter" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <g clip-path="url(#clip0_478_6335)">
+          <path d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+            fill="#475569" />
+        </g>
+        <defs>
+          <clipPath id="clip0_478_6335">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+      <p class="m-0 sortedByCls ml-2">{{sortCode ? sortCode : "SortBy"}}</p>
+    </button>
+    <mat-menu #filter="matMenu">
+      <div *ngFor="let sortby of sortList">
+        <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+
+      </div>
+    </mat-menu>
+    <button (click)="exportReport()" [disabled]="reportserv.report?.length == 0" type="submit" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn">
+      <svg width="16" class="mr-2" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M2.74966 7.5H13.2497C13.316 7.5 13.3796 7.47366 13.4264 7.42678C13.4733 7.37989 13.4997 7.3163 13.4997 7.25V5.5C13.4997 5.43432 13.4868 5.36927 13.4617 5.30858C13.4366 5.24788 13.3998 5.19272 13.3534 5.14625L9.85341 1.64625C9.80695 1.59983 9.75179 1.56303 9.69109 1.53793C9.63039 1.51284 9.56534 1.49995 9.49966 1.5H3.49966C3.23445 1.5 2.98009 1.60536 2.79256 1.79289C2.60502 1.98043 2.49966 2.23478 2.49966 2.5V7.25C2.49966 7.3163 2.526 7.37989 2.57289 7.42678C2.61977 7.47366 2.68336 7.5 2.74966 7.5ZM9.49966 2.75L12.2497 5.5H9.49966V2.75ZM9.74966 13.0331C9.73848 13.1616 9.67912 13.2812 9.58349 13.3678C9.48786 13.4544 9.36303 13.5016 9.23404 13.5H7.49966C7.36706 13.5 7.23988 13.4473 7.14611 13.3536C7.05234 13.2598 6.99966 13.1326 6.99966 13V9.51688C6.99807 9.38788 7.04531 9.26305 7.1319 9.16743C7.21848 9.0718 7.33802 9.01244 7.46654 9.00125C7.53493 8.99671 7.60353 9.00628 7.66807 9.02936C7.73261 9.05245 7.79171 9.08856 7.84171 9.13545C7.8917 9.18234 7.93152 9.23901 7.9587 9.30194C7.98587 9.36486 7.99981 9.43271 7.99966 9.50125V12.5013H9.24966C9.3181 12.5011 9.38583 12.515 9.44867 12.5421C9.5115 12.5692 9.56811 12.6089 9.61498 12.6588C9.66185 12.7086 9.69799 12.7676 9.72116 12.832C9.74432 12.8964 9.75403 12.9648 9.74966 13.0331ZM5.90654 9.79062L4.86404 11.25L5.90654 12.7094C5.9767 12.8173 6.00251 12.9482 5.97861 13.0747C5.95471 13.2012 5.88293 13.3136 5.77822 13.3885C5.67351 13.4634 5.54394 13.495 5.41649 13.4768C5.28905 13.4586 5.17355 13.3919 5.09404 13.2906L4.24966 12.11L3.40654 13.2906C3.36973 13.3473 3.32184 13.3958 3.26574 13.4335C3.20964 13.4711 3.1465 13.4969 3.08014 13.5095C3.01377 13.522 2.94555 13.521 2.8796 13.5064C2.81364 13.4919 2.75132 13.4641 2.69639 13.4248C2.64146 13.3855 2.59506 13.3355 2.55999 13.2778C2.52492 13.22 2.50191 13.1558 2.49234 13.089C2.48278 13.0221 2.48686 12.954 2.50434 12.8888C2.52182 12.8235 2.55233 12.7625 2.59404 12.7094L3.63529 11.25L2.59279 9.79062C2.55293 9.73492 2.52495 9.67161 2.51057 9.60464C2.49619 9.53767 2.49572 9.46846 2.5092 9.4013C2.52268 9.33414 2.54982 9.27047 2.58892 9.21423C2.62803 9.15799 2.67827 9.11039 2.73654 9.07438C2.84776 9.00886 2.97962 8.98779 3.10572 9.01537C3.23181 9.04296 3.34283 9.11716 3.41654 9.22313L4.24966 10.39L5.09279 9.20938C5.1723 9.10811 5.2878 9.04142 5.41525 9.02319C5.54269 9.00496 5.67226 9.03659 5.77697 9.1115C5.88168 9.1864 5.95346 9.29881 5.97736 9.42532C6.00126 9.55183 5.97545 9.68268 5.90529 9.79062H5.90654ZM13.4865 12.2694C13.4672 12.4606 13.4057 12.6451 13.3065 12.8097C13.2073 12.9743 13.0728 13.1148 12.9128 13.2212C12.5884 13.4375 12.1834 13.5 11.8197 13.5C11.4992 13.4986 11.1802 13.4566 10.8703 13.375C10.7426 13.3393 10.6343 13.2543 10.5692 13.1387C10.5042 13.0231 10.4877 12.8865 10.5234 12.7587C10.5591 12.631 10.6441 12.5227 10.7597 12.4577C10.8753 12.3926 11.0119 12.3762 11.1397 12.4119C11.4134 12.4875 12.0734 12.5813 12.3609 12.39C12.4165 12.3525 12.4759 12.295 12.4953 12.1444C12.5165 11.9775 12.4503 11.8881 11.6965 11.67C11.1122 11.5013 10.134 11.2181 10.259 10.225C10.2783 10.0379 10.3384 9.85737 10.4351 9.69604C10.5317 9.53471 10.6626 9.39653 10.8184 9.29125C11.5584 8.79125 12.7384 9.08437 12.8703 9.11875C12.9986 9.15248 13.1082 9.2358 13.1751 9.35037C13.242 9.46495 13.2606 9.60139 13.2269 9.72969C13.1931 9.85799 13.1098 9.96763 12.9952 10.0345C12.8807 10.1014 12.7442 10.12 12.6159 10.0863C12.3359 10.0131 11.6647 9.92625 11.3772 10.1213C11.3395 10.1467 11.3085 10.1808 11.2867 10.2207C11.2649 10.2606 11.2531 10.3052 11.2522 10.3506C11.2453 10.4069 11.244 10.4181 11.3222 10.4694C11.4665 10.5625 11.7253 10.6369 11.9753 10.7094C12.5922 10.8856 13.6247 11.1875 13.4865 12.2694Z"
+          fill="white" />
+      </svg>
+
+      Excel report
+    </button>
+  </div>
+
+</div>
+<div class="masterScreen-content-table reportsTable">
+  <table class="table ">
+    <thead>
+      <tr>
+        <th *ngIf="this.logedInUser !=  'Admin'"><mat-checkbox [(ngModel)]="selectAll" (change)="onCheckboxChange($event)"></mat-checkbox></th>
+        <th scope="col">
+          <!-- <ng-container *ngIf="item !== 'CheckBox' && item !== 'more'">
+                    {{ item || '' }}
+                  </ng-container> -->
+          <!-- <ng-container *ngIf="item == 'CheckBox'"> -->
+          Date
+          <!-- </ng-container>  -->
+        </th>
+        <th>Supplier</th>
+        <th>Product</th>
+        <th>Haulier</th>
+        <th>Net weight</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reports of reportList; index as i" >
+        <td *ngIf="this.logedInUser !=  'Admin'">
+          <ng-container>
+            <mat-checkbox [(ngModel)]="reports.checked" ></mat-checkbox>
+          </ng-container>
+          <!-- <ng-container *ngIf="key === 'more'" class="action-cell">
+            <button class="common-btn" (click)="$event.stopPropagation()"
+              [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item class="menuBtns"> <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_2818_30768)">
+                    <path
+                      d="M11.3333 2.0004C11.5084 1.82531 11.7163 1.68642 11.9451 1.59165C12.1738 1.49689 12.419 1.44812 12.6666 1.44812C12.9143 1.44812 13.1595 1.49689 13.3882 1.59165C13.617 1.68642 13.8249 1.82531 14 2.0004C14.1751 2.1755 14.314 2.38337 14.4087 2.61214C14.5035 2.84092 14.5523 3.08612 14.5523 3.33374C14.5523 3.58136 14.5035 3.82656 14.4087 4.05533C14.314 4.28411 14.1751 4.49198 14 4.66707L4.99998 13.6671L1.33331 14.6671L2.33331 11.0004L11.3333 2.0004Z"
+                      fill="white" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_2818_30768">
+                      <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                Edit order</button>
+              <button mat-menu-item class="menuBtns">
+                <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_2818_25200)">
+                    <path d="M0 0.000244141H16V16.0002H0V0.000244141Z" fill="white" />
+                    <path
+                      d="M10.6666 0.66687H2.66665C1.92998 0.66687 1.33331 1.26354 1.33331 2.0002V11.3335H2.66665V2.0002H10.6666V0.66687ZM12.6666 3.33354H5.33331C4.59665 3.33354 3.99998 3.9302 3.99998 4.66687V14.0002C3.99998 14.7369 4.59665 15.3335 5.33331 15.3335H12.6666C13.4033 15.3335 14 14.7369 14 14.0002V4.66687C14 3.9302 13.4033 3.33354 12.6666 3.33354ZM12.6666 14.0002H5.33331V4.66687H12.6666V14.0002Z"
+                      fill="#464855" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_2818_25200">
+                      <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+
+                Duplicate order</button>
+              <button mat-menu-item class="menuBtns"><svg class="mr-2" width="16" height="16" viewBox="0 0 16 16"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_2818_29698)">
+                    <path d="M0 0.000244141H16V16.0002H0V0.000244141Z" fill="white" />
+                    <path
+                      d="M2 12.667C2 13.0206 2.14048 13.3597 2.39052 13.6098C2.64057 13.8598 2.97971 14.0003 3.33333 14.0003C3.68696 14.0003 4.02609 13.8598 4.27614 13.6098C4.52619 13.3597 4.66667 13.0206 4.66667 12.667C4.66667 12.3133 4.52619 11.9742 4.27614 11.7241C4.02609 11.4741 3.68696 11.3336 3.33333 11.3336C2.97971 11.3336 2.64057 11.4741 2.39052 11.7241C2.14048 11.9742 2 12.3133 2 12.667Z"
+                      stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M12.6666 4.66691C13.0203 4.66691 13.3594 4.52643 13.6095 4.27639C13.8595 4.02634 14 3.6872 14 3.33358C14 2.97996 13.8595 2.64082 13.6095 2.39077C13.3594 2.14072 13.0203 2.00024 12.6666 2.00024C12.313 2.00024 11.9739 2.14072 11.7238 2.39077C11.4738 2.64082 11.3333 2.97996 11.3333 3.33358C11.3333 3.6872 11.4738 4.02634 11.7238 4.27639C11.9739 4.52643 12.313 4.66691 12.6666 4.66691Z"
+                      stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M7.33331 12.667H11C11.6188 12.667 12.2123 12.4211 12.6499 11.9835C13.0875 11.5459 13.3333 10.9525 13.3333 10.3336C13.3333 9.71478 13.0875 9.12129 12.6499 8.6837C12.2123 8.24612 11.6188 8.00028 11 8.00028H5.66665C5.04781 8.00028 4.45432 7.75445 4.01673 7.31687C3.57915 6.87928 3.33331 6.28579 3.33331 5.66695C3.33331 5.04811 3.57915 4.45462 4.01673 4.01704C4.45432 3.57945 5.04781 3.33362 5.66665 3.33362H8.66665"
+                      stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_2818_29698">
+                      <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                Open in tracking</button>
+              <button mat-menu-item class="menuBtns" (click)="deleteReportsList(i)">
+                <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_2818_30206)">
+                    <path
+                      d="M13.5 3.00024H11.25V2.25024C11.25 1.78612 11.0656 1.341 10.7374 1.01281C10.4092 0.684619 9.96413 0.500244 9.5 0.500244H6.5C6.03587 0.500244 5.59075 0.684619 5.26256 1.01281C4.93437 1.341 4.75 1.78612 4.75 2.25024V3.00024H2.5C2.30109 3.00024 2.11032 3.07926 1.96967 3.21991C1.82902 3.36057 1.75 3.55133 1.75 3.75024C1.75 3.94916 1.82902 4.13992 1.96967 4.28057C2.11032 4.42123 2.30109 4.50024 2.5 4.50024H2.75V13.0002C2.75 13.3318 2.8817 13.6497 3.11612 13.8841C3.35054 14.1185 3.66848 14.2502 4 14.2502H12C12.3315 14.2502 12.6495 14.1185 12.8839 13.8841C13.1183 13.6497 13.25 13.3318 13.25 13.0002V4.50024H13.5C13.6989 4.50024 13.8897 4.42123 14.0303 4.28057C14.171 4.13992 14.25 3.94916 14.25 3.75024C14.25 3.55133 14.171 3.36057 14.0303 3.21991C13.8897 3.07926 13.6989 3.00024 13.5 3.00024ZM6.25 2.25024C6.25 2.18394 6.27634 2.12035 6.32322 2.07347C6.37011 2.02658 6.4337 2.00024 6.5 2.00024H9.5C9.5663 2.00024 9.62989 2.02658 9.67678 2.07347C9.72366 2.12035 9.75 2.18394 9.75 2.25024V3.00024H6.25V2.25024ZM11.75 12.7502H4.25V4.50024H11.75V12.7502ZM7.25 6.50024V10.5002C7.25 10.6992 7.17098 10.8899 7.03033 11.0306C6.88968 11.1712 6.69891 11.2502 6.5 11.2502C6.30109 11.2502 6.11032 11.1712 5.96967 11.0306C5.82902 10.8899 5.75 10.6992 5.75 10.5002V6.50024C5.75 6.30133 5.82902 6.11057 5.96967 5.96991C6.11032 5.82926 6.30109 5.75024 6.5 5.75024C6.69891 5.75024 6.88968 5.82926 7.03033 5.96991C7.17098 6.11057 7.25 6.30133 7.25 6.50024ZM10.25 6.50024V10.5002C10.25 10.6992 10.171 10.8899 10.0303 11.0306C9.88968 11.1712 9.69891 11.2502 9.5 11.2502C9.30109 11.2502 9.11032 11.1712 8.96967 11.0306C8.82902 10.8899 8.75 10.6992 8.75 10.5002V6.50024C8.75 6.30133 8.82902 6.11057 8.96967 5.96991C9.11032 5.82926 9.30109 5.75024 9.5 5.75024C9.69891 5.75024 9.88968 5.82926 10.0303 5.96991C10.171 6.11057 10.25 6.30133 10.25 6.50024Z"
+                      fill="#475569" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_2818_30206">
+                      <rect width="16" height="16" fill="white" transform="translate(0 0.000244141)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                Delete order</button>
+            </mat-menu>
+          </ng-container>
+          <ng-container *ngIf="key === 'Progress'">
+            <div class="action-cell" [ngClass]="{
+                      'Inprogress':reports[key] === 'In progress',
+                      'completed':reports[key] === 'Completed',
+                      'pending':reports[key] === 'Pending',
+                      'weighed':reports[key] === 'Weighed'
+                    }">
+              {{reports[key] || '-' }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="key !== 'CheckBox' && key !== 'more' && key !== 'Progress'">
+            {{reports[key] || '-' }}
+          </ng-container> -->
+        </td>
+        <td>{{reports.orderDate | date: "dd/MM/yyyy"}}</td>
+        <td>{{reports.consignorName ? reports.consignorName: "-" }}</td>
+        <td>{{reports.materialName ? reports.materialName: "-"}}</td>
+        <td>{{reports.haulierName ? reports.haulierName : "-"}}</td>
+        <td>{{reports.netWeight ? reports.netWeight+ " kg" : "-" }}</td>
+
+
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="reportList?.length == 0">
+    <div class="mb-2">
+      <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_684_86570)">
+          <path
+            d="M21.5 16H19.5C18.9696 16 18.4609 16.2107 18.0858 16.5858C17.7107 16.9609 17.5 17.4696 17.5 18V30C17.5 30.5304 17.7107 31.0391 18.0858 31.4142C18.4609 31.7893 18.9696 32 19.5 32H29.5C30.0304 32 30.5391 31.7893 30.9142 31.4142C31.2893 31.0391 31.5 30.5304 31.5 30V18C31.5 17.4696 31.2893 16.9609 30.9142 16.5858C30.5391 16.2107 30.0304 16 29.5 16H27.5"
+            stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M21.5 16C21.5 15.4696 21.7107 14.9609 22.0858 14.5858C22.4609 14.2107 22.9696 14 23.5 14H25.5C26.0304 14 26.5391 14.2107 26.9142 14.5858C27.2893 14.9609 27.5 15.4696 27.5 16C27.5 16.5304 27.2893 17.0391 26.9142 17.4142C26.5391 17.7893 26.0304 18 25.5 18H23.5C22.9696 18 22.4609 17.7893 22.0858 17.4142C21.7107 17.0391 21.5 16.5304 21.5 16Z"
+            stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M21.5 23H27.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M21.5 27H27.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <rect x="0.5" width="47" height="47" rx="23.5" fill="#283892" fill-opacity="0.2" />
+        <defs>
+          <clipPath id="clip0_684_86570">
+            <rect width="24" height="24" fill="white" transform="translate(12.5 11)" />
+          </clipPath>
+        </defs>
+      </svg>
+
+
+    </div>
+
+
+    <p>No reports added yet</p>
+
+  </div> 
+  <app-custom-paginator 
+  [length]="totalPages" 
+  [pageSizeOptions]="[3,5,10,25, 50,75, 100]" 
+  [showFirstLastButtons]="true" 
+  (pageChange)="onPageChange($event)">
+</app-custom-paginator>
+</div>

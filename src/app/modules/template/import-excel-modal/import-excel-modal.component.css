@@ -1,0 +1,484 @@
+/* Import Modal Overlay */
+.import-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99999 !important;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.import-modal-container {
+  width: 400px;
+  background: white;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease-out;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 100000 !important;
+  position: relative;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Modal Header */
+.import-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E5E7EB;
+  background: white;
+  z-index: 100001 !important;
+  position: relative;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: #F3F4F6;
+}
+
+/* Modal Body */
+.import-modal-body {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 2px dashed #D1D5DB;
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #FAFAFA;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+  border-color: #3B82F6;
+  background: #EFF6FF;
+}
+
+.upload-icon {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.upload-text {
+  margin-bottom: 20px;
+}
+
+.drag-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0 0 8px 0;
+}
+
+.upload-instruction {
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+}
+
+.upload-btn {
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.upload-btn:hover {
+  background: #2563EB;
+}
+
+/* Format Warning */
+.format-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.warning-icon {
+  flex-shrink: 0;
+}
+
+.warning-text {
+  font-size: 14px;
+  color: #92400E;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Uploaded File */
+.uploaded-file {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.file-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.file-details {
+  flex: 1;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.file-size {
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0;
+}
+
+.file-sheets {
+  font-size: 12px;
+  color: #059669;
+  margin: 4px 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sheets-badge {
+  background: #D1FAE5;
+  color: #059669;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.sheets-names {
+  color: #6B7280;
+  font-size: 11px;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delete-file-btn {
+  background: none;
+  border: 1px solid #DC2626;
+  color: #DC2626;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-file-btn:hover {
+  background: #DC2626;
+  color: white;
+}
+
+/* Template Name Section */
+.template-name-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 14px;
+  color: #374151;
+  margin: 0;
+  font-weight: 500;
+}
+
+.name-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.template-name-input {
+  padding: 12px 16px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111827;
+  transition: border-color 0.2s;
+}
+
+.template-name-input:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.template-name-input::placeholder {
+  color: #9CA3AF;
+}
+
+/* Modal Footer */
+.import-modal-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #E5E7EB;
+  background: white;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel-btn {
+  background: white;
+  color: #374151;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #F9FAFB;
+  border-color: #9CA3AF;
+}
+
+.import-btn {
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.import-btn:hover:not(:disabled) {
+  background: #2563EB;
+}
+
+.import-btn:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* Force modal to be on top of everything */
+::ng-deep .import-modal-overlay {
+  z-index: 99999 !important;
+}
+
+::ng-deep .import-modal-container {
+  z-index: 100000 !important;
+}
+
+::ng-deep .import-modal-header {
+  z-index: 100001 !important;
+}
+
+/* Override any potential conflicts */
+.import-modal-overlay * {
+  z-index: inherit !important;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .import-modal-container {
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .import-modal-header,
+  .import-modal-body,
+  .import-modal-footer {
+    padding: 16px;
+  }
+  
+  .upload-area {
+    padding: 30px 16px;
+  }
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100001;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #5253AE;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-message {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 500;
+}
+
+.upload-area.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Load Template Section */
+.load-template-section {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+}
+
+.template-select-container {
+  margin-top: 12px;
+}
+
+.template-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.template-select:hover:not(:disabled) {
+  border-color: #9ca3af;
+}
+
+.template-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.template-select:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.template-select option {
+  padding: 8px;
+}
+
+/* Divider with OR text */
+.divider-with-text {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  position: relative;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.divider-with-text span {
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

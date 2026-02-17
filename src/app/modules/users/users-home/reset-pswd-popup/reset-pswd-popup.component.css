@@ -1,0 +1,68 @@
+.resetPswdContainer {
+    background-color: #FFF;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+margin-bottom: 28px;
+}
+h1 {
+    color: var(--menu, #464855);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+margin-bottom: 0;
+}
+.contentMsg {
+    color: var(--Slate-700, #334155);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+width: 90%;
+margin-bottom: 19px;
+}
+label {
+    color: var(--Slate-700, #334155);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+}
+.emailAddress {
+    color: var(--Slate-700, #334155);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+}
+.btnClass {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+    justify-content: flex-end;
+    margin-right: 25px;
+}
+.cancelBtn {
+    display: flex;
+padding: 6px 20px;
+flex-direction: column;
+align-items: center;
+color: var(--menu, #464855);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+border-radius: 6px;
+border: 1px solid var(--menu, #464855);
+}
+.resetBtn {
+    display: flex;
+padding: 6px 20px;
+flex-direction: column;
+align-items: center;
+color: var(--Background-White, #FFF);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+border-radius: 6px;
+}

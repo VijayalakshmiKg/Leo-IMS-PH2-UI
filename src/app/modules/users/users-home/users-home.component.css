@@ -1,0 +1,252 @@
+.users-header{
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--White, #FFF);
+z-index: 1000;
+position: sticky;
+top: 0;
+}
+
+.users-container{
+    /* height: 100%; */
+}
+
+
+::ng-deep .users-container .search .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 4PX;
+}
+
+::ng-deep .users-container .search .mat-form-field-prefix .mat-icon {
+    font-size: 140%;
+    line-height: 1.125;
+    color: #686777;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #F1F5F9;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+    border-right-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+    border-left-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 I !important;
+}
+
+::ng-deep .users-container .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0;
+    margin-bottom: 4px;
+    margin-top: -1px;
+}
+
+::ng-deep .users-container .search input.mat-input-element {
+    margin-top: -0.0625em;
+    color: var(--text-dark-60, #686777);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.gap-24{
+    gap: 24px;
+}
+
+.users-container span{
+    color: var(--Slate-700, #334155);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.addBtnCls{
+    border-radius: 4px;
+
+padding: 4px 16px 4px 12px;
+color: var(--White, #FFF);
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.sortedByCls{
+    color: var(--Slate-600, #475569);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-bottom: 0px;
+}
+
+
+
+::ng-deep .border-less-input .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: transparent;
+}
+  ::ng-deep .border-less-input .mat-form-field-appearance-outline .mat-form-field-infix {
+    /* padding: 1em 0 1em 0; */
+    padding: 0px 0px !important;
+}
+  ::ng-deep .border-less-input .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0% !important;
+    padding: 0px !important;
+}
+::ng-deep .border-less-input .mat-select-arrow {
+    width: 0;
+    height: 0;
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 0px solid;
+    margin: 0 4px;
+}
+::ng-deep .border-less-input .mat-select-placeholder {
+    transition: color 400ms 133.3333333333ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    color: #334155;
+    font-family: BlinkMacSystemFont;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.23px;
+    text-align: left;
+}
+::ng-deep .border-less-input .mat-select-value-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: BlinkMacSystemFont !important;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.23px;
+    text-align: left;
+    color: #334155;
+}
+::ng-deep .border-less-input .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    width: 0px !important;
+    text-align: end;
+}
+
+::ng-deep .border-less-input .mat-form-field-appearance-outline .mat-form-field-suffix{
+    top: 0 !important;
+}
+
+::ng-deep .border-less-input .mat-form-field-appearance-outline .mat-form-field-flex {
+    padding: 0px !important;
+}
+
+.noUsersContainer{
+    min-height: 80vh !important;
+}
+
+
+.noUserscls{
+    color: var(--primary-col, #006CB7);
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.users-bodyContent{
+    /* padding: 12px; */
+    padding-top: 0px;
+}
+
+.usersCards{
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+}
+
+.usersCards label{
+    color: var(--Slate-800, #1E293B);
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.usersCards p{
+    color: var(--Slate-600, #475569);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 17px; /* 141.667% */
+margin-bottom: 0px;
+text-overflow: ellipsis;
+overflow: hidden;
+
+}
+
+.nameIndication{
+    width: 39.902px;
+    height: 39.902px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(0, 108, 183, 0.30);
+    align-items: center;
+    color: var(--primary-col, #006CB7);
+    text-align: center;
+    font-feature-settings: 'liga' off;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 132%;
+    letter-spacing: 0.14px;
+    text-transform: capitalize;
+}
+
+.gap-12{
+    gap: 12px;
+}
+
+.w-180{
+    width: 180px;
+    text-align: left;
+}
+
+.status-w{
+    width: 100px;
+}
+
+.pedingCls{
+    color: var(--Status-Interested, #FFB100) !important;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.12px;
+text-transform: capitalize;
+}
+
+.usersCards:hover{
+    background-color: #d9e9f4 !important;
+}

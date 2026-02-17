@@ -1,0 +1,99 @@
+<div class="addmaterial-container">
+  <form [formGroup]="materialForm">
+    <div
+      class="addmaterial-header d-flex justify-content-between align-items-center  ">
+      <button class="cancel-btn common-btn" type="button" (click)="back()">
+        Cancel
+      </button>
+
+      <h4 class="mb-0">{{this.materialServ.editMaterialRecord ? 'Edit' : 'New'
+        }} product</h4>
+
+      <button class="addBtn-users bgColorCls" type="button"
+        [matMenuTriggerFor]="menu"
+        *ngIf="this.materialServ.editMaterialRecord == null else Edit">
+        <div class="saveText">
+          {{saveBtnText}}
+        </div>
+
+        <div class="dropDownIcon">
+          <svg width="11" height="6" viewBox="0 0 11 6" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+        </div>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item type="submit" (click)="onSubmitandClose()">Add and
+          close</button>
+        <button mat-menu-item type="submit"
+          (click)="onSubmitandAddAnother()">Save and add another</button>
+      </mat-menu>
+      <ng-template #Edit>
+        <button class="addBtn-users bgColorCls" type="button" mat-button
+          (click)="onSubmitandClose()">
+          Update
+        </button>
+      </ng-template>
+    </div>
+
+    <div class="container">
+
+      <div class="homeAddContainer  mt-3">
+
+        <div>
+          <h4 class="mb-0">Product details</h4>
+        </div>
+
+        <div class="addmaterial-bodyContent mt-0">
+          <div class="form-container">
+            <div class="form-row">
+              <mat-label>Product name <span
+                class="text-dange">*</span></mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="materialName" placeholder
+                required />
+            </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Product type <span
+                  class="text-dange">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="materialType" required>
+                  <mat-option *ngFor="let item of materialTypeList"
+                    [value]="item.materialTypeName">
+                    {{ item.materialTypeName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              </div>
+              <div class="form-field">
+                <mat-label>Category type <span
+                    class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="categoryType" required>
+                    <mat-option *ngFor="let item of categoryTypeList"
+                      [value]="item.categoryTypeName">
+                      {{ item.categoryTypeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-row">
+              <mat-label>Description</mat-label>
+              <mat-form-field appearance="outline"
+                class="description-field w-100">
+                <textarea matInput formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>

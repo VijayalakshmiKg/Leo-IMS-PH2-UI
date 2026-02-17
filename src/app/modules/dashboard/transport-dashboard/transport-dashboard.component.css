@@ -1,0 +1,400 @@
+.clalanter-text {
+    color: var(--Slate-600, #475569);
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+cursor: pointer;
+}
+
+.dash-header {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 1000;
+    position: static;
+    top: 40px;
+}
+
+.generateBtn {
+    border-radius: 4px;
+    background: var(--Leo-Color, #2D2E83);
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border: none;
+    padding: 4px 16px 4px 12px;
+}
+
+.count-card {
+    display: flex;
+    /* width: 366.5px; */
+    height: 88px;
+    padding: 20px 16px 20px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    margin-right: 12px;
+}
+.crs-pointer {
+cursor: pointer;
+}
+.count-card-last {
+    display: flex;
+    /* width: 380.5px; */
+    height: 88px;
+    padding: 20px 16px 20px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+}
+
+
+
+.card-heading {
+    color: var(--Slate-500, #64748B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.card-total {
+    color: var(--Slate-800, #1E293B);
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.overview-count {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.Vehicle-status-card {
+    display: flex;
+    height: 310px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+    background: #FFF;
+}
+
+::ng-deep .semi-donet .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center,
+.apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+    justify-content: center;
+    margin-bottom: 62px;
+    border-top: 1px solid #E2E8F0;
+    padding-top: 8px;
+}
+
+::ng-deep .pie .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center,
+.apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+    border-top: 1px solid #E2E8F0;
+    padding-top: 8px;
+}
+
+.Vehicle-status {
+    color: var(--Slate-800, #1E293B);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+
+#DriverChart {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#OrderChart,
+#VehicleChart,
+#TrailerChart {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.Vehicle-status-card-two {
+    display: flex;
+    height: 470px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+
+    background: #FFF;
+}
+
+#deliveryChart,#OrderCycleChart, #OrderAccuracyChart , #FillChart {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.profile h6 {
+    background: #ECECEC;
+    border-radius: 50%;
+    color: var(--Slate-500, #64748B);
+    text-align: center;
+
+    font-size: 15.556px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    margin-right: 12px;
+}
+.profile {
+    position: relative;
+}
+.status-icon {
+    position: absolute;
+    top: 26px;
+    left: 31px;
+
+}
+.user-name {
+    color: var(--Slate-800, #1E293B);
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+}
+.mgs-text {
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont;
+    font-size: 12px;
+    font-style: normal;
+    white-space: normal;
+    overflow: hidden;
+    max-width: 679px;
+    font-weight: 600;
+}
+.recevied-time {
+    color: var(--Status-Not-Decided, #64748B);
+text-align: right;
+font-family: BlinkMacSystemFont;
+font-size: 11px;
+font-style: normal;
+font-weight: 500;
+}
+.mgs-count {
+    display: flex;
+width: 25px;
+height: 25px;
+padding: 3.852px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 6.42px;
+border-radius: 22.203px;
+background: var(--Violet-light, #5253AE);
+
+}
+.mgs-num {
+    color: var(--White, #FFF);
+text-align: center;
+font-size: 13.868px;
+font-style: normal;
+font-weight: 700;
+line-height: 10.914px; /* 110.597% */
+}
+.mgs-section {
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--Background-White, #FFF);
+}
+.no-data {
+    color: var(--Slate-500, #64748B);
+font-size: 13px;
+font-style: normal;
+font-weight: 600;
+}
+::ng-deep .transport-container .mat-paginator-page-size {
+    display: none;
+    align-items: baseline;
+    margin-right: 8px;
+}
+::ng-deep .transport-container .mat-paginator-icon {
+    width: 28px;
+    fill: currentColor;
+    border: 0.8px solid #CBD5E1;
+    border-radius: 4px;
+}
+.total-des {
+    color: var(--Slate-600, #475569);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+text-align: center;
+}
+.total-no {
+    color: var(--Neutral-Colors-Black, #1E1B39);
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+}
+.no-data-section {
+     align-items: center;
+    justify-content: center;
+   
+    margin: auto;
+}
+.no-data-legents {
+    border-top: 1px solid var(--Slate-200, #E2E8F0);
+    display: flex;
+    justify-content: center;
+}
+.legents-text {
+    color: rgb(55, 61, 63);
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+::ng-deep .transport-container .mat-paginator-icon {
+    width: 28px;
+    fill: currentColor;
+    border: 1px solid #CBD5E1;
+    border-radius: 4px;
+}
+/* ::ng-deep  .transport-container .mat-form-field-wrapper {
+    position: relative;
+    width: 0px !important;
+} */
+
+::ng-deep  .date-time-picker {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    width: 0px;
+    visibility: hidden !important;
+    line-height: 22px;
+}
+::ng-deep .dateMenu .mat-icon-button {
+    padding: 0;
+    min-width: 0;
+    width: 27px;
+    height: 35px;
+    flex-shrink: 0;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: left;
+}
+@media screen and (min-width: 992px) and (max-width: 1085px) {
+   .acc-res, .drive-res {
+    margin-left: 16px !important;
+
+   }
+    }
+
+    @media screen and (min-width: 1102px) and (max-width: 1085px) {
+        .acc-res{
+         margin-left: 0px !important;
+     
+        }
+        .fill-res {
+            margin-left: 16px !important;
+        }
+         }
+         @media screen and (min-width: 1316px) and (max-width: 1702px) {
+            .ord-res,  .fill-res {
+             margin-left: 16px !important;
+         
+            }
+             }
+             ::ng-deep .table-search .mat-form-field-flex {
+                height: 21px;
+                width: 327px;
+            }
+            
+            ::ng-deep .table-search .mat-form-field-appearance-legacy .mat-form-field-infix {
+                border-top: 0px !important;
+            }
+            ::ng-deep .table-search mat-label {
+                color: var(--Slate-700, #334155);
+                color: var(--Slate-600, #475569);
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px;
+            }
+
+            .no-data-text {
+                color: #283892;
+            font-family: BlinkMacSystemFont;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            }
+
+        .status-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            /* Adjust as needed for spacing between dashCardss */
+            justify-content: center;
+            /* Center the dashCardss horizontally */
+            margin-bottom: 12px;
+        }
+        .status-cards {
+            flex: 1 1 calc(25% - 16px);
+            /* Allow dashCardss to grow/shrink with a base width of 25% minus the gap */
+            /* max-width: 273.5px; */
+            min-width: 400px;
+            /* Minimum width for a dashCards */
+            border-radius: 4px;
+            border: 0.8px solid var(--Slate-300, #CBD5E1);
+            background: #FFF;
+            padding: 20px;
+            
+        }
+        .map-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 12px;
+            margin-top: 12px;
+            padding-bottom: 12px;
+        }
+        .map-cards {
+            flex: 1 1 calc(25% - 16px);
+            min-width: 400px;
+            border-radius: 4px;
+            border: 0.8px solid var(--Slate-300, #CBD5E1);
+            background: #FFF;
+            padding: 20px;
+        }
+
+    
+      ::ng-deep .ag-theme-material .row-hover {
+        background-color: #e0f7fa !important; 
+         /* Hover color */
+      }
+      
+            

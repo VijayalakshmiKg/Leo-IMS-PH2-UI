@@ -1,0 +1,1872 @@
+.gap-12 {
+    gap: 12px;
+}
+
+.template-header {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+}
+.delete-header {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 10020;
+    position: fixed;
+    top: 41px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.delete-header p{
+    color: #334155;
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 153.846% */
+}
+
+.template-header span {
+    color: var(--Slate-700, #334155);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.selected-template-name {
+    color: var(--Slate-700, #334155);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 4px 12px;
+    background: var(--Slate-100, #F1F5F9);
+    border-radius: 4px;
+    border: 1px solid var(--Slate-200, #E2E8F0);
+}
+
+.selected-template-name strong {
+    color: var(--Slate-500, #64748B);
+    font-weight: 500;
+    margin-right: 4px;
+}
+
+.gap-8{
+    gap: 8px;
+}
+
+.deleteBtn{
+    color: var(--Slate-600, #475569);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+padding: 5px 8px;
+border-radius: 3.24px;
+border: 1px solid var(--Slate-300, #CBD5E1);
+background: #F1F5F9;
+
+}
+
+/* Action buttons for duplicate and delete */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.duplicate-btn {
+  color: #059669;
+  border-color: #d1fae5;
+  background: #ecfdf5;
+}
+
+.duplicate-btn:hover {
+  background: #d1fae5;
+  border-color: #059669;
+}
+
+.delete-btn {
+  color: #dc2626;
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+  border-color: #dc2626;
+}
+
+
+.sortedByCls {
+    color: var(--Slate-600, #475569);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0px;
+}
+
+.gap-24 {
+    gap: 24px;
+}
+
+.isActive {
+    background: #129D5226;
+    border-radius: 22px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.51px;
+    text-align: left;
+    color: #129D52;
+    padding: 4px 16px;
+}
+
+.activeTh {
+    width: 52px;
+}
+
+
+.avaiable-status {
+    color: #0DBA5D;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15.51px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+}
+
+.avaiable-status .cricle {
+    background: #0DBA5D;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+
+}
+
+.noProfile {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    /* background: #d9e9f4; */
+    border-radius: 33px;
+    /* color: var(--primary-col, #006CB7); */
+    text-align: center;
+    font-feature-settings: 'liga' off;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 132%;
+    /* 18.48px */
+    letter-spacing: 0.14px;
+    background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30));
+    color: #283892;
+}
+
+table h4 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+table p {
+    color: var(--Slate-600, #475569);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    /* 141.667% */
+}
+
+
+::ng-deep .template-header .search .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 4PX;
+}
+
+::ng-deep .template-header .search .mat-form-field-prefix .mat-icon {
+    font-size: 140%;
+    line-height: 1.125;
+    color: #686777;
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-outline {
+    /* color: #F1F5F9; */
+    border: none !important;
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+    border-right-style: none;
+    /* background: #F1F5F9; */
+    border: none !important;
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+    border-left-style: none;
+    border: none !important;
+    /* background: #F1F5F9; */
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 I !important;
+}
+
+::ng-deep .template-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0;
+    margin-bottom: 4px;
+    margin-top: -1px;
+}
+
+
+.addBtnCls {
+    border-radius: 4px;
+    
+    padding: 4px 16px 4px 12px;
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+/* Override global masterScreen-content-table padding for template page */
+.masterScreen-content-table.templateTable {
+    padding-bottom: 0px !important;
+    overflow: hidden;
+}
+
+/* Hide columns when screen width is below 800px */
+@media (max-width: 800px) {
+    .hide-col {
+        display: none;
+    }
+
+    .activeTh {
+        width: 0px;
+        display: none;
+    }
+
+}
+
+.noRecordText {
+    color: var(--Slate-700, #334155);
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.noMasterRecords {
+  height: 65vh;
+}
+.noMasterRecords p {
+    color: var(--Slate-500, #64748B);
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.status-btn {
+    color: var(--Slate-700, #334155);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.07px;
+}
+
+.weighed {
+    border-radius: 4px;
+    background: rgba(13, 186, 93, 0.14);
+    display: flex;
+    padding: 5px 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pending {
+    border-radius: 4px;
+    background: rgba(232, 28, 40, 0.14);
+    padding: 5px 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.completed {
+    border-radius: 4px;
+    background: rgba(13, 186, 93, 0.14);
+    display: flex;
+    padding: 5px 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.Inprogress {
+    border-radius: 4px;
+    background: rgba(255, 177, 0, 0.20);
+    display: flex;
+    padding: 5px 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.menuBtns {
+    color: var(--Slate-600, #475569);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  /* Table container styling - scroll within table only */
+  .templateTable {
+    overflow-x: auto;
+    padding: 0px !important;
+    margin-bottom: 0px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* When table has data - enable scroll with fixed height */
+  .templateTable:not(.empty-table) {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    max-height: calc(100vh - 150px);
+  }
+
+  /* When table is empty - no scroll, auto height */
+  .templateTable.empty-table {
+    overflow-y: hidden;
+    height: auto;
+    min-height: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    overflow-y: scroll;
+    background: #eef6f6;
+    box-shadow: inset 0 0 4px #707070;
+}
+
+/* ::ng-deep .mat-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .custom-page-number {
+    position: absolute;
+    left: 47px;
+    top: 1px;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--Slate-500, #64748B);
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+border-radius: 4px;
+background: #E9E9E9;
+padding: 4px 9px;
+  }
+
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    border-radius: 4px;
+    border: 1px solid #E9E9E9;
+    background: #FEFEFE;
+    padding: 3px 8px;
+}
+
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px !important;
+    display: none !important;
+}
+  
+  ::ng-deep .mat-paginator-page-size-label {
+    margin: 0 4px;
+    color: var(--Slate-500, #64748B);
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+::ng-deep .mat-paginator-page-size {
+    display: flex;
+    align-items: baseline;
+    margin-right: 8px;
+    order: 2;
+}
+::ng-deep .mat-paginator-page-size-label {
+    margin: 0 4px;
+    color: var(--Slate-500, #64748B);
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex
+;
+    order: 2;
+}
+
+
+
+::ng-deep .mat-mdc-paginator-page-size-label {
+    display: none;
+}
+
+::ng-deep .mat-mdc-paginator-page-size {
+    position: relative;
+} */
+
+/* ::ng-deep .mat-mdc-paginator-page-size::before {
+    content: "Items per page";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: normal;
+} */
+
+.custom-paginator{
+    position: relative;
+}
+
+/* Removed fixed positioning - paginator should be relative to its parent container */
+
+/* ::ng-deep .mat-paginator-navigation-first {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M18 6L16.59 7.41 12.83 11.17 16.59 15 18 16.59 12 10.59z'/%3E%3Cpath d='M6 6L4.59 7.41 9.17 12 4.59 16.59 6 18 12 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  
+  ::ng-deep .mat-paginator-navigation-last {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M6 18L7.41 16.59 11.17 12.83 7.41 9 6 7.41 12 12.41z'/%3E%3Cpath d='M18 18L19.41 16.59 14.83 12 19.41 7.41 18 6 12 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+ 
+::ng-deep .mat-paginator-navigation-first .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-last .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-previous .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-next .mat-button-wrapper {
+  display: none;
+} */
+
+/* ::ng-deep .mat-paginator-navigation-next,
+::ng-deep .mat-paginator-navigation-previous,
+::ng-deep .mat-paginator-navigation-first,
+::ng-deep .mat-paginator-navigation-last {
+  background-color: #0a68ec;
+  -webkit-mask-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"%3E%3Cg clip-path="url(%23clip0_6492_121909)"%3E%3Cpath d="M9.71564 2.06815L3.73571 5.56815C3.66042 5.61217 3.59796 5.67522 3.55454 5.75102C3.51113 5.82682 3.48828 5.91272 3.48828 6.00015C3.48828 6.08757 3.51113 6.17347 3.55454 6.24927C3.59796 6.32508 3.66042 6.38813 3.73571 6.43215L9.71564 9.93215C9.79137 9.97649 9.87742 9.99999 9.9651 10.0003C10.0528 10.0006 10.139 9.97767 10.215 9.93385C10.2911 9.89003 10.3542 9.82685 10.3981 9.7507C10.442 9.67455 10.4651 9.58813 10.4651 9.50015V2.50015C10.4651 2.41217 10.442 2.32574 10.3981 2.2496C10.3542 2.17345 10.2911 2.11027 10.215 2.06645C10.139 2.02262 10.0528 1.9997 9.9651 2C9.87742 2.0003 9.79137 2.02381 9.71564 2.06815Z" fill="%2364748B"%3E%3C/path%3E%3Cpath d="M1.99442 2C2.11648 2.00002 2.23429 2.04498 2.3255 2.12636C2.41671 2.20774 2.47498 2.31987 2.48926 2.4415L2.49275 2.5V9.5C2.49261 9.62744 2.44397 9.75002 2.35678 9.84268C2.26959 9.93535 2.15042 9.99112 2.02363 9.99859C1.89683 10.0061 1.77198 9.96466 1.67458 9.88287C1.57718 9.80107 1.51458 9.68505 1.49958 9.5585L1.49609 9.5V2.5C1.49609 2.36739 1.5486 2.24021 1.64205 2.14645C1.73551 2.05268 1.86226 2 1.99442 2Z" fill="%2364748B"%3E%3C/path%3E%3C/g%3E%3C/defs%3E%3C/svg%3E');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+
+::ng-deep .mat-paginator-range-label {
+    display: none;
+} */
+
+.customPaginatorBtns{
+    position: relative;
+
+}
+
+.customPaginatorAbsolute{
+    position: absolute;
+    top: 12px;
+    right: 195px;
+}
+
+.customPaginatorBtns button{
+    background-color: transparent;
+    border: none;
+}
+
+.gap-45{
+    gap: 45px;
+}
+
+.gap-16{
+    gap: 16px;
+}
+
+.gap-55{
+    gap: 55px;
+}
+
+.customPaginatorBtns .disable{
+    opacity: 0.6;
+}
+
+/* Download Button with Dropdown Styles */
+.downloadBtnCls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: white !important;
+    border: none;
+    background-color: #283892;
+    transition: all 0.2s ease;
+    min-width: 140px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.downloadBtnCls span {
+    color: white !important;
+}
+
+.downloadBtnCls:hover {
+    background-color: #1e2a6b;
+    box-shadow: 0 2px 8px rgba(40, 56, 146, 0.3);
+    transform: translateY(-1px);
+}
+
+.downloadBtnCls:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(40, 56, 146, 0.3);
+}
+
+.downloadBtnCls svg {
+    stroke: white !important;
+    fill: white !important;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.downloadBtnCls[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.downloadBtnCls:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 56, 146, 0.2);
+}
+
+/* Export Button with Dropdown Styles */
+.exportBtnCls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: white !important;
+    border: none;
+    background-color: #16a34a;
+    transition: all 0.2s ease;
+    min-width: 140px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.exportBtnCls span {
+    color: white !important;
+}
+
+.exportBtnCls:hover {
+    background-color: #15803d;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+    transform: translateY(-1px);
+}
+
+.exportBtnCls:active {
+    transform: translateY(0);
+    background-color: #166534;
+}
+
+.exportBtnCls svg {
+    width: 12px;
+    height: 8px;
+    fill: white;
+    transition: transform 0.2s ease;
+}
+
+.exportBtnCls[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.exportBtnCls:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+}
+
+/* Export Menu Styles */
+::ng-deep .export-dropdown-menu .mat-menu-panel {
+    border-radius: 8px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 8px !important;
+    min-width: 160px !important;
+}
+
+::ng-deep .export-menu-item {
+    padding: 12px 16px !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: #374151 !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+::ng-deep .export-menu-item:hover {
+    background-color: #f1f5f9 !important;
+    color: #16a34a !important;
+}
+
+::ng-deep .export-menu-item svg {
+    color: #6b7280;
+    transition: color 0.2s ease;
+}
+
+::ng-deep .export-menu-item:hover svg {
+    color: #16a34a;
+}
+
+::ng-deep .export-menu-item span {
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+/* Download Menu Styles */
+::ng-deep .download-dropdown-menu .mat-menu-panel {
+    border-radius: 8px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 8px !important;
+    min-width: 180px !important;
+}
+
+::ng-deep .download-menu-item {
+    padding: 12px 16px !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: #374151 !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+::ng-deep .download-menu-item:hover {
+    background-color: #f1f5f9 !important;
+    color: #283892 !important;
+}
+
+::ng-deep .download-menu-item svg {
+    color: #6b7280;
+    transition: color 0.2s ease;
+}
+
+::ng-deep .download-menu-item:hover svg {
+    color: #283892;
+}
+
+::ng-deep .download-menu-item span {
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+/* Import Menu Styles */
+::ng-deep .import-dropdown-menu .mat-menu-panel {
+    border-radius: 8px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 8px !important;
+    min-width: 180px !important;
+}
+
+::ng-deep .import-menu-item {
+    padding: 12px 16px !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: #374151 !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+::ng-deep .import-menu-item:hover {
+    background-color: #f1f5f9 !important;
+    color: #283892 !important;
+}
+
+::ng-deep .import-menu-item svg {
+    color: #6b7280;
+    transition: color 0.2s ease;
+}
+
+::ng-deep .import-menu-item:hover svg {
+    color: #283892;
+}
+
+::ng-deep .import-menu-item span {
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+/* Additional responsive styles for download button */
+@media (max-width: 768px) {
+    .downloadBtnCls {
+        min-width: 120px;
+        font-size: 12px;
+        padding: 6px 12px;
+        height: 34px;
+    }
+    
+    .downloadBtnCls span {
+        display: none;
+    }
+    
+    .downloadBtnCls::before {
+        content: "Download";
+    }
+}
+
+/* Template Dropdown Styles */
+.template-selector {
+  min-width: 200px;
+}
+
+.template-dropdown {
+  width: 100%;
+  font-size: 14px;
+}
+
+.template-dropdown .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.template-dropdown .mat-form-field-infix {
+  padding: 8px 0;
+  border-top: none;
+  min-height: 32px;
+}
+
+.template-dropdown .mat-form-field-label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.template-dropdown .mat-select-value {
+  font-size: 14px;
+  color: #374151;
+}
+
+.template-dropdown .mat-form-field-outline {
+  color: #d1d5db;
+}
+
+.template-dropdown .mat-form-field-outline-thick {
+  color: #5253ae;
+}
+
+/* Search Templates Styles */
+.search-templates {
+  margin-left: 16px;
+}
+
+.search-input-field {
+  width: 200px;
+  font-size: 14px;
+}
+
+.search-input-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.search-input-field .mat-form-field-infix {
+  padding: 8px 0;
+  border-top: none;
+  min-height: 32px;
+}
+
+.search-input-field .mat-form-field-outline {
+  background: #f8f9fa;
+  border-radius: 4px;
+  color: #e1e5e9;
+}
+
+.search-input-field .mat-form-field-outline-thick {
+  color: #5253ae;
+}
+
+.search-input {
+  font-size: 14px;
+  color: #374151;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.search-icon {
+  color: #6c757d;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Mat-option styles for the dropdown */
+::ng-deep .mat-option {
+  height: auto !important;
+  line-height: normal !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-option:hover {
+  background-color: #f3f4f6 !important;
+}
+
+::ng-deep .mat-option.mat-selected {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+}
+
+/* Template Dropdown Panel Styles */
+.template-selector {
+  position: relative;
+}
+
+.select-template-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  min-width: 160px;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+
+.select-template-btn:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.select-template-btn:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Template menu backdrop - ensures clicking outside closes the menu */
+::ng-deep .template-menu-backdrop {
+  background: transparent;
+}
+
+/* Custom dropdown panel - positioned absolutely below the button */
+.template-dropdown-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e5e7eb;
+  background: white;
+  overflow: hidden;
+}
+
+
+::ng-deep .template-dropdown-panel .mat-menu-content {
+  padding: 0;
+}
+
+.template-menu-content {
+  width: 280px;
+  max-height: 400px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Search Container */
+.template-search-container {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fafafa;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.template-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.template-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.template-search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Template Options Container */
+.template-options-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.template-option {
+  padding: 0 16px;
+}
+
+.template-option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+  margin: 0 -8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.template-option-label:hover {
+  background-color: #f3f4f6;
+}
+
+.template-radio {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.template-radio:checked {
+  border-color: #3b82f6;
+  background-color: white;
+}
+
+.template-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+}
+
+.radio-custom {
+  display: none;
+}
+
+.template-name {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 400;
+}
+
+.template-option-label:hover .template-name {
+  color: #1f2937;
+}
+
+/* Import Excel Button Styles */
+.import-template {
+  display: flex;
+  align-items: center;
+}
+
+.importBtnCls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 0px solid #d1d5db;
+  border-radius: 6px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.importBtnCls:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.importBtnCls:focus {
+  outline: none;
+  border-color: #6b7280;
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+}
+
+.importBtnCls:active {
+  background: #f3f4f6;
+  border-color: #6b7280;
+  transform: translateY(1px);
+}
+
+.importBtnCls svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+.importBtnCls span {
+  color: inherit;
+  font-weight: 500;
+}
+
+/* Save Button Styles */
+.saveBtnCls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #283892;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saveBtnCls:hover {
+  background: #1e2b6f;
+  box-shadow: 0 2px 4px rgba(40, 56, 146, 0.2);
+}
+
+.saveBtnCls:active {
+  transform: translateY(1px);
+}
+
+.saveBtnCls svg {
+  width: 16px;
+  height: 16px;
+}
+
+.saveBtnCls span
+{
+  color:#fff !important;
+}
+/* Cancel Button Styles */
+.cancelBtnCls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtnCls:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #374151;
+}
+
+.cancelBtnCls:active {
+  transform: translateY(1px);
+}
+
+.cancelBtnCls svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .importBtnCls {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  
+  .importBtnCls svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .saveBtnCls, .cancelBtnCls {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  
+  .saveBtnCls svg, .cancelBtnCls svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Table Scroll Wrapper - Enable horizontal scrolling only when data exists */
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: hidden; /* Hidden by default - no scroll when no data */
+  overflow-y: visible;
+  max-width: 100%;
+}
+
+.table-scroll-wrapper.has-data {
+  overflow-x: auto !important; /* Show scroll only when data exists */
+  overflow-y: visible;
+  display: block;
+}
+
+/* Table Styling with Borders and Header Background */
+.templateTable .table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-scroll-wrapper.has-data .templateTable .table {
+  min-width: 2500px; /* Minimum width to force horizontal scroll when data exists */
+}
+
+.templateTable .table th,
+.templateTable .table td {
+  border: 1px solid #d1d5db;
+  padding: 8px 12px !important;
+  text-align: left;
+  vertical-align: middle;
+  height: 32px;
+  line-height: 1.2;
+}
+
+.templateTable .table thead th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 2px solid #d1d5db;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.templateTable .table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+.templateTable .table tbody td {
+  color: #374151;
+  font-size: 13px;
+  padding-left: 5px !important;
+}
+
+/* Excel Footer Styles */
+.excel-footer {
+  background: #f8f9fa;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #d1d5db;
+  border-left: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
+  border-bottom: 1px solid #d1d5db;
+  min-height: 40px;
+  margin-top: -1px; /* To merge with table border */
+}
+
+.excel-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Editable Cell Styles */
+.editable-cell {
+  cursor: pointer;
+  position: relative;
+}
+
+.editable-cell:hover {
+  background-color: #f8f9fa;
+  outline: 1px solid #3b82f6;
+}
+
+.cell-input, .cell-select {
+  width: 100%;
+  border: 2px solid #3b82f6;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: white;
+  outline: none;
+  margin: -4px -8px;
+  min-height: 20px;
+}
+
+/* DateTime input styling for calendar/time picker */
+.cell-input.datetime-input,
+input[type="datetime-local"].cell-input {
+  width: 100%;
+  min-width: 180px;
+  max-width: 200px;
+  padding: 4px 8px;
+  cursor: pointer;
+  position: relative;
+  font-size: 12px;
+}
+
+/* Ensure the calendar icon is visible and clickable */
+.cell-input.datetime-input::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 2px;
+  margin-left: 4px;
+  opacity: 1;
+  background-color: #f0f4ff;
+  border-radius: 3px;
+  width: 18px;
+  height: 18px;
+  filter: invert(30%) sepia(80%) saturate(500%) hue-rotate(200deg);
+}
+
+.cell-input.datetime-input::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  background-color: #dbeafe;
+}
+
+/* Firefox datetime-local styling */
+input[type="datetime-local"] {
+  -moz-appearance: textfield;
+}
+
+/* DateTime cell container */
+.datetime-cell {
+  min-width: 200px !important;
+  width: 200px;
+  position: relative;
+}
+
+.datetime-cell input[type="datetime-local"] {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.cell-input:focus, .cell-select:focus {
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 1px #1d4ed8;
+}
+
+.cell-select {
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
+.editable-cell span {
+  display: block;
+  min-height: 20px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+}
+
+/* Weight input with unit dropdown */
+.weight-input-container {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  margin: -4px -8px;
+}
+
+.weight-value-input {
+  flex: 1;
+  min-width: 60px;
+  margin: 0;
+}
+
+.weight-unit-select {
+  flex: 0 0 70px;
+  margin: 0;
+  padding: 4px 4px;
+  font-size: 12px;
+}
+
+/* Datetime input styling */
+.datetime-input {
+  min-width: 180px;
+  font-size: 13px;
+}
+
+.excel-add-sheet-btn {
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.excel-add-sheet-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.excel-add-sheet-btn:active {
+  background: #e5e7eb;
+}
+
+.plus-icon {
+  font-size: 16px;
+  font-weight: bold;
+  color: #374151;
+  line-height: 1;
+}
+
+.sheet-tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.sheet-tab {
+  padding: 4px 12px;
+  background: #e5e7eb;
+  border: 1px solid #d1d5db;
+  border-bottom: none;
+  cursor: pointer;
+  font-size: 11px;
+  color: #374151;
+  border-radius: 4px 4px 0 0;
+  transition: all 0.2s;
+  min-width: 80px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sheet-tab.active {
+  background: #ffffff;
+  color: #1f2937;
+  font-weight: 500;
+  border-color: #9ca3af;
+  z-index: 1;
+  position: relative;
+}
+
+.sheet-tab.disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  font-style: italic;
+}
+
+.sheet-tab:hover:not(.active):not(.disabled) {
+  background: #f3f4f6;
+}
+
+.excel-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sheet-navigation {
+  display: flex;
+  gap: 2px;
+}
+
+.nav-btn {
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #374151;
+  font-size: 12px;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #9ca3af;
+}
+
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.items-per-page select {
+  padding: 2px 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  font-size: 11px;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+}
+
+.items-per-page select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* Validation Error Styling */
+.validation-error {
+  background-color: #ffe6e6 !important;
+  border: 1px solid #ff4444 !important;
+  position: relative;
+}
+
+.validation-error::after {
+  content: '⚠';
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  color: #ff4444;
+  font-size: 14px;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+td.validation-error {
+  cursor: help;
+}
+
+/* Small text for customer dependency message */
+td small.text-muted {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Disabled dropdown styling */
+select[disabled] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+select[disabled]:hover {
+  background-color: #f5f5f5;
+}
+
+/* ========================================
+   Validation Error Modal Styles
+   ======================================== */
+
+.validation-error-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.validation-error-modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.validation-modal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E5E7EB;
+  background: #FEF2F2;
+  border-radius: 12px 12px 0 0;
+}
+
+.validation-modal-header .header-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FEE2E2;
+}
+
+.validation-modal-header .header-icon.error {
+  background: #FEE2E2;
+}
+
+.validation-modal-header .header-content {
+  flex: 1;
+}
+
+.validation-modal-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #DC2626;
+}
+
+.validation-modal-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.validation-modal-header .close-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.validation-modal-header .close-btn:hover {
+  background: #FEE2E2;
+}
+
+/* Summary Section */
+.validation-summary {
+  padding: 16px 24px;
+  background: #F9FAFB;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.validation-summary h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.validation-summary .summary-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.validation-summary .summary-item {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 200px;
+  flex: 1;
+}
+
+.validation-summary .summary-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.validation-summary .summary-count {
+  display: block;
+  font-size: 13px;
+  color: #DC2626;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.validation-summary .summary-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 60px;
+  overflow-y: auto;
+}
+
+.validation-summary .value-chip {
+  display: inline-block;
+  background: #FEF2F2;
+  color: #991B1B;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: 'Consolas', monospace;
+  border: 1px solid #FECACA;
+}
+
+/* Error Table */
+.validation-error-content {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+}
+
+.error-table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.validation-error-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.validation-error-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.validation-error-table th {
+  background: #F3F4F6;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.validation-error-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #E5E7EB;
+  vertical-align: top;
+}
+
+.validation-error-table tbody tr:hover {
+  background: #F9FAFB;
+}
+
+.validation-error-table .sheet-name-cell {
+  background: #F9FAFB;
+  border-right: 2px solid #E5E7EB;
+  vertical-align: middle;
+}
+
+.validation-error-table .sheet-badge {
+  display: inline-block;
+  background: #283892;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.validation-error-table .row-number {
+  font-weight: 600;
+  color: #6B7280;
+  text-align: center;
+  width: 60px;
+}
+
+.validation-error-table .column-name {
+  font-weight: 500;
+  color: #374151;
+}
+
+.validation-error-table .provided-value code {
+  background: #FEF2F2;
+  color: #991B1B;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+}
+
+.validation-error-table .error-message {
+  color: #DC2626;
+  font-size: 12px;
+}
+
+.validation-error-table tr.sheet-first-row td:not(.sheet-name-cell) {
+  border-top: 2px solid #E5E7EB;
+}
+
+/* Modal Footer */
+.validation-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  border-radius: 0 0 12px 12px;
+}
+
+.validation-modal-footer .btn-secondary {
+  padding: 10px 24px;
+  background: #fff;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.validation-modal-footer .btn-secondary:hover {
+  background: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+.validation-modal-footer .btn-primary {
+  padding: 10px 24px;
+  background: #283892;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.validation-modal-footer .btn-primary:hover {
+  background: #1e2d70;
+}

@@ -1,0 +1,12 @@
+<!-- custom timepicker container  -->
+<div class="">
+    <div class="time-picker-cls py-5">
+        <ngx-timepicker-field #timePicker [defaultTime]="currentTime"></ngx-timepicker-field>
+    </div>
+    <div class="btn-container">
+        <button  mat-stroked-button class="btn-cls mr-3" (click)="closeDialog()">Cancel</button>
+        <button mat-stroked-button class="btn-cls ml-3" (click)="sendSelectedTime()">Ok</button>
+    </div>
+</div>
+
+<!-- custom timepicker container  -->

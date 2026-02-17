@@ -1,0 +1,11 @@
+<div class="masters-home-container">
+    <div class="masters-left-content">
+        <button type="button" class="masterListBtns common-btn" *ngFor="let item of mastersList" [routerLink]="item.link" routerLinkActive="activeMaster" [routerLinkActiveOptions]="{exact:true}">
+            {{item.name}}
+        </button>
+    </div>
+    <div class="masters-right-content w-100">
+<router-outlet></router-outlet>
+
+    </div>
+</div>

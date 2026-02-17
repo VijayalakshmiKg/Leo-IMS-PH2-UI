@@ -1,0 +1,527 @@
+<div class="template-header d-flex justify-content-between align-items-center">
+  <div class="template-head-left d-flex gap-24 align-items-center">
+    <!-- Show when action buttons are visible (rows selected) -->
+    <ng-container *ngIf="showActionButtons()">
+      <span class="selected-count-badge">
+        <span class="count-dot"></span>
+        {{getSelectedCount()}} Selected
+      </span>
+      <button class="action-btn weigh-btn" (click)="onWeighTrailer()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 14h12M4 14V8h8v6M6 8V6a2 2 0 114 0v2M8 11v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Weigh trailer</span>
+      </button>
+      <button class="action-btn raise-issue-btn" (click)="onRaiseIssues()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 5.33334V8.00001M8 10.6667H8.00667M14.6667 8.00001C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.31811 14.6667 1.33334 11.6819 1.33334 8.00001C1.33334 4.31811 4.31811 1.33334 8 1.33334C11.6819 1.33334 14.6667 4.31811 14.6667 8.00001Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Raise issues</span>
+      </button>
+    </ng-container>
+    
+    <!-- Show when no action buttons (normal header) -->
+    <ng-container *ngIf="!showActionButtons()">
+      <span>{{taskList.length}} task(s) in List</span>
+      
+      <!-- Search Box -->
+      <div class="search-customers">
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            class="search-customers-input" 
+            placeholder="Search by order no, driver, vehicle..."
+            [(ngModel)]="searchText"
+            (keyup.enter)="onSearch()">
+          <svg class="search-input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.0001 14.0001L11.1001 11.1001" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <button *ngIf="searchText" class="clear-search-btn" (click)="clearSearch()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Filter Dropdown -->
+      <div class="filter-dropdown" style="display:none;">
+        <button type="button" class="importBtnCls" [matMenuTriggerFor]="filterMenu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 2h14l-6 7v4l-2 1V9L1 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{{filterStatus}}</span>
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <mat-menu #filterMenu="matMenu">
+          <button mat-menu-item (click)="filterByStatus('All')">
+            <span>All</span>
+          </button>
+          <button mat-menu-item (click)="filterByStatus('Load in transit')">
+            <span>Loads in transit</span>
+          </button>
+          <button mat-menu-item (click)="filterByStatus('Load arrived')">
+            <span>Loads arrived</span>
+          </button>
+          <button mat-menu-item (click)="filterByStatus('Weighed')">
+            <span>Weighed</span>
+          </button>
+        </mat-menu>
+      </div>
+      
+      <!-- Manage Columns -->
+      <div class="manage-columns-container">
+        <button class="importBtnCls manage-columns-btn" (click)="toggleColumnManager()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Manage Columns</span>
+        </button>
+        
+        <!-- Column Manager Panel -->
+        <div class="column-manager-panel" *ngIf="showColumnManager">
+          <div class="column-manager-header">
+            <h4>Manage Columns</h4>
+            <button type="button" class="close-btn" (click)="toggleColumnManager()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="column-list">
+            <div class="column-item" *ngFor="let col of tableColumns; let i = index"
+                 draggable="true" 
+                 (dragstart)="onColumnDragStart(col.key, $event)"
+                 (dragover)="onColumnDragOver($event)"
+                 (drop)="onColumnDrop(i, $event)">
+              <input type="checkbox" 
+                     [checked]="col.visible" 
+                     (change)="toggleColumnVisibility(col.key)">
+              <span class="column-name">{{col.label}}</span>
+              <div class="drag-handle">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <circle cx="3" cy="3" r="1" fill="#9ca3af"/>
+                  <circle cx="9" cy="3" r="1" fill="#9ca3af"/>
+                  <circle cx="3" cy="9" r="1" fill="#9ca3af"/>
+                  <circle cx="9" cy="9" r="1" fill="#9ca3af"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Refresh Button -->
+      <button class="importBtnCls" (click)="refreshData()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 8a6 6 0 11-1.5-4M14 2v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Refresh</span>
+      </button>
+    </ng-container>
+  </div>
+  
+  <div class="template-head-right d-flex align-items-center gap-24" *ngIf="!showActionButtons()">
+    <!-- Export Button -->
+    <button type="button" class="exportBtnCls" [matMenuTriggerFor]="exportMenu" *ngIf="taskList.length > 0">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 10v2a2 2 0 002 2h8a2 2 0 002-2v-2M8 2v8m0 0l3-3m-3 3L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Export Report</span>
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <mat-menu #exportMenu="matMenu">
+      <button mat-menu-item (click)="exportToExcel()">
+        <span>Export as Excel</span>
+      </button>
+      <button mat-menu-item (click)="exportToCSV()">
+        <span>Export as CSV</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+
+<!-- Table Section -->
+<div class="masterScreen-content-table templateTable" [class.empty-table]="taskList?.length === 0">
+  
+  <!-- Loading Indicator -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Data Table -->
+  <table class="table advanced-table">
+    <thead>
+      <tr>
+        <th class="checkbox-column">
+          <input type="checkbox" 
+                 [checked]="selectAll"
+                 (change)="toggleSelectAll()">
+        </th>
+        <th *ngFor="let col of getVisibleColumns()" 
+            class="advanced-header"
+            [style.width.px]="col.width"
+            [style.min-width.px]="col.width">
+          
+          <!-- Column Header Content -->
+          <div class="header-content">
+            <span class="column-title">{{col.label}}</span>
+            
+            <!-- Sort Indicator and Filter Icon -->
+            <div class="header-controls">
+              <div class="sort-controls" *ngIf="col.sortable">
+                <button class="sort-btn" (click)="toggleColumnSort(col.key)">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                       [class.sort-asc]="columnSorts[col.key] === 'asc'"
+                       [class.sort-desc]="columnSorts[col.key] === 'desc'">
+                    <path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Filter Icon -->
+              <div class="column-filter-icon" 
+                   *ngIf="col.filterable" 
+                   (click)="toggleColumnFilterPopup(col.key, $event)"
+                   #filterTrigger>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" 
+                     [class.active]="activeColumnFilters && activeColumnFilters[col.key] && activeColumnFilters[col.key].length > 0">
+                  <path d="M0 1h12L7.5 5.5V9.5L4.5 7.5V5.5L0 1z" 
+                        stroke="currentColor" stroke-width="1" 
+                        fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            
+            <!-- Column Resize Handle -->
+            <div class="resize-handle" 
+                 (mousedown)="startResize(col.key, $event)">
+            </div>
+          </div>
+          
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of getFilteredAndSortedTasks(); index as i" [class.row-selected]="isRowSelected(task.taskID)">
+        <td class="checkbox-column">
+          <input type="checkbox" 
+                 [checked]="isRowSelected(task.taskID)"
+                 (change)="toggleRowSelection(task.taskID)">
+        </td>
+        
+        <!-- Dynamic Column Cells -->
+        <td *ngFor="let col of getVisibleColumns()"
+            class="dynamic-cell"
+            [style.width.px]="col.width"
+            [style.min-width.px]="col.width">
+          <!-- Status Column with Badge -->
+          <div style="text-align: center;">
+            <span *ngIf="col.key === 'status'" [ngClass]="getStatusClass(task[col.key])">
+              {{task[col.key] || '-'}}
+            </span>
+            <!-- Other Columns -->
+            <span *ngIf="col.key !== 'status'">
+              {{task[col.key] || '-'}}
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Column Filter Popup -->
+  <div class="column-filter-popup" *ngIf="showColumnFilterPopup">
+    <div class="filter-popup-header">
+      <h5>Filter by {{getColumnLabel(showColumnFilterPopup)}}</h5>
+      <button type="button" class="close-filter-btn" (click)="closeColumnFilterPopup()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="filter-search">
+      <input type="text" 
+             placeholder="Search..." 
+             [(ngModel)]="columnFilterSearch[showColumnFilterPopup]"
+             class="filter-search-input">
+      <svg class="filter-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    
+    <div class="filter-actions-top">
+      <button class="select-all-btn" (click)="selectAllFilterValues(showColumnFilterPopup)">Select All</button>
+      <button class="clear-all-btn" (click)="clearAllFilterValues(showColumnFilterPopup)">Clear All</button>
+    </div>
+    
+    <div class="filter-values-list">
+      <div class="filter-value-item" *ngFor="let value of getFilteredDistinctValues(showColumnFilterPopup)">
+        <input type="checkbox" 
+               [id]="'filter_' + showColumnFilterPopup + '_' + value"
+               [checked]="isValueSelected(showColumnFilterPopup, value)"
+               (change)="toggleFilterValue(showColumnFilterPopup, value)">
+        <label [for]="'filter_' + showColumnFilterPopup + '_' + value">{{value}}</label>
+      </div>
+      <div class="no-filter-values" *ngIf="getFilteredDistinctValues(showColumnFilterPopup).length === 0">
+        No values found
+      </div>
+    </div>
+    
+    <div class="filter-actions-bottom">
+      <button class="cancel-filter-btn" (click)="closeColumnFilterPopup()">Cancel</button>
+      <button class="apply-filter-btn" (click)="applyColumnFilters()">Apply</button>
+    </div>
+  </div>
+  
+  <!-- No Data Message -->
+  <div class="no-data" *ngIf="taskList.length === 0 && !isLoading">
+    <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.5" width="47" height="47" rx="23.5" fill="#EFEBFE" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+            fill="#283892" />
+    </svg>
+    <p>No tasks found</p>
+  </div>
+</div>
+
+<!-- Weigh Trailer Popup Overlay -->
+<div class="popup-overlay" *ngIf="showWeighTrailerPopup" (click)="closeWeighTrailerPopup()"></div>
+
+<!-- Weigh Trailer Slide-in Popup -->
+<div class="weigh-trailer-popup" [class.open]="showWeighTrailerPopup">
+  <div class="popup-header">
+    <h3>Weigh trailer</h3>
+    <button type="button" class="popup-close-btn" (click)="closeWeighTrailerPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="popup-content" *ngIf="weighTrailerData">
+    <!-- Task Info Section -->
+    <div class="task-info-section">
+      <div class="task-info-left">
+        <h4 class="customer-name">{{weighTrailerData.customer || '-'}}</h4>
+        <p class="product-info">{{weighTrailerData.product || '-'}} • {{weighTrailerData.productCategory || '-'}} • ({{weighTrailerData.productEstWeight || '0'}} kg)</p>
+        <p class="driver-name">{{weighTrailerData.driverName || '-'}}</p>
+      </div>
+      <div class="task-info-right">
+        <span class="status-badge" [ngClass]="getStatusClass(weighTrailerData.status)">{{weighTrailerData.status || '-'}}</span>
+      </div>
+    </div>
+    
+    <!-- Document Info -->
+    <div class="document-info-row">
+      <div class="doc-item">
+        <label>Movement Doc No</label>
+        <span>{{weighTrailerData.movementDocNo || weighTrailerData.taskID || '-'}}</span>
+      </div>
+      <div class="doc-item">
+        <label>Ticket No</label>
+        <span>{{weighTrailerData.ticketNo || '-'}}</span>
+      </div>
+      <div class="doc-item">
+        <label>Transaction Type</label>
+        <span>{{weighTrailerData.transactionType || 'General'}}</span>
+      </div>
+    </div>
+    
+    <!-- Weight Form Section -->
+    <div class="weight-form-section">
+      <h5>Enter the weights given below</h5>
+      
+      <div class="weight-form-grid">
+        <!-- Gross Weight Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Gross weight</label>
+            <div class="input-with-suffix">
+              <input type="number" [(ngModel)]="weighFormData.grossWeight" placeholder="0" class="weight-input">
+              <span class="input-suffix">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weighed date & time <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.grossWeighedDateTime" class="datetime-input">
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{weighFormData.grossWeight || '0.00'}}</span>
+          </div>
+        </div>
+        
+        <!-- Moisture Deduction Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Moisture deduction</label>
+            <div class="input-with-suffix">
+              <input type="number" [(ngModel)]="weighFormData.moistureDeduction" placeholder="0" class="weight-input">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Date & time <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.moistureDateTime" class="datetime-input">
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{calculateMoistureDeductionWeight()}}</span>
+          </div>
+        </div>
+        
+        <!-- Tare Weight Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tare weight</label>
+            <div class="input-with-suffix">
+              <input type="number" [(ngModel)]="weighFormData.tareWeight" placeholder="0" class="weight-input">
+              <span class="input-suffix">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weighed date & time <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.tareWeighedDateTime" class="datetime-input" readonly>
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{weighFormData.tareWeight || '0.00'}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Net Weight -->
+      <div class="net-weight-row">
+        <label>Net weight</label>
+        <span class="net-weight-value">{{calculateNetWeight()}}</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="popup-loading" *ngIf="isLoadingWeighData">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Popup Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeWeighTrailerPopup()">Cancel</button>
+    <button type="button" class="save-btn" (click)="saveWeighTrailerData()" [disabled]="isSavingWeighData">
+      <span *ngIf="!isSavingWeighData">Save changes</span>
+      <span *ngIf="isSavingWeighData">Saving...</span>
+    </button>
+  </div>
+</div>
+
+<!-- Raise Issues Popup Overlay -->
+<div class="popup-overlay" *ngIf="showRaiseIssuesPopup" (click)="closeRaiseIssuesPopup()"></div>
+
+<!-- Raise Issues Slide-in Popup -->
+<div class="weigh-trailer-popup raise-issues-popup" [class.active]="showRaiseIssuesPopup">
+  <!-- Popup Header -->
+  <div class="popup-header">
+    <h3>Raise Issues</h3>
+    <button type="button" class="close-popup-btn" (click)="closeRaiseIssuesPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Popup Content -->
+  <div class="popup-content" *ngIf="raiseIssuesData && !isLoadingRaiseIssues">
+    <!-- Task Info Card -->
+    <div class="task-info-card">
+      <div class="task-info-header">
+        <div class="task-info-details">
+          <h4 class="customer-name">{{raiseIssuesData.customer || 'N/A'}}</h4>
+          <p class="product-info">{{raiseIssuesData.productCategory || ''}} <span *ngIf="raiseIssuesData.product">› {{raiseIssuesData.product}}</span> <span *ngIf="raiseIssuesData.productEstWeight">› ({{raiseIssuesData.productEstWeight}})</span></p>
+          <p class="location-info">{{raiseIssuesData.pickupLocation || ''}}</p>
+        </div>
+        <div class="task-status-badge" [ngClass]="getStatusClass(raiseIssuesData.status)">
+          {{raiseIssuesData.status || 'N/A'}}
+        </div>
+      </div>
+      
+      <!-- Task Details Row -->
+      <div class="task-details-row">
+        <div class="detail-item">
+          <label>Supplier</label>
+          <span>{{raiseIssuesData.supplier || 'N/A'}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Vehicle Registration</label>
+          <span>{{raiseIssuesData.vehicle || 'N/A'}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Trailer number</label>
+          <span>{{raiseIssuesData.trailerIn || 'N/A'}}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Issues Section -->
+    <div class="issues-section">
+      <!-- Trailer Leaking -->
+      <div class="issue-row">
+        <label class="issue-label">Trailer Leaking</label>
+        <div class="issue-toggle-group">
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerLeaking === true"
+                  (click)="setTrailerLeaking(true)">Yes</button>
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerLeaking === false"
+                  (click)="setTrailerLeaking(false)">No</button>
+        </div>
+      </div>
+      
+      <!-- Trailer Contains Strong Odours -->
+      <div class="issue-row">
+        <label class="issue-label">Trailer contains strong odours</label>
+        <div class="issue-toggle-group">
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerContainsStrongOdours === true"
+                  (click)="setTrailerOdours(true)">Yes</button>
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerContainsStrongOdours === false"
+                  (click)="setTrailerOdours(false)">No</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Warning Message -->
+    <div class="warning-message">
+      <div class="warning-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="9" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+          <path d="M10 6V10.5M10 13.5V14" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p>The Planner will receive an email notification regarding the trailer issues once the fields above have been updated.</p>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="popup-loading" *ngIf="isLoadingRaiseIssues">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Popup Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeRaiseIssuesPopup()">Cancel</button>
+    <button type="button" class="save-btn send-report-btn" (click)="saveRaiseIssuesData()" [disabled]="isSavingRaiseIssues">
+      <span *ngIf="!isSavingRaiseIssues">Send report</span>
+      <span *ngIf="isSavingRaiseIssues">Sending...</span>
+    </button>
+  </div>
+</div>

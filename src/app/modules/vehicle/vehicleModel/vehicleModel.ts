@@ -1,0 +1,21 @@
+export class vehicleModel {
+    public TruckID  !: number
+    public RegistrationNo !: string
+    public Name !: string
+    public EngineNumber !: string
+    public FuelTankCapacity !: number
+    public Milage !: number
+    public BatteryCapacity !: string
+    public Dimension !: number
+    public Status !: string
+    public PayLoad !: number
+    public LastMaintenanceDate !: Date
+    public Description !: string
+    public VehicleModel !: string
+    public VehicleMake !: string
+    public ChassisNumber !: string
+    public TrailerNumber !: string
+    public VehicleNo !: string
+    public VechicleType !: string
+    public VehicleName !: string
+}

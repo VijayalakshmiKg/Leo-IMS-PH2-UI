@@ -1,0 +1,690 @@
+<div class="qualityTaskContainer">
+    <header class="stage_header">
+        <button type="button" class="cancelBtn" (click)="back()">Cancel</button>
+        <div class="stage_button_grp">
+            <button class="stage_button"
+                [ngClass]="{'stage_button_active':active1}" type="button"
+                (click)="next('stage1')">
+                <svg *ngIf="check1" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <rect x="-0.00585938" y="0.164398" width="23.6712"
+                        height="23.6712" rx="11.8356" fill="#283892" />
+                    <g clip-path="url(#clip0_4081_291391)">
+                        <path
+                            d="M7.16406 11.9998L10.4974 15.3332L17.1641 8.6665"
+                            stroke="white" stroke-width="1.33333"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_4081_291391">
+                            <rect width="16" height="16" fill="white"
+                                transform="translate(3.83008 4)" />
+                        </clippath>
+                    </defs>
+                </svg>
+                <span class="cusTab"
+                    [ngClass]="{'tabActive':active1}" *ngIf="!check1">1</span> Order
+                details</button>
+            <button class="stage_button"
+                [ngClass]="{'stage_button_active':active2}" type="button"
+                (click)="next('stage2')">
+                <svg *ngIf="check2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <rect x="-0.00585938" y="0.164398" width="23.6712"
+                        height="23.6712" rx="11.8356" fill="#283892" />
+                    <g clip-path="url(#clip0_4081_291391)">
+                        <path
+                            d="M7.16406 11.9998L10.4974 15.3332L17.1641 8.6665"
+                            stroke="white" stroke-width="1.33333"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_4081_291391">
+                            <rect width="16" height="16" fill="white"
+                                transform="translate(3.83008 4)" />
+                        </clippath>
+                    </defs>
+                </svg>
+                <span class="cusTab"
+                    [ngClass]="{'tabActive':active2}" *ngIf="!check2">2</span> Trailer & hygiene
+                check</button>
+            <button class="stage_button"
+                [ngClass]="{'stage_button_active':active3}" type="button"
+                (click)="next('stage3')">
+                <svg *ngIf="check3" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <rect x="-0.00585938" y="0.164398" width="23.6712"
+                        height="23.6712" rx="11.8356" fill="#283892" />
+                    <g clip-path="url(#clip0_4081_291391)">
+                        <path
+                            d="M7.16406 11.9998L10.4974 15.3332L17.1641 8.6665"
+                            stroke="white" stroke-width="1.33333"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_4081_291391">
+                            <rect width="16" height="16" fill="white"
+                                transform="translate(3.83008 4)" />
+                        </clippath>
+                    </defs>
+                </svg>
+                <span class="cusTab"
+                    [ngClass]="{'tabActive':active3}" *ngIf="!check3">3</span> Raw materials &
+                bin selection</button>
+        </div>
+        <button type="button" class="continueBtn" (click)="continue(stage)">{{btnText}}</button>
+    </header>
+    <section class="stages">
+        <div *ngIf="stage == 'stage1'">
+            <form [formGroup]="orderDetailForm" class>
+                <div class="stages_Container">
+                    <h2 class="stageHeader">{{orderNo}}</h2>
+                    <div class="stages_inner_container">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Banks man
+                                        </mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="banks Man">
+                                            <input type="text" matInput
+                                                aria-label="banks Man"
+                                                formControlName="banksMan">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Operative
+                                        </mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="operative">
+                                            <input type="text" matInput
+                                                aria-label="operative"
+                                                formControlName="operative">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Order no
+                                        </mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="order No">
+                                            <input type="text" matInput
+                                                aria-label="order No"
+                                                formControlName="orderNo">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Order date
+                                            <span class="text-dange">*</span>
+                                        </mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="order Date">
+                                            <input matInput
+                                                [matDatepicker]="picker"
+                                                formControlName="orderDate">
+                                            <mat-datepicker-toggle matSuffix
+                                                [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker
+                                                #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Order time
+                                            <span
+                                                class="text-dange">*</span></mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="order Time">
+                                            <input matInput
+                                                formControlName="orderTime"
+                                                [value]="this.orderDetailForm.get('orderTime')?.value | date:'hh:mm a'"
+                                                (click)="openTimePicker('orderTime')"
+                                                readonly
+                                                aria-label="select order Time">
+                                            <mat-icon matSuffix
+                                                (click)="openTimePicker('orderTime')" >access_time</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Consignor
+                                            <span
+                                                class="text-dange">*</span></mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="consignor">
+                                            <input type="text" matInput
+                                                aria-label="consignor"
+                                                formControlName="consignor">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <p class="content">Brookwoods Industrial Estate,
+                                    Holywell Green, Halifax HX4 9BH</p>
+                                <div class="col-md-6">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Material
+                                            description <span
+                                                class="text-dange">*</span></mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="material Description">
+                                            <input type="text" matInput
+                                                aria-label="material Description"
+                                                formControlName="materialDescription">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div
+                                        class="search d-flex flex-column align-items-start justify-content-start w-100">
+                                        <mat-label class="inputLabel">Material
+                                            quantity <span
+                                                class="text-dange">*</span></mat-label>
+                                        <mat-form-field
+                                            class="searchCls w-100 mt-3"
+                                            appearance="outline"
+                                            aria-label="material Quantity">
+                                            <input type="text" matInput
+                                                aria-label="material Quantity"
+                                                formControlName="materialQuantity">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <div
+                                        class="d-flex justify-content-betwen w-100 align-items-center mb-2">
+                                        <p class="chooseContent">Cat 3
+                                            materials</p>
+                                        <div
+                                            class="d-flex gap-3 align-items-center">
+                                            <button class="chooseBtn "
+                                                [ngClass]="{'yesBtn':cat3 === 'Yes'}"
+                                                type="button"
+                                                (click)="cat3 = 'Yes'">Yes</button>
+                                            <button class="chooseBtn "
+                                                [ngClass]="{'noBtn':cat3 === 'No'}"
+                                                type="button"
+                                                (click)="cat3 = 'No'">No</button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="d-flex justify-content-betwen w-100 align-items-center mb-3">
+                                        <p class="chooseContent">Paperwork
+                                            matches product</p>
+                                        <div
+                                            class="d-flex gap-3 align-items-center">
+                                            <button class="chooseBtn"
+                                                [ngClass]="{'yesBtn':paperWork === 'Yes'}"
+                                                type="button"
+                                                (click)="paperWork = 'Yes'">Yes</button>
+                                            <button class="chooseBtn"
+                                                [ngClass]="{'noBtn':paperWork === 'No'}"
+                                                type="button"
+                                                (click)="paperWork = 'No'">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="stages_Container mt-3 mb-3">
+                <h2 class="stageHeader">Vehicle & driver</h2>
+                <div class="addorders-bodyContent w-100">
+                    <div class="form-container">
+
+                        <div class="form-row disableText" >
+                            <button type="button" class="inputLikeBtn"><svg
+                                    width="20" height="20" viewBox="0 0 20 20"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_2650_5066)">
+                                        <path
+                                            d="M17.1349 5.48206H12.6328V13.7941H14.3715H14.3928L14.3949 13.8152C14.4896 14.791 15.3122 15.5532 16.3127 15.5532C17.3131 15.5532 18.1351 14.791 18.2298 13.8152L18.2319 13.794H18.2531H19.206C19.6313 13.794 19.9785 13.4456 19.9785 13.0215H20.002L19.9785 13.0215V13.0214V13.0214V13.0212V13.0211V13.0209V13.0207V13.0205V13.0203V13.02V13.0197V13.0193V13.0189V13.0185V13.0181V13.0176V13.0171V13.0166V13.0161V13.0155V13.0149V13.0142V13.0136V13.0129V13.0122V13.0114V13.0106V13.0098V13.009V13.0081V13.0072V13.0063V13.0054V13.0044V13.0034V13.0024V13.0013V13.0003V12.9991V12.998V12.9969V12.9957V12.9945V12.9932V12.992V12.9907V12.9894V12.988V12.9867V12.9853V12.9838V12.9824V12.9809V12.9794V12.9779V12.9764V12.9748V12.9732V12.9716V12.97V12.9683V12.9666V12.9649V12.9632V12.9614V12.9596V12.9578V12.956V12.9541V12.9522V12.9503V12.9484V12.9465V12.9445V12.9425V12.9405V12.9385V12.9364V12.9343V12.9322V12.9301V12.9279V12.9258V12.9236V12.9213V12.9191V12.9169V12.9146V12.9123V12.91V12.9076V12.9052V12.9029V12.9005V12.898V12.8956V12.8931V12.8906V12.8881V12.8856V12.883V12.8805V12.8779V12.8753V12.8727V12.87V12.8674V12.8647V12.862V12.8592V12.8565V12.8537V12.851V12.8482V12.8454V12.8425V12.8397V12.8368V12.8339V12.831V12.8281V12.8251V12.8222V12.8192V12.8162V12.8132V12.8102V12.8071V12.8041V12.801V12.7979V12.7948V12.7917V12.7885V12.7854V12.7822V12.779V12.7758V12.7725V12.7693V12.766V12.7628V12.7595V12.7562V12.7529V12.7495V12.7462V12.7428V12.7394V12.7361V12.7327V12.7292V12.7258V12.7223V12.7189V12.7154V12.7119V12.7084V12.7049V12.7014V12.6978V12.6943V12.6907V12.6871V12.6835V12.6799V12.6763V12.6726V12.669V12.6653V12.6616V12.658V12.6543V12.6505V12.6468V12.6431V12.6393V12.6356V12.6318V12.628V12.6242V12.6204V12.6166V12.6128V12.609V12.6051V12.6013V12.5974V12.5935V12.5896V12.5857V12.5818V12.5779V12.574V12.57V12.5661V12.5621V12.5582V12.5542V12.5502V12.5462V12.5422V12.5382V12.5342V12.5301V12.5261V12.522V12.518V12.5139V12.5099V12.5058V12.5017V12.4976V12.4935V12.4894V12.4853V12.4811V12.477V12.4729V12.4687V12.4646V12.4604V12.4562V12.4521V12.4479V12.4437V12.4395V12.4353V12.4311V12.4269V12.4227V12.4184V12.4142V12.41V12.4057V12.4015V12.3972V12.393V12.3887V12.3845V12.3802V12.3759V12.3716V12.3673V12.3631V12.3588V12.3545V12.3502V12.3459V12.3416V12.3372V12.3329V12.3286V12.3243V12.32V12.3156V12.3113V12.307V12.3026V12.2983V12.2939V12.2896V12.2852V12.2809V12.2765V12.2722V12.2678V12.2635V12.2591V12.2548V12.2504V12.246V12.2417V12.2373V12.2329V12.2286V12.2242V12.2198V12.2154V12.2111V12.2067V12.2023V12.198V12.1936V12.1892V12.1848V12.1805V12.1761V12.1717V12.1674V12.163V12.1586V12.1542V12.1499V12.1455V12.1411V12.1368V12.1324V12.1281V12.1237V12.1193V12.115V12.1106V12.1063V12.1019V12.0976V12.0932V12.0889V12.0845V12.0802V12.0759V12.0715V12.0672V12.0629V12.0586V12.0542V12.0499V12.0456V12.0413V12.037V12.0327V12.0284V12.0241V12.0198V12.0155V12.0113V12.007V12.0027V11.9984V11.9942V11.9899V11.9857V11.9814V11.9772V11.973V11.9687V11.9645V11.9603V11.9561V11.9519V11.9477V11.9435V11.9393V11.9351V11.9309V11.9268V11.9226V11.9184V11.9143V11.9102V11.906V11.9019V11.8978V11.8937V11.8896V11.8855V11.8814V11.8773V11.8732V11.8692V11.8651V11.8611V11.857V11.853V11.849V11.845V11.841V11.837V11.833V11.829V11.825V11.8211V11.8171V11.8132V11.8093V11.8053V11.8014V11.7975V11.7936V11.7898V11.7859V11.782V11.7782V11.7743V11.7705V11.7667V11.7629V11.7591V11.7553V11.7516V11.7478V11.7441V11.7403V11.7366V11.7329V11.7292V11.7255V11.7218V11.7182V11.7145V11.7109V11.7073V11.7036V11.7V11.6965V11.6929V11.6893V11.6858V11.6822V11.6787V11.6752V11.6717V11.6682V11.6648V11.6613V11.6579V11.6545V11.6511V11.6477V11.6443V11.6409V11.6376V11.6343V11.6309V11.6276V11.6243V11.6211V11.6178V11.6146V11.6113V11.6081V11.6049V11.6018V11.5986V11.5955V11.5923V11.5892V11.5861V11.583V11.58V11.5769V11.5739V11.5709V11.5679V11.5649V11.562V11.559V11.5561V11.5532V11.5503V11.5474V11.5446V11.5417V11.5389V11.5361V11.5333V11.5306V11.5278V11.5251V11.5224V11.5197V11.5171V11.5144V11.5118V11.5092V11.5066V11.504V11.5015V11.499V11.4964V11.494V11.4915V11.489V11.4866V11.4842V11.4818V11.4795V11.4771V11.4748V11.4725V11.4702V11.468V11.4657V11.4635V11.4613V11.4591V11.457V11.4549V11.4527V11.4507V11.4486V11.4466V11.4445V11.4426V11.4406V11.4386V11.4367V11.4348V11.4329V11.4311V11.4292V11.4274V11.4256V11.4239V11.4221V11.4204V11.4187V11.4171V11.4154V11.4138V11.4122V11.4107C19.9785 11.148 19.885 10.5932 19.7417 10.2521L19.7417 10.2521L19.7412 10.2508L18.2891 6.16772C18.187 5.98066 18.0064 5.80919 17.7965 5.68432C17.5861 5.55909 17.3485 5.48206 17.1349 5.48206ZM13.5015 6.49632V6.47289L13.525 6.47289L16.7387 6.47293C16.8284 6.47293 16.9425 6.51556 17.0429 6.57525C17.1433 6.63495 17.2353 6.71483 17.2782 6.79406L17.2785 6.79387L17.2799 6.79794L18.193 9.59541L18.203 9.62612H18.1707H13.525H13.5015V9.60268V6.49632ZM17.3115 13.6258C17.3115 14.1771 16.864 14.6247 16.3127 14.6247C15.7607 14.6247 15.3138 14.1771 15.3138 13.6258C15.3138 13.0744 15.7607 12.6281 16.3127 12.6281C16.8639 12.6281 17.3115 13.0745 17.3115 13.6258Z"
+                                            fill="#475569" stroke="#6B6B6B"
+                                            stroke-width="0.046875" />
+                                        <path
+                                            d="M5.72338 13.8152L5.72542 13.794H5.74672H11.4702V4.44678H0.0238018V13.794H1.86517H1.88642L1.8885 13.8152C1.98437 14.7909 2.80577 15.5532 3.80686 15.5532C4.80735 15.5532 5.62991 14.7909 5.72338 13.8152ZM4.8057 13.6258C4.8057 14.1771 4.35813 14.6246 3.80682 14.6246C3.25492 14.6246 2.80795 14.1771 2.80795 13.6258C2.80795 13.0744 3.25492 12.6281 3.80682 12.6281C4.3581 12.6281 4.8057 13.0744 4.8057 13.6258Z"
+                                            fill="#475569" stroke="#6B6B6B"
+                                            stroke-width="0.046875" />
+                                    </g>
+                                    <defs>
+                                        <clippath id="clip0_2650_5066">
+                                            <rect width="20.0017"
+                                                height="20.0017" fill="white"
+                                                transform="matrix(-1 0 0 1 20.002 -0.000854492)" />
+                                        </clippath>
+                                    </defs>
+                                </svg>
+                                {{this.orderDetails?.truckName || ''}}
+                            </button>
+                            <button type="button" class="inputLikeBtn">
+                                <svg width="18" height="16" viewBox="0 0 18 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="1.72357" cy="1.72357"
+                                        r="1.32858"
+                                        transform="matrix(-1 0 0 1 10.1104 11.6586)"
+                                        stroke="#475569"
+                                        stroke-width="0.789968" />
+                                    <circle cx="1.72357" cy="1.72357"
+                                        r="1.32858"
+                                        transform="matrix(-1 0 0 1 5.49268 11.6586)"
+                                        stroke="#475569"
+                                        stroke-width="0.789968" />
+                                    <path
+                                        d="M17.8501 0.999146V9.8253H0.333582V0.999146H17.8501Z"
+                                        fill="#475569" />
+                                    <path
+                                        d="M0.333582 10.7758H17.8501V13.1521H10.4497L10.4231 12.9394C10.3958 12.7205 10.3331 12.5075 10.2377 12.3087C9.56754 10.9125 7.64825 10.7405 6.74054 11.9953L6.66959 12.0934C6.52042 12.2996 6.40969 12.531 6.34272 12.7766L6.24031 13.1521H5.90085L5.62927 12.4052C4.90944 10.8548 2.72247 10.8076 1.93641 12.3255L1.89513 12.4052L1.62356 13.0842H0.333582V10.7758Z"
+                                        fill="#475569" />
+                                    <path
+                                        d="M17.8501 0.999146V9.8253H0.333582V0.999146H17.8501Z"
+                                        stroke="#475569"
+                                        stroke-width="0.135787" />
+                                    <path
+                                        d="M0.333582 10.7758H17.8501V13.1521H10.4497L10.4231 12.9394C10.3958 12.7205 10.3331 12.5075 10.2377 12.3087C9.56754 10.9125 7.64825 10.7405 6.74054 11.9953L6.66959 12.0934C6.52042 12.2996 6.40969 12.531 6.34272 12.7766L6.24031 13.1521H5.90085L5.62927 12.4052C4.90944 10.8548 2.72247 10.8076 1.93641 12.3255L1.89513 12.4052L1.62356 13.0842H0.333582V10.7758Z"
+                                        stroke="#475569"
+                                        stroke-width="0.135787" />
+                                </svg>
+                                {{this.orderDetails?.trailerNumber || ''}}
+                            </button>
+                            <button type="button" class="inputLikeBtn">
+                                <svg width="21" height="20" viewBox="0 0 21 20"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.5012 6.66638C13.5012 8.23135 12.2326 9.5 10.6676 9.5C9.10264 9.5 7.83398 8.23135 7.83398 6.66638C7.83398 5.10142 9.10264 3.83276 10.6676 3.83276C12.2326 3.83276 13.5012 5.10142 13.5012 6.66638Z"
+                                        fill="#475569" stroke="#475569" />
+                                    <path
+                                        d="M16.8345 15.8338V16.6672C16.8345 16.7556 16.7993 16.8404 16.7368 16.903C16.6743 16.9655 16.5895 17.0006 16.5011 17.0006H4.8334C4.74498 17.0006 4.66018 16.9655 4.59765 16.903C4.53513 16.8404 4.5 16.7556 4.5 16.6672V15.8338C4.5 14.6402 4.97415 13.4955 5.81815 12.6515C6.66214 11.8075 7.80684 11.3334 9.00043 11.3334H12.334C13.5276 11.3334 14.6723 11.8075 15.5163 12.6515C16.3603 13.4955 16.8345 14.6402 16.8345 15.8338Z"
+                                        fill="#475569" stroke="#475569" />
+                                </svg>
+                                {{this.orderDetails?.driverName || ''}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div *ngIf="stage == 'stage2'">
+            <form [formGroup]="hygieneCheckForm">
+                <div class="stages_Container mt-3 mb-3">
+                    <h2 class="stageHeader">Trailer & Hygiene check</h2>
+                    <div class="container-fluid">
+                        <div class="contentBox col-md-12 p-0">
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Twist locks</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':twistLocks === 'Yes'}"
+                                        type="button"
+                                        (click)="twistLocks = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':twistLocks === 'No'}"
+                                        type="button"
+                                        (click)="twistLocks = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Lights</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':lights === 'Yes'}"
+                                        type="button"
+                                        (click)="lights = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':lights === 'No'}"
+                                        type="button"
+                                        (click)="lights = 'No'">Not Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Door seal</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':doorSeal === 'Yes'}"
+                                        type="button"
+                                        (click)="doorSeal = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':doorSeal === 'No'}"
+                                        type="button"
+                                        (click)="doorSeal = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Trailer integrity</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':trailerIntegrity === 'Yes'}"
+                                        type="button"
+                                        (click)="trailerIntegrity = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':trailerIntegrity === 'No'}"
+                                        type="button"
+                                        (click)="trailerIntegrity = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Sheet & bib clean</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':bibClean === 'Yes'}"
+                                        type="button"
+                                        (click)="bibClean = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':bibClean === 'No'}"
+                                        type="button"
+                                        (click)="bibClean = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Center bar check</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':centerBarCheck === 'Yes'}"
+                                        type="button"
+                                        (click)="centerBarCheck = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':centerBarCheck === 'No'}"
+                                        type="button"
+                                        (click)="centerBarCheck = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Drain tap</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':drainTap === 'Yes'}"
+                                        type="button"
+                                        (click)="drainTap = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':drainTap === 'No'}"
+                                        type="button"
+                                        (click)="drainTap = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Trailer clean inside
+                                    and out</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':trailerClean === 'Yes'}"
+                                        type="button"
+                                        (click)="trailerClean = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':trailerClean === 'No'}"
+                                        type="button"
+                                        (click)="trailerClean = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-betwen w-100 align-items-center">
+                                <p class="chooseContent">Tipping shed floor &
+                                    bin lid clean</p>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <button class="chooseBtn"
+                                        [ngClass]="{'yesBtn':tippingShed === 'Yes'}"
+                                        type="button"
+                                        (click)="tippingShed = 'Yes'">Ok</button>
+                                    <button class="chooseBtn "
+                                        [ngClass]="{'noBtn':tippingShed === 'No'}"
+                                        type="button"
+                                        (click)="tippingShed = 'No'">Not
+                                        Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div *ngIf="stage == 'stage3'">
+            <form [formGroup]="rawMaterialsForm">
+                <div class="stages_Container mt-3 mb-3">
+                    <h2 class="stageHeader">Raw materials & Bin selection</h2>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="selectGrp">
+                                <mat-radio-group class="matRadioGroup"
+                                    aria-label="Select an option"
+                                    formControlName="rawMaterial">
+                                    <mat-radio-button class="cus_radio"
+                                        *ngFor="let item of RawMaterialsLists"
+                                        [value]="item.id"
+                                        [ngClass]="{'cus_radio_acitve':item.id === rawMaterialsForm.value.rawMaterial}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            *ngIf="item.id != rawMaterialsForm.value.rawMaterial"
+                                            width="12" height="12"
+                                            viewBox="0 0 12 12" fill="none">
+                                            <circle cx="6" cy="6" r="5.5"
+                                                stroke="black"
+                                                stroke-opacity="0.69" />
+                                        </svg>
+                                        <svg
+                                            *ngIf="item.id === rawMaterialsForm.value.rawMaterial"
+                                            width="12" height="12"
+                                            viewBox="0 0 12 12" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="6" cy="6" r="5.5"
+                                                stroke="white" />
+                                            <path d="M8 4.75L5.25 7.5L4 6.25"
+                                                stroke="white"
+                                                stroke-width="1.3"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        {{item.description}}</mat-radio-button>
+                                    <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
+                                </mat-radio-group>
+                            </div>
+                            <div class="selectGrp">
+                                <mat-radio-group class="matRadioGroup"
+                                    aria-label="Select an option"
+                                    formControlName="binSelection"
+                                 >
+                                    <mat-radio-button class="cus_radio"
+                                        *ngFor="let item of binSelectionList"
+                                        [value]="item.binID"
+                                        (click)="getRawMaterial($event)"
+                                        [ngClass]="{'cus_radio_acitve':item.binID === rawMaterialsForm.value.binSelection}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            *ngIf="item.binID != rawMaterialsForm.value.binSelection"
+                                            width="12" height="12"
+                                            viewBox="0 0 12 12" fill="none">
+                                            <circle cx="6" cy="6" r="5.5"
+                                                stroke="black"
+                                                stroke-opacity="0.69" />
+                                        </svg>
+                                        <svg
+                                            *ngIf="item.binID === rawMaterialsForm.value.binSelection"
+                                            width="12" height="12"
+                                            viewBox="0 0 12 12" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="6" cy="6" r="5.5"
+                                                stroke="white" />
+                                            <path d="M8 4.75L5.25 7.5L4 6.25"
+                                                stroke="white"
+                                                stroke-width="1.3"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                      <!-- {{item.binID}} -->
+                                        {{item.binName}}</mat-radio-button>
+                                    <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
+                                </mat-radio-group>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                <div class="stages_Container mt-3 mb-3">
+                    <div class="container-fluid">
+                        <div class="row p-3">
+                            <div class="contentBox col-md-12 p-0">
+                                <div
+                                    class="d-flex justify-content-betwen w-100 align-items-center">
+                                    <p class="chooseContent">Freshness check (1
+                                        good -5 bad)</p>
+                                    <div
+                                        class="d-flex gap-3 align-items-center">
+                                        <button class="ratingBtn"
+                                            [ngClass]="{'ratingBtnActive':freshnessCheck > 0}"
+                                            (click)="freshnessCheck = 1">1</button>
+                                        <button class="ratingBtn"
+                                            [ngClass]="{'ratingBtnActive':freshnessCheck > 1}"
+                                            (click)="freshnessCheck = 2">2</button>
+                                        <button class="ratingBtn "
+                                            [ngClass]="{'ratingBtnActive':freshnessCheck > 2}"
+                                            (click)="freshnessCheck = 3">3</button>
+                                        <button class="ratingBtn "
+                                            [ngClass]="{'ratingBtnActive':freshnessCheck > 3}"
+                                            (click)="freshnessCheck = 4">4</button>
+                                        <button class="ratingBtn "
+                                            [ngClass]="{'ratingBtnActive':freshnessCheck > 4}"
+                                            (click)="freshnessCheck = 5">5</button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="d-flex justify-content-betwen w-100 align-items-center">
+                                    <p class="chooseContent">Contaminations
+                                        (Trailer check)</p>
+                                    <div
+                                        class="d-flex gap-3 align-items-center">
+                                        <button class="chooseBtn"
+                                            [ngClass]="{'yesBtn':contaminationTrailer === 'Yes'}"
+                                            type="button"
+                                            (click)="contaminationTrailer = 'Yes'">Yes</button>
+                                        <button class="chooseBtn"
+                                            [ngClass]="{'noBtn':contaminationTrailer === 'No'}"
+                                            type="button"
+                                            (click)="contaminationTrailer = 'No'">No</button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="d-flex justify-content-betwen w-100 align-items-center">
+                                    <p class="chooseContent">Contaminations (Bin
+                                        check)</p>
+                                    <div
+                                        class="d-flex gap-3 align-items-center">
+                                        <button class="chooseBtn"
+                                            [ngClass]="{'yesBtn':contaminationBin === 'Yes'}"
+                                            type="button"
+                                            (click)="contaminationBin = 'Yes'">Yes</button>
+                                        <button class="chooseBtn"
+                                            [ngClass]="{'noBtn':contaminationBin === 'No'}"
+                                            type="button"
+                                            (click)="contaminationBin = 'No'">No</button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="d-flex justify-content-betwen w-100 align-items-center">
+                                    <p class="chooseContent">Temperature</p>
+                                    <div
+                                        class="search d-flex flex-column align-items-end justify-content-end w-100">
+                                        <!-- <mat-label class="inputLabel">Operative </mat-label> -->
+                                        <mat-form-field
+                                            class="searchCls w-50 mt-3"
+                                            appearance="outline"
+                                            aria-label="Company code">
+                                            <input type="companyCode" matInput
+                                                aria-label="Company code"
+                                                formControlName="temperature">
+                                            <mat-icon matSuffix><svg width="15"
+                                                    height="23"
+                                                    viewBox="0 0 15 23"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M2.82324 10.8696C1.81396 10.8696 1.02051 10.0635 1.02051 9.06055C1.02051 8.05762 1.81396 7.25146 2.82324 7.25146C3.82617 7.25146 4.63232 8.05762 4.63232 9.06055C4.63232 10.0635 3.82617 10.8696 2.82324 10.8696ZM2.82324 10.0508C3.38184 10.0508 3.82617 9.6001 3.82617 9.06055C3.82617 8.5083 3.38184 8.06396 2.82324 8.06396C2.29639 8.06396 1.82666 8.5083 1.82666 9.06055C1.82666 9.6001 2.29639 10.0508 2.82324 10.0508ZM9.62793 16.6523C7.10156 16.6523 5.50195 14.8179 5.50195 11.917C5.50195 9.0415 7.12061 7.18799 9.62793 7.18799C11.6211 7.18799 13.1382 8.40039 13.4302 10.2285H12.2749C11.9829 9.02881 10.9355 8.2417 9.62793 8.2417C7.83789 8.2417 6.67627 9.68896 6.67627 11.917C6.67627 14.1641 7.8252 15.5986 9.63428 15.5986C10.98 15.5986 11.9448 14.9512 12.2749 13.834H13.4302C13.0112 15.6431 11.6528 16.6523 9.62793 16.6523Z"
+                                                        fill="#6B6B6B" />
+                                                </svg>
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div
+                                    class="d-flex justify-content-betwen w-100 align-items-center">
+                                    <p class="chooseContent">Supplier
+                                        Non-conformance required (P-Q-05)</p>
+                                    <div
+                                        class="d-flex gap-3 align-items-center">
+                                        <button class="chooseBtn"
+                                            [ngClass]="{'yesBtn':supplierRequired === 'Yes'}"
+                                            type="button"
+                                            (click)="supplierRequired = 'Yes'">Yes</button>
+                                        <button class="chooseBtn"
+                                            [ngClass]="{'noBtn':supplierRequired === 'No'}"
+                                            type="button"
+                                            (click)="supplierRequired = 'No'">No</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="stages_Container mt-3 mb-3">
+                    <div class="container-fluid">
+                        <div class="search row p-3">
+                            <p class="chooseContent mb-1">Comments</p>
+                            <mat-form-field appearance="outline"
+                                class="w-100 pl-2">
+                                <textarea matInput
+                                    formControlName="comments"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

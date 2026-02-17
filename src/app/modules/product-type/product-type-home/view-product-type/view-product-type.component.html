@@ -1,0 +1,161 @@
+<div class="viewProductTypes-header d-flex gap-24 align-items-center">
+    <span>
+      {{totalProductType}} product type(s) in List
+    </span>
+    <div class="search ml-3">
+      <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search product type">
+          <input type="search" matInput placeholder="Search product type"
+               aria-label="Search" (keyup)="filteredUsersList($event)" [(ngModel)]="searchValue">
+          <mat-icon matPrefix>search</mat-icon>
+          <button class="common-btn" *ngIf="searchValue" matSuffix aria-label="Clear" (click)="clear()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 4L4 12" stroke="#1E293B" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 4L12 12" stroke="#1E293B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+      </mat-form-field>
+  </div>
+</div>
+
+<div class="viewProductTypes-container">
+    <div class="ProductTypesList">
+        <h4>Product type name</h4>
+
+        <button *ngFor="let item of ProductTypesList;index as i" [class.activeCls]="i == activeProductTypes" class="ProductTypesListCls common-btn w-100" (click)="changeProductTypesView(item, i)">
+            <div class="text-left">
+              <h3 class="mb-2">{{item.productTypeName}}</h3>
+              <p class="m-0">PT{{item.productTypeID}}</p>
+            </div>
+        </button>
+    </div>
+
+    <div class="ProductTypesViewDeatils">
+        <div class="d-flex justify-content-between view-head">
+            <div class="text-left">
+                <h3 class="mb-1">{{viewProductTypesRecord.productTypeName}}</h3>
+                <p class="m-0">Product Type ID: PT{{viewProductTypesRecord.productTypeID}}</p>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-start">
+                <div class="mr-4 d-flex align-items-center justify-content-start">
+                    <button class="editBtn bgColorCls" (click)="editProductTypes()" *ngIf="permissions?.editAccess">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_934_27443)">
+                            <path d="M2.66602 13.3333H5.33268L12.3327 6.33333C12.5078 6.15824 12.6467 5.95037 12.7414 5.72159C12.8362 5.49282 12.885 5.24762 12.885 5C12.885 4.75238 12.8362 4.50718 12.7414 4.2784C12.6467 4.04963 12.5078 3.84176 12.3327 3.66666C12.1576 3.49157 11.9497 3.35268 11.7209 3.25791C11.4922 3.16315 11.247 3.11438 10.9993 3.11438C10.7517 3.11438 10.5065 3.16315 10.2778 3.25791C10.049 3.35268 9.84111 3.49157 9.66602 3.66666L2.66602 10.6667V13.3333Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 4.33325L11.6667 6.99992" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_934_27443">
+                            <rect width="16" height="16" fill="white"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
+                        Edit
+                    </button>
+
+                    <button class="moreBtn" [matMenuTriggerFor]="menu" aria-label="more" *ngIf="permissions?.deleteAccess">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <g clip-path="url(#clip0_934_27455)">
+                              <path d="M7.33594 7.9987C7.33594 8.17551 7.40618 8.34508 7.5312 8.4701C7.65622 8.59513 7.82579 8.66536 8.0026 8.66536C8.17942 8.66536 8.34898 8.59513 8.47401 8.4701C8.59903 8.34508 8.66927 8.17551 8.66927 7.9987C8.66927 7.82189 8.59903 7.65232 8.47401 7.52729C8.34898 7.40227 8.17942 7.33203 8.0026 7.33203C7.82579 7.33203 7.65622 7.40227 7.5312 7.52729C7.40618 7.65232 7.33594 7.82189 7.33594 7.9987Z" stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M7.33594 12.6665C7.33594 12.8434 7.40618 13.0129 7.5312 13.1379C7.65622 13.263 7.82579 13.3332 8.0026 13.3332C8.17942 13.3332 8.34898 13.263 8.47401 13.1379C8.59903 13.0129 8.66927 12.8434 8.66927 12.6665C8.66927 12.4897 8.59903 12.3202 8.47401 12.1951C8.34898 12.0701 8.17942 11.9999 8.0026 11.9999C7.82579 11.9999 7.65622 12.0701 7.5312 12.1951C7.40618 12.3202 7.33594 12.4897 7.33594 12.6665Z" stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M7.33594 3.33464C7.33594 3.51145 7.40618 3.68102 7.5312 3.80604C7.65622 3.93106 7.82579 4.0013 8.0026 4.0013C8.17942 4.0013 8.34898 3.93106 8.47401 3.80604C8.59903 3.68102 8.66927 3.51145 8.66927 3.33464C8.66927 3.15782 8.59903 2.98826 8.47401 2.86323C8.34898 2.73821 8.17942 2.66797 8.0026 2.66797C7.82579 2.66797 7.65622 2.73821 7.5312 2.86323C7.40618 2.98826 7.33594 3.15782 7.33594 3.33464Z" stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_934_27455">
+                                <rect width="16" height="16" fill="white"/>
+                              </clipPath>
+                            </defs>
+                        </svg>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <div class="d-flex flex-column">
+                            <button mat-menu-item class="common-btn" (click)="deleteProductTypes()">
+                                <span>Remove</span>
+                            </button>
+                        </div>
+                    </mat-menu>
+                </div>
+
+                <button class="common-btn" (click)="back()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15" stroke="#1E293B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 5L15 15" stroke="#1E293B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="Product type details">
+                <div class="basicActivityDetails-container">
+                    <div class="d-flex">
+                        <label>Product type ID</label>
+                        <span>PT{{viewProductTypesRecord.productTypeID ? viewProductTypesRecord.productTypeID : '-'}}</span>
+                    </div>
+                    <div class="d-flex">
+                        <label>Product type name</label>
+                        <span>{{viewProductTypesRecord.productTypeName ? viewProductTypesRecord.productTypeName : '-'}}</span>
+                    </div>
+                   <!--<div class="d-flex">
+                        <label>Description</label>
+                        <span>{{viewProductTypesRecord.description ? viewProductTypesRecord.description : '-'}}</span>
+                    </div>--> 
+                    <div class="d-flex">
+                        <label>Product type status</label>
+                        <span *ngIf="viewProductTypesRecord?.deleted == false" class="statusAvailable">{{viewProductTypesRecord.deleted ? '-' : 'Active'}}</span>
+                        <span *ngIf="viewProductTypesRecord?.deleted == true" class="inTransmitCls">{{viewProductTypesRecord.deleted ? 'Inactive' : '-'}}</span>
+                    </div>
+                </div>
+                <app-custom-paginator 
+                [length]="totalPages" 
+                [pageSizeOptions]="[10,25, 50,75, 100]" 
+                [showFirstLastButtons]="true" 
+                (pageChange)="onPageChange($event)">
+              </app-custom-paginator>
+            </mat-tab>
+
+            <mat-tab label="History">
+                <div class="documentRecord">
+                    <div class="doc-card" *ngIf="productTypeHistorydetails?.length > 0">
+                        <div class="doc-recordcard d-flex align-items-center justify-content-between" *ngFor="let data of productTypeHistorydetails">
+                            <div class="d-flex align-items-center justify-content-between gap-12">
+                                <div>
+                                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="24" cy="24" r="24" fill="#283892" fill-opacity="0.2"/>
+                                        <g clip-path="url(#clip0_6869_61644)">
+                                        <path d="M24.0013 13.5L33.3346 18.75V29.25L24.0013 34.5L14.668 29.25V18.75L24.0013 13.5Z" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M24 24L33.3333 18.75" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M24 24V34.5" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M24.0013 24L14.668 18.75" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_6869_61644">
+                                        <rect width="28" height="28" fill="white" transform="translate(10 10)"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="doc-heading">
+                                    <h6>Order No. - {{data.orderNo}}</h6>
+                                    <p>{{data.orderDate ? (data.orderDate | date:'d MMM y, h:mm a'):'-'}}</p>
+                                </div>
+                            </div>
+                            <div class="doc-heading">
+                                <h6>Product</h6>
+                                <p>{{data.productName ? data.productName:'-'}}</p>
+                            </div>
+                            <div class="doc-heading">
+                                <h6>Quantity</h6>
+                                <p>{{data.quantity ? data.quantity:'-'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="noRecord" *ngIf="productTypeHistorydetails?.length == 0">
+                    <p>No records!</p>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="importtemplate-container">
+    <div class="importtemplate-header d-flex justify-content-between align-items-center">
+        <h6>Template</h6>
+        <button class="common-btn" (click)=" close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <g clip-path="url(#clip0_4411_85429)">
+                    <path d="M15 5L5 15" stroke="#334155" stroke-width="1.25" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M5 5L15 15" stroke="#334155" stroke-width="1.25" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_4411_85429">
+                        <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </button>
+    </div>
+    <form [formGroup]="importForm">
+        <div class="import-content">
+          <div>
+            <mat-radio-group
+              class="example-radio-group-label d-flex flex-column"
+              formControlName="selectedTemplate"
+            >
+              <mat-radio-button
+                [value]="data.orderTemplateName"
+                class="example-radio-button"
+                *ngFor="let data of importData"
+                (click)="importDetails(data)"
+              >
+                {{ data.orderTemplateName }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      
+        <div class="bottom-btn d-flex justify-content-end align-items-center">
+          <button type="button" class="cancel-btn common-btn mr-2" (click)="close()">
+            Cancel
+          </button>
+          <button type="button" class="import-btn common-btn" (click)="onImport()">
+            Import
+          </button>
+        </div>
+      </form>
+
+</div>

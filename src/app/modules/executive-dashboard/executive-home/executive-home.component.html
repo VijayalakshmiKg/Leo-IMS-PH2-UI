@@ -1,0 +1,417 @@
+<div class="container-fluid exe-dashboard">
+    <div class="d-flex justify-content-end">
+        <mat-form-field>
+            <mat-datepicker #pickers></mat-datepicker>
+            <mat-datepicker-toggle matPrefix [for]="pickers"></mat-datepicker-toggle>
+
+            <input matInput autocomplete="nope" [(ngModel)]="dateInputValue" [matDatepicker]="pickers"
+                (dateChange)="changeDateEvent($event)">
+
+        </mat-form-field>
+    </div>
+
+    <div class="">
+        <div class="overview-count row justify-content-between">
+            <div class="col count-card">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="24" fill="#2CB6B8" />
+                            <g clip-path="url(#clip0_129_135249)">
+                                <path
+                                    d="M20 19C20 20.0609 20.4214 21.0783 21.1716 21.8284C21.9217 22.5786 22.9391 23 24 23C25.0609 23 26.0783 22.5786 26.8284 21.8284C27.5786 21.0783 28 20.0609 28 19C28 17.9391 27.5786 16.9217 26.8284 16.1716C26.0783 15.4214 25.0609 15 24 15C22.9391 15 21.9217 15.4214 21.1716 16.1716C20.4214 16.9217 20 17.9391 20 19Z"
+                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M18 33V31C18 29.9391 18.4214 28.9217 19.1716 28.1716C19.9217 27.4214 20.9391 27 22 27H26C27.0609 27 28.0783 27.4214 28.8284 28.1716C29.5786 28.9217 30 29.9391 30 31V33"
+                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135249">
+                                    <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Drivers</div>
+                        <div class="card-total mt-2">{{executiveService.executiveDashboardCount.totalDrivers}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col count-card">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24.5" cy="24" r="24" fill="#FF9500" />
+                            <g clip-path="url(#clip0_129_135264)">
+                                <path
+                                    d="M17.5 29C17.5 29.5304 17.7107 30.0391 18.0858 30.4142C18.4609 30.7893 18.9696 31 19.5 31C20.0304 31 20.5391 30.7893 20.9142 30.4142C21.2893 30.0391 21.5 29.5304 21.5 29C21.5 28.4696 21.2893 27.9609 20.9142 27.5858C20.5391 27.2107 20.0304 27 19.5 27C18.9696 27 18.4609 27.2107 18.0858 27.5858C17.7107 27.9609 17.5 28.4696 17.5 29Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M27.5 29C27.5 29.5304 27.7107 30.0391 28.0858 30.4142C28.4609 30.7893 28.9696 31 29.5 31C30.0304 31 30.5391 30.7893 30.9142 30.4142C31.2893 30.0391 31.5 29.5304 31.5 29C31.5 28.4696 31.2893 27.9609 30.9142 27.5858C30.5391 27.2107 30.0304 27 29.5 27C28.9696 27 28.4609 27.2107 28.0858 27.5858C27.7107 27.9609 27.5 28.4696 27.5 29Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M17.5 29H15.5V25M14.5 17H25.5V29M21.5 29H27.5M31.5 29H33.5V23M33.5 23H25.5M33.5 23L30.5 18H25.5"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15.5 21H19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135264">
+                                    <rect width="24" height="24" fill="white" transform="translate(12.5 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Trucks</div>
+                        <div class="card-total mt-2">{{executiveService.executiveDashboardCount?.totalTrucks}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col count-card">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="24" fill="#52AC56" />
+                            <g clip-path="url(#clip0_129_135275)">
+                                <path
+                                    d="M14 15H15C15.5304 15 16.0391 15.2107 16.4142 15.5858C16.7893 15.9609 17 16.4696 17 17V27C17 27.5304 17.2107 28.0391 17.5858 28.4142C17.9609 28.7893 18.4696 29 19 29H34"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M21 21C21 20.2044 21.3161 19.4413 21.8787 18.8787C22.4413 18.3161 23.2044 18 24 18H28C28.7956 18 29.5587 18.3161 30.1213 18.8787C30.6839 19.4413 31 20.2044 31 21V23C31 23.7956 30.6839 24.5587 30.1213 25.1213C29.5587 25.6839 28.7956 26 28 26H24C23.2044 26 22.4413 25.6839 21.8787 25.1213C21.3161 24.5587 21 23.7956 21 23V21Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M19 31C19 31.5304 19.2107 32.0391 19.5858 32.4142C19.9609 32.7893 20.4696 33 21 33C21.5304 33 22.0391 32.7893 22.4142 32.4142C22.7893 32.0391 23 31.5304 23 31C23 30.4696 22.7893 29.9609 22.4142 29.5858C22.0391 29.2107 21.5304 29 21 29C20.4696 29 19.9609 29.2107 19.5858 29.5858C19.2107 29.9609 19 30.4696 19 31Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M28 31C28 31.5304 28.2107 32.0391 28.5858 32.4142C28.9609 32.7893 29.4696 33 30 33C30.5304 33 31.0391 32.7893 31.4142 32.4142C31.7893 32.0391 32 31.5304 32 31C32 30.4696 31.7893 29.9609 31.4142 29.5858C31.0391 29.2107 30.5304 29 30 29C29.4696 29 28.9609 29.2107 28.5858 29.5858C28.2107 29.9609 28 30.4696 28 31Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135275">
+                                    <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Trailers</div>
+                        <div class="card-total mt-2">{{executiveService.executiveDashboardCount?.totalTrailers}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col count-card mt-sm-2 mt-md-0 ">
+                <div class="d-flex">
+                    <div class="pr-3 ">
+                        <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24.5" cy="24" r="24" fill="#AF52DE" />
+                            <g clip-path="url(#clip0_129_135290)">
+                                <path d="M24.5 15L32.5 19.5V28.5L24.5 33L16.5 28.5V19.5L24.5 15Z" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M24.5 24L32.5 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M24.5 24V33" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M24.5 24L16.5 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135290">
+                                    <rect width="24" height="24" fill="white" transform="translate(12.5 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Orders</div>
+                        <div class="card-total mt-2">{{executiveService.executiveDashboardCount?.totalOrders}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col count-card-last mt-md-2 mr-md-2 mt-lg-0 mr-lg-0 ">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="24" fill="#3A91E1" />
+                            <g clip-path="url(#clip0_129_135306)">
+                                <path d="M24 15L32 19.5V28.5L24 33L16 28.5V19.5L24 15Z" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M24 24L32 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M24 24V33" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M24 24L16 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135306">
+                                    <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Products</div>
+                        <div class="card-total mt-2">{{executiveService.executiveDashboardCount?.totalProducts}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-lg-12 col-xl-4  w-100  pr-md-3  pb-sm-3 pb-xl-0 pr-xl-0 ">
+            <div class="truck-status-card">
+                <div class="d-flex  justify-content-between">
+                    <div class="truck-status">Truck status</div>
+                    <div class="d-flex align-items-center " [matMenuTriggerFor]="menu">
+                        <div class="pr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                        </div>
+                        <div class="clalanter-text pr-2">
+                            {{trackSelectedType}}
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                        </div>
+                    </div>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item  (click)="truckSwitchMode('Day')">
+                          <span>Day</span>
+                        </button>
+                        <button mat-menu-item  (click)="truckSwitchMode('Week')" >
+                          <span>Week</span>
+                        </button>
+                        <button mat-menu-item  (click)="truckSwitchMode('Month')">
+                          <span>Month</span>
+                        </button>
+                        <button mat-menu-item  (click)="truckSwitchMode('Year')">
+                            <span>Year</span>
+                          </button>
+                      </mat-menu>
+                </div>
+
+                <div>
+                    <div id="truckChart">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6  col-xl-4  w-100  pr-md-3  pb-sm-3 pb-xl-0 pr-xl-0 ">
+            <div class="truck-status-card">
+                <div class="truck-status">Products received</div>
+                <div>
+                    <ag-grid-angular style="width: 100%; height: 305px;"
+                    class="ag-theme-material" [rowData]="ProductsList" [pagination]="true"  [paginationPageSize]="paginationPageSize"
+                    [columnDefs]="ProductsHeaders">
+                </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6  col-xl-4 w-100 ">
+            <div class="truck-status-card">
+                <div class="d-flex  justify-content-between">
+                    <div class="truck-status">Trailer status</div>
+                    <div class="d-flex align-items-center " [matMenuTriggerFor]="menu2">
+                        <div class="pr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                        </div>
+                        <div class="clalanter-text pr-2">
+                            {{trilerSelectedType}}
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                        </div>
+                    </div>
+                    <mat-menu #menu2="matMenu">
+                        <button mat-menu-item  (click)="trilerSwitchMode('Day')">
+                          <span>Day</span>
+                        </button>
+                        <button mat-menu-item  (click)="trilerSwitchMode('Week')" >
+                          <span>Week</span>
+                        </button>
+                        <button mat-menu-item  (click)="trilerSwitchMode('Month')">
+                          <span>Month</span>
+                        </button>
+                        <button mat-menu-item  (click)="trilerSwitchMode('Year')">
+                            <span>Year</span>
+                          </button>
+                      </mat-menu>
+                </div>
+                <div>
+                    <div id="trailerChart">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-12  col-lg-12  col-xl-4  w-100  pr-md-3  pb-sm-3 pb-xl-0 pr-xl-0 ">
+            <div class="truck-status-card-two">
+                <div class="d-flex  justify-content-between">
+                    <div class="truck-status">Orders delivered</div>
+                    <div class="d-flex align-items-center " [matMenuTriggerFor]="menu3">
+                        <div class="pr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                        </div>
+                        <div class="clalanter-text pr-2">
+                            {{ordersSelectedType}}
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                        </div>
+                    </div>
+                    <mat-menu #menu3="matMenu">
+                        <button mat-menu-item  (click)="OrderswitchMode('Day')">
+                          <span>Day</span>
+                        </button>
+                        <button mat-menu-item  (click)="OrderswitchMode('Week')" >
+                          <span>Week</span>
+                        </button>
+                        <button mat-menu-item  (click)="OrderswitchMode('Month')">
+                          <span>Month</span>
+                        </button>
+                        <button mat-menu-item  (click)="OrderswitchMode('Year')">
+                            <span>Year</span>
+                          </button>
+                      </mat-menu>
+                </div>
+                <div>
+                    <div id="OrdersChart">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6  col-xl-4  w-100 pr-md-3  pb-sm-3 pb-xl-0 pr-xl-0">
+            <div class="truck-status-card-two">
+                <div class="truck-status">Consignors</div>
+                <div class="d-flex">
+                    <div id="consignorsChart">
+                    </div>
+                    <div class="align-items-center consignor-section m-auto">
+                        <div class="d-flex  align-items-center ">
+                            <div class="pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                    fill="none">
+                                    <ellipse cx="6.18448" cy="6.99999" rx="6.18509" ry="6.01367" fill="#F7B026" />
+                                </svg>
+                            </div>
+                            <div class="consignor-desc">
+                                Medcalf J & E Ltd
+                            </div>
+
+                        </div>
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                    fill="none">
+                                    <ellipse cx="6.18448" cy="6.99999" rx="6.18509" ry="6.01367" fill="#AF52DE" />
+                                </svg>
+                            </div>
+                            <div class="consignor-desc">
+                                Newmans Meat shop
+                            </div>
+
+                        </div>
+                        <div class="d-flex align-items-center mt-2 ">
+                            <div class="pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                    fill="none">
+                                    <ellipse cx="6.18448" cy="6.99999" rx="6.18509" ry="6.01367" fill="#5DC04D" />
+                                </svg>
+                            </div>
+                            <div class="consignor-desc">
+                                ABC Meat & Chicken shop 
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="consignor-bottom-section">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="consignor-des mr-1"> Total Orders</div>
+                            <div class="consignor-count">57</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="consignor-des mr-1"> In Transit Orders</div>
+                            <div class="consignor-count">30</div>
+                        </div>
+                        <div class="d-flex align-items-center" > 
+                            <div class="consignor-des mr-1"> Completed Orders</div>
+                            <div class="consignor-count">27</div>   
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class=" col-sm-12 col-lg-6  col-xl-4 w-100  pb-md-3 pb-xl-0">
+            <div class="truck-status-card-two">
+                <div class="d-flex  ">
+                    <div class="truck-status">Drivers in transit</div>
+                    <!-- <div>clalanter</div> -->
+                </div>
+                <div>
+                    <ag-grid-angular style="width: 100%; height: 305px;"
+                    class="ag-theme-material" [rowData]="driversList" [pagination]="true"  [paginationPageSize]="paginationPageSize"
+                    [columnDefs]="driversHeaders">
+                </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

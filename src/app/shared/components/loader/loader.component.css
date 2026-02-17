@@ -1,0 +1,47 @@
+.overlay {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* background-color: rgba(74,74,74,.8); */
+  z-index: 99999;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+/* New */
+.progress{
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(74, 74, 74, 0);
+  z-index: 99999;
+}
+
+
+.progressloader{
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 4px;
+  /* background: linear-gradient(to right, #58bdbd 0%, #a49ee1 100%) !important; */
+  background: #13D090 !important;
+}
+
+.progress .progress-bar {
+  animation-name: animateBar;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 2.1s;
+}
+@keyframes animateBar {
+  0% {transform: translateX(-100%);}
+  100% {transform: translateX(0);}
+}

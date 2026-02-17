@@ -1,0 +1,228 @@
+.gap-12{
+    gap: 12px;
+}
+
+.CustomerTrailerOuts-header{
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--White, #FFF);
+z-index: 1000;
+position: sticky;
+top: 0;
+}
+
+.CustomerTrailerOuts-header span{
+    color: var(--Slate-700, #334155);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.sortedByCls{
+    color: var(--Slate-600, #475569);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-bottom: 0px;
+}
+.status-btn{
+    margin-right: 26px;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: -5px;
+}
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 4PX;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-prefix .mat-icon {
+    font-size: 140%;
+    line-height: 1.125;
+    color: #686777;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #F1F5F9;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+    border-right-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+    border-left-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 I !important;
+}
+
+::ng-deep .CustomerTrailerOuts-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0;
+    margin-bottom: 4px;
+    margin-top: -1px;
+}
+
+.addBtnCls{
+    border-radius: 4px;
+padding: 4px 16px 4px 12px;
+color: var(--White, #FFF);
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.status-dropdown {
+    position: relative;
+}
+
+.status-select {
+    padding: 6px 28px 6px 12px;
+    border: 1px solid var(--Slate-200, #E2E8F0);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--Slate-700, #334155);
+    background: var(--White, #FFF);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23334155' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+}
+
+.sort-dropdown {
+    width: 160px;
+}
+
+::ng-deep .customerTrailerOut-header .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+::ng-deep .customerTrailerOut-header .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 6px 0;
+    border-top: 0;
+}
+
+::ng-deep .customerTrailerOut-header .mat-form-field-appearance-outline .mat-form-field-label {
+    top: 1.2em;
+    font-size: 13px;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.customerTrailerOut-body {
+    padding: 12px;
+}
+
+.customerTrailerOut-table {
+    width: 100%;
+    background: var(--White, #FFF);
+    border-radius: 4px;
+    border-collapse: collapse;
+}
+
+.customerTrailerOut-table thead tr {
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+}
+
+.customerTrailerOut-table th {
+    padding: 12px;
+    text-align: left;
+    color: var(--Slate-600, #475569);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.customerTrailerOut-table tbody tr {
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    cursor: pointer;
+}
+
+.customerTrailerOut-table tbody tr:hover {
+    background: var(--Slate-50, #F8FAFC);
+}
+
+.customerTrailerOut-table td {
+    padding: 12px;
+    color: var(--Slate-700, #334155);
+    font-size: 13px;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+}
+
+.status-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.status-active .status-indicator {
+    background: #10B981;
+}
+
+.status-inactive .status-indicator {
+    background: #E81C28;
+}
+
+.noMasterRecords {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.noRecordText {
+    color: var(--Slate-600, #475569);
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.flex-column {
+    flex-direction: column;
+}

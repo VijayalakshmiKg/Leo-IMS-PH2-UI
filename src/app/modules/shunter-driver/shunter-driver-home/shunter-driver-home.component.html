@@ -1,0 +1,160 @@
+<div class="drivers-header d-flex justify-content-between align-items-center">
+  <div class="driver-head-left d-flex gap-24 align-items-center">
+    <span>
+      {{shuntDriversList.length}} shunter driver(s) in List
+    </span>
+    <div class="search ml-3">
+      <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search driver">
+        <input type="search" matInput placeholder="Search shunter driver name" aria-label="Search"
+          (keyup)="filteredUsersList($event)" [(ngModel)]="searchValue">
+        <mat-icon matPrefix>search</mat-icon>
+        <button class="common-btn" *ngIf="searchValue" matSuffix aria-label="Clear" (click)="clear()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M12 4L4 12" stroke="#1E293B" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 4L12 12" stroke="#1E293B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="driver-head-right d-flex align-items-center gap-24">
+    <div class="">
+      <button class="common-btn status-filter">
+        <div class=" d-flex align-items-center" [matMenuTriggerFor]="statusmenu">
+          <h6>{{avalStatus}}</h6>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+            <path d="M5 8L10 13L15 8" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+      </button>
+      <mat-menu #statusmenu="matMenu">
+        <div class="d-flex flex-column">
+          <button mat-menu-item type="button" class="common-btn" (click)="statusSetoption('')">
+            All
+          </button>
+          <button mat-menu-item type="button" class="common-btn" (click)="statusSetoption('Available')">
+            Available
+          </button>
+          <button mat-menu-item type="button" class="common-btn" (click)="statusSetoption('On duty')">
+            On duty
+          </button>
+        </div>
+      </mat-menu>
+    </div>
+    <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn"
+      [matMenuTriggerFor]="filter" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <g clip-path="url(#clip0_478_6335)">
+          <path d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+            fill="#475569" />
+        </g>
+        <defs>
+          <clippath id="clip0_478_6335">
+            <rect width="20" height="20" fill="white" />
+          </clippath>
+        </defs>
+      </svg>
+      <p class="m-0 sortedByCls ml-2">Sort by</p>
+    </button>
+    <mat-menu #filter="matMenu">
+      <div *ngFor="let sortby of sortList">
+        <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+
+      </div>
+    </mat-menu>
+    <button type="button"  class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn"
+      (click)="addDrivers()" *ngIf="permissions?.createAccess">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+        <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      Shunter Driver</button>
+  </div>
+</div>
+<div class="masterScreen-content-table">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col" class="hide-col">Email address</th>
+        <th scope="col">Mobile number</th>
+        <th scope="col">Status</th>
+        <th scope="col" class="hide-col" class="activeTh">Active</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of shuntDriversList; index as i" (click)="viewDrivers(item, i)">
+        <td>
+          <div class="d-flex gap-12">
+            <div class="noProfile" *ngIf="item?.shunterDriverProfilePhoto?.length == 0">
+              {{item?.shunterfirstname?.slice(0,1)}}{{item?.shunterlastname?.slice(0,1)}}
+            </div>
+            <div class="noProfile" *ngIf="item?.shunterDriverProfilePhoto?.length > 0">
+              <img [src]="item?.shunterDriverProfilePhoto[0].url" alt class="noProfile">
+            </div>
+            <div>
+              <h4 class="mb-2">{{item?.shunterfirstname}}
+                {{item?.shunterlastname}}</h4>
+              <p class="m-0">Emp ID - {{item.employeeNo}}</p>
+            </div>
+          </div>
+        </td>
+        <td class="hide-col">{{item.email || '-'}}</td>
+        <td>{{item.phoneCountryCode ? item.phoneCountryCode : '-'}}
+          {{item.contactDetails | faxNumber}}</td>
+        <td>
+          <div
+            [ngClass]="{'avaiable-status' : item.status === 'Available', 'inTransmitCls' : item.status === 'On duty'}">
+            <div [ngClass]="{'cricle' : item.status === 'Available', 'cricleCls' : item.status === 'On duty'}"></div>
+            {{item.status}}
+          </div>
+        </td>
+        <td class="hide-col">
+          <div class="isActive" *ngIf="item.isActive == true">
+            Yes
+          </div>
+          <div class="isNotActive" *ngIf="item.isActive == false">
+            No
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <app-custom-paginator 
+    [length]="totalPages" 
+    [pageSizeOptions]="[10,25, 50,75, 100]" 
+    [showFirstLastButtons]="true" 
+    (pageChange)="onPageChange($event)">
+  </app-custom-paginator>
+  </table>
+  <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="shuntDriversList?.length === 0">
+    <div class="mb-2">
+      <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.5" width="47" height="47" rx="23.5" fill="#006CB7" fill-opacity="0.2" />
+        <g clip-path="url(#clip0_1421_6138)">
+          <path
+            d="M15.5 24C15.5 25.1819 15.7328 26.3522 16.1851 27.4442C16.6374 28.5361 17.3003 29.5282 18.136 30.364C18.9718 31.1997 19.9639 31.8626 21.0558 32.3149C22.1478 32.7672 23.3181 33 24.5 33C25.6819 33 26.8522 32.7672 27.9442 32.3149C29.0361 31.8626 30.0282 31.1997 30.864 30.364C31.6997 29.5282 32.3626 28.5361 32.8149 27.4442C33.2672 26.3522 33.5 25.1819 33.5 24C33.5 22.8181 33.2672 21.6478 32.8149 20.5558C32.3626 19.4639 31.6997 18.4718 30.864 17.636C30.0282 16.8003 29.0361 16.1374 27.9442 15.6851C26.8522 15.2328 25.6819 15 24.5 15C23.3181 15 22.1478 15.2328 21.0558 15.6851C19.9639 16.1374 18.9718 16.8003 18.136 17.636C17.3003 18.4718 16.6374 19.4639 16.1851 20.5558C15.7328 21.6478 15.5 22.8181 15.5 24Z"
+            stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M22.5 24C22.5 24.5304 22.7107 25.0391 23.0858 25.4142C23.4609 25.7893 23.9696 26 24.5 26C25.0304 26 25.5391 25.7893 25.9142 25.4142C26.2893 25.0391 26.5 24.5304 26.5 24C26.5 23.4696 26.2893 22.9609 25.9142 22.5858C25.5391 22.2107 25.0304 22 24.5 22C23.9696 22 23.4609 22.2107 23.0858 22.5858C22.7107 22.9609 22.5 23.4696 22.5 24Z"
+            stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M24.5 26V33" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22.5 24L15.75 22" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M26.5 24L33.25 22" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </g>
+        <defs>
+          <clippath id="clip0_1421_6138">
+            <rect width="24" height="24" fill="white" transform="translate(12.5 12)" />
+          </clippath>
+        </defs>
+      </svg>
+
+    </div>
+    <div class="noRecordText">
+      No shunter drivers added yet!
+    </div>
+  </div>
+</div>

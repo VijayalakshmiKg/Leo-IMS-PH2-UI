@@ -1,0 +1,395 @@
+.dash-header {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 1000;
+    position: sticky;
+    top: 40px;
+}
+
+
+.generateBtn {
+    border-radius: 4px;
+    background: var(--Leo-Color, #2D2E83);
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border: none;
+    padding: 4px 16px 4px 12px;
+}
+
+.dashboard-content {
+    padding: 12px;
+}
+
+.dashCards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    /* Adjust as needed for spacing between dashCardss */
+    justify-content: center;
+    /* Center the dashCardss horizontally */
+    margin-bottom: 12px;
+}
+
+.dashCardsSecoundRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    /* Adjust as needed for spacing between dashCardss */
+    justify-content: center;
+    /* Center the dashCardss horizontally */
+}
+
+.dashCards {
+    flex: 1 1 calc(25% - 16px);
+    /* Allow dashCardss to grow/shrink with a base width of 25% minus the gap */
+    /* max-width: 273.5px; */
+    min-width: 160px;
+    /* Minimum width for a dashCards */
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    padding: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dashCardsSecoundRow-cards {
+    flex: 1 1 calc(25% - 16px);
+    /* Allow dashCardss to grow/shrink with a base width of 25% minus the gap */
+    /* max-width: 273.5px; */
+    min-width: 400px;
+    /* Minimum width for a dashCards */
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    padding: 20px;
+    /* display: flex;
+    gap: 12px;
+    align-items: center; */
+}
+
+.dashCards label {
+    color: var(--Slate-500, #64748B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.dashCards p {
+    color: var(--Slate-800, #1E293B);
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.dashCardsSecoundRow-cards h4 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+
+::ng-deep .apexcharts-text tspan {
+    font-family: BlinkMacSystemFont !important;
+    color: var(--Neutral-Colors-Text-Gray, #615E83);
+    text-align: center;
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* font-family: Inter; */
+    font-size: 10.871px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 12.682px;
+}
+
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: .25em 0;
+    margin-bottom: 0px !important;
+    padding: 0px !important;
+}
+
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0px;
+    border-top: 10px solid transparent;
+    border-bottom: 6px solid transparent;
+}
+
+.dashCardsSecoundRow-cards mat-label {
+    color: var(--Slate-700, #334155);
+    color: var(--Slate-600, #475569);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    /* 166.667% */
+}
+
+::ng-deep .dashCardsSecoundRow-cards input.mat-input-element {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: translateY(0%);
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    background: var(--Slate-100, #F1F5F9);
+    /* border-right: 1px solid var(--Slate-200, #E2E8F0); */
+
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    background: var(--Slate-100, #F1F5F9);
+
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    background: var(--Slate-100, #F1F5F9);
+    /* border-left: 1px solid var(--Slate-200, #E2E8F0); */
+
+}
+
+::ng-deep .dashCardsSecoundRow-cards span.mat-select-min-line {
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-outline .mat-form-field-suffix {
+    /* top: -2px !important; */
+}
+
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-legacy .mat-form-field-infix {
+
+    border-top: 0px !important;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    /* padding-bottom: 16px; */
+}
+
+::ng-deep .order-table .mat-form-field-flex {
+    height: 21px;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-checkbox-layout .mat-checkbox-label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: #1E293B;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-checkbox-checked {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    text-decoration-line: line-through !important;
+    color: #1E293B;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .charts-container .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    /* background-color: #007AFF; */
+    border-radius: 4px;
+    background: var(--linear-Color, #283892) !important;
+    border: 2px solid #007AFF;
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-checkbox-frame {
+
+    border-radius: 4px;
+    border: 1px solid var(--Grey-Grey_50, #B3B3B3);
+    background: var(--Grey-Grey_10, #F9F9F9);
+}
+
+::ng-deep .dashCardsSecoundRow-cards .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #283892 !important;
+}
+
+mat-checkbox {
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+}
+
+mat-checkbox:last-of-type {
+    border-bottom: 0px solid var(--Slate-200, #E2E8F0);
+
+}
+
+.gap-16 {
+    gap: 16px;
+}
+
+.addNotesBtn {
+    color: var(--primary-col, #006CB7);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+
+.clalanter-text {
+    color: var(--slate-700, #334155);
+    font-family: BlinkMacSystemFont;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+::ng-deep .dashCardsSecoundRow .mat-paginator-page-size {
+    display: none;
+    align-items: baseline;
+    margin-right: 8px;
+}
+
+::ng-deep .dashCardsSecoundRow .mat-paginator-icon {
+    width: 28px;
+    fill: currentColor;
+    border: 0.8px solid #CBD5E1;
+    border-radius: 4px;
+}
+
+.Vehicle-status {
+    color: var(--Slate-800, #1E293B);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+::ng-deep .add-notes .mat-dialog-container {
+    padding: 0px;
+}
+
+::ng-deep .add-notes .mat-dialog-container {
+    position: fixed;
+    top: 40px;
+    right: 0px;
+    height: 100vh;
+    width: calc(100% - 112px);
+    max-width: 700px;
+    min-width: 300px;
+    box-shadow: -11px 5px 22px 1px #00000026;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 0px;
+}
+
+.notes-no-data {
+    min-height: 400px;
+    color: var(--Slate-500, #64748B);
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+
+}
+
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px !important;
+}
+
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon {
+    /* width: 1em; */
+    /* margin-top: -1px; */
+    width: 24px !important;
+}
+
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon,
+.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 2em;
+}
+
+/* ::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 10px !important;
+} */
+
+::ng-deep .time-picker .mat-form-field-flex {
+    display: inline-flex;
+    align-items: flex-end;
+    box-sizing: border-box;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+::ng-deep .time-picker .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    padding-left: 18px !important;
+    width: 75px !important;
+}
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0px;
+}
+.no-data-text {
+    color: #283892;
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+}
+::ng-deep  .date-time-picker {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    width: 0px;
+    visibility: hidden !important;
+    line-height: 22px;
+}
+::ng-deep .dashboard_title_dropdown .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0px;
+}
+.no-data-section {
+    min-height: 400px;
+}
+.order-text {
+    color: var(--linear-Color, #283892);
+font-family: BlinkMacSystemFont;
+font-size: 17px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.order-count {
+    color: var(--Slate-500, #64748B);
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}

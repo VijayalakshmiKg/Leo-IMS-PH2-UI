@@ -1,0 +1,177 @@
+.gap-12{
+    gap: 12px;
+}
+
+.gap-24{
+    gap: 24px;
+}
+
+.TrailerTypes-header{
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+}
+
+.TrailerTypes-header span{
+    color: var(--Slate-700, #334155);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.sortedByCls{
+    color: var(--Slate-600, #475569);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0px;
+}
+
+.status-btn{
+    margin-right: 26px;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: -5px;
+}
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 4PX;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-prefix .mat-icon {
+    font-size: 140%;
+    line-height: 1.125;
+    color: #686777;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #F1F5F9;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+    border-right-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+    border-left-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 !important;
+}
+
+::ng-deep .TrailerTypes-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0;
+    margin-bottom: 4px;
+    margin-top: -1px;
+}
+
+.addBtnCls{
+    border-radius: 4px;
+    padding: 4px 16px 4px 12px;
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+}
+
+.status-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.status-active .status-indicator {
+    background: #10B981;
+}
+
+.status-inactive .status-indicator {
+    background: #E81C28;
+}
+
+.noMasterRecords {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.noRecordText {
+    color: var(--Slate-600, #475569);
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.mr-1 {
+    margin-right: 4px;
+}
+
+.mr-2 {
+    margin-right: 8px;
+}
+
+.ml-2 {
+    margin-left: 8px;
+}
+
+.ml-3 {
+    margin-left: 12px;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.bgColorCls {
+    background: #283892;
+}
+
+.common-btn {
+    border: none;
+    cursor: pointer;
+    
+}
+
+@media (max-width: 800px) {
+    .hide-col {
+      display: none;
+    }
+}

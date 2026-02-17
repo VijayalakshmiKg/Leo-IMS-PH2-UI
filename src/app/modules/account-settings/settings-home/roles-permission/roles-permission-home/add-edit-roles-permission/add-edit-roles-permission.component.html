@@ -1,0 +1,151 @@
+<div class="addUsers-container">
+  <form [formGroup]="roleForm" (ngSubmit)="save()">
+    <div class="addUsers-header d-flex justify-content-between align-items-center  ">
+      <button class="cancel-btn common-btn" type="button" (click)="back()">
+        Cancel
+      </button>
+
+      <h4 class="mb-0">{{this.settingsServ?.editRoleRecord ? this.settingsServ?.editRoleRecord?.roleName : 'New User'}}</h4>
+
+      <button class="addBtn-users bgColorCls" type="submit">
+        {{saveBtnText}}
+      </button>
+    </div>
+
+
+    <div class="container addEditRoles-Container mt-2">
+
+      <div class="form-container">
+
+        <form [formGroup]="roleForm" (ngSubmit)="save()">
+          <div class="homeAddContainer">
+
+            <h4 class="mb-0">Role details</h4>
+
+
+            <div class="addUsers-bodyContent mt-0">
+              <div class="w-100 d-flex flex-column ">
+                <mat-label>Role Name <span class="ml-0"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                        fill="#FF1F00" />
+                    </svg>
+                  </span></mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput placeholder="" formControlName="roleName">
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-label>Description</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <textarea matInput formControlName="description" placeholder=""></textarea>
+                </mat-form-field>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div formArrayName="rootMenu">
+            <div *ngFor="let menu of rootMenu.controls; let i = index" [formGroupName]="i">
+              <div class="homeAddContainer mt-3">
+                <!-- Menu Header with visibility toggle -->
+                <h4 class="mb-0">
+                  <mat-checkbox formControlName="visible" (change)="toggleRootMenu(i)"
+                    *ngIf="menu.get('subMenus')?.value?.length > 0"></mat-checkbox>
+                  <!-- <input type="checkbox" formControlName="visible" (change)="toggleRootMenu(i)" *ngIf="menu.get('subMenus')?.value?.length > 0"> -->
+                  {{ menu.get('name')?.value }}
+                </h4>
+
+                <!-- If menu has no submenus, show permissions directly -->
+                <div *ngIf="menu.get('subMenus')?.value?.length === 0"
+                  class="addEditRoles-content-table comman-container">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Full Access</th>
+                        <th>View</th>
+                        <th>Create</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><mat-checkbox formControlName="fullAccess"
+                            (change)="onFullAccessChange(menu)"></mat-checkbox></td>
+                        <td><mat-checkbox formControlName="view" (change)="onPermissionChange(menu)"></mat-checkbox>
+                        </td>
+                        <td><mat-checkbox formControlName="create" (change)="onPermissionChange(menu)"></mat-checkbox>
+                        </td>
+                        <td><mat-checkbox formControlName="edit" (change)="onPermissionChange(menu)"></mat-checkbox>
+                        </td>
+                        <td><mat-checkbox formControlName="delete" (change)="onPermissionChange(menu)"></mat-checkbox>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- If menu has submenus, iterate through them -->
+                <div *ngIf="menu.get('subMenus')?.value?.length > 0" formArrayName="subMenus"
+                  class="addEditRoles-content-table comman-container">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Full Access</th>
+                        <th>View</th>
+                        <th>Create</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let subMenu of getSubMenus(menu).controls; let j = index" [formGroupName]="j">
+                        <td>{{ subMenu.get('name')?.value }}</td>
+                        <td> <mat-checkbox formControlName="fullAccess"
+                            (change)="onFullAccessChange(subMenu)"></mat-checkbox></td>
+                        <td> <mat-checkbox formControlName="view" (change)="onPermissionChange(subMenu)"></mat-checkbox>
+                        </td>
+                        <td> <mat-checkbox formControlName="create"
+                            (change)="onPermissionChange(subMenu)"></mat-checkbox></td>
+                        <td> <mat-checkbox formControlName="edit" (change)="onPermissionChange(subMenu)"></mat-checkbox>
+                        </td>
+                        <td> <mat-checkbox formControlName="delete"
+                            (change)="onPermissionChange(subMenu)"></mat-checkbox></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="homeAddContainer mt-3">
+            <h4 class="mb-0">Settings</h4>
+            <div formArrayName="settings" class="comman-container">
+              <div *ngFor="let setting of settings.controls; let k = index" [formGroupName]="k"
+                class="d-flex gap-8 align-items-center">
+                <mat-checkbox formControlName="visible" [disabled]="this.settingsServ?.editRoleRecord?.roleName == 'Admin' && setting.get('name')?.value == 'Roles'"
+                [ngClass]="{'disable':(this.settingsServ?.editRoleRecord?.roleName == 'Admin' && setting.get('name')?.value == 'Roles')}"></mat-checkbox>
+                <span>{{ setting.get('name')?.value }}</span>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+
+
+
+      </div>
+
+    </div>
+  </form>
+</div>

@@ -1,0 +1,397 @@
+<div class="dashborad-container">
+    <div class="dash-header d-flex justify-content-end align-items-center ">
+        <!-- <div class="pr-2 time-picker">
+            <mat-form-field>
+                <mat-datepicker #pickers></mat-datepicker>
+                <mat-datepicker-toggle matPrefix [for]="pickers"></mat-datepicker-toggle>
+
+                <input matInput autocomplete="nope" [(ngModel)]="dateInputValue" [matDatepicker]="pickers"
+                    (dateChange)="changeDateEvent($event)">
+
+            </mat-form-field>
+        </div> -->
+        <button class="generateBtn">
+            Generate report
+        </button>
+    </div>
+    <div class="dashboard-content">
+        <div class="dashCards-grid">
+            <div class="dashCards" (click)="navigateToMenu('tasks')" >
+                <div>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="24" fill="#AF52DE" />
+                        <g clip-path="url(#clip0_4134_127700)">
+                            <path
+                                d="M21 17H19C18.4696 17 17.9609 17.2107 17.5858 17.5858C17.2107 17.9609 17 18.4696 17 19V31C17 31.5304 17.2107 32.0391 17.5858 32.4142C17.9609 32.7893 18.4696 33 19 33H29C29.5304 33 30.0391 32.7893 30.4142 32.4142C30.7893 32.0391 31 31.5304 31 31V19C31 18.4696 30.7893 17.9609 30.4142 17.5858C30.0391 17.2107 29.5304 17 29 17H27"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M21 17C21 16.4696 21.2107 15.9609 21.5858 15.5858C21.9609 15.2107 22.4696 15 23 15H25C25.5304 15 26.0391 15.2107 26.4142 15.5858C26.7893 15.9609 27 16.4696 27 17C27 17.5304 26.7893 18.0391 26.4142 18.4142C26.0391 18.7893 25.5304 19 25 19H23C22.4696 19 21.9609 18.7893 21.5858 18.4142C21.2107 18.0391 21 17.5304 21 17Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M21 24H27" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M21 28H27" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_4134_127700">
+                                <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+
+
+
+                </div>
+                <div>
+                    <label>Total Tasks</label>
+                    <p class="mb-0">{{overViewCardCount?.totalTasks }}</p>
+                </div>
+            </div>
+            <div class="dashCards" (click)="navigateToMenu('tasks')" >
+                <div>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="24" fill="#FF9900" />
+                        <g clip-path="url(#clip0_6516_29672)">
+                            <path d="M24 15L32 19.5V28.5L24 33L16 28.5V19.5L24 15Z" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M24 24L32 19.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M24 24V33" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M24 24L16 19.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_6516_29672">
+                                <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+
+
+
+
+                </div>
+                <div>
+                    <label>Loads In transit</label>
+                    <p class="mb-0">{{overViewCardCount?.loadsInTransit }}</p>
+                </div>
+            </div>
+            <div class="dashCards"(click)="navigateToMenu('tasks')" >
+                <div>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="24" fill="#3A91E1" />
+                        <g clip-path="url(#clip0_6516_29688)">
+                            <path d="M24 15L32 19.5V28.5L24 33L16 28.5V19.5L24 15Z" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M24 24L32 19.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M24 24V33" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M24 24L16 19.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_6516_29688">
+                                <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+
+
+
+
+
+                </div>
+                <div>
+                    <label>Loads arrived</label>
+                    <p class="mb-0">{{overViewCardCount?.loadsArrived }}</p>
+                </div>
+            </div>
+            <div class="dashCards" (click)="navigateToMenu('Orders')">
+                <div>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="24" fill="#52AC56" />
+                        <g clip-path="url(#clip0_4134_127686)">
+                            <path
+                                d="M21 18C21 18.7956 21.3161 19.5587 21.8787 20.1213C22.4413 20.6839 23.2044 21 24 21C24.7956 21 25.5587 20.6839 26.1213 20.1213C26.6839 19.5587 27 18.7956 27 18C27 17.2044 26.6839 16.4413 26.1213 15.8787C25.5587 15.3161 24.7956 15 24 15C23.2044 15 22.4413 15.3161 21.8787 15.8787C21.3161 16.4413 21 17.2044 21 18Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M18.8354 21H29.1654C29.3996 21 29.6264 21.0821 29.8062 21.2322C29.986 21.3822 30.1075 21.5906 30.1494 21.821L31.7864 30.821C31.8126 30.9651 31.8069 31.1133 31.7695 31.2549C31.7322 31.3966 31.6642 31.5283 31.5703 31.6408C31.4764 31.7532 31.359 31.8437 31.2263 31.9058C31.0936 31.9679 30.9489 32 30.8024 32H17.1984C17.0519 32 16.9072 31.9679 16.7745 31.9058C16.6418 31.8437 16.5244 31.7532 16.4305 31.6408C16.3366 31.5283 16.2686 31.3966 16.2313 31.2549C16.1939 31.1133 16.1882 30.9651 16.2144 30.821L17.8514 21.821C17.8933 21.5906 18.0148 21.3822 18.1946 21.2322C18.3744 21.0821 18.6012 21 18.8354 21Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_4134_127686">
+                                <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+
+
+
+                </div>
+                <div>
+                    <label>Loads weighed</label>
+                    <p class="mb-0">{{overViewCardCount?.loadsWeighed }}</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="dashCardsSecoundRow">
+
+            <div class="dashCardsSecoundRow-cards order-table">
+
+                <div class="d-flex justify-content-between ">
+                    <h4 class="mb-0 mt-1">Tasks </h4>
+                    <div class="d-flex ">
+                        <div class="mr-4 table-search">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Search vehicle no</mat-label>
+                                <input matInput  (keyup)="tableSearch($event)">
+                                <mat-icon matPrefix><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M14.3496 14.3563C14.2563 14.4483 14.1306 14.4999 13.9996 14.5001C13.8668 14.4995 13.7393 14.4481 13.6434 14.3563L10.9434 11.6501C9.80622 12.6052 8.34425 13.0845 6.86236 12.9879C5.38046 12.8913 3.99306 12.2264 2.98951 11.1317C1.98596 10.0371 1.44375 8.59729 1.47597 7.1126C1.50818 5.62791 2.11233 4.21298 3.16241 3.1629C4.21249 2.11282 5.62743 1.50867 7.11212 1.47645C8.59681 1.44424 10.0366 1.98645 11.1313 2.99C12.2259 3.99355 12.8908 5.38095 12.9874 6.86285C13.084 8.34474 12.6047 9.80671 11.6496 10.9438L14.3496 13.6438C14.3969 13.6904 14.4344 13.7458 14.46 13.807C14.4856 13.8681 14.4988 13.9338 14.4988 14.0001C14.4988 14.0664 14.4856 14.132 14.46 14.1932C14.4344 14.2544 14.3969 14.3098 14.3496 14.3563ZM7.24961 12.0001C8.18907 12.0001 9.10743 11.7215 9.88857 11.1996C10.6697 10.6776 11.2785 9.93579 11.638 9.06784C11.9976 8.19989 12.0916 7.24483 11.9083 6.32342C11.7251 5.40201 11.2727 4.55564 10.6084 3.89134C9.94407 3.22704 9.0977 2.77465 8.17629 2.59137C7.25488 2.40809 6.29981 2.50215 5.43186 2.86167C4.56391 3.22119 3.82206 3.83001 3.30013 4.61114C2.77819 5.39227 2.49961 6.31064 2.49961 7.2501C2.50126 8.50937 3.00224 9.71659 3.89268 10.607C4.78312 11.4975 5.99034 11.9984 7.24961 12.0001Z"
+                                            fill="#475569" />
+                                    </svg>
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="d-flex mt-1" [matMenuTriggerFor]="menu2">
+
+                            <div class="clalanter-text pr-1">
+                                {{SelectedDateRangeForTask == '' ? "All" : SelectedDateRangeForTask}}
+                            </div>
+                            <div class="mr-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
+                                    fill="none">
+                                    <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <mat-menu #menu2="matMenu">
+                                <button mat-menu-item (click)="switchMode('All')">
+                                    <span>All</span>
+                                </button>
+                                <button mat-menu-item (click)="switchMode('Load in transit')">
+                                    <span>Loads in transit</span>
+                                </button>
+                                <button mat-menu-item (click)="switchMode('Load arrived')">
+                                    <span>Loads arrived</span>
+                                </button>
+
+                            </mat-menu>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div *ngIf="TasksList?.length > 0">
+                    <ag-grid-angular style="width: 100%; height: 350px;" class="ag-theme-material" [rowData]="TasksList"
+                        [columnDefs]="TrucksHeaders">
+                    </ag-grid-angular>
+                    <div class="d-flex justify-content-end ">
+                        <mat-paginator [length]="overAllTaskList?.totalCount" [pageSize]="6"
+                            (page)="onPageChanged($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center no-data-section align-items-center m-auto"
+                    *ngIf="TasksList?.length == 0">
+                    <div class="text-center">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#D4D7E9" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+                                fill="#283892" />
+                        </svg>
+
+                        <div class="no-data-text mt-1">No data found</div>
+                    </div>
+                </div>
+
+
+
+                <!-- //old  -->
+                <!-- <div class="Vehicle-status-card-two ">
+                    <div class="d-flex justify-content-between align-items-center mr-3 ">
+                        <div class="Vehicle-status">Trucks in transit</div>
+                        <div>
+                            <mat-paginator [length]="overViewList?.totalTasks"
+                                [pageSize]="pageSize" (page)="onPageChanged($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="masterScreen-content-table pt-0">
+                    <div>
+                        <ag-grid-angular style="width: 100%; height: 540px;" class="ag-theme-material" [rowData]="TrucksList"
+                         [columnDefs]="TrucksHeaders">
+                    </ag-grid-angular>
+                   
+                    </div>
+                   
+                </div> -->
+            </div>
+            <div class="dashCardsSecoundRow-cards">
+                <div class="d-flex justify-content-between  mb-2" *ngIf="orderChartList?.length > 0">
+                    <h4 class="mb-0">
+                        Total Moment document
+                    </h4>
+                    <div>
+                        <button class="common-btn d-flex  mr-3 mt-1 " [matMenuTriggerFor]="menu">
+                            <div class="pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
+                                    fill="none">
+                                    <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z"
+                                        stroke="#464855" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="clalanter-text pr-1 mt-1">
+                                {{SelectedDateRange == '' ? "All" : SelectedDateRange}}
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
+                                    fill="none">
+                                    <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </button>
+                        <mat-menu #menu="matMenu" class="dateMenu">
+                            <button mat-menu-item (click)="switchModeForOrders('Day')">
+                                <span>Day</span>
+                            </button>
+                            <button mat-menu-item (click)="switchModeForOrders('Week')">
+                                <span>Week</span>
+                            </button>
+                            <button mat-menu-item (click)="switchModeForOrders('Month')">
+                                <span>Month</span>
+                            </button>
+                            <!-- <button mat-menu-item (click)="picker.open()" >
+                                <mat-datepicker #picker></mat-datepicker>
+                                <span>
+                                    <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+                                    Select Date
+                                </span>
+                                <input class="date-time-picker" autocomplete="nope" [matDatepicker]="picker"
+                                    (dateChange)="changeDateEventForOrder($event)">
+                            </button> -->
+                            <button mat-menu-item (click)="switchModeForOrders('custom range')">
+                                <span>
+                                    <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+                                    From - To Date
+                                </span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="dashboard_title_dropdown d-flex justify-content-end align-items-center flex-wrap">
+                    <form [formGroup]="customDateForm" (ngSubmit)="customRangeForDate()">
+
+                        <div class="d-flex " *ngIf="SelectedDateRange === 'custom range'">
+                            <mat-form-field appearance="outline" class="ml-3 yearscls" *ngIf="cutomDateField"
+                                [style.width.px]="150">
+                                <input aria-label="from date" matInput autocomplete="nope"
+                                    (dateChange)="fromDateValidation()" [matDatepicker]="Fromdate1" placeholder="From"
+                                    formControlName="fromDate" />
+                                <mat-datepicker-toggle matSuffix [for]="Fromdate1"></mat-datepicker-toggle>
+                                <mat-datepicker #Fromdate1></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="ml-3 yearscls" *ngIf="cutomDateField"
+                                [style.width.px]="150">
+                                <input aria-label="to date" matInput autocomplete="nope" [matDatepicker]="Todate2"
+                                    placeholder="To" (dateChange)="toDateValidation()" formControlName="toDate" />
+                                <mat-datepicker-toggle matSuffix [for]="Todate2"></mat-datepicker-toggle>
+                                <mat-datepicker #Todate2></mat-datepicker>
+                            </mat-form-field>
+                            <div>
+                                <button *ngIf="cutomDateField" type="submit" role="button" class="mt-1 ml-3"
+                                    mat-stroked-button>
+                                    Search
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div *ngIf="orderChartList?.length > 0">
+                    <div class="order-text">{{orderChartList[0]?.totalWeighedCount ?
+                        orderChartList[0]?.totalWeighedCount: 0 }} Moc doc <span class="order-count">{{SelectedDateRange
+                            == 'custom range' ? dateText : 'Last ' + SelectedDateRange }}</span></div>
+                    <apx-chart [series]="ChartOptionsForOrders?.series" [chart]="ChartOptionsForOrders?.chart"
+                        [dataLabels]="ChartOptionsForOrders?.dataLabels" [stroke]="ChartOptionsForOrders?.stroke"
+                        [grid]="ChartOptionsForOrders?.grid" [xaxis]="ChartOptionsForOrders?.xaxis"
+                        [title]="ChartOptionsForOrders?.title">
+                    </apx-chart>
+
+                </div>
+                
+                <!-- //olg  -->
+
+                <!-- <div class="d-flex justify-content-between  mb-2">
+                    <h4 class="mb-0" >
+                        Notes
+                    </h4>
+
+                    <button class="common-btn addNotesBtn" (click)="addNotes()">
+                        <svg width="20" height="21" class="ml-2" viewBox="0 0 20 21" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_663_437244)">
+                                <path d="M10 4.6665V16.3332" stroke="#006CB7" stroke-width="1.66667"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4.16699 10.5H15.8337" stroke="#006CB7" stroke-width="1.66667"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_663_437244">
+                                    <rect width="20" height="20" fill="white" transform="translate(0 0.5)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                        Add
+                    </button>
+                </div>
+                <div class="d-flex flex-column gap-16">
+                    <div class="notes-no-data d-flex align-items-center m-auto" *ngIf="toDoList?.length == 0">
+                        No data found
+                        
+                    </div>
+                    <mat-checkbox (change)="updateTask($event,note)" [checked]="note.deleted"  *ngFor="let note of toDoList?.data">{{note.notes}}</mat-checkbox>
+                    
+                </div>
+                <div class="d-flex justify-content-end ">
+                    <mat-paginator [length]="toDoList?.totalCount"
+                        [pageSize]="pageSizeForTask" (page)="onPageChangedForTask($event)">
+                    </mat-paginator>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

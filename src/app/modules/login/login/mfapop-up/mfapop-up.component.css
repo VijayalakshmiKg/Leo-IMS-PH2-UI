@@ -1,0 +1,148 @@
+/* MFA header */
+.MFA-header-content {
+    padding: 7px 20px;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid var(--Slate-300, #CBD5E1);
+    background: var(--White, #FFF);
+
+}
+
+.MFA-header h6 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 22px;
+}
+
+.MFA-header p {
+    color: var(--Slate-500, #64748B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: 22px;
+}
+.resendBtn {
+    text-decoration: underline;
+}
+
+/* =============================================================== */
+/* mobile content */
+.mobile-content {
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: #FFF;
+}
+
+/* ============================== */
+/* buttonCls */
+.buttonCls {
+    padding: 16px 20px;
+    border-radius: 0px 0px 4px 4px;
+    background: #FFF;
+}
+
+.continueCls {
+    border-radius: 4px;
+    
+    color: var(--Background-White, #FFF);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 4px 20px;
+}
+
+.continueCls:hover {
+    background-color: #155c8d;
+}
+
+.mobile {
+    border-radius: 5px;
+    background: rgba(241, 245, 249, 0.00);
+    padding: 8px 12px;
+}
+
+.mobile:hover {
+    border-radius: 5px;
+    background: var(--highlighter, #DEECF6);
+}
+
+.activeBtn {
+    border-radius: 5px;
+    background: var(--highlighter, #DEECF6);
+}
+
+.cancelCls {
+    border-radius: 4px;
+    border: 1px solid var(--Slate-300, #CBD5E1);
+    padding: 4px 20px;
+    color: var(--Slate-700, #334155);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    margin-left: 16px;
+}
+
+/* =================================================== */
+/* mobile-otp-header */
+.mobile-otp-header {
+    padding: 7px 20px;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid var(--Slate-300, #CBD5E1);
+    background: var(--White, #FFF);
+}
+
+.otp-content {
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: #FFF;
+    padding: 4px 8px;
+}
+
+.otp {
+    border-radius: 5px;
+    background: rgba(253, 250, 239, 0.00);
+    padding: 12px 12px;
+
+}
+
+::ng-deep .otp-content .otp-input {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 4.5px !important;
+    border: 0.75px solid var(--Slate-500, #64748B) !important;
+    background: var(--White, #FFF) !important;
+    text-align: center !important;
+    font-size: 17px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+    font-style: normal !important;
+    outline: burlywood;
+    font-weight: 500 !important;
+}
+
+::ng-deep .otp-content .ng-otp-input-wrapper[_ngcontent-kyu-c251] .otp-input[_ngcontent-kyu-c251]:not(:last-child) {
+    margin-right: 6px !important;
+}
+
+.otpBtn {
+    border-radius: 0px 0px 4px 4px;
+    background: #FFF;
+    padding: 16px 20px;
+}
+::ng-deep .otp-content .otp-input:focus-visible {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    border: solid 2px #006CB7 !important;
+    text-align: center;
+    /* outline: burlywood; */
+    font-size: 32px;
+}
+/* OTP validation */
+::ng-deep .MFA-container .otpInvalid .ng-otp-input-wrapper .otp-input {
+    border: 1px solid #FB3D4E !important;
+}

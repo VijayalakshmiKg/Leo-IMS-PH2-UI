@@ -1,0 +1,310 @@
+<!-- <div class=""> -->
+  <!-- <div class="search ml-3  d-flex gap-24 align-items-center">
+    <span>
+      {{driversList.length}} driver(s) in List
+  </span>
+    <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search driver">
+        <input type="search" matInput placeholder="Search driver"
+             aria-label="Search" (keyup)="filteredUsersList($event)">
+        <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+</div> -->
+  <div class="viewDrivers-header d-flex gap-24 align-items-center">
+    <span>
+      {{totalDriver}} driver(s) in List
+    </span>
+    <div class="search ml-3">
+      <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search driver">
+        <input type="search" matInput placeholder="Search driver, registration no" aria-label="Search"
+          (keyup)="filteredUsersList($event)" [(ngModel)]="searchValue">
+        <mat-icon matPrefix>search</mat-icon>
+        <button class="common-btn" *ngIf="searchValue" matSuffix aria-label="Clear" (click)="clear()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M12 4L4 12" stroke="#1E293B" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 4L12 12" stroke="#1E293B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+<!-- </div> -->
+<div class="viewDrivers-container">
+
+  <div class="driversList">
+    <h4>Name</h4>
+
+    <button *ngFor="let item of driversList;index as i" [class.activeCls]="i == activeDriver"
+      class="driverListCls common-btn w-100" (click)="changeDriverView(item, i)">
+      <div class="d-flex gap-12">
+        <div class="noProfile" *ngIf="item?.driverProfilePhoto?.length == 0">
+          {{item?.firstName?.slice(0,1) | uppercase}}{{item?.lastName?.slice(0,1) | uppercase}}
+        </div>
+        <div class="noProfile" *ngIf="item?.driverProfilePhoto?.length > 0">
+          <img [src]="item?.driverProfilePhoto[0]?.url" alt="" class="noProfile">
+        </div>
+        <div class="text-left">
+          <h3 class="mb-2">{{item.firstName | titlecase}} {{item?.lastName | titlecase}}</h3>
+          <p class="m-0">Emp ID - {{item.employeeNo}}</p>
+        </div>
+      </div>
+    </button>
+  </div>
+  <div class="driversViewDeatils">
+    <div class="d-flex justify-content-between view-head">
+      <div class="d-flex gap-12 align-items-center">
+        <div class="noProfile" *ngIf="this.viewDriversRecord?.driverProfilePhoto?.length == 0">
+          {{ this.viewDriversRecord?.firstName?.slice(0,1) | uppercase}}{{ this.viewDriversRecord?.lastName?.slice(0,1)
+          | uppercase}}
+        </div>
+        <div class="noProfile" *ngIf="this.viewDriversRecord?.driverProfilePhoto?.length > 0">
+          <img [src]="this.viewDriversRecord?.driverProfilePhoto[0].url" alt="" class="noProfile">
+        </div>
+        <div class="text-left">
+          <h3 class="mb-1">{{ this.viewDriversRecord?.firstName | titlecase}} {{ this.viewDriversRecord?.lastName |
+            titlecase}}</h3>
+          <p class="m-0">Employee ID : {{ this.viewDriversRecord?.employeeNo}}</p>
+        </div>
+        <div class="activeStatus" [ngClass]="{'inActivestatus': viewDriversRecord?.isActive == false}">
+          <h6>{{ viewDriversRecord?.isActive ? 'Active' : 'Inactive' }}</h6>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-start">
+        <div class="mr-4 d-flex align-items-center justify-content-start">
+
+          <button class="editBtn bgColorCls" (click)="editDriver()" *ngIf="permissions?.editAccess">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_934_27443)">
+                <path
+                  d="M2.66602 13.3333H5.33268L12.3327 6.33333C12.5078 6.15824 12.6467 5.95037 12.7414 5.72159C12.8362 5.49282 12.885 5.24762 12.885 5C12.885 4.75238 12.8362 4.50718 12.7414 4.2784C12.6467 4.04963 12.5078 3.84176 12.3327 3.66666C12.1576 3.49157 11.9497 3.35268 11.7209 3.25791C11.4922 3.16315 11.247 3.11438 10.9993 3.11438C10.7517 3.11438 10.5065 3.16315 10.2778 3.25791C10.049 3.35268 9.84111 3.49157 9.66602 3.66666L2.66602 10.6667V13.3333Z"
+                  stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M9 4.33325L11.6667 6.99992" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_934_27443">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+
+            Edit
+          </button>
+
+          <button class="moreBtn" [matMenuTriggerFor]="menu" aria-label="more" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <g clip-path="url(#clip0_934_27455)">
+                <path
+                  d="M7.33594 7.9987C7.33594 8.17551 7.40618 8.34508 7.5312 8.4701C7.65622 8.59513 7.82579 8.66536 8.0026 8.66536C8.17942 8.66536 8.34898 8.59513 8.47401 8.4701C8.59903 8.34508 8.66927 8.17551 8.66927 7.9987C8.66927 7.82189 8.59903 7.65232 8.47401 7.52729C8.34898 7.40227 8.17942 7.33203 8.0026 7.33203C7.82579 7.33203 7.65622 7.40227 7.5312 7.52729C7.40618 7.65232 7.33594 7.82189 7.33594 7.9987Z"
+                  stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M7.33594 12.6665C7.33594 12.8434 7.40618 13.0129 7.5312 13.1379C7.65622 13.263 7.82579 13.3332 8.0026 13.3332C8.17942 13.3332 8.34898 13.263 8.47401 13.1379C8.59903 13.0129 8.66927 12.8434 8.66927 12.6665C8.66927 12.4897 8.59903 12.3202 8.47401 12.1951C8.34898 12.0701 8.17942 11.9999 8.0026 11.9999C7.82579 11.9999 7.65622 12.0701 7.5312 12.1951C7.40618 12.3202 7.33594 12.4897 7.33594 12.6665Z"
+                  stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M7.33594 3.33464C7.33594 3.51145 7.40618 3.68102 7.5312 3.80604C7.65622 3.93106 7.82579 4.0013 8.0026 4.0013C8.17942 4.0013 8.34898 3.93106 8.47401 3.80604C8.59903 3.68102 8.66927 3.51145 8.66927 3.33464C8.66927 3.15782 8.59903 2.98826 8.47401 2.86323C8.34898 2.73821 8.17942 2.66797 8.0026 2.66797C7.82579 2.66797 7.65622 2.73821 7.5312 2.86323C7.40618 2.98826 7.33594 3.15782 7.33594 3.33464Z"
+                  stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_934_27455">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <div class="d-flex flex-column">
+              <button mat-menu-item class="common-btn" type="button" (click)="activeStatus()">
+
+                <span>{{viewDriversRecord?.isActive ? 'Mark as Inactive' : 'Mark as active'}}</span>
+              </button>
+              <button mat-menu-item class="common-btn" (click)="deleteDriver()" type="button" *ngIf="permissions?.deleteAccess">
+
+                <span>Remove</span>
+              </button>
+            </div>
+
+          </mat-menu>
+
+        </div>
+
+        <button class="common-btn" (click)="back()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            viewBox="0 0 20 20" fill="none">
+            <path d="M15 5L5 15" stroke="#1E293B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5 5L15 15" stroke="#1E293B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg></button>
+      </div>
+    </div>
+
+    <div>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Basic details">
+
+          <div class="basicActivityDetails-container">
+            <div class="d-flex">
+              <label>Employee ID</label>
+              <span>{{viewDriversRecord?.employeeNo ? viewDriversRecord?.employeeNo : '-'}}</span>
+            </div>
+            <div class="d-flex">
+              <label>First name</label>
+              <span>{{viewDriversRecord?.firstName | titlecase}}</span>
+            </div>
+            <div class="d-flex">
+              <label>Last name</label>
+              <span>{{viewDriversRecord?.lastName | titlecase}}</span>
+            </div>
+            <div class="d-flex">
+              <label>Email address</label>
+              <span>{{viewDriversRecord?.email ? viewDriversRecord?.email : '-'}}</span>
+            </div>
+            <div class="d-flex">
+              <label>Mobile number</label>
+              <span>{{viewDriversRecord?.phoneCountryCode ? viewDriversRecord?.phoneCountryCode : '-'}}
+                {{viewDriversRecord?.contactDetails | faxNumber}}</span>
+            </div>
+          </div>
+
+          <h4>Driver license </h4>
+
+          <div class="basicActivityDetails-container">
+            <div class="d-flex">
+              <label>License no</label>
+              <span>{{viewDriversRecord?.licenseNumber ? viewDriversRecord?.licenseNumber : '-'}}</span>
+            </div>
+            <div class="d-flex">
+              <label>License issued from</label>
+              <span>{{viewDriversRecord?.licenceIssuedDate | date : 'dd/MM/YYYY' : '-'}}</span>
+            </div>
+            <div class="d-flex">
+              <label>Validity</label>
+              <span>{{viewDriversRecord?.licenceValidDate | date : 'dd/MM/YYYY' : '-'}}</span>
+            </div>
+
+
+          </div>
+
+          <h4>Driver app <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"
+              class="ml-2">
+              <path opacity="0.4"
+                d="M9.9974 18.3307C14.5999 18.3307 18.3307 14.5999 18.3307 9.9974C18.3307 5.3949 14.5999 1.66406 9.9974 1.66406C5.3949 1.66406 1.66406 5.3949 1.66406 9.9974C1.66406 14.5999 5.3949 18.3307 9.9974 18.3307Z"
+                fill="#94A3B8" />
+              <path
+                d="M9.9974 11.4557C10.3391 11.4557 10.6224 11.1724 10.6224 10.8307V6.66406C10.6224 6.3224 10.3391 6.03906 9.9974 6.03906C9.65573 6.03906 9.3724 6.3224 9.3724 6.66406V10.8307C9.3724 11.1724 9.65573 11.4557 9.9974 11.4557ZM10.7641 13.0132C10.7224 12.9132 10.6641 12.8216 10.5891 12.7382C10.5057 12.6632 10.4141 12.6049 10.3141 12.5632C10.1112 12.4799 9.88361 12.4799 9.68073 12.5632C9.58073 12.6049 9.48906 12.6632 9.40573 12.7382C9.33073 12.8216 9.2724 12.9132 9.23073 13.0132C9.18906 13.1132 9.16406 13.2216 9.16406 13.3299C9.16406 13.4382 9.18906 13.5466 9.23073 13.6466C9.2724 13.7549 9.33073 13.8382 9.40573 13.9216C9.48906 13.9966 9.58073 14.0549 9.68073 14.0966C9.78073 14.1382 9.88906 14.1632 9.9974 14.1632C10.1057 14.1632 10.2141 14.1382 10.3141 14.0966C10.4141 14.0549 10.5057 13.9966 10.5891 13.9216C10.6641 13.8382 10.7224 13.7549 10.7641 13.6466C10.8057 13.5466 10.8307 13.4382 10.8307 13.3299C10.8307 13.2216 10.8057 13.1132 10.7641 13.0132Z"
+                fill="#475569" />
+            </svg></h4>
+
+          <div class="basicActivityDetails-container">
+            <div class="textCls-p">
+              User not yet installed the driver app
+            </div>
+
+            <button class="link common-btn" type="button" (click)="resendInvitation()">Resend Invitation</button>
+          </div>
+          <app-custom-paginator 
+          [length]="totalPages" 
+          [pageSizeOptions]="[10,25, 50,75, 100]" 
+          [showFirstLastButtons]="true" 
+          (pageChange)="onPageChange($event)">
+        </app-custom-paginator>
+
+        </mat-tab>
+        <mat-tab label="Documents">
+          <div class="documentRecord" *ngIf="viewDriversRecord?.driverLicensePhoto?.length > 0">
+            <button class="common-btn fileCard" *ngFor="let file of viewDriversRecord?.driverLicensePhoto"
+              (click)="viewFile(file)">
+              <div class="d-flex align-items-center gap-16">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="24" fill="#283892" fill-opacity="0.2" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M20.5013 12.5918V18.1673H14.9258C15.0366 17.952 15.1803 17.7551 15.3516 17.584L19.918 13.0177C20.089 12.8459 20.2859 12.703 20.5013 12.5918ZM22.8346 12.334V18.1673C22.8346 18.7862 22.5888 19.3796 22.1512 19.8172C21.7136 20.2548 21.1201 20.5007 20.5013 20.5007H14.668V33.334C14.668 33.9528 14.9138 34.5463 15.3514 34.9839C15.789 35.4215 16.3825 35.6673 17.0013 35.6673H31.0013C31.6201 35.6673 32.2136 35.4215 32.6512 34.9839C33.0888 34.5463 33.3346 33.9528 33.3346 33.334V14.6673C33.3346 14.0485 33.0888 13.455 32.6512 13.0174C32.2136 12.5798 31.6201 12.334 31.0013 12.334H22.8346ZM19.3346 28.6673C19.3346 28.3579 19.4576 28.0612 19.6763 27.8424C19.8951 27.6236 20.1919 27.5007 20.5013 27.5007H27.5013C27.8107 27.5007 28.1075 27.6236 28.3263 27.8424C28.5451 28.0612 28.668 28.3579 28.668 28.6673C28.668 28.9767 28.5451 29.2735 28.3263 29.4923C28.1075 29.7111 27.8107 29.834 27.5013 29.834H20.5013C20.1919 29.834 19.8951 29.7111 19.6763 29.4923C19.4576 29.2735 19.3346 28.9767 19.3346 28.6673ZM20.5013 22.834C20.1919 22.834 19.8951 22.9569 19.6763 23.1757C19.4576 23.3945 19.3346 23.6912 19.3346 24.0007C19.3346 24.3101 19.4576 24.6068 19.6763 24.8256C19.8951 25.0444 20.1919 25.1673 20.5013 25.1673H27.5013C27.8107 25.1673 28.1075 25.0444 28.3263 24.8256C28.5451 24.6068 28.668 24.3101 28.668 24.0007C28.668 23.6912 28.5451 23.3945 28.3263 23.1757C28.1075 22.9569 27.8107 22.834 27.5013 22.834H20.5013Z"
+                    fill="#2D2E83" />
+                </svg>
+                <div>
+                  <p class="fileName">{{file.fileName}}</p>
+                  <p class="fileDetails">{{file.uploadedDate}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-custom">
+                <p class="fileSize">{{file.fileSize}}</p>
+                <!-- <button class="common-btn" type="button" [matMenuTriggerFor]="moreMenu" aria-label="more">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 20 20" fill="none">
+                            <path
+                              d="M10.0013 6.56185C9.25342 6.56185 8.64714 5.95557 8.64714 5.20768C8.64714 4.4598 9.25342 3.85352 10.0013 3.85352C10.7492 3.85352 11.3555 4.4598 11.3555 5.20768C11.3555 5.95557 10.7492 6.56185 10.0013 6.56185ZM10.0013 11.3535C9.25342 11.3535 8.64714 10.7472 8.64714 9.99935C8.64714 9.25146 9.25342 8.64518 10.0013 8.64518C10.7492 8.64518 11.3555 9.25146 11.3555 9.99935C11.3555 10.7472 10.7492 11.3535 10.0013 11.3535ZM8.64714 14.791C8.64713 15.5389 9.25342 16.1452 10.0013 16.1452C10.7492 16.1452 11.3555 15.5389 11.3555 14.791C11.3555 14.0431 10.7492 13.4368 10.0013 13.4368C9.25342 13.4368 8.64714 14.0431 8.64714 14.791Z"
+                              fill="#212121" />
+                          </svg>
+                        </button> -->
+                <mat-menu #moreMenu="matMenu">
+                  <div class="d-flex flex-column">
+                    <button mat-menu-item type="button" class="common-btn" (click)="viewFile(file)">
+                      View
+                    </button>
+                    <!-- <button mat-menu-item type="button" class="common-btn" (click)="deleteFile(file)">
+                              Delete
+                            </button> -->
+                  </div>
+
+                </mat-menu>
+              </div>
+            </button>
+            
+          </div>
+          <div class="noRecord" *ngIf="viewDriversRecord?.driverLicensePhoto?.length == 0">
+            <p>No documents</p>
+          </div>
+        </mat-tab>
+        <mat-tab label="History">
+          <div class="documentRecord">
+            <div class="doc-card" *ngIf="orderHistoryList.length > 0 ">
+              <div class="doc-recordcard d-flex align-items-center justify-content-between"
+                *ngFor="let data of orderHistoryList">
+                <div class="d-flex align-items-center justify-content-between gap-12">
+                  <div>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="24" cy="24" r="24" fill="#283892" fill-opacity="0.2" />
+                      <g clip-path="url(#clip0_6869_61644)">
+                        <path d="M24.0013 13.5L33.3346 18.75V29.25L24.0013 34.5L14.668 29.25V18.75L24.0013 13.5Z"
+                          stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M24 24L33.3333 18.75" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M24 24V34.5" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M24.0013 24L14.668 18.75" stroke="#2D2E83" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_6869_61644">
+                          <rect width="28" height="28" fill="white" transform="translate(10 10)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+
+                  <div class="doc-heading">
+                    <h6>Mov Doc No. - {{data.orderNo ? data.orderNo :'-'}}</h6>
+                    <p>{{data.orderDate ? (data.orderDate | date :'d MMM y, h:mm a') :'-'}}</p>
+                  </div>
+                </div>
+                <!-- <div class="doc-heading">
+                          <h6>Driver name</h6>
+                          <p>John Paul</p>
+                        </div> -->
+                <div class="doc-heading">
+                  <h6>Trailer no</h6>
+                  <p>{{data.trailerNumber}}</p>
+                </div>
+                <div class="doc-heading">
+                  <h6>Vehicle no</h6>
+                  <p>{{data.truckName}}</p>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+          <div class="noRecord" *ngIf="orderHistoryList?.length == 0">
+            <p>No records!</p>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

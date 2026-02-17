@@ -1,0 +1,91 @@
+<div class="addUsers-container h-100">
+    <form [formGroup]="userForm" >
+    <div class="addUsers-header d-flex justify-content-between align-items-center  ">
+        <button class="cancel-btn common-btn" type="button" (click)="cancel()">
+            Cancel
+        </button>
+
+        <h4 class="mb-0">New User</h4>
+
+        <button class="addBtn-users bgColorCls" type="submit" (click)="onSubmit()">
+            {{saveBtnText}}
+        </button>
+    </div>
+
+
+    <div class="container">
+        <div class="  addUsers-bodyContent">
+            <div class="form-container">
+               
+                  <div class="form-row">
+                    <div class="form-field">
+                        <mat-label>First name <span>*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput placeholder=""  formControlName="firstName" (keypress)="restrictedName($event)" appLettersOnly>
+                          </mat-form-field>
+                    </div>
+                    <div class="form-field">
+                       <mat-label>Last name <span>*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput placeholder=""  type="text" formControlName="lastName" (keypress)="restrictedName($event)" appLettersOnly>
+                          </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-field">
+                     
+                       <mat-label>Email address <span>*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput placeholder="" type="email" formControlName="email" >
+                          </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-field">
+                       <mat-label>Mobile number <span>*</span></mat-label>
+                      <div class="d-flex gap-16">
+                         <mat-form-field class="volume-field w-25" appearance="outline">
+                        <input type="text" placeholder="+44" formControlName="prefixmobile" matInput
+                            (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="auto1">
+                        <mat-autocomplete #auto1="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredTel | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <input matInput placeholder=""  type="text" appNumberOnly formControlName="mobileNumber" (keypress)="numberOnly($event)">
+                          </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-field">
+                      <mat-label>Role type <span>*</span></mat-label>
+                      <mat-form-field appearance="outline">
+
+                      <mat-select formControlName="roleType">
+                        <mat-option [value]="role.roleID" *ngFor="let role of rolesList">{{role.roleName}}</mat-option>
+                      </mat-select>
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                 <div class="form-row" *ngIf="userForm.value.roleType == 12">
+                    <div class="form-field">
+                      <mat-label>Planner Location <span>*</span></mat-label>
+                      <mat-form-field appearance="outline">
+
+                      <mat-select formControlName="location">
+                        <mat-option [value]="role.consigneeID" *ngFor="let role of locationList">{{role.city}}</mat-option>
+                      </mat-select>
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                
+              </div>
+        </div>
+    </div>
+</form>
+</div>

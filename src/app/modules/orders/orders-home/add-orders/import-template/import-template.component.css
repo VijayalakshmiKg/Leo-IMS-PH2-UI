@@ -1,0 +1,78 @@
+.importtemplate-header {
+    padding: 8px 20px;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid var(--Slate-300, #CBD5E1);
+    background: var(--White, #FFF);
+}
+
+.importtemplate-header h6 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    margin-bottom: 0;
+}
+
+/* ---------------------------------------- */
+.import-content {
+    padding: 12px 20px;
+    background: var(--Background-White, #FFF);
+    /* height: 215px; */
+
+}
+
+::ng-deep .import-content .mat-radio-button {
+    color: var(--Slate-600, #475569);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+
+/* ---------------------------------------- */
+.bottom-btn {
+    border-radius: 0px 0px 4px 4px;
+    border-top: 1px solid var(--Slate-200, #E2E8F0);
+    border-left: 1px solid var(--Slate-200, #E2E8F0);
+    background: #FFF;
+    padding: 16px;
+
+}
+
+.cancel-btn {
+    border-radius: 4px;
+    border: 1px solid var(--Light-theme-Rest-Border-Default-Border, #D1D1D1);
+    background: var(--Light-theme-Rest-Background-Default-Background, #FFF);
+    color: var(--light-theme-rest-foreground-default-foreground-242424, #242424);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 7px 27px;
+    gap: 8px;
+
+}
+
+.import-btn {
+    border-radius: 4px;
+    background: var(--Leo-Color, #2D2E83);
+    padding: 7px 27px;
+    color: var(--Light-theme-Rest-Foreground-Default-Foreground-3, #FFF);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 19px;
+
+}

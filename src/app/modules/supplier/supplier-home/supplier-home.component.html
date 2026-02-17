@@ -1,0 +1,131 @@
+<div class="supplier-header d-flex justify-content-between align-items-center">
+    <div class="supplier-head-left d-flex gap-24 align-items-center">
+      <span>
+          {{supplierList.length}} supplier(s) in List
+      </span>
+      <div class="search ml-3">
+          <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search supplier">
+              <input type="search" matInput placeholder="Search supplier"
+                   aria-label="Search" (keyup)="filteredUsersList($event.target)">
+              <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field>
+      </div>
+  </div>
+  <div class="supplier-head-right d-flex align-items-center gap-24">
+      <div class="border-less-input ">
+        
+        </div>
+      <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn" [matMenuTriggerFor]="filter" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <g clip-path="url(#clip0_478_6335)">
+                  <path
+                      d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+                      fill="#475569" />
+              </g>
+              <defs>
+                  <clipPath id="clip0_478_6335">
+                      <rect width="20" height="20" fill="white" />
+                  </clipPath>
+              </defs>
+          </svg>
+          <p class="m-0 sortedByCls ml-2">Sort by</p>
+      </button>
+      <mat-menu #filter="matMenu">
+          <div *ngFor="let sortby of sortList">
+              <button mat-menu-item (click)="sortByValue(sortby.element)">{{sortby.name}}</button>
+  
+          </div>
+      </mat-menu>
+      <button type="button" *ngIf="this.logedInUser !=  'Admin'" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn" (click)="addSupplier()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+              <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+          Add supplier</button>
+  </div>
+  </div>
+  <div class="masterScreen-content-table p-0">
+    <!-- <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">supplier name</th>
+            <th scope="col" class="hide-col">supplier reg no</th>
+            <th scope="col" >Email address</th>
+            <th scope="col" >Mobile number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of supplierList; index as i" (click)="viewSupplier(i)">
+            <td>
+                {{item.supplierName || '-'}}
+            </td>
+            <td class="hide-col">{{item.supplierRgno || '-'}}</td>
+            <td >{{item.email || '-'}}</td>
+            <td>{{item.mobileNumber || '-'}}</td>
+           
+          </tr>
+        </tbody>
+      </table> -->
+
+      <div class="supplier-cards-container">
+        <div class="supplier-cards" *ngFor="let item of supplierList; index as i" (click)="viewSupplier(i)">
+            <div class="content d-flex flex-column gap-4">
+                <div class="heading">Supplier name</div>
+                <div class="values"> {{item.supplierName || '-'}}</div>
+            </div>
+            <div class="content d-flex flex-column gap-4">
+                <div class="heading">Supplier Category</div>
+                <div class="values">{{item.supplierCategory || '-'}}</div>
+            </div>
+            <div class="content d-flex flex-column gap-4">
+                <div class="heading">Mobile number</div>
+                <div class="values">{{item.mobileNumber || '-'}}</div>
+            </div>
+            <div class="content d-flex flex-column gap-4">
+                <div class="heading">Supplier type</div>
+                <div class="values">{{item.supplierType || 'Supplier'}}</div>
+            </div>
+            <div class="content d-flex flex-column gap-4">
+                <div class="heading">Opening balance</div>
+                <div class="values">{{item.balancePay || '-'}}</div>
+            </div>
+            <div class="content d-flex flex-column gap-4">
+                <div class="heading">Status</div>
+                <div class="values">Active</div>
+            </div>
+            </div>
+            
+        </div>
+
+
+
+      <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="supplierList?.length === 0">
+        <div class="mb-2">
+            <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" width="47" height="47" rx="23.5" fill="#006CB7" fill-opacity="0.2"/>
+                <g clip-path="url(#clip0_3687_448)">
+                <path d="M17.0005 18C17.0005 19.0609 17.422 20.0783 18.1721 20.8284C18.9223 21.5786 19.9397 22 21.0005 22C22.0614 22 23.0788 21.5786 23.829 20.8284C24.5791 20.0783 25.0005 19.0609 25.0005 18C25.0005 16.9391 24.5791 15.9217 23.829 15.1716C23.0788 14.4214 22.0614 14 21.0005 14C19.9397 14 18.9223 14.4214 18.1721 15.1716C17.422 15.9217 17.0005 16.9391 17.0005 18Z" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15 32V30C15 28.9391 15.4214 27.9217 16.1716 27.1716C16.9217 26.4214 17.9391 26 19 26H23C24.0609 26 25.0783 26.4214 25.8284 27.1716C26.5786 27.9217 27 28.9391 27 30V32" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M27.9995 14.1297C28.8599 14.35 29.6225 14.8504 30.1671 15.552C30.7117 16.2537 31.0073 17.1166 31.0073 18.0047C31.0073 18.8929 30.7117 19.7558 30.1671 20.4574C29.6225 21.159 28.8599 21.6594 27.9995 21.8797" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M33 31.9998V29.9998C32.9949 29.117 32.6979 28.2606 32.1553 27.5642C31.6126 26.8678 30.8548 26.3705 30 26.1498" stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_3687_448">
+                <rect width="24" height="24" fill="white" transform="translate(12 11)"/>
+                </clipPath>
+                </defs>
+                </svg>
+                
+                
+                 
+        </div>
+        <div class="noRecordText">
+            No suppliers added yet
+        </div>
+      </div>
+  </div>
+  
+  
+  

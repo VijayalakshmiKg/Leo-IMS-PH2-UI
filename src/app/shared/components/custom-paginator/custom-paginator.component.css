@@ -1,0 +1,166 @@
+::ng-deep .custom-paginator-container .mat-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    position: relative;
+  }
+  
+  /* Style the custom page number */
+  .custom-page-number {
+    position: absolute;
+    left: 47px;
+    top: 1px;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--Slate-500, #64748B);
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+border-radius: 4px;
+background: #E9E9E9;
+padding: 4px 9px;
+  }
+
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    /* padding: .4375em 0; */
+    border-radius: 4px;
+    border: 1px solid #E9E9E9;
+    background: #FEFEFE;
+    padding: 3px 8px;
+}
+
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px !important;
+    display: none !important;
+}
+  
+  ::ng-deep .custom-paginator-container .mat-paginator-page-size-label {
+    margin: 0 4px;
+    color: var(--Slate-500, #64748B);
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+::ng-deep  .custom-paginator-container .mat-paginator-page-size {
+    display: flex;
+    align-items: baseline;
+    margin-right: 8px;
+    order: 2;
+}
+::ng-deep .custom-paginator-container .mat-paginator-page-size-label {
+    margin: 0 4px;
+    color: var(--Slate-500, #64748B);
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex
+;
+    order: 2;
+}
+
+
+
+::ng-deep .custom-paginator-container .mat-mdc-paginator-page-size-label {
+    display: none; /* Hide the default label */
+}
+
+::ng-deep .custom-paginator-container .mat-mdc-paginator-page-size {
+    position: relative;
+}
+
+::ng-deep .custom-paginator-container .mat-mdc-paginator-page-size::before {
+    content: "Items per page";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: normal; /* Optional */
+}
+
+.custom-paginator{
+    position: relative;
+}
+
+.custom-paginator-container{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    border-top: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--Background-White, #FFF);
+}
+
+/* ::ng-deep .mat-paginator-navigation-first {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M18 6L16.59 7.41 12.83 11.17 16.59 15 18 16.59 12 10.59z'/%3E%3Cpath d='M6 6L4.59 7.41 9.17 12 4.59 16.59 6 18 12 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  
+  ::ng-deep .mat-paginator-navigation-last {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M6 18L7.41 16.59 11.17 12.83 7.41 9 6 7.41 12 12.41z'/%3E%3Cpath d='M18 18L19.41 16.59 14.83 12 19.41 7.41 18 6 12 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+ 
+::ng-deep .mat-paginator-navigation-first .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-last .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-previous .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-next .mat-button-wrapper {
+  display: none;
+} */
+
+::ng-deep .custom-paginator-container .mat-paginator-navigation-next,
+::ng-deep .custom-paginator-container .mat-paginator-navigation-previous,
+::ng-deep .custom-paginator-container .mat-paginator-navigation-first,
+::ng-deep .custom-paginator-container .mat-paginator-navigation-last {
+  background-color: #0a68ec;
+  -webkit-mask-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"%3E%3Cg clip-path="url(%23clip0_6492_121909)"%3E%3Cpath d="M9.71564 2.06815L3.73571 5.56815C3.66042 5.61217 3.59796 5.67522 3.55454 5.75102C3.51113 5.82682 3.48828 5.91272 3.48828 6.00015C3.48828 6.08757 3.51113 6.17347 3.55454 6.24927C3.59796 6.32508 3.66042 6.38813 3.73571 6.43215L9.71564 9.93215C9.79137 9.97649 9.87742 9.99999 9.9651 10.0003C10.0528 10.0006 10.139 9.97767 10.215 9.93385C10.2911 9.89003 10.3542 9.82685 10.3981 9.7507C10.442 9.67455 10.4651 9.58813 10.4651 9.50015V2.50015C10.4651 2.41217 10.442 2.32574 10.3981 2.2496C10.3542 2.17345 10.2911 2.11027 10.215 2.06645C10.139 2.02262 10.0528 1.9997 9.9651 2C9.87742 2.0003 9.79137 2.02381 9.71564 2.06815Z" fill="%2364748B"%3E%3C/path%3E%3Cpath d="M1.99442 2C2.11648 2.00002 2.23429 2.04498 2.3255 2.12636C2.41671 2.20774 2.47498 2.31987 2.48926 2.4415L2.49275 2.5V9.5C2.49261 9.62744 2.44397 9.75002 2.35678 9.84268C2.26959 9.93535 2.15042 9.99112 2.02363 9.99859C1.89683 10.0061 1.77198 9.96466 1.67458 9.88287C1.57718 9.80107 1.51458 9.68505 1.49958 9.5585L1.49609 9.5V2.5C1.49609 2.36739 1.5486 2.24021 1.64205 2.14645C1.73551 2.05268 1.86226 2 1.99442 2Z" fill="%2364748B"%3E%3C/path%3E%3C/g%3E%3C/defs%3E%3C/svg%3E');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+
+::ng-deep .custom-paginator-container .mat-paginator-range-label {
+    display: none;
+}
+
+.customPaginatorBtns{
+    position: relative;
+
+}
+
+.customPaginatorAbsolute{
+    position: absolute;
+    top: 12px;
+    right: 195px;
+}
+
+.customPaginatorBtns button{
+    background-color: transparent;
+    border: none;
+}
+
+.gap-45{
+    gap: 45px;
+}
+
+.gap-16{
+    gap: 16px;
+}
+
+.gap-55{
+    gap: 55px;
+}
+
+.customPaginatorBtns .disable{
+    opacity: 0.6;
+}

@@ -1,0 +1,87 @@
+::ng-deep .custom-msg-box mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 12px !important;
+}
+
+.msg-box-container {
+    padding: 24px !important;
+}
+
+.title {
+    margin-bottom: 24px;
+}
+
+.title h3 {
+    color: var(--Slate-700, #334155);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.message {
+    width: 100%;
+    padding: 16px;
+}
+
+.logo {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.msg-body-color {
+    border-radius: 8px;
+    background: #FDFAEF;
+    display: flex;
+    align-items: self-start;
+}
+
+.success-body {
+    display: flex;
+    justify-content: center;
+}
+
+.msg-content {
+    display: flex;
+    align-items: center;
+}
+
+.msg-content h5 {
+    font-style: normal;
+    font-weight: 500;
+    margin: 2px 0px 0px 0px !important;
+}
+
+.button-container {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.color-1{
+    color: #D18407;
+}
+
+.btn-cls-1 {
+    color: var(--Light-theme-Rest-Foreground-Default-Foreground-3, #FFF);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    border-radius: 4px;
+    border: #283892;
+    border-radius: 4px;
+    background: #283892;
+    padding: 6px 32px;
+}
+
+.btn-cls-2 {
+    padding: 6px 32px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid var(--Light-theme-Rest-Border-Default-Border, #D1D1D1);
+    background: var(--Light-theme-Rest-Background-Default-Background, #FFF);
+}

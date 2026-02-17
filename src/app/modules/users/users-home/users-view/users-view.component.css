@@ -1,0 +1,198 @@
+.usersView-header{
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--White, #FFF);
+z-index: 1000;
+position: sticky;
+top: 0;
+}
+
+.removeBtn{
+    color: #DD545C;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px; /* 83.333% */
+    letter-spacing: -0.06px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.editBtn{
+    color: var(--primary-color, #0072BA);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px; /* 83.333% */
+    letter-spacing: -0.06px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.backBtn{
+    color: var(--Slate-700, #334155);
+    text-align: center;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19px; /* 146.154% */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.gap-20{
+    gap: 20px;
+}
+
+.users-view-content{
+    padding: 12px 20px;
+}
+
+.nameIndication{
+    width: 39.902px;
+    height: 39.902px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(0, 108, 183, 0.30);
+    align-items: center;
+    color: var(--primary-col, #006CB7);
+    text-align: center;
+    font-feature-settings: 'liga' off;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 132%;
+    letter-spacing: 0.14px;
+    text-transform: capitalize;
+}
+
+.gap-12{
+gap: 12px;
+}
+
+.users-view-content span{
+width: 106px;
+color: var(--Slate-600, #475569);
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.users-view-content p{
+    color: var(--Slate-800, #1E293B);
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: 17px; /* 130.769% */
+}
+
+.users-view-content h5{
+    color: var(--Slate-700, #334155);
+font-size: 19px;
+font-style: normal;
+font-weight: 600;
+line-height: 22px; /* 115.789% */
+border-bottom: 1px solid #D9D9D9;
+padding-bottom: 8px;
+display: flex;
+align-items: center;
+gap: 6px;
+width: 100%;
+}
+
+.users-view-content h6{
+    color: var(--Slate-700, #334155);
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+
+.linkCls{
+    color: var(--primary-col, #006CB7);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px; /* 76.923% */
+    letter-spacing: -0.065px;
+}
+
+.gap-6{
+    gap: 6px;
+}
+
+.users-view-component label{
+    color: var(--Slate-800, #1E293B);
+font-feature-settings: 'liga' off, 'clig' off;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 111.111% */
+text-transform: capitalize;
+}
+
+.users-view-content label{
+    color: var(--Slate-600, #475569) !important;
+    /* font-family: BlinkMacSystemFont !important; */
+font-size: 13px !important;
+font-style: normal !important;
+font-weight: 500 !important;
+line-height: 20px !important; /* 153.846% */
+}
+
+.gap-8{
+    gap: 8px;
+}
+
+::ng-deep .users-view-component .mat-slide-toggle-bar {
+    height: 24px !important;
+    border-radius: 13px !important;
+    width: 40px !important;
+}
+
+::ng-deep .users-view-component .mat-slide-toggle-thumb-container {
+    position: absolute;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    top: 2px;
+    left: 1px;
+    transform: translate3d(0, 0, 0);
+    transition: all 80ms linear;
+    transition-property: transform;
+}
+
+::ng-deep .users-view-component .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #FFF;
+}
+
+::ng-deep .users-view-component .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgb(22 236 19 / 54%);
+}
+
+::ng-deep .userDelete-cls .mat-dialog-container 
+{
+  padding: 0px;
+}
+
+/* Reset Pswd Popup */
+::ng-deep .resetPswdCls .mat-dialog-container {
+    display: block;
+    padding: 20px !important;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+}

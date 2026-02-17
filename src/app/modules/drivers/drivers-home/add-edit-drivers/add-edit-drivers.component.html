@@ -1,0 +1,482 @@
+<div class="addDriver-container">
+    <form [formGroup]="driverForm">
+        <div class="addDriver-header d-flex justify-content-between align-items-center  ">
+            <button class="cancel-btn common-btn" type="button" (click)="back()">
+                Cancel
+            </button>
+
+            <h4 class="mb-0">{{this.driverServ.editDriverRecord ? 'Edit':'New'}} driver</h4>
+
+            <button class="addBtn-users bgColorCls" type="button" [matMenuTriggerFor]="menu"
+                *ngIf="this.driverServ.editDriverRecord == null else Edit" [disabled]="emailExits || mobileNumberexits">
+                <div class="saveText">
+                    {{saveBtnText}}
+                </div>
+
+                <div class="dropDownIcon">
+                    <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="submit" (click)="onSubmitandClose()">Add and close</button>
+                <button mat-menu-item type="submit" (click)="onSubmitandAddAnother()">Save and add another</button>
+            </mat-menu>
+            <ng-template #Edit>
+                <button class="addBtn-users bgColorCls" type="button" mat-button (click)="onSubmitandClose()">
+                    Update
+                </button>
+            </ng-template>
+        </div>
+
+
+        <div class="container">
+            <div class="  addDriver-bodyContent">
+                <div class="form-container">
+
+                    <div class="profile-Upload mb-3 d-flex gap-8 align-items-end">
+                        <div class="d-flex  align-items-center  ">
+
+                            <div class="profile-img-content" *ngIf="imageUrlProfile == null; else profileFound">
+                                <span class="noProfile common-btn">
+                                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.408163" y="0.408163" width="79.1837" height="78.8749" fill="white"
+                                            stroke="#E2E8F0" stroke-width="0.816326" />
+                                        <mask id="mask0_923_4832" style="mask-type:alpha" maskUnits="userSpaceOnUse"
+                                            x="2" y="11" width="77" height="69">
+                                            <rect x="2.44922" y="11.3839" width="75.5782" height="68.6155"
+                                                fill="white" />
+                                        </mask>
+                                        <g mask="url(#mask0_923_4832)">
+                                            <mask id="mask1_923_4832" style="mask-type:alpha" maskUnits="userSpaceOnUse"
+                                                x="6" y="19" width="70" height="76">
+                                                <path
+                                                    d="M71.0937 76.913C68.7352 80.4178 65.9916 83.5055 62.9471 86.062C61.8882 86.9572 60.7872 87.7841 59.656 88.5427C55.4925 91.3421 50.8717 93.2235 45.9741 93.9517C44.4579 94.1793 42.9116 94.2931 41.3473 94.2931C39.44 94.2931 37.5628 94.1186 35.7278 93.7848C30.758 92.8821 26.0951 90.7959 21.9195 87.7613H21.9135C20.8485 86.9875 19.8137 86.1531 18.8149 85.2579C15.8487 82.5951 13.1893 79.4316 10.915 75.8585C10.9211 75.8281 10.9331 75.8054 10.9451 75.775C11.0173 75.5702 11.0895 75.373 11.1677 75.1833C11.2279 75.024 11.2941 74.8647 11.3663 74.713C11.3904 74.6447 11.4204 74.5764 11.4565 74.5081C11.5167 74.3716 11.5829 74.235 11.6491 74.1061C11.7032 73.9923 11.7574 73.8861 11.8115 73.7799C11.9138 73.5826 12.0281 73.3854 12.1424 73.1957C12.2387 73.0212 12.341 72.8543 12.4493 72.695C12.5516 72.5357 12.6599 72.3764 12.7682 72.2247C12.7983 72.1791 12.8344 72.1336 12.8644 72.0957C12.9848 71.9288 13.1111 71.7619 13.2435 71.6026L13.2856 71.5495C13.412 71.3978 13.5443 71.246 13.6767 71.1019C13.8271 70.935 13.9775 70.7757 14.134 70.624C14.2603 70.495 14.3927 70.3736 14.525 70.2598C14.6995 70.1005 14.874 69.9488 15.0605 69.8122C15.1628 69.7288 15.2711 69.6453 15.3854 69.5695C15.7103 69.3267 16.0473 69.1143 16.3962 68.9246C16.5166 68.8564 16.6309 68.7957 16.7512 68.735C16.9317 68.6439 17.1122 68.5605 17.2987 68.4846C17.4792 68.4088 17.6597 68.3329 17.8462 68.2722L27.1901 65.0177L27.503 64.9115L29.4103 64.2439L30.4993 63.8646L30.9144 63.7205H50.7694L51.1846 63.8646L52.2736 64.2439L54.1809 64.9115L54.4937 65.0177L63.8376 68.2722C67.2791 69.4708 69.9746 72.7405 71.0937 76.913Z"
+                                                    fill="white" />
+                                                <path
+                                                    d="M51.1924 64.1338C48.8875 67.1611 45.1143 69.1334 40.8476 69.1334C36.581 69.1334 32.8078 67.1611 30.5029 64.1338L33.4758 63.3126L34.6011 57.0182L35.4075 52.5222L40.8476 54.6443L46.2878 52.5222L48.057 62.4014L48.2195 63.3126L51.1924 64.1338Z"
+                                                    fill="#F69779" />
+                                                <path
+                                                    d="M48.0565 62.4014C46.0827 63.0967 44.5481 63.0967 44.5481 63.0967C44.5481 63.0967 38.0308 63.0968 34.6006 57.0182L35.407 52.5222L40.8471 54.6443L46.2873 52.5222L48.0565 62.4014Z"
+                                                    fill="#F37A67" />
+                                                <path
+                                                    d="M75.3079 80.2056C68.3874 88.5981 67.5208 88.0766 64.4758 90.0968C63.4166 90.8041 63.8018 89.4973 62.6704 90.0968C54.5045 94.4235 51.3448 93.4178 46.4463 93.9933C45.6519 88.4063 46.1577 76.2471 46.1577 76.2471C46.1577 75.5877 46.2661 74.8084 46.4466 73.9811C47.1266 70.762 48.8056 66.8535 48.8056 66.8535L49.269 66.5298L52.2839 64.4316L54.1916 64.9592L54.5045 65.0431L63.8503 67.6148C67.2925 68.5619 74.1886 76.9086 75.3079 80.2056Z"
+                                                    fill="#A1CC36" />
+                                                <path
+                                                    d="M6.27998 80.2056C13.2005 88.5981 14.0671 88.0766 17.1121 90.0968C18.1713 90.8041 17.7861 89.4973 18.9175 90.0968C27.0834 94.4235 30.2431 93.4178 35.1416 93.9933C35.936 88.4063 35.4301 76.2471 35.4301 76.2471C35.4301 75.5877 35.3218 74.8084 35.1413 73.9811C34.4613 70.762 32.7823 66.8535 32.7823 66.8535L32.3189 66.5298L29.304 64.4316L27.3963 64.9592L27.0834 65.0431L17.7376 67.6148C14.2954 68.5619 7.3993 76.9086 6.27998 80.2056Z"
+                                                    fill="#A1CC36" />
+                                                <path
+                                                    d="M35.7327 87.7748C30.762 87.0614 26.0981 85.4129 21.9217 83.015H21.9157C20.8505 82.4036 19.8155 81.7442 18.8165 81.0368C15.8497 78.9327 13.1898 76.4329 10.915 73.6094C10.9211 73.5855 10.9331 73.5675 10.9451 73.5435C11.0173 73.3816 11.0896 73.2258 11.1678 73.0759C11.228 72.95 11.2942 72.8241 11.3664 72.7042C11.3905 72.6503 11.4205 72.5963 11.4566 72.5424C11.5168 72.4345 11.583 72.3266 11.6492 72.2247C11.7034 72.1347 11.7575 72.0508 11.8117 71.9669C11.914 71.811 12.0283 71.6552 12.1427 71.5053C12.239 71.3674 12.3413 71.2355 12.4496 71.1097C12.5519 70.9838 12.6602 70.8579 12.7685 70.738C12.7986 70.702 12.8347 70.6661 12.8648 70.6361C12.9852 70.5042 13.1116 70.3723 13.244 70.2464L13.2861 70.2045C13.4125 70.0846 13.5448 69.9647 13.6772 69.8508C13.8277 69.7189 13.9781 69.593 14.1346 69.4731C14.261 69.3712 14.3934 69.2753 14.5258 69.1854C14.7003 69.0595 14.8748 68.9396 15.0613 68.8317C15.1637 68.7658 15.272 68.6998 15.3863 68.6399C15.7113 68.448 16.0483 68.2802 16.3973 68.1303C16.5177 68.0764 16.632 68.0284 16.7524 67.9805C16.9329 67.9085 17.1134 67.8426 17.3 67.7826C17.4805 67.7227 17.6611 67.6627 17.8476 67.6148L27.1934 65.0431L27.5063 64.9592L29.414 64.4316L32.4289 66.5298L32.8923 66.8535C32.8923 66.8535 34.5713 70.762 35.2513 73.9811C35.4318 74.8143 35.5401 75.5877 35.5401 76.2471C35.5401 76.2471 36.491 82.2237 35.7327 87.7748Z"
+                                                    fill="#A1CC36" />
+                                                <path
+                                                    d="M52.7329 28.9921C51.3428 26.3904 48.6829 24.9577 46.2276 24.1604C42.7372 23.0274 38.958 23.0274 35.4677 24.1604C33.0184 24.9577 30.3525 26.3964 28.9624 28.9921C26.4469 33.7878 26.8742 41.2571 26.8742 41.2571L29.4979 44.0266L40.8476 42.5939L52.1973 44.0266L54.8211 41.2571C54.8211 41.2571 55.2484 33.7938 52.7329 28.9921Z"
+                                                    fill="#051733" />
+                                                <path
+                                                    d="M55.5482 40.8011C55.476 40.3215 55.2954 39.8359 54.9283 39.5182C54.5973 39.2305 54.146 39.1166 53.7067 39.1346C53.2674 39.1525 52.8461 39.2964 52.449 39.4882C52.449 39.4882 52.4129 28.4341 48.4772 28.3082C45.8955 28.1823 44.7521 28.9497 40.8465 28.9497C36.9409 28.9497 35.7915 28.1763 33.2159 28.3082C29.2802 28.4341 29.2441 39.4882 29.2441 39.4882C28.8469 39.2964 28.4256 39.1525 27.9863 39.1346C27.547 39.1166 27.0957 39.2365 26.7647 39.5182C26.3976 39.8359 26.2231 40.3215 26.1449 40.8011C26.0004 41.7602 26.2291 42.7733 26.7767 43.5766C27.3244 44.3799 28.1368 44.9853 29.0876 45.2011C30.7666 56.8907 40.8465 56.8907 40.8465 56.8907C40.8465 56.8907 50.9325 56.8907 52.6054 45.2011C53.5563 44.9853 54.3626 44.3799 54.9163 43.5766C55.4699 42.7733 55.6926 41.7602 55.5482 40.8011Z"
+                                                    fill="#F69779" />
+                                                <path
+                                                    d="M49.2655 69.5345C49.2655 69.5345 46.8042 72.3759 46.1543 76.2485L47.9657 62.0172L49.2655 62.8145V69.5285V69.5345Z"
+                                                    fill="#718F26" />
+                                                <path
+                                                    d="M47.3037 58.2162C47.3037 58.2162 52.2444 60.3623 54.0618 63.4615L54.8441 72.891L49.2595 69.5341L47.3037 58.2162Z"
+                                                    fill="#BFE06C" />
+                                                <path
+                                                    d="M32.4277 69.5345C32.4277 69.5345 34.889 72.3759 35.539 76.2485L33.7276 62.0172L32.4277 62.8145V69.5285V69.5345Z"
+                                                    fill="#718F26" />
+                                                <path
+                                                    d="M34.389 58.2162C34.389 58.2162 29.4484 60.3623 27.631 63.4615L26.8486 72.891L32.4332 69.5341L34.389 58.2162Z"
+                                                    fill="#BFE06C" />
+                                                <path
+                                                    d="M26.9456 37.277C26.9456 37.277 25.6758 26.7204 32.4218 22.0626V23.891C32.4218 23.891 39.6433 16.9911 49.4103 21.4751L47.4003 22.1825C47.4003 22.1825 51.7211 22.3024 53.9718 25.2458L51.8415 25.3656C51.8415 25.3656 54.5074 26.3667 55.1573 29.3161L53.1473 28.297C53.1473 28.297 55.6327 31.624 54.8023 38.0982L51.1976 28.8485L49.5366 27.1401L41.3584 26.1989L33.493 26.3787L30.5081 28.309L29.2925 31.4502L26.9516 37.289L26.9456 37.277Z"
+                                                    fill="#051733" />
+                                                <path
+                                                    d="M40.2822 39.1055V45.9633H41.4497C43.4476 45.9633 40.6553 39.8908 40.2822 39.1055Z"
+                                                    fill="#F37A67" />
+                                                <path
+                                                    d="M48.7679 36.4326C47.1551 35.6413 45.3618 35.5214 43.6828 36.1868C42.9727 36.4686 43.2796 37.6315 44.0017 37.3438C45.3798 36.7983 46.8241 36.8103 48.1601 37.4697C48.8521 37.8114 49.466 36.7743 48.7679 36.4326Z"
+                                                    fill="#051733" />
+                                                <path
+                                                    d="M46.1794 40.2395C46.8075 40.2395 47.3167 39.7322 47.3167 39.1065C47.3167 38.4808 46.8075 37.9735 46.1794 37.9735C45.5512 37.9735 45.042 38.4808 45.042 39.1065C45.042 39.7322 45.5512 40.2395 46.1794 40.2395Z"
+                                                    fill="#051733" />
+                                                <path
+                                                    d="M32.9298 36.4326C34.5426 35.6413 36.3359 35.5214 38.0149 36.1868C38.725 36.4686 38.4181 37.6315 37.696 37.3438C36.3179 36.7983 34.8736 36.8103 33.5376 37.4697C32.8456 37.8114 32.2317 36.7743 32.9298 36.4326Z"
+                                                    fill="#051733" />
+                                                <path
+                                                    d="M35.5182 40.2386C36.1464 40.2386 36.6556 39.7314 36.6556 39.1056C36.6556 38.4799 36.1464 37.9727 35.5182 37.9727C34.8901 37.9727 34.3809 38.4799 34.3809 39.1056C34.3809 39.7314 34.8901 40.2386 35.5182 40.2386Z"
+                                                    fill="#051733" />
+                                                <path
+                                                    d="M37.1475 48.6375C37.5446 50.1241 39.0491 51.2331 40.8484 51.2331C42.6478 51.2331 44.1462 50.1241 44.5494 48.6375H37.1535H37.1475Z"
+                                                    fill="white" />
+                                                <path
+                                                    d="M62.9558 81.6752C61.8967 82.3826 60.7954 83.036 59.6641 83.6355L61.7823 72.1138L62.9558 81.6752Z"
+                                                    fill="#718F26" />
+                                                <path
+                                                    d="M21.9137 83.018C20.8485 82.4066 19.8134 81.7472 18.8145 81.0398L19.9097 72.1138L21.9137 83.018Z"
+                                                    fill="#718F26" />
+                                            </mask>
+                                            <g mask="url(#mask1_923_4832)">
+                                                <rect x="1.49414" y="11.3843" width="78.4483" height="69.5685"
+                                                    fill="#E2E8F0" />
+                                            </g>
+                                        </g>
+                                    </svg>
+
+                                </span>
+
+                                <button class=" common-btn uploadBtn" type="button" id="noProfile">
+                                    <label for="fileUpload">Upload</label>
+                                </button>
+                            </div>
+
+                            <ng-template #profileFound>
+                                <div class="hasProfile">
+                                    <img [src]="  imageUrlProfile" alt="Profile Image" class="profile-image">
+
+                                    <button class="imgBtnUpload common-btn" type="button" id="noProfile"
+                                        (click)="deleteProfile('profile')">
+                                        <label>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g clip-path="url(#clip0_923_20018)">
+                                                    <path
+                                                        d="M16.6667 5C16.8791 5.00024 17.0834 5.08157 17.2379 5.22737C17.3923 5.37318 17.4852 5.57246 17.4977 5.7845C17.5101 5.99653 17.4412 6.20532 17.3048 6.36819C17.1685 6.53107 16.9751 6.63575 16.7642 6.66083L16.6667 6.66667H16.5992L15.8334 15.8333C15.8334 16.471 15.5898 17.0846 15.1523 17.5485C14.7149 18.0125 14.1166 18.2918 13.4801 18.3292L13.3334 18.3333H6.66672C5.33505 18.3333 4.24672 17.2925 4.17339 16.0417L4.16922 15.9025L3.40005 6.66667H3.33339C3.12099 6.66643 2.91669 6.5851 2.76225 6.43929C2.6078 6.29349 2.51486 6.09421 2.50241 5.88217C2.48996 5.67014 2.55895 5.46135 2.69527 5.29847C2.8316 5.1356 3.02497 5.03092 3.23589 5.00583L3.33339 5H16.6667Z"
+                                                        fill="white" />
+                                                    <path
+                                                        d="M11.667 1.6665C12.109 1.6665 12.5329 1.8421 12.8455 2.15466C13.1581 2.46722 13.3337 2.89114 13.3337 3.33317C13.3334 3.54557 13.2521 3.74986 13.1063 3.90431C12.9605 4.05876 12.7612 4.1517 12.5492 4.16415C12.3371 4.17659 12.1283 4.10761 11.9655 3.97128C11.8026 3.83496 11.6979 3.64158 11.6728 3.43067L11.667 3.33317H8.33366L8.32783 3.43067C8.30274 3.64158 8.19806 3.83496 8.03519 3.97128C7.87231 4.10761 7.66352 4.17659 7.45149 4.16415C7.23945 4.1517 7.04017 4.05876 6.89437 3.90431C6.74856 3.74986 6.66723 3.54557 6.66699 3.33317C6.66686 2.91269 6.82566 2.5077 7.11157 2.19938C7.39748 1.89106 7.78936 1.70221 8.20866 1.67067L8.33366 1.6665H11.667Z"
+                                                        fill="white" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_923_20018">
+                                                        <rect width="20" height="20" fill="white" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+
+                                        </label>
+                                    </button>
+                                </div>
+                            </ng-template>
+
+
+                        </div>
+
+                        <input type="file" id="fileUpload" (change)="onFileSelectedProfile($event)"
+                            [(ngModel)]="selectedFileProfile" style="display: none;"
+                            [ngModelOptions]="{standalone: true}" />
+                        <div class=" gap-6 align-items-center">
+                            <p class="mb-0">Preferred Image Dimensions: 240 x 240 pixels</p>
+                            <!-- <span class="circle"></span> -->
+                            <p class="mb-0">Maximum File Size: 1MB</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <mat-label>First name <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" formControlName="firstName" appLettersOnly>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>Last name <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" type="text" formControlName="lastName" appLettersOnly>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+
+                            <mat-label>Email address <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" type="email" formControlName="email"
+                                    (blur)="checkalreadyExitsForEmail()">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field mobileCls">
+                            <mat-label>Mobile number <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <div class="d-flex" style="gap:10px">
+                                <mat-form-field class="volume-field w-25" appearance="outline">
+                                    <input type="text" placeholder="+44" [formControl]="prefixmobile" matInput
+                                        (keyup)="getCountryCodeFilter($event)" [matAutocomplete]="auto1">
+                                    <mat-autocomplete #auto1="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredTel | async" [value]="option">
+                                            {{option}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="mobileNumber" appNumberOnly
+                                        (blur)="checkalreadyExitsForPhone()">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <mat-label>Haulier <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <!-- <input matInput placeholder=""  > -->
+                                <mat-select formControlName="vendor">
+                                    <mat-option *ngFor="let item of vendors" [value]="item.name">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                         <div class="form-field" style="display: none;">
+
+                            <mat-label>Employee ID </mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" type="text" formControlName="employeeId"
+                                    (keypress)="allowOnlyNumbersLettersAndHyphen($event)">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>License number <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup> </mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="" formControlName="licenseNumber"
+                                    (keypress)="allowOnlyNumbersLettersAndHyphen($event)">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+
+                            <mat-label>License issued date <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                            fill="#FF1F00" />
+                                    </svg>
+                                </sup></mat-label>
+                            <mat-form-field appearance="outline">
+                                <!-- <input matInput placeholder="" type="text" formControlName="licenseIssuedDate"> -->
+
+                                <input matInput [matDatepicker]="picker" [max]="todayDate"
+                                    formControlName="licenseIssuedDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-label>Validity</mat-label>
+                            <mat-form-field appearance="outline">
+                                <!-- <input matInput placeholder=""  formControlName="validity"> -->
+                                <input matInput [matDatepicker]="picker1" formControlName="validityDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="homeAddContainer  mt-3">
+
+                <div>
+                    <h4 class="mb-0">Home address</h4>
+                </div>
+
+                <div class="addDriver-bodyContent mt-0">
+                    <div class="form-container">
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>Address line 1 <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                                fill="#FF1F00" />
+                                        </svg>
+                                    </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="addressLine1">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>Address line 2 <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                                fill="#FF1F00" />
+                                        </svg>
+                                    </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="addressLine2">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-field">
+
+                                <mat-label>City <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                                fill="#FF1F00" />
+                                        </svg>
+                                    </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <!-- <mat-select  formControlName="city">
+                                        <mat-option *ngFor="let item of citys" [value]="item">{{item}}</mat-option>
+                                    </mat-select> -->
+                                    <input matInput formControlName="city" readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-field">
+                                <mat-label>County</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <!-- <mat-select  formControlName="state">
+                                        <mat-option *ngFor="let item of states" [value]="item">{{item}}</mat-option>
+                                    </mat-select> -->
+                                    <input matInput formControlName="state" readonly>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-field">
+
+                                <mat-label>Zip/Postal code <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                                fill="#FF1F00" />
+                                        </svg>
+                                    </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <!-- <input matInput (keyup)="getZipCode($event)"  formControlName="zipCode"> -->
+                                    <!-- <mat-select  formControlName="zipCode"> -->
+                                    <!-- <mat-option *ngFor="let item of zipCodes" [value]="item.zip" (keypress)="getZipCode($event)">{{item.zip}}</mat-option> -->
+                                    <!-- </mat-select> -->
+                                    <input type="text" matInput (keyup)="getZipCode($event)" [matAutocomplete]="auto"
+                                        formControlName="zipCode" />
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let item of zipCodes" [value]="item.postalCode"
+                                            (click)="getStateCountryCity(item)">
+                                            {{item.postalCode}} | {{item.city}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="form-field">
+                                <mat-label>Country <sup style="display: none;"><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                                fill="#FF1F00" />
+                                        </svg>
+                                    </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="country" readonly>
+                                    <!-- <mat-select formControlName="country">
+                                        <mat-option *ngFor="let item of countries"
+                                            [value]="item.code">{{item.countryName}}</mat-option>
+                                    </mat-select> -->
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="homeAddContainer  mt-3">
+
+                <div>
+                    <h4 class="mb-0">Driver license photo </h4>
+                </div>
+
+                <div class="addDriver-bodyContent mt-0">
+                    <div class="form-container">
+                        <button class="common-btn" type="button">
+                            <label for="driverLicenseUpload" class="licenseUploadBtn">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_923_5052)">
+                                        <path
+                                            d="M1.33398 11.6895V13.5357C1.33398 13.8621 1.49007 14.1751 1.7679 14.4059C2.04573 14.6368 2.42255 14.7664 2.81547 14.7664H13.1858C13.5787 14.7664 13.9556 14.6368 14.2334 14.4059C14.5112 14.1751 14.6673 13.8621 14.6673 13.5357V11.6895M10.9636 4.92028L8.00065 2.45874L5.03769 4.92028M8.00065 2.45874V11.0741"
+                                            stroke="#64748B" stroke-width="1.12" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_923_5052">
+                                            <rect width="16" height="16" fill="white"
+                                                transform="translate(0 -0.000488281)" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                Upload file
+                            </label>
+                        </button>
+
+                        <p class="mb-0 mt-2" *ngIf="!selectedFile">No file choosen</p>
+                        <p class="mb-0 mt-2 d-flex align-items-center gap-4 " *ngIf="selectedFile">{{selectedFile.name ?
+                            selectedFile.name : selectedFile.fileName}} <button class="common-btn"
+                                (click)="deleteLicensePhoto()"><svg width="16" height="17" viewBox="0 0 16 17"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.1032 6.79073L11.9032 12.8442C11.8862 13.3627 11.6678 13.8541 11.2943 14.2141C10.9209 14.5742 10.4219 14.7746 9.90319 14.7727H6.10319C5.5848 14.7746 5.08606 14.5745 4.71271 14.2149C4.33936 13.8552 4.12073 13.3643 4.10319 12.8462L3.90319 6.79073C3.89881 6.65812 3.94729 6.52921 4.03797 6.43234C4.12864 6.33548 4.25408 6.27861 4.38669 6.27423C4.5193 6.26985 4.64821 6.31834 4.74507 6.40901C4.84194 6.49968 4.89881 6.62512 4.90319 6.75773L5.10319 12.8127C5.11315 13.0712 5.22288 13.3158 5.40935 13.4951C5.59582 13.6744 5.84451 13.7744 6.10319 13.7742H9.90319C10.1622 13.7744 10.4112 13.6741 10.5977 13.4944C10.7842 13.3146 10.8937 13.0696 10.9032 12.8107L11.1032 6.75773C11.1076 6.62512 11.1644 6.49968 11.2613 6.40901C11.3582 6.31834 11.4871 6.26985 11.6197 6.27423C11.7523 6.27861 11.8777 6.33548 11.9684 6.43234C12.0591 6.52921 12.1076 6.65812 12.1032 6.79073ZM12.7647 4.77623C12.7647 4.90884 12.712 5.03602 12.6182 5.12978C12.5245 5.22355 12.3973 5.27623 12.2647 5.27623H3.74219C3.60958 5.27623 3.4824 5.22355 3.38863 5.12978C3.29487 5.03602 3.24219 4.90884 3.24219 4.77623C3.24219 4.64362 3.29487 4.51644 3.38863 4.42268C3.4824 4.32891 3.60958 4.27623 3.74219 4.27623H5.29219C5.45061 4.27666 5.60353 4.21813 5.72118 4.11203C5.83883 4.00593 5.9128 3.85986 5.92869 3.70223C5.96558 3.33247 6.13882 2.9897 6.41463 2.74068C6.69045 2.49167 7.0491 2.35426 7.42069 2.35523H8.58569C8.95728 2.35426 9.31592 2.49167 9.59174 2.74068C9.86756 2.9897 10.0408 3.33247 10.0777 3.70223C10.0936 3.85986 10.1675 4.00593 10.2852 4.11203C10.4028 4.21813 10.5558 4.27666 10.7142 4.27623H12.2642C12.3968 4.27623 12.524 4.32891 12.6177 4.42268C12.7115 4.51644 12.7642 4.64362 12.7642 4.77623H12.7647ZM6.79669 4.27623H9.21069C9.14498 4.1261 9.10201 3.96702 9.08319 3.80423C9.0708 3.68098 9.01311 3.56672 8.92129 3.48359C8.82947 3.40045 8.71005 3.35435 8.58619 3.35423H7.42119C7.29732 3.35435 7.17791 3.40045 7.08609 3.48359C6.99427 3.56672 6.93657 3.68098 6.92419 3.80423C6.9052 3.96705 6.86206 4.12613 6.79619 4.27623H6.79669ZM7.30019 11.8517V7.59423C7.30019 7.46162 7.24751 7.33444 7.15374 7.24068C7.05997 7.14691 6.9328 7.09423 6.80019 7.09423C6.66758 7.09423 6.5404 7.14691 6.44663 7.24068C6.35287 7.33444 6.30019 7.46162 6.30019 7.59423V11.8537C6.30019 11.9863 6.35287 12.1135 6.44663 12.2073C6.5404 12.3011 6.66758 12.3537 6.80019 12.3537C6.9328 12.3537 7.05997 12.3011 7.15374 12.2073C7.24751 12.1135 7.30019 11.9863 7.30019 11.8537V11.8517ZM9.70719 11.8517V7.59423C9.70719 7.46162 9.65451 7.33444 9.56074 7.24068C9.46697 7.14691 9.3398 7.09423 9.20719 7.09423C9.07458 7.09423 8.9474 7.14691 8.85363 7.24068C8.75987 7.33444 8.70719 7.46162 8.70719 7.59423V11.8537C8.70719 11.9863 8.75987 12.1135 8.85363 12.2073C8.9474 12.3011 9.07458 12.3537 9.20719 12.3537C9.3398 12.3537 9.46697 12.3011 9.56074 12.2073C9.65451 12.1135 9.70719 11.9863 9.70719 11.8537V11.8517Z"
+                                        fill="#DD545C" />
+                                </svg>
+                            </button></p>
+
+                        <input type="file" id="driverLicenseUpload" (change)="onFileSelected($event)"
+                            [(ngModel)]="selectedFile" style="display: none;" [ngModelOptions]="{standalone: true}" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

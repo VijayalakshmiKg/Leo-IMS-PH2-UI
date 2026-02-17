@@ -1,0 +1,130 @@
+.acc-count-card {
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    padding: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+}
+.acc-manager {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.acc-count-card label {
+    color: var(--Slate-500, #64748B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+}
+.acc-count-card p {
+    color: var(--Slate-800, #1E293B);
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    
+}
+.exprt-btn {
+    padding: 4px 16px 4px 12px;
+   
+    border-radius: 4px;
+    background: var(--linear-Color, #283892);
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    border-style: none;
+    height: 27px;
+
+}
+.section-card {
+height: 415px;
+padding: 20px;
+border-radius: 4px;
+border: 0.8px solid #CBD5E1;
+background: #FFF;
+}
+.section-card-intake {
+    height: 430px;
+    padding: 20px;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+    background: #FFF;
+    }
+::ng-deep .dashboard_title_dropdown .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0px;
+}
+::ng-deep .order-table .mat-form-field-flex {
+    height: 21px;
+}
+::ng-deep .table-search .mat-form-field-flex {
+    height: 21px;
+}
+
+::ng-deep .table-search .mat-form-field-appearance-legacy .mat-form-field-infix {
+    border-top: 0px !important;
+}
+::ng-deep .table-search mat-label {
+    color: var(--Slate-700, #334155);
+    color: var(--Slate-600, #475569);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+.clalanter-text {
+    color: var(--Slate-600, #475569);
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+cursor: pointer;
+} 
+
+.section-card h4 , .section-card-intake h4{
+    color: var(--Slate-800, #1E293B);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+
+::ng-deep  .date-time-picker {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    width: 0px;
+    visibility: hidden !important;
+    line-height: 22px;
+}
+
+.drowdown-search {
+    margin-left: 10px;
+    /* border-radius: 0 8px 8px 0; */
+    border-radius: 3px;
+    padding: 5px;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    border-style: none;
+    border-radius: 6px;
+border: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--Slate-100, #F1F5F9);
+}
+/* ::ng-deep .drowdown-search  {
+    position: absolute;
+} */
+ .search-icon {
+    position: relative !important;
+    /* left: -10px; */
+    right: 25px !important;
+}

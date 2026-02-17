@@ -1,0 +1,27 @@
+<div class="deletePopupContainer">
+    <h5 class="title-header-popup">
+        {{data.title}} <button class="common-btn" type="button" (click)="dialogClose()" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1498_71967)">
+                    <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_1498_71967">
+                        <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </button>
+    </h5>
+    <p>{{data.message}}</p>
+    <div class="d-flex" style="justify-content: flex-end; gap: 12px; margin-top: 24px;">
+        <button (click)="deleteOrg()" type="button" class="delete">Delete</button>
+        <button (click)="dialogClose()" type="button" class="cancel">Cancel</button>
+    </div>
+
+
+    
+</div>

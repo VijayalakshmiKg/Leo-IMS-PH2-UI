@@ -1,0 +1,723 @@
+<div class="template-header d-flex justify-content-between align-items-center">
+  <div class="template-head-left d-flex gap-24 align-items-center">
+    <span>
+      {{templateList.length}} task(s) in List
+    </span>
+    
+    <!-- Display selected template name when data is loaded -->
+    <span *ngIf="hasLoadedData && selectedTemplateName" class="selected-template-name">
+      <strong>Template Name:</strong> {{selectedTemplateName}}
+    </span>
+    
+    <!-- Save and Cancel buttons - Show only when data is loaded -->
+    <button *ngIf="hasLoadedData" type="button" class="saveBtnCls" (click)="saveTemplate()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.3333 14H2.66667C2.29848 14 2 13.7015 2 13.3333V2.66667C2 2.29848 2.29848 2 2.66667 2H10.6667L14 5.33333V13.3333C14 13.7015 13.7015 14 13.3333 14Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.3333 14V8.66667H4.66667V14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.66667 2V5.33333H10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Save Template</span>
+    </button>
+    
+    <button *ngIf="hasLoadedData" type="button" class="cancelBtnCls" (click)="cancelImport()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Cancel</span>
+    </button>
+    
+    <!-- Template Selector with Dropdown Panel - Hide when data is loaded -->
+    <div class="template-selector" *ngIf="!hasLoadedData">
+      <button type="button" class="select-template-btn" (click)="toggleTemplateDropdown($event)">
+        <span>{{selectedTemplateName || 'Select template'}}</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      
+      <!-- Template Selection Panel - Custom Dropdown -->
+      <div class="template-dropdown-panel" *ngIf="showTemplateDropdown">
+        <div class="template-menu-content" (click)="$event.stopPropagation()">
+          <!-- Search Input -->
+          <div class="template-search-container">
+            <div class="search-input-wrapper">
+              <input type="text" 
+                     [(ngModel)]="templateSearchText" 
+                     (input)="filterTemplates()" 
+                     placeholder="Search Templates"
+                     class="template-search-input"
+                     (click)="$event.stopPropagation()">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14.0001 14.0001L11.1001 11.1001" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Template Options with Radio Buttons -->
+          <div class="template-options-container">
+            <div class="template-option" *ngFor="let template of filteredTemplates; let i = index">
+              <label class="template-option-label" (click)="$event.stopPropagation()">
+                <input type="radio" 
+                       [value]="template.value" 
+                       [(ngModel)]="selectedTemplate" 
+                       (change)="onTemplateSelect(template)"
+                       class="template-radio">
+                <span class="radio-custom"></span>
+                <span class="template-name">{{template.name}}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Import button - Hide when data is loaded   [matMenuTriggerFor]="importMenu"-->
+    <div class="import-template" *ngIf="!hasLoadedData">
+      <button type="button" class="importBtnCls" (click)="importExcel('weekly')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 10v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2M11 7l-3 3m0 0L5 7m3 3V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Import excel sheet</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      
+      <!-- Import Template Menu -->
+      <!-- <mat-menu #importMenu="matMenu" class="import-dropdown-menu">
+        <button mat-menu-item (click)="importExcel('weekly')" class="import-menu-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+            <path d="M14 10v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2M11 7l-3 3m0 0L5 7m3 3V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Weekly Template</span>
+        </button>
+       <button mat-menu-item (click)="importExcel('monthly')" class="import-menu-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+            <path d="M14 10v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2M11 7l-3 3m0 0L5 7m3 3V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Monthly Template</span>
+        </button>
+      </mat-menu> -->
+    </div>
+  </div>
+  <div class="template-head-right d-flex align-items-center gap-24">
+    <!-- Sort by button hidden -->
+    <!-- <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn"
+      [matMenuTriggerFor]="filter" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <g clip-path="url(#clip0_478_6335)">
+          <path d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+            fill="#475569" />
+        </g>
+        <defs>
+          <clipPath id="clip0_478_6335">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+      <p class="m-0 sortedByCls ml-2">Sort by</p>
+    </button>
+    <mat-menu #filter="matMenu">
+      <div *ngFor="let sortby of sortList">
+        <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+
+      </div>
+    </mat-menu> -->
+    
+    <!-- Show Download template button only when no data is loaded   -->
+    <button type="button" class="downloadBtnCls" [matMenuTriggerFor]="downloadMenu"  *ngIf="!hasLoadedData && templateList.length === 0">
+      <span>Download template</span>
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </button>
+       <mat-menu #downloadMenu="matMenu" class="download-dropdown-menu">
+      <button mat-menu-item (click)="downloadTemplate('weekly')" class="download-menu-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+          <path d="M8 1V10M8 10L11 7M8 10L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path
+            d="M1 12V13C1 13.5304 1.21071 14.0391 1.58579 14.4142C1.96086 14.7893 2.46957 15 3 15H13C13.5304 15 14.0391 14.7893 14.4142 14.4142C14.7893 14.0391 15 13.5304 15 13V12"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Weekly Template</span>
+      </button>
+      <!--<button mat-menu-item (click)="downloadTemplate('changeover')" class="download-menu-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+          <path d="M8 1V10M8 10L11 7M8 10L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path
+            d="M1 12V13C1 13.5304 1.21071 14.0391 1.58579 14.4142C1.96086 14.7893 2.46957 15 3 15H13C13.5304 15 14.0391 14.7893 14.4142 14.4142C14.7893 14.0391 15 13.5304 15 13V12"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Change over task</span>
+      </button>-->
+    </mat-menu> 
+    
+    <!-- Show Export Report button only when data is loaded -->
+    <button type="button" class="exportBtnCls" [matMenuTriggerFor]="exportMenu" *ngIf="templateList.length > 0">
+      <span>Export Report</span>
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </button>
+    <mat-menu #exportMenu="matMenu" class="export-dropdown-menu">
+      <button mat-menu-item (click)="exportToExcel()" class="export-menu-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+          <path d="M2 3C2 2.44772 2.44772 2 3 2H13C13.5523 2 14 2.44772 14 3V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V3Z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 6L10 10M6 10L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Excel</span>
+      </button>
+      <button mat-menu-item (click)="exportToCSV()" class="export-menu-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+          <path d="M2 2H14V14H2V2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 6V10M10 6V10M2 8H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>CSV</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+
+
+<div class="delete-header" *ngIf="this.allTemplateId.length > 0">
+  
+  <div class="d-flex gap-8 align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none">
+      <circle cx="3.5" cy="4" r="3.5" fill="#5253AE" />
+    </svg>
+    <p class="mb-0">{{allTemplateId.length}} Selected</p>
+  </div>
+  <!-- Single row selected: Show both duplicate and delete -->
+  <div *ngIf="this.allTemplateId.length === 1" class="d-flex gap-12 align-items-center">
+    <button class="action-btn duplicate-btn" type="button" (click)="duplicateRow()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5 6.5H9.5V2.5C9.5 2.36739 9.44732 2.24021 9.35355 2.14645C9.25979 2.05268 9.13261 2 9 2H2.5C2.36739 2 2.24021 2.05268 2.14645 2.14645C2.05268 2.24021 2 2.36739 2 2.5V9C2 9.13261 2.05268 9.25979 2.14645 9.35355C2.24021 9.44732 2.36739 9.5 2.5 9.5H6.5V13.5C6.5 13.6326 6.55268 13.7598 6.64645 13.8536C6.74021 13.9473 6.86739 14 7 14H13.5C13.6326 14 13.7598 13.9473 13.8536 13.8536C13.9473 13.7598 14 13.6326 14 13.5V7C14 6.86739 13.9473 6.74021 13.8536 6.64645C13.7598 6.55268 13.6326 6.5 13.5 6.5ZM3 3H8.5V8.5H3V3ZM13 13H7.5V9.5H9C9.13261 9.5 9.25979 9.44732 9.35355 9.35355C9.44732 9.25979 9.5 9.13261 9.5 9V7.5H13V13Z" fill="currentColor"/>
+      </svg>
+      <span>Duplicate row</span>
+    </button>
+    <button class="action-btn delete-btn" type="button" (click)="deleteSelectedRows()" *ngIf="permissions?.deleteAccess">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 2V1.5C6 1.36739 6.05268 1.24021 6.14645 1.14645C6.24021 1.05268 6.36739 1 6.5 1H9.5C9.63261 1 9.75979 1.05268 9.85355 1.14645C9.94732 1.24021 10 1.36739 10 1.5V2H13C13.1326 2 13.2598 2.05268 13.3536 2.14645C13.4473 2.24021 13.5 2.36739 13.5 2.5C13.5 2.63261 13.4473 2.75979 13.3536 2.85355C13.2598 2.94732 13.1326 3 13 3H3C2.86739 3 2.74021 2.94732 2.64645 2.85355C2.55268 2.75979 2.5 2.63261 2.5 2.5C2.5 2.36739 2.55268 2.24021 2.64645 2.14645C2.74021 2.05268 2.86739 2 3 2H6ZM3.5 4H12.5V13C12.5 13.2652 12.3946 13.5196 12.2071 13.7071C12.0196 13.8946 11.7652 14 11.5 14H4.5C4.23478 14 3.98043 13.8946 3.79289 13.7071C3.60536 13.5196 3.5 13.2652 3.5 13V4Z" fill="currentColor"/>
+      </svg>
+      <span>Delete row</span>
+    </button>
+  </div>
+  
+  <!-- Multiple rows selected: Show only delete -->
+  <div *ngIf="this.allTemplateId.length > 1" class="d-flex gap-12 align-items-center">
+    <button class="action-btn delete-btn" type="button" (click)="deleteSelectedRows()" *ngIf="permissions?.deleteAccess">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 2V1.5C6 1.36739 6.05268 1.24021 6.14645 1.14645C6.24021 1.05268 6.36739 1 6.5 1H9.5C9.63261 1 9.75979 1.05268 9.85355 1.14645C9.94732 1.24021 10 1.36739 10 1.5V2H13C13.1326 2 13.2598 2.05268 13.3536 2.14645C13.4473 2.24021 13.5 2.36739 13.5 2.5C13.5 2.63261 13.4473 2.75979 13.3536 2.85355C13.2598 2.94732 13.1326 3 13 3H3C2.86739 3 2.74021 2.94732 2.64645 2.85355C2.55268 2.75979 2.5 2.63261 2.5 2.5C2.5 2.36739 2.55268 2.24021 2.64645 2.14645C2.74021 2.05268 2.86739 2 3 2H6ZM3.5 4H12.5V13C12.5 13.2652 12.3946 13.5196 12.2071 13.7071C12.0196 13.8946 11.7652 14 11.5 14H4.5C4.23478 14 3.98043 13.8946 3.79289 13.7071C3.60536 13.5196 3.5 13.2652 3.5 13V4Z" fill="currentColor"/>
+      </svg>
+      <span>Delete row</span>
+    </button>
+  </div>
+
+</div>
+
+<div class="masterScreen-content-table asa templateTable" [class.empty-table]="templateList?.length === 0">
+  <div class="table-scroll-wrapper" [class.has-data]="templateList.length > 0">
+    <table class="table ">
+    <thead>
+      <tr>
+        <th scope="col" *ngIf="this.logedInUser !=  'Admin'">
+          <input type="checkbox" name="" id="" [(ngModel)]="allChecked" (change)="toggleAll()">
+        </th>
+        <th scope="col">NO</th> 
+        <th scope="col">Planner</th>
+        <th scope="col">Customer</th>
+        <th scope="col">Pickup Location</th>
+        <th scope="col">Product</th>
+        <th scope="col">Product Type</th>
+        <th scope="col">Collection time</th>
+        <th scope="col">Delivery Location</th>
+        <th scope="col">Scheduled time</th>
+        <th scope="col">Driver</th>
+        <th scope="col">Vehicle</th>
+        <th scope="col">Trailer Type</th>
+        <th scope="col">Trailer Out</th>
+        <th scope="col">Trailer in</th>
+        <th scope="col">Status</th>
+        <th scope="col">Product est Weight</th>
+        <th scope="col">Changeover Location</th>
+        <th scope="col">Changeover Message</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let template of templateList; index as i" [attr.data-index]="i">
+        <td *ngIf="this.logedInUser !=  'Admin'">
+          <input type="checkbox" name="" id="" [(ngModel)]="template.checked" (change)="updateMasterCheckbox($event)">
+        </td>
+        <!-- NO - Read Only -->
+        <td class="non-editable-cell">
+          <span>{{getRowNumber(i)}}</span>
+        </td>
+        <!-- Planner - Dropdown -->
+        <td (click)="startEdit(i, 'planner', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'planner')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'planner'" 
+                  [(ngModel)]="template.plannerId" 
+                  (ngModelChange)="onDropdownChange(i, 'planner', $event, template)"
+                  (blur)="stopEdit()"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Planner</option>
+            <option *ngFor="let planner of plannerOptions" [value]="planner.value">{{planner.name}}</option>
+          </select>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'planner')">
+            {{template.planner || '-'}}
+          </span>
+        </td>
+        <!-- Customer - Dropdown -->
+        <td (click)="startEdit(i, 'customer', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'customer')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'customer'" 
+                  [(ngModel)]="template.customerId" 
+                  (ngModelChange)="onDropdownChange(i, 'customer', $event, template)"
+                  (blur)="stopEdit()"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Customer</option>
+            <option *ngFor="let customer of customerOptions" [value]="customer.value">{{customer.name}}</option>
+          </select>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'customer')">
+            {{template.customer || '-'}}
+          </span>
+        </td>
+        <!-- Pickup Location - Dropdown -->
+        <td (click)="startEdit(i, 'pickupLocation', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'pickupLocation')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'pickupLocation'" 
+                  [(ngModel)]="template.pickupLocationId" 
+                  (ngModelChange)="onDropdownChange(i, 'pickupLocation', $event, template)"
+                  (blur)="stopEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Location</option>
+            <option *ngFor="let location of pickupLocationOptions" [value]="location.value">{{location.name}}</option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'pickupLocation' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'pickupLocation')">
+            {{template.pickupLocation || '-'}}
+          </span>
+        </td>
+        <!-- Product - Dropdown -->
+        <td (click)="startEdit(i, 'product', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'product')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'product'" 
+                  [(ngModel)]="template.productId" 
+                  (ngModelChange)="onDropdownChange(i, 'product', $event, template)"
+                  (blur)="stopEdit()" 
+                  (keyup.enter)="stopEdit()" 
+                  (keyup.escape)="cancelEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Product</option>
+            <option *ngFor="let option of productOptions" [value]="option.value">
+              {{option.name}}
+            </option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'product' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'product')">
+            {{template.product || '-'}}
+          </span>
+        </td>
+        <!-- Product Type - Read Only (Auto-populated from Product) -->
+        <td class="non-editable-cell">
+          <span>{{template.productType || '-'}}</span>
+        </td>
+        <!-- Collection time - DateTime Input -->
+        <td (click)="startEdit(i, 'collectionTime', $event)" class="editable-cell datetime-cell">
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === 'collectionTime'" 
+                 type="datetime-local" 
+                 [(ngModel)]="template.collectionTime" 
+                 (change)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input datetime-input"
+                 #cellInput>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'collectionTime')">
+            {{template.collectionTime ? formatDateTime(template.collectionTime) : '-'}}
+          </span>
+        </td>
+        <!-- Delivery Location - Dropdown -->
+        <td (click)="startEdit(i, 'deliveryLocation', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'deliveryLocation')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'deliveryLocation'" 
+                  [(ngModel)]="template.deliveryLocationId" 
+                  (ngModelChange)="onDropdownChange(i, 'deliveryLocation', $event, template)"
+                  (blur)="stopEdit()"
+                  
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Location</option>
+            <option *ngFor="let location of deliveryLocationOptions" [value]="location.value">{{location.name}}</option>
+          </select>
+          
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'deliveryLocation')">
+            {{template.deliveryLocation || '-'}}
+          </span>
+        </td>
+        <!-- Scheduled time - DateTime Input -->
+        <td (click)="startEdit(i, 'scheduledTime', $event)" class="editable-cell datetime-cell">
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === 'scheduledTime'" 
+                 type="datetime-local" 
+                 [(ngModel)]="template.scheduledTime" 
+                 (change)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input datetime-input"
+                 #cellInput>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'scheduledTime')">
+            {{template.scheduledTime ? formatDateTime(template.scheduledTime) : '-'}}
+          </span>
+        </td>
+        <!-- Driver - Dropdown -->
+        <td (click)="startEdit(i, 'driverName', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'driverName')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'driverName'" 
+                  [(ngModel)]="template.driverId" 
+                  (ngModelChange)="onDropdownChange(i, 'driverName', $event, template)"
+                  (blur)="stopEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Driver</option>
+            <option *ngFor="let driver of driverOptions" [value]="driver.value">{{driver.name}}</option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'driverName' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'driverName')">
+            {{template.driverName || '-'}}
+          </span>
+        </td>
+        <!-- Vehicle - Dropdown -->
+        <td (click)="startEdit(i, 'vehicle', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'vehicle')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'vehicle'" 
+                  [(ngModel)]="template.vehicleId" 
+                  (ngModelChange)="onDropdownChange(i, 'vehicle', $event, template)"
+                  (blur)="stopEdit()"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Vehicle</option>
+            <option *ngFor="let vehicle of vehicleOptions" [value]="vehicle.value">{{vehicle.name}}</option>
+          </select>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'vehicle')">
+            {{template.vehicle || '-'}}
+          </span>
+        </td>
+        <!-- Trailer Type - Dropdown (renamed from Trailer In Type) -->
+        <td (click)="startEdit(i, 'trailerInType', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'trailerInType')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'trailerInType'" 
+                  [(ngModel)]="template.trailerInTypeId" 
+                  (ngModelChange)="onDropdownChange(i, 'trailerInType', $event, template)"
+                  (blur)="stopEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Trailer Type</option>
+            <option *ngFor="let trailerType of trailerTypeOptions" [value]="trailerType.value">{{trailerType.name}}</option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'trailerInType' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'trailerInType')">
+            {{template.trailerInType || '-'}}
+          </span>
+        </td>
+        <!-- Trailer Out - Dropdown -->
+        <td (click)="startEdit(i, 'trailerOut', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'trailerOut')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'trailerOut'" 
+                  [(ngModel)]="template.trailerOutId" 
+                  (ngModelChange)="onDropdownChange(i, 'trailerOut', $event, template)"
+                  (blur)="stopEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Trailer</option>
+            <option *ngFor="let trailer of trailerOutOptions" [value]="trailer.value">{{trailer.name}}</option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'trailerOut' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'trailerOut')">
+            {{template.trailerOut || '-'}}
+          </span>
+        </td>
+        <!-- Trailer In - Dropdown -->
+        <td (click)="startEdit(i, 'trailerIn', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'trailerIn')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'trailerIn'" 
+                  [(ngModel)]="template.trailerInId" 
+                  (ngModelChange)="onDropdownChange(i, 'trailerIn', $event, template)"
+                  (blur)="stopEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Trailer</option>
+            <option *ngFor="let trailer of trailerOptions" [value]="trailer.value">{{trailer.name}}</option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'trailerIn' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'trailerIn')">
+            {{template.trailerIn || '-'}}
+          </span>
+        </td>
+        <!-- Status - Dropdown -->
+        <td (click)="startEdit(i, 'status', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'status')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'status'" 
+                  [(ngModel)]="template.statusId" 
+                  (ngModelChange)="onDropdownChange(i, 'status', $event, template)"
+                  (blur)="stopEdit()"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Status</option>
+            <option *ngFor="let status of statusOptions" [value]="status.value">{{status.name}}</option>
+          </select>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'status')">
+            {{template.status || '-'}}
+          </span>
+        </td>
+        <!-- Product Est Weight - Input with Unit Dropdown -->
+        <td (click)="startEdit(i, 'productEstWeight', $event)" class="editable-cell">
+          <div *ngIf="editingCell.rowIndex === i && editingCell.field === 'productEstWeight'" class="weight-input-container">
+            <input type="number" 
+                   [(ngModel)]="template.productEstWeight" 
+                   (blur)="stopEdit()" 
+                   (keyup.enter)="stopEdit()" 
+                   (keyup.escape)="cancelEdit()"
+                   class="cell-input weight-value-input"
+                   placeholder="0"
+                   #cellInput>
+            <select [(ngModel)]="template.weightUnit" 
+                    (blur)="stopEdit()" 
+                    (change)="stopEdit()"
+                    class="cell-select weight-unit-select">
+              <option value="">Unit</option>
+              <option *ngFor="let unit of weightUnitOptions" [value]="unit.value">{{unit.name}}</option>
+            </select>
+          </div>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'productEstWeight')">
+            {{template.productEstWeight ? (template.productEstWeight + ' ' + (template.weightUnit || '')) : '-'}}
+          </span>
+        </td>
+        <!-- Changeover Location - Dropdown -->
+        <td (click)="startEdit(i, 'changeoverLocation', $event)" 
+            class="editable-cell"
+            [class.validation-error]="hasValidationError(i, 'changeoverLocation')"
+            [title]="getValidationError(i)">
+          <select *ngIf="editingCell.rowIndex === i && editingCell.field === 'changeoverLocation'" 
+                  [(ngModel)]="template.changeoverLocationId" 
+                  (ngModelChange)="onDropdownChange(i, 'changeoverLocation', $event, template)"
+                  (blur)="stopEdit()"
+                  [disabled]="!template.customerId"
+                  class="cell-select"
+                  #cellInput>
+            <option value="">Select Location</option>
+            <option *ngFor="let location of changeoverLocationOptions" [value]="location.value">{{location.name}}</option>
+          </select>
+          <small *ngIf="editingCell.rowIndex === i && editingCell.field === 'changeoverLocation' && !template.customerId" class="text-muted d-block">
+            Please select a valid customer
+          </small>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'changeoverLocation')">
+            {{template.changeoverLocation || '-'}}
+          </span>
+        </td>
+        <!-- Changeover Message - Textbox -->
+        <td (click)="startEdit(i, 'changeoverMessage', $event)" class="editable-cell">
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === 'changeoverMessage'" 
+                 type="text" 
+                 [(ngModel)]="template.changeoverMessage" 
+                 (blur)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input"
+                 #cellInput>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'changeoverMessage')">
+            {{template.changeoverMessage || '-'}}
+          </span>
+        </td>
+        <!-- Notes - Textbox -->
+        <td (click)="startEdit(i, 'notes', $event)" class="editable-cell">
+          <input *ngIf="editingCell.rowIndex === i && editingCell.field === 'notes'" 
+                 type="text" 
+                 [(ngModel)]="template.notes" 
+                 (blur)="stopEdit()" 
+                 (keyup.enter)="stopEdit()" 
+                 (keyup.escape)="cancelEdit()"
+                 class="cell-input"
+                 #cellInput>
+          <span *ngIf="!(editingCell.rowIndex === i && editingCell.field === 'notes')">
+            {{template.notes || '-'}}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="templateList?.length === 0">
+    <div class="mb-2">
+      <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.5" width="47" height="47" rx="23.5" fill="#EFEBFE" />
+        <g clip-path="url(#clip0_853_135022)">
+          <path
+            d="M15.5 16C15.5 15.7348 15.6054 15.4804 15.7929 15.2929C15.9804 15.1054 16.2348 15 16.5 15H30.5C30.7652 15 31.0196 15.1054 31.2071 15.2929C31.3946 15.4804 31.5 15.7348 31.5 16V18C31.5 18.2652 31.3946 18.5196 31.2071 18.7071C31.0196 18.8946 30.7652 19 30.5 19H16.5C16.2348 19 15.9804 18.8946 15.7929 18.7071C15.6054 18.5196 15.5 18.2652 15.5 18V16Z"
+            stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M15.5 24C15.5 23.7348 15.6054 23.4804 15.7929 23.2929C15.9804 23.1054 16.2348 23 16.5 23H20.5C20.7652 23 21.0196 23.1054 21.2071 23.2929C21.3946 23.4804 21.5 23.7348 21.5 24V30C21.5 30.2652 21.3946 30.5196 21.2071 30.7071C21.0196 30.8946 20.7652 31 20.5 31H16.5C16.2348 31 15.9804 30.8946 15.7929 30.7071C15.6054 30.5196 15.5 30.2652 15.5 30V24Z"
+            stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.5 23H31.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.5 27H31.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.5 31H31.5" stroke="#283892" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <defs>
+          <clipPath id="clip0_853_135022">
+            <rect width="24" height="24" fill="white" transform="translate(11.5 11)" />
+          </clipPath>
+        </defs>
+      </svg>
+
+    </div>
+    <div class="noRecordText">
+      You have not created any template
+    </div> 
+  </div>
+    <app-template-paginator #templatePaginator [length]="totalPages" [pageSizeOptions]="[10,25, 50,75, 100]" [showFirstLastButtons]="true"
+    (pageChange)="onPageChange($event)"
+    (sheetSelected)="onSheetChanged($event)"
+    (sheetAdded)="onSheetChanged($event)">
+  </app-template-paginator>
+
+</div>
+
+<!-- Import Excel Modal -->
+<app-import-excel-modal 
+  *ngIf="showImportModal"
+  [templateType]="selectedTemplateType"
+  [availableTemplates]="availableTemplates"
+  (closeModalEvent)="closeImportModal()"
+  (importCompleted)="onImportCompleted($event)"
+  (templateSelected)="onTemplateSelect($event)">
+</app-import-excel-modal>
+
+<!-- Validation Error Modal -->
+<div class="validation-error-modal-overlay" *ngIf="showValidationErrorModal" (click)="closeValidationErrorModal()">
+  <div class="validation-error-modal" (click)="$event.stopPropagation()">
+    <!-- Modal Header -->
+    <div class="validation-modal-header">
+      <div class="header-icon error">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 9L9 15" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 9L15 15" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="header-content">
+        <h3>Validation Failed</h3>
+        <p>{{validationErrorList.length}} error(s) found. Please fix these issues and try again.</p>
+      </div>
+      <button class="close-btn" (click)="closeValidationErrorModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 5L5 15M5 5L15 15" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="validation-summary">
+      <h4>Missing Master Data Summary</h4>
+      <div class="summary-grid">
+        <ng-container *ngFor="let entry of getUniqueMissingValues() | keyvalue">
+          <div class="summary-item">
+            <span class="summary-label">{{entry.key}}</span>
+            <span class="summary-count">{{entry.value.size}} unique value(s)</span>
+            <div class="summary-values">
+              <span *ngFor="let val of entry.value" class="value-chip">{{val}}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Error Details Table -->
+    <div class="validation-error-content">
+      <div class="error-table-container">
+        <table class="validation-error-table">
+          <thead>
+            <tr>
+              <th>Sheet</th>
+              <th>Row</th>
+              <th>Column</th>
+              <th>Value</th>
+              <th>Error</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let sheetEntry of groupedValidationErrors | keyvalue">
+              <tr *ngFor="let error of sheetEntry.value; let first = first" 
+                  [class.sheet-first-row]="first">
+                <td [attr.rowspan]="first ? sheetEntry.value.length : null" 
+                    *ngIf="first" 
+                    class="sheet-name-cell">
+                  <span class="sheet-badge">{{sheetEntry.key}}</span>
+                </td>
+                <td class="row-number">{{error.rowNumber}}</td>
+                <td class="column-name">{{error.columnName}}</td>
+                <td class="provided-value">
+                  <code>{{error.providedValue}}</code>
+                </td>
+                <td class="error-message">Not found in master data</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="validation-modal-footer">
+      <button class="btn-secondary" (click)="closeValidationErrorModal()">Close</button>
+    </div>
+  </div>
+</div>

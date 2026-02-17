@@ -1,0 +1,328 @@
+<div class="viewTemplates-header d-flex justify-content-between">
+  <!-- <div class="search ml-3">
+      <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search Templates">
+        <input type="search" matInput placeholder="Search Templates" aria-label="Search"
+          (keyup)="filteredUsersList($event.target)">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div> -->
+  <p>{{templatesList.length}} template(s) in list</p>
+
+  <button
+    class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn"
+    [matMenuTriggerFor]="filter" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+      viewBox="0 0 20 20" fill="none">
+      <path
+        d="M8.74754 16.8437V10.8727V16.8437ZM8.74754 16.8437L8.73309 16.8534L8.74754 16.875H8.77358V16.8577L11.2475 15.2078V10.8727L8.74754 16.8437ZM17.9893 3.8799L17.9894 3.88029C18.0873 4.09653 18.1194 4.33682 18.0816 4.57116C18.0438 4.8055 17.9378 5.02351 17.7768 5.19798L17.7765 5.19834L17.7707 5.20487L17.7703 5.20537L12.4785 10.8549L12.4715 10.8624V10.8727V15.2078C12.4715 15.4095 12.4218 15.608 12.3266 15.7857C12.2315 15.9635 12.0939 16.115 11.9261 16.2268L11.9261 16.2268L9.42607 17.894C9.42607 17.894 9.42606 17.894 9.42606 17.894C9.2417 18.0168 9.02747 18.0872 8.80621 18.0979C8.58494 18.1085 8.36494 18.0589 8.16967 17.9543C7.97439 17.8497 7.81116 17.6941 7.69738 17.504C7.58359 17.3139 7.52353 17.0965 7.52358 16.875V10.8727V10.8624L7.51654 10.8549L2.22537 5.20512L2.21935 5.19834L2.21915 5.19813C2.05985 5.02281 1.95484 4.80503 1.91687 4.5712C1.8789 4.33738 1.9096 4.09756 2.00524 3.88083C2.10089 3.66411 2.25737 3.4798 2.4557 3.35027C2.65404 3.22073 2.8857 3.15153 3.12259 3.15106L16.8725 3.15106L16.8727 3.15106C17.1098 3.1497 17.342 3.21807 17.5405 3.34765C17.739 3.47724 17.8951 3.66232 17.9893 3.8799ZM11.6055 10.0398L11.6056 10.0397L16.8915 4.39282L16.9326 4.34898H16.8725H3.12254H3.06245L3.10353 4.39283L8.39103 10.0358L8.39106 10.0358C8.60399 10.2623 8.72221 10.5617 8.7215 10.8726V10.8727V16.875V16.9237L8.76199 16.8967L11.262 15.2295L11.2736 15.2218V15.2078V10.8727C11.2743 10.563 11.393 10.2651 11.6055 10.0398Z"
+        fill="#475569" stroke="#475569" stroke-width="0.0520833" />
+    </svg>
+
+  </button>
+  <mat-menu #filter="matMenu">
+    <div *ngFor="let sortby of sortList">
+      <button mat-menu-item
+        (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+
+    </div>
+  </mat-menu>
+
+</div>
+
+<div class="delete-header" *ngIf="this.allTemplateId.length > 0">
+  <button class="deleteBtn" type="button" (click)="deleteTemplatesMultiple()" *ngIf="permissions?.deleteAccess">
+    Delete template
+  </button>
+
+  <div class="d-flex gap-8 align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8"
+      viewBox="0 0 7 8" fill="none">
+      <circle cx="3.5" cy="4" r="3.5" fill="#5253AE" />
+    </svg>
+    <p class="mb-0">{{allTemplateId.length}} Selected</p>
+  </div>
+</div>
+<div class="viewTemplates-container">
+
+  <div class="TemplatesList">
+    <div class="d-flex justify-content-between listHeader">
+      <div>
+
+        <!-- <button mat-button [matMenuTriggerFor]="menu" class="sortSelectedText">{{sortByText}} <svg width="16" class="ml-1" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 5.99999L8 9.99999L12 5.99999" stroke="#6B6B6B" stroke-width="1.33331" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    </button> -->
+        <mat-menu #menu="matMenu" class="sortByTextCls">
+          <button mat-menu-item (click)="changeSortBY('All')"
+            class="sortByTextCls">All</button>
+          <button mat-menu-item (click)="changeSortBY('Active')"
+            class="sortByTextCls">Active</button>
+          <button mat-menu-item (click)="changeSortBY('Inactive')"
+            class="sortByTextCls">Inactive</button>
+        </mat-menu>
+
+      </div>
+      <!-- <button class="addTemplatesBtn bgColorCls" type="button"><svg width="16" class="mr-2" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 3.33333V12.6667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M3.33301 8H12.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+   Templates </button> -->
+    </div>
+
+    <button *ngFor="let item of templatesList;index as i"
+      [class.activeCls]="i == activeTemplates"
+      class="TemplatesListCls common-btn w-100"
+      (click)="changetemplatesView(i)">
+
+      <div class="d-flex gap-12 driverListCls align-items-start">
+        <!-- <mat-checkbox [(ngModel)]="item.checked"></mat-checkbox> -->
+
+        <!-- <input type="checkbox" [(ngModel)]="item.checked"> -->
+
+        <div class="d-flex gap-12 w-100">
+          <div>
+            <input type="checkbox" name id [(ngModel)]="item.checked"
+              (change)="updateMasterCheckbox($event)">
+          </div>
+          <div class="d-flex  justify-content-between w-100">
+            <div class="d-flex gap-4 align-items-start flex-column ">
+              <span>{{item?.orderTemplateName}} </span>
+              <p class="mb-0 ">{{item.materialTypeName}}</p>
+              <!-- <div class="activeStatus">Active</div> -->
+            </div>
+            <p class="mb-0 dateTimeCls "> {{item.orderTemplateDate |
+              date:'dd/MM/yyy, HH:mm a'}}</p>
+          </div>
+        </div>
+      </div>
+
+    </button>
+
+    <app-custom-paginator [length]=totalPages [pageSizeOptions]="[10,25,50,75, 100]" [showFirstLastButtons]="true"
+    (pageChange)="onPageChange($event)" [currentIndex] = currentPage>
+  </app-custom-paginator>
+  </div>
+  <div class="TemplatesViewDeatils">
+    <div class="d-flex justify-content-between view-head">
+      <div class>
+        <h3>{{viewTemplatesRecord?.orderTemplateName}}</h3>
+        <div class="d-flex align-items-center">
+          <span>{{viewTemplatesRecord?.materialTypeName}}</span>
+          <div
+            class="ml-3 dateCls">
+            {{viewTemplatesRecord?.orderTemplateDate | date:'dd/MM/y, HH:mm a'}}
+          </div>
+
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-start">
+        <div class="mr-4 d-flex align-items-center justify-content-start">
+
+          <button class="editBtn bgColorCls" (click)="editTemplates()" *ngIf="permissions?.editAccess">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_934_27443)">
+                <path
+                  d="M2.66602 13.3333H5.33268L12.3327 6.33333C12.5078 6.15824 12.6467 5.95037 12.7414 5.72159C12.8362 5.49282 12.885 5.24762 12.885 5C12.885 4.75238 12.8362 4.50718 12.7414 4.2784C12.6467 4.04963 12.5078 3.84176 12.3327 3.66666C12.1576 3.49157 11.9497 3.35268 11.7209 3.25791C11.4922 3.16315 11.247 3.11438 10.9993 3.11438C10.7517 3.11438 10.5065 3.16315 10.2778 3.25791C10.049 3.35268 9.84111 3.49157 9.66602 3.66666L2.66602 10.6667V13.3333Z"
+                  stroke="white" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M9 4.33325L11.6667 6.99992" stroke="white"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clippath id="clip0_934_27443">
+                  <rect width="16" height="16" fill="white" />
+                </clippath>
+              </defs>
+            </svg>
+
+            Edit
+          </button>
+          <button type="button" class="common-btn bgColorCls deleteBtn"
+            (click)="deleteTemplates()" *ngIf="permissions?.deleteAccess">Remove</button>
+
+          <!-- <button class="moreBtn" [matMenuTriggerFor]="menu" aria-label="more">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <g clip-path="url(#clip0_934_27455)">
+                  <path
+                    d="M7.33594 7.9987C7.33594 8.17551 7.40618 8.34508 7.5312 8.4701C7.65622 8.59513 7.82579 8.66536 8.0026 8.66536C8.17942 8.66536 8.34898 8.59513 8.47401 8.4701C8.59903 8.34508 8.66927 8.17551 8.66927 7.9987C8.66927 7.82189 8.59903 7.65232 8.47401 7.52729C8.34898 7.40227 8.17942 7.33203 8.0026 7.33203C7.82579 7.33203 7.65622 7.40227 7.5312 7.52729C7.40618 7.65232 7.33594 7.82189 7.33594 7.9987Z"
+                    stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M7.33594 12.6665C7.33594 12.8434 7.40618 13.0129 7.5312 13.1379C7.65622 13.263 7.82579 13.3332 8.0026 13.3332C8.17942 13.3332 8.34898 13.263 8.47401 13.1379C8.59903 13.0129 8.66927 12.8434 8.66927 12.6665C8.66927 12.4897 8.59903 12.3202 8.47401 12.1951C8.34898 12.0701 8.17942 11.9999 8.0026 11.9999C7.82579 11.9999 7.65622 12.0701 7.5312 12.1951C7.40618 12.3202 7.33594 12.4897 7.33594 12.6665Z"
+                    stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M7.33594 3.33464C7.33594 3.51145 7.40618 3.68102 7.5312 3.80604C7.65622 3.93106 7.82579 4.0013 8.0026 4.0013C8.17942 4.0013 8.34898 3.93106 8.47401 3.80604C8.59903 3.68102 8.66927 3.51145 8.66927 3.33464C8.66927 3.15782 8.59903 2.98826 8.47401 2.86323C8.34898 2.73821 8.17942 2.66797 8.0026 2.66797C7.82579 2.66797 7.65622 2.73821 7.5312 2.86323C7.40618 2.98826 7.33594 3.15782 7.33594 3.33464Z"
+                    stroke="#334155" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_934_27455">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button> -->
+
+          <mat-menu #menu="matMenu">
+            <div class="d-flex flex-column">
+              <!-- <button mat-menu-item class="common-btn">
+                              
+                                    <span>Mark as Inactive</span>
+                                  </button> -->
+              <button mat-menu-item class="common-btn">
+
+                <button type="button" class="common-btn"
+                  (click)="deleteTemplates()">Remove</button>
+              </button>
+            </div>
+
+          </mat-menu>
+
+        </div>
+
+        <button class="common-btn" (click)="back()"><svg
+            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            viewBox="0 0 20 20" fill="none">
+            <path d="M15 5L5 15" stroke="#1E293B" stroke-width="1.25"
+              stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5 5L15 15" stroke="#1E293B" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg></button>
+      </div>
+    </div>
+
+    <div>
+      <!-- <h4>Templates details</h4> -->
+      <!-- <div class="templatesHeadView">
+          <button type="button" class="common-btn" [class.active]="viewMode=='Overview'" (click)="changeView('Overview')">Overview</button>
+          <button type="button" class="common-btn" [class.active]="viewMode=='Intake sheet'" (click)="changeView('Intake sheet')">Intake sheet</button>
+          <button type="button" class="common-btn" [class.active]="viewMode=='Summary'" (click)="changeView('Summary')">Summary</button>
+         </div> -->
+
+      <div>
+        <div class="vehicleDetails basicActivityDetails-container">
+
+          <div>
+
+            <h4>Templates details</h4>
+            <div class="d-flex">
+              <label>Templates name</label>
+              <span>{{viewTemplatesRecord?.orderTemplateName || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Date</label>
+              <span> {{viewTemplatesRecord?.orderTemplateDate ?
+                (viewTemplatesRecord?.orderTemplateDate | date:'dd/MM/yyy') :
+                '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Time</label>
+              <span> {{viewTemplatesRecord?.orderTemplateDate ?
+                (viewTemplatesRecord?.orderTemplateDate | date:' HH:mm a') :
+                '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Repeat order</label>
+              <span>{{viewTemplatesRecord?.repeatDays || '--'}}</span>
+
+            </div>
+
+          </div>
+          <div>
+
+            <h4>Movement document details</h4>
+            <div class="d-flex">
+              <label>Supplier</label>
+              <span>{{viewTemplatesRecord?.consignorName || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Supplier address</label>
+              <!-- <span>{{viewTemplatesRecord?.consignorAddress || '--' }}</span> -->
+              <span
+                *ngIf="viewTemplatesRecord">{{viewTemplatesRecord?.consignorAddress
+                || ''}} <span *ngIf="viewTemplatesRecord.consignorCity">,
+                </span> {{viewTemplatesRecord?.consignorCity || ''}}<span
+                  *ngIf="viewTemplatesRecord.consignorState">,
+                </span>{{viewTemplatesRecord?.state || ''}}
+                {{viewTemplatesRecord?.consignorPincode || ''}}<span
+                  *ngIf="viewTemplatesRecord.consignorCountry">,
+                </span>{{viewTemplatesRecord?.consignorCountry || ''}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Consignee</label>
+              <span>{{viewTemplatesRecord?.consigneeName || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Consignee address</label>
+              <span
+                *ngIf="viewTemplatesRecord">{{viewTemplatesRecord?.consigneeAddress
+                || ''}} <span *ngIf="viewTemplatesRecord.consigneeCity">,
+                </span> {{viewTemplatesRecord?.consigneeCity || ''}}<span
+                  *ngIf="viewTemplatesRecord.consigneeState">,
+                </span>{{viewTemplatesRecord?.state || ''}}
+                {{viewTemplatesRecord?.consigneePincode || ''}}<span
+                  *ngIf="viewTemplatesRecord.consigneeCountry">,
+                </span>{{viewTemplatesRecord?.consigneeCountry || ''}}</span>
+
+            </div>
+
+          </div>
+          <div>
+
+            <h4>Product details</h4>
+            <div class="d-flex">
+              <label>Product name</label>
+              <span>{{viewTemplatesRecord?.materialTypeName || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Product quantity</label>
+              <span>{{viewTemplatesRecord?.trilerQuantity+' kg' || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Notes</label>
+              <span>{{viewTemplatesRecord?.notes || '--'}}</span>
+
+            </div>
+
+          </div>
+          <div *ngIf="viewTemplatesRecord?.truckName || viewTemplatesRecord?.trailerNumber || viewTemplatesRecord?.driverName">
+
+            <h4>Vehicle & driver details</h4>
+            <div class="d-flex">
+              <label>Vehicle no</label>
+              <span>{{viewTemplatesRecord?.truckName || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Trailer</label>
+              <span>{{viewTemplatesRecord?.trailerNumber || '--'}}</span>
+
+            </div>
+            <div class="d-flex">
+              <label>Driver</label>
+              <span>{{viewTemplatesRecord?.driverName || '--'}}</span>
+
+            </div>
+            <!-- <div class="d-flex">
+            <label>Trailer Quantity</label>
+            <span>{{viewTemplatesRecord?.trilerQuantity || '--'}} kg</span>
+  
+          </div> -->
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="roless-container">
+    <div class="roless-header d-flex justify-content-between align-items-center  ">
+        <div class="roles-head-left d-flex gap-24 align-items-center">
+            <span>
+                {{rolesRecords?.length}} role(s) in List
+            </span>
+            <!-- <div class="search">
+                <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search customer name">
+                    <input type="search" matInput placeholder="Search customer name"
+                         aria-label="Search" (keyup)="filteredrolessList($event.target)">
+                    <mat-icon matPrefix>search</mat-icon>
+                </mat-form-field>
+            </div> -->
+        </div>
+        <div class="roles-head-right d-flex align-items-center gap-24">
+            <div class="border-less-input ">
+                <!-- <mat-form-field appearance="outline" class="doc-typ">
+                 
+                  <mat-select placeholder="Document type">
+                    <mat-option >All</mat-option>
+      
+      
+                  </mat-select>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M5 8L10 13L15 8" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </mat-form-field> -->
+              </div>
+            <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn" [matMenuTriggerFor]="filter" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <g clip-path="url(#clip0_478_6335)">
+                        <path
+                            d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+                            fill="#475569" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_478_6335">
+                            <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                <p class="m-0 sortedByCls ml-2">Sort by</p>
+            </button>
+            <mat-menu #filter="matMenu">
+                <div *ngFor="let sortby of sortList">
+                    <button mat-menu-item (click)="sortByValue(sortby.element)">{{sortby.name}}</button>
+
+                </div>
+            </mat-menu>
+            <button type="button" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn" (click)="addEditRoles()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+                    <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Add role</button>
+        </div>
+    </div>
+
+    <div class="roless-bodyContent">
+        <!-- <div class="norolessContainer d-flex flex-column justify-content-center align-items-center "  *ngIf="this.rolesRecords.length == 0; else asRecords">
+            <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" width="47" height="47" rx="23.5" fill="#006CB7" fill-opacity="0.2" />
+                <g clip-path="url(#clip0_499_5276)">
+                    <path
+                        d="M17.001 18C17.001 19.0609 17.4224 20.0783 18.1725 20.8284C18.9227 21.5786 19.9401 22 21.001 22C22.0618 22 23.0793 21.5786 23.8294 20.8284C24.5795 20.0783 25.001 19.0609 25.001 18C25.001 16.9391 24.5795 15.9217 23.8294 15.1716C23.0793 14.4214 22.0618 14 21.001 14C19.9401 14 18.9227 14.4214 18.1725 15.1716C17.4224 15.9217 17.001 16.9391 17.001 18Z"
+                        stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M15 32V30C15 28.9391 15.4214 27.9217 16.1716 27.1716C16.9217 26.4214 17.9391 26 19 26H23C24.0609 26 25.0783 26.4214 25.8284 27.1716C26.5786 27.9217 27 28.9391 27 30V32"
+                        stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M27.999 14.1296C28.8594 14.3499 29.6221 14.8503 30.1667 15.5519C30.7113 16.2536 31.0069 17.1165 31.0069 18.0046C31.0069 18.8928 30.7113 19.7557 30.1667 20.4573C29.6221 21.1589 28.8594 21.6593 27.999 21.8796"
+                        stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M33 31.9999V29.9999C32.9949 29.1171 32.6979 28.2607 32.1553 27.5643C31.6126 26.8679 30.8548 26.3706 30 26.1499"
+                        stroke="#006CB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_499_5276">
+                        <rect width="24" height="24" fill="white" transform="translate(12 11)" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <p class="mb-0 norolesscls mt-2">No roless added yet</p>
+        </div> -->
+
+
+        <!-- <ng-template #asRecords> -->
+            <div class="masterScreen-content-table">
+                <table class="table ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Role description</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of rolesRecords;index as i">
+                    
+                        <td>{{item.roleName}}</td>
+                        <td>{{item.roleDescription ? item.roleDescription : '--'}}</td>
+                        <td class="action-cell">
+                            <button class="icon common-btn" type="button" (click)="addEditRoles(i,item)"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+                                <path d="M1 13.7737H4.33333L13.0833 5.02369C13.3022 4.80482 13.4758 4.54498 13.5943 4.25902C13.7127 3.97305 13.7737 3.66655 13.7737 3.35702C13.7737 3.04749 13.7127 2.741 13.5943 2.45503C13.4758 2.16906 13.3022 1.90923 13.0833 1.69036C12.8645 1.47149 12.6046 1.29787 12.3187 1.17942C12.0327 1.06097 11.7262 1 11.4167 1C11.1071 1 10.8006 1.06097 10.5147 1.17942C10.2287 1.29787 9.96887 1.47149 9.75 1.69036L1 10.4404V13.7737Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.92188 2.41406L12.2552 5.7474" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                                </button>
+                            <button *ngIf="!item.alreadyCreated" class="icon common-btn" type="button" (click)="deleteRole(i,item)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M15.1231 7.62251L14.8731 15.1894C14.8518 15.8374 14.5788 16.4517 14.1121 16.9018C13.6453 17.3518 13.0215 17.6023 12.3731 17.6H7.62312C6.97514 17.6023 6.35172 17.3522 5.88503 16.9027C5.41833 16.4531 5.14506 15.8395 5.12312 15.1919L4.87313 7.62251C4.86765 7.45675 4.92826 7.2956 5.0416 7.17452C5.15494 7.05345 5.31174 6.98235 5.4775 6.97688C5.64326 6.97141 5.8044 7.03201 5.92548 7.14536C6.04656 7.2587 6.11766 7.4155 6.12313 7.58126L6.37312 15.15C6.38557 15.4731 6.52275 15.7788 6.75583 16.0029C6.98891 16.2271 7.29978 16.3521 7.62312 16.3519H12.3731C12.6969 16.3521 13.0081 16.2267 13.2413 16.002C13.4744 15.7774 13.6113 15.4711 13.6231 15.1475L13.8731 7.58126C13.8786 7.4155 13.9497 7.2587 14.0708 7.14536C14.1918 7.03201 14.353 6.97141 14.5187 6.97688C14.6845 6.98235 14.8413 7.05345 14.9546 7.17452C15.068 7.2956 15.1286 7.45675 15.1231 7.62251ZM15.95 5.10438C15.95 5.27014 15.8842 5.42911 15.7669 5.54632C15.6497 5.66353 15.4908 5.72938 15.325 5.72938H4.67188C4.50611 5.72938 4.34714 5.66353 4.22993 5.54632C4.11272 5.42911 4.04688 5.27014 4.04688 5.10438C4.04688 4.93862 4.11272 4.77965 4.22993 4.66244C4.34714 4.54523 4.50611 4.47938 4.67188 4.47938H6.60938C6.8074 4.47991 6.99855 4.40675 7.14561 4.27413C7.29268 4.14151 7.38514 3.95891 7.405 3.76188C7.45112 3.29968 7.66766 2.87121 8.01243 2.55995C8.35721 2.24868 8.80551 2.07692 9.27 2.07813H10.7263C11.1907 2.07692 11.639 2.24868 11.9838 2.55995C12.3286 2.87121 12.5451 3.29968 12.5912 3.76188C12.6111 3.95891 12.7036 4.14151 12.8506 4.27413C12.9977 4.40675 13.1888 4.47991 13.3869 4.47938H15.3244C15.4901 4.47938 15.6491 4.54523 15.7663 4.66244C15.8835 4.77965 15.9494 4.93862 15.9494 5.10438H15.95ZM8.49 4.47938H11.5075C11.4254 4.29172 11.3717 4.09287 11.3481 3.88938C11.3326 3.73532 11.2605 3.5925 11.1457 3.48858C11.031 3.38465 10.8817 3.32703 10.7269 3.32688H9.27063C9.11579 3.32703 8.96653 3.38465 8.85175 3.48858C8.73697 3.5925 8.66486 3.73532 8.64937 3.88938C8.62564 4.0929 8.57172 4.29175 8.48938 4.47938H8.49ZM9.11937 13.9488V8.62688C9.11937 8.46112 9.05353 8.30215 8.93632 8.18494C8.81911 8.06773 8.66014 8.00188 8.49437 8.00188C8.32861 8.00188 8.16964 8.06773 8.05243 8.18494C7.93522 8.30215 7.86937 8.46112 7.86937 8.62688V13.9513C7.86937 14.117 7.93522 14.276 8.05243 14.3932C8.16964 14.5104 8.32861 14.5763 8.49437 14.5763C8.66014 14.5763 8.81911 14.5104 8.93632 14.3932C9.05353 14.276 9.11937 14.117 9.11937 13.9513V13.9488ZM12.1281 13.9488V8.62688C12.1281 8.46112 12.0623 8.30215 11.9451 8.18494C11.8279 8.06773 11.6689 8.00188 11.5031 8.00188C11.3374 8.00188 11.1784 8.06773 11.0612 8.18494C10.944 8.30215 10.8781 8.46112 10.8781 8.62688V13.9513C10.8781 14.117 10.944 14.276 11.0612 14.3932C11.1784 14.5104 11.3374 14.5763 11.5031 14.5763C11.6689 14.5763 11.8279 14.5104 11.9451 14.3932C12.0623 14.276 12.1281 14.117 12.1281 13.9513V13.9488Z" fill="#DD545C"/>
+                              </svg></button>
+                          </td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+        
+                  <div class="noMasterRecords" *ngIf=" 0 == rolesRecords?.length ">
+                    <div >
+                        No roles added yet
+                    </div>
+                  </div>
+            </div>
+        <!-- </ng-template> -->
+       
+    </div>
+</div>
+

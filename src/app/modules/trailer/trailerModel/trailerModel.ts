@@ -1,0 +1,21 @@
+export class trailerModel {
+    public TrailerID  !: number
+    public TrailerNumber  !: string
+    public OrganisationName !: string
+    public Payload !: number
+    public LastMaintenanceDate  !: Date
+    public Status !: string
+    public Description !: string
+    public WeightLevel !: string
+    public Temperature !: string
+    public Width !: string
+    public Height  !: string
+    public Length  !: string
+    public InteriorVolume !: string
+    public CargoVolume !: string
+    public BedLength !: string
+    public LicensePlate  !: string
+    public TrailerType !: string
+    public AxleCount !: number
+    public TrailerMake !: string
+}

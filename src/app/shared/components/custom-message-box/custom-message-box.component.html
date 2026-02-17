@@ -1,0 +1,20 @@
+<div class="msg-box-container">
+    <div class="title" *ngIf="data.title">
+        <h3>{{data?.title}}</h3>
+    </div>
+    <div class="message" [class.msg-body-color]="condition1">
+        <div class="logo" *ngIf="condition1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 8.00195V13.002M12 22.0019C17.5 22.0019 22 17.502 22 12.002C22 6.50195 17.5 2.00195 12 2.00195C6.5 2.00195 2 6.50195 2 12.002C2 17.502 6.5 22.0019 12 22.0019Z" stroke="#EC9C1C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M11.9961 15.998H12.0081" stroke="#EC9C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+        </div>
+        <div class="msg-content" [class.success-body]="condition2">
+            <h5 [class.color-1]="condition1" [ngStyle]="{'font-size' : condition2 ? '18px' : '15px' }">{{data?.message}}</h5>
+        </div>
+    </div>
+    <div class="button-container" [ngStyle]="{'justify-content' : selectedBtn?.length > 1 ? 'start' : 'center' }">
+        <button *ngFor="let btn of selectedBtn; index as i" [class]="btn.class"
+            [ngStyle]="{'margin-left' : i!=0 ? '8px' : '0px' }" (click)="closeDialog(btn.action)">{{btn.text}}</button>
+    </div>
+</div>

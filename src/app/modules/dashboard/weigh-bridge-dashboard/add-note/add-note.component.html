@@ -1,0 +1,30 @@
+<div class="add-notes-container">
+    <div class="addUpdate-note-header">
+        <h4 class="mb-0">Add Notes</h4>
+        <button class="cancel-btn" (click)="close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15 5L5 15" stroke="#334155" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#334155" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+        </button>
+    </div>
+    <div class="addUpdate-add-note-content">
+        <div class="w-100 d-flex flex-column">
+            <mat-label>Notes<sup class="add-notes-required-cls">*</sup></mat-label>
+            <mat-form-field appearance="outline">
+                <textarea [(ngModel)]="notesValue" matInput></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="footer-btn-container">
+        <div class="d-flex gap-8">
+            <button class="deleteBtn" (click)="close()">
+                Cancel
+            </button>
+            <button class="saveBtn" (click)="saveNotes()" >
+                Save
+            </button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,226 @@
+.addCustomers-container {
+    background-color: #f2f2f7 !important;
+    padding-bottom: 50px;
+}
+
+.addCustomers-header {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    position: sticky;
+    z-index: 1000;
+    top: 40px;
+}
+
+.cancel-btn {
+    color: var(--Slate-700, #334155);
+    text-align: center;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19px;
+}
+
+.addCustomers-header h4 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.addCustomers-header .addBtn-users {
+    border-radius: 4px;
+    border: none;
+    color: var(--Background-White, #FFF);
+    text-align: center;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19px;
+    padding: 4px 16px 4px 12px;
+    display: flex;
+    width: fit-content;
+}
+
+.saveText {
+    padding: 2.5px 15px 2.5px 0;
+}
+
+.dropDownIcon {
+    border-left: 1px solid #FFFFFF;
+    padding-left: 7.5px;
+}
+
+.indicationCls {
+    color: #475569;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    margin-left: 6px;
+}
+
+@media (min-width: 1200px) {
+
+    .addCustomers-container .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 50% !important;
+        height: calc(100vh - 93px);
+    }
+}
+
+.addCustomers-bodyContent {
+    background: var(--Background-White, #FFF);
+    padding: 20px 28px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    &>.form-field {
+        flex: 0 0 48%;
+
+        &:only-child {
+            flex: 0 0 100%;
+        }
+    }
+}
+
+.form-field {
+    flex: 0 0 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field-full {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.homeAddContainer h4 {
+    border-bottom: 1px solid #CBD5E1;
+    color: #1E293B;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: left;
+    padding: 8px 28px;
+}
+
+::ng-deep .addCustomers-bodyContent .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: .25em 0;
+    margin-bottom: 0px !important;
+    padding: 0px !important;
+}
+
+::ng-deep .addCustomers-bodyContent .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0px;
+    border-top: 10px solid transparent;
+    border-bottom: 6px solid transparent;
+}
+
+.addCustomers-bodyContent mat-label {
+    color: var(--Slate-700, #334155);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+::ng-deep .addCustomers-bodyContent input.mat-input-element {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+::ng-deep .addCustomers-bodyContent textarea.mat-input-element {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+::ng-deep .addCustomers-bodyContent .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: translateY(0%);
+}
+
+::ng-deep .addCustomers-bodyContent .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    background: var(--Slate-100, #F1F5F9);
+}
+
+::ng-deep .addCustomers-bodyContent .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    background: var(--Slate-100, #F1F5F9);
+}
+
+::ng-deep .addCustomers-bodyContent .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    background: var(--Slate-100, #F1F5F9);
+}
+
+::ng-deep .addCustomers-bodyContent span.mat-select-min-line {
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.homeAddContainer {
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+
+.homeAddContainer p {
+    color: #61656E;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+}
+
+.gap-4 {
+    gap: 4px;
+}
+
+.gap-6 {
+    gap: 6px;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+.gap-24 {
+    gap: 24px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

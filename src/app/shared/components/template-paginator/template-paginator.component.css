@@ -1,0 +1,756 @@
+::ng-deep .custom-paginator-container .mat-paginator {
+    display: none;
+  }
+  
+  /* Style the custom page number */
+  .custom-page-number {
+    position: absolute;
+    left: 47px;
+    top: 1px;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--Slate-500, #64748B);
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+border-radius: 4px;
+background: #E9E9E9;
+padding: 4px 9px;
+  }
+
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    /* padding: .4375em 0; */
+    border-radius: 4px;
+    border: 1px solid #E9E9E9;
+    background: #FEFEFE;
+    padding: 3px 8px;
+}
+
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px !important;
+    display: none !important;
+}
+  
+  ::ng-deep .custom-paginator-container .mat-paginator-page-size-label {
+    margin: 0 4px;
+    color: var(--Slate-500, #64748B);
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+::ng-deep  .custom-paginator-container .mat-paginator-page-size {
+    display: flex;
+    align-items: baseline;
+    margin-right: 8px;
+    order: 2;
+}
+::ng-deep .custom-paginator-container .mat-paginator-page-size-label {
+    margin: 0 4px;
+    color: var(--Slate-500, #64748B);
+    font-family: BlinkMacSystemFont;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex
+;
+    order: 2;
+}
+
+
+
+::ng-deep .custom-paginator-container .mat-mdc-paginator-page-size-label {
+    display: none; /* Hide the default label */
+}
+
+::ng-deep .custom-paginator-container .mat-mdc-paginator-page-size {
+    position: relative;
+}
+
+::ng-deep .custom-paginator-container .mat-mdc-paginator-page-size::before {
+    content: "Items per page";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: normal; /* Optional */
+}
+
+.custom-paginator{
+    position: relative;
+}
+
+.custom-paginator-container{
+    position: relative;
+    width: 100%;
+    border-top: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--Background-White, #FFF);
+}
+
+/* ::ng-deep .mat-paginator-navigation-first {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M18 6L16.59 7.41 12.83 11.17 16.59 15 18 16.59 12 10.59z'/%3E%3Cpath d='M6 6L4.59 7.41 9.17 12 4.59 16.59 6 18 12 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  
+  ::ng-deep .mat-paginator-navigation-last {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M6 18L7.41 16.59 11.17 12.83 7.41 9 6 7.41 12 12.41z'/%3E%3Cpath d='M18 18L19.41 16.59 14.83 12 19.41 7.41 18 6 12 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+ 
+::ng-deep .mat-paginator-navigation-first .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-last .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-previous .mat-button-wrapper,
+::ng-deep .mat-paginator-navigation-next .mat-button-wrapper {
+  display: none;
+} */
+
+::ng-deep .custom-paginator-container .mat-paginator-navigation-next,
+::ng-deep .custom-paginator-container .mat-paginator-navigation-previous,
+::ng-deep .custom-paginator-container .mat-paginator-navigation-first,
+::ng-deep .custom-paginator-container .mat-paginator-navigation-last {
+  background-color: #0a68ec;
+  -webkit-mask-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"%3E%3Cg clip-path="url(%23clip0_6492_121909)"%3E%3Cpath d="M9.71564 2.06815L3.73571 5.56815C3.66042 5.61217 3.59796 5.67522 3.55454 5.75102C3.51113 5.82682 3.48828 5.91272 3.48828 6.00015C3.48828 6.08757 3.51113 6.17347 3.55454 6.24927C3.59796 6.32508 3.66042 6.38813 3.73571 6.43215L9.71564 9.93215C9.79137 9.97649 9.87742 9.99999 9.9651 10.0003C10.0528 10.0006 10.139 9.97767 10.215 9.93385C10.2911 9.89003 10.3542 9.82685 10.3981 9.7507C10.442 9.67455 10.4651 9.58813 10.4651 9.50015V2.50015C10.4651 2.41217 10.442 2.32574 10.3981 2.2496C10.3542 2.17345 10.2911 2.11027 10.215 2.06645C10.139 2.02262 10.0528 1.9997 9.9651 2C9.87742 2.0003 9.79137 2.02381 9.71564 2.06815Z" fill="%2364748B"%3E%3C/path%3E%3Cpath d="M1.99442 2C2.11648 2.00002 2.23429 2.04498 2.3255 2.12636C2.41671 2.20774 2.47498 2.31987 2.48926 2.4415L2.49275 2.5V9.5C2.49261 9.62744 2.44397 9.75002 2.35678 9.84268C2.26959 9.93535 2.15042 9.99112 2.02363 9.99859C1.89683 10.0061 1.77198 9.96466 1.67458 9.88287C1.57718 9.80107 1.51458 9.68505 1.49958 9.5585L1.49609 9.5V2.5C1.49609 2.36739 1.5486 2.24021 1.64205 2.14645C1.73551 2.05268 1.86226 2 1.99442 2Z" fill="%2364748B"%3E%3C/path%3E%3C/g%3E%3C/defs%3E%3C/svg%3E');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+
+::ng-deep .custom-paginator-container .mat-paginator-range-label {
+    display: none;
+}
+
+.customPaginatorBtns{
+    position: relative;
+
+}
+
+.customPaginatorAbsolute{
+    position: relative;
+    padding: 0px 10px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+}
+
+.customPaginatorBtns button{
+    background-color: transparent;
+    border: none;
+}
+
+.gap-45{
+    gap: 45px;
+}
+
+.gap-16{
+    gap: 16px;
+}
+
+.gap-55{
+    gap: 55px;
+}
+
+.customPaginatorBtns .disable{
+    opacity: 0.6;
+}
+
+/* Footer Layout */
+.footer-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+    gap: 20px;
+    padding: 8px 0;
+}
+
+.sheet-management-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.add-sheet-btn {
+    width: 32px;
+    height: 32px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.add-sheet-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-sheet-btn:active {
+    background: #e2e8f0;
+    transform: translateY(1px);
+}
+
+.add-sheet-btn svg {
+    transition: stroke 0.2s ease;
+}
+
+.add-sheet-btn:hover svg {
+    stroke: #475569;
+}
+
+.sheet-tabs-container {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    max-width: 850px;
+    overflow-x: auto;
+    padding: 2px 0;
+}
+
+.sheet-tabs-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.sheet-tabs-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.sheet-tabs-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 2px;
+}
+
+.sheet-tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0px 0px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-bottom: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    color: #475569;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.2s ease;
+    min-width: 100px;
+    max-width: 150px;
+    justify-content: space-between;
+    white-space: nowrap;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.sheet-tab.active {
+    background: #ffffff;
+    color: #1e293b;
+    font-weight: 600;
+    border-color: #94a3b8;
+    border-bottom: 2px solid #ffffff;
+    z-index: 2;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sheet-tab:hover:not(.active) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+.sheet-tab span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.close-sheet-btn {
+    width: 18px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    opacity: 0.6;
+}
+
+.close-sheet-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    opacity: 1;
+}
+
+.close-sheet-btn:hover svg {
+    stroke: #ef4444;
+}
+
+.close-sheet-btn svg {
+    width: 12px;
+    height: 12px;
+    transition: stroke 0.2s ease;
+}
+
+.no-sheets-btn {
+    padding: 8px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px 6px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #94a3b8;
+    cursor: not-allowed;
+    border-bottom: none;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.05);
+    min-width: 120px;
+    text-align: center;
+}
+
+.pagination-navigation-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Fixed Position Footer */
+.custom-paginator-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: white;
+    border-top: 0px solid #e5e7eb;
+   /*box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);*/
+}
+
+.customPaginatorAbsolute {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: white;
+    padding: 0px 10px;
+    min-height: 56px;
+}
+
+/* Updated Sheet Tab Styles */
+.sheet-tab {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 0px solid #d1d5db;
+    border-radius: 6px 6px 6px 6px;
+    margin-right: 2px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    color:#1c3991;
+}
+
+.sheet-tab.active {
+    background: #eadef6;
+   /* border-color: #9ca3af;*/
+    z-index: 1;
+}
+
+.sheet-tab:hover:not(.active) {
+    background: #f3f4f6;
+}
+
+.sheet-tab-button {
+    background: none;
+    border: none;
+    padding: 6px 12px;
+    padding-right:0px;
+    font-size: 12px;
+    color: #374151;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    flex: 1;
+    text-align: left;
+}
+
+.sheet-tab.active .sheet-tab-button {
+    color: #283892;
+    font-weight: 500;
+}
+
+.sheet-dropdown-btn {
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    padding-left: 0px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-left: 0px solid rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.sheet-dropdown-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.sheet-dropdown-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.sheet-dropdown-btn svg {
+    width: 10px;
+    height: 6px;
+}
+
+/* Sheet Context Menu Styles */
+::ng-deep .sheet-context-menu {
+    margin-top: 4px;
+}
+
+::ng-deep .sheet-context-menu .mat-menu-content {
+    padding: 4px 0;
+}
+
+.sheet-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0px 16px;
+    font-size: 14px;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+.sheet-menu-item:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.sheet-menu-item svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+.sheet-menu-item:hover svg {
+    color: #374151;
+}
+
+/* Rename Popup Styles */
+.rename-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.rename-popup {
+    position: absolute;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 280px;
+    overflow: hidden;
+    z-index: 10001;
+}
+
+.rename-popup-header {
+    padding: 12px 16px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.rename-popup-header h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.rename-popup-content {
+    padding: 16px;
+}
+
+.rename-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.rename-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.rename-popup-actions {
+    padding: 12px 16px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.btn-cancel,
+.btn-save {
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel {
+    background: white;
+    color: #6b7280;
+}
+
+.btn-cancel:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+.btn-save {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.btn-save:hover:not(:disabled) {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-save:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+}
+
+/* Menu Item Disabled State */
+::ng-deep .sheet-context-menu .mat-menu-item[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+::ng-deep .sheet-context-menu .mat-menu-item[disabled]:hover {
+    background: transparent !important;
+}
+
+/* Additional Menu Styling */
+::ng-deep .sheet-context-menu .mat-divider {
+    margin: 4px 0;
+    border-color: #e5e7eb;
+}
+
+/* Navigation Buttons */
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    margin: 0 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.nav-button:hover:not(:disabled) {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:disabled {
+    background-color: #f9fafb;
+    color: #d1d5db;
+    cursor: not-allowed;
+    border-color: #e5e7eb;
+    box-shadow: none;
+}
+
+.nav-button:disabled svg {
+    stroke: #d1d5db;
+}
+
+.nav-button svg {
+    stroke: #6b7280;
+    transition: stroke 0.2s ease;
+}
+
+.nav-button:hover:not(:disabled) svg {
+    stroke: #374151;
+}
+
+/* Custom Dropdown Styles */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    min-width: 180px;
+    padding: 4px 0;
+    margin-top: 4px;
+}
+
+.custom-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.custom-menu-item:hover:not(:disabled) {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.custom-menu-item:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.custom-menu-item svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.custom-menu-item:hover:not(:disabled) svg {
+    color: #374151;
+}
+
+.custom-menu-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 4px 0;
+}
+
+.mat-icon-button
+{
+    line-height:20px;
+}
+
+/* Fix menu overlay z-index and click issues */
+::ng-deep .cdk-overlay-container {
+    z-index: 10000 !important;
+    pointer-events: none !important;
+}
+
+::ng-deep .cdk-overlay-backdrop {
+    pointer-events: none !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+    z-index: 10001 !important;
+    pointer-events: auto !important;
+}
+
+::ng-deep .mat-menu-panel {
+    pointer-events: auto !important;
+    z-index: 10002 !important;
+}
+
+::ng-deep .mat-menu-content {
+    pointer-events: auto !important;
+}
+
+::ng-deep .mat-menu-content button {
+    pointer-events: auto !important;
+}
+
+::ng-deep .mat-menu-item {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+::ng-deep .mat-menu-item:hover {
+    background-color: #f3f4f6 !important;
+}
+
+::ng-deep .sheet-context-menu {
+    pointer-events: auto !important;
+}
+
+::ng-deep .sheet-context-menu .mat-menu-item {
+    min-height: 36px !important;
+    line-height: 36px !important;
+    padding: 0 16px !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure sheet dropdown button is clickable */
+.sheet-dropdown-btn {
+    pointer-events: auto !important;
+    z-index: 1 !important;
+}
+
+/* Specifically target the mat-menu-panel to ensure it's clickable */
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+    pointer-events: none !important;
+}
+
+::ng-deep .mat-menu-panel.sheet-context-menu {
+    pointer-events: auto !important;
+}

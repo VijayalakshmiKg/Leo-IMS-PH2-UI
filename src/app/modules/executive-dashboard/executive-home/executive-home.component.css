@@ -1,0 +1,208 @@
+::ng-deep .exe-dashboard .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    padding-left: 10px !important;
+    width: 96px !important;
+}
+
+/* ::ng-deep  .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 2em !important;
+} */
+::ng-deep .exe-dashboard .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px !important;
+}
+
+::ng-deep .exe-dashboard .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon {
+    /* width: 1em; */
+    /* margin-top: -1px; */
+    width: 24px !important;
+}
+
+::ng-deep .exe-dashboard .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon,
+.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 2em;
+}
+
+::ng-deep .exe-dashboard .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 10px !important;
+}
+
+::ng-deep .exe-dashboard .mat-form-field-flex {
+    display: inline-flex;
+    align-items: flex-end;
+    box-sizing: border-box;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+::ng-deep .exe-dashboard .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    padding-left: 10px !important;
+    width: 80px !important;
+}
+
+.overview-count {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.count-card {
+    display: flex;
+    /* width: 366.5px; */
+    height: 88px;
+    padding: 20px 16px 20px 20px;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    margin-right: 12px;
+}
+
+.count-card-last {
+    display: flex;
+    /* width: 380.5px; */
+    height: 88px;
+    padding: 20px 16px 20px 20px;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+}
+
+
+.card-heading {
+    color: var(--Slate-500, #64748B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.card-total {
+    color: var(--Slate-800, #1E293B);
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.truck-status-card {
+    display: flex;
+    height: 355px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+
+    background: #FFF;
+}
+
+.truck-status-card-two {
+    display: flex;
+    height: 360px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+
+    background: #FFF;
+}
+
+.truck-status {
+    color: var(--Slate-800, #1E293B);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+
+#truckChart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#trailerChart {
+    display: flex;
+    justify-content: center;
+}
+
+#consignorsChart {
+    /* margin: auto; */
+    width: 350px;
+    /* height: 350px; */
+    display: flex;
+    justify-content: center;
+
+}
+
+::ng-deep .exe-dashboard .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center,
+.apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+    justify-content: center;
+    margin-bottom: 62px;
+    border-top: 1px solid #E2E8F0;
+    padding-top: 8px;
+}
+
+.consignor-desc {
+    color: var(--Slate-600, #475569);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.consignor-bottom-section {
+    border-top: 1px solid var(--Slate-200, #E2E8F0);
+    padding: 10px 10px 0px 10px;
+    gap: 10px;
+}
+
+.consignor-des {
+    color: var(--Slate-600, #475569);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.consignor-count {
+    color: var(--Neutral-Colors-Black, #1E1B39);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+@media (max-width: 1718px) {
+   
+::ng-deep .exe-dashboard .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center,
+.apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+    justify-content: center;
+    margin-bottom: 62px;
+   border-style: none;
+    padding-top: 8px;
+}
+    }
+.clalanter-text {
+    color: var(--slate-700, #334155);
+font-family: BlinkMacSystemFont;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+}

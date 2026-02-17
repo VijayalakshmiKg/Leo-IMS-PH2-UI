@@ -1,0 +1,21 @@
+<div *ngIf="loggedInUser?.roleName == 'Weighbridge operator'" class="dashborad-container">
+  <app-weighbridge-dashboard></app-weighbridge-dashboard>
+</div>
+<div *ngIf="loggedInUser?.roleName == 'Transportation Manager'" class="dashborad-container">
+<app-transport-dashboard></app-transport-dashboard>
+</div>
+<div *ngIf="loggedInUser?.roleName == 'Plant Site Manager' || loggedInUser?.roleName == 'Admin' ">
+    <app-plant-site-dashboard></app-plant-site-dashboard>
+</div>  
+<div *ngIf="loggedInUser?.roleName == 'Accounts Manager'">
+  <app-account-manager></app-account-manager>
+</div>  
+<div *ngIf="loggedInUser?.roleName == 'Quality Manager'">
+  <app-quality-manager></app-quality-manager>
+</div>
+<div *ngIf="loggedInUser?.roleName == 'Planner Admin' || loggedInUser?.roleName == 'Planner'" class="dashborad-container">
+  <app-planner-dashboard></app-planner-dashboard>
+</div>
+<div *ngIf="loggedInUser?.roleName == 'Weighbridge Operator' || loggedInUser?.roleName == 'Weighbridge Operator'" class="dashborad-container">
+  <app-weighbridge-dashboard></app-weighbridge-dashboard>
+</div>

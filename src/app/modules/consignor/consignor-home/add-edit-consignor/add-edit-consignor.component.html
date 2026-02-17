@@ -1,0 +1,217 @@
+<div class="addconsignor-container">
+  <form [formGroup]="consignorForm">
+    <div
+      class="addconsignor-header d-flex justify-content-between align-items-center  ">
+      <button class="cancel-btn common-btn" type="button" (click)="back()">
+        Cancel
+      </button>
+
+      <h4 class="mb-0">{{this.consignorServ.editConsignorRecord ? 'Edit' : 'New' }} supplier</h4>
+
+      <button class="addBtn-users bgColorCls" type="button" [matMenuTriggerFor]="menu"
+        *ngIf="this.consignorServ.editConsignorRecord == null else Edit">
+        <div class="saveText">
+          {{saveBtnText}}
+        </div>
+
+        <div class="dropDownIcon">
+          <svg width="11" height="6" viewBox="0 0 11 6" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+        </div>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item type="submit" (click)="onSubmitandClose()">Add and
+          close</button>
+        <button mat-menu-item type="submit"
+          (click)="onSubmitandAddAnother()">Save and add another</button>
+      </mat-menu>
+      <ng-template #Edit>
+        <button class="addBtn-users bgColorCls" type="button" mat-button
+          (click)="onSubmitandClose()">
+          Update
+        </button>
+      </ng-template>
+    </div>
+
+    <div class="container">
+
+      <div class="homeAddContainer  mt-3">
+
+        <div>
+          <h4 class="mb-0">Supplier details</h4>
+        </div>
+
+        <div class="addconsignor-bodyContent mt-0">
+          <div class="form-container">
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Supplier name <span
+                    class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="consignorName" placeholder
+                    required />
+                </mat-form-field>
+              </div>
+              <div class="form-field">
+                <mat-label>Supplier license no <span
+                    class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="consignorLicenseNo" placeholder
+                    required />
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Email address <span
+                    class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline" class="volume-field">
+                  <input matInput formControlName="email" placeholder
+                    type="email" />
+                </mat-form-field>
+              </div>
+              <div class="form-field" style="width: 48%;">
+                <mat-label>Contact number</mat-label>
+                    <div class="d-flex gap-2">
+                      <mat-form-field class="volume-field w-25"
+                        appearance="outline">
+                        <input type="text" placeholder="+44"
+                          [formControl]="prefixmobile" matInput
+                          (keyup)="getCountryCodeFilter($event)"
+                          [matAutocomplete]="auto1">
+                        <mat-autocomplete #auto1="matAutocomplete">
+                          <mat-option *ngFor="let option of filteredTel | async"
+                            [value]="option">
+                            {{option}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="volume-field w-75">
+                        <input matInput formControlName="contactDetails" placeholder
+                          appNumberOnly />
+                      </mat-form-field>
+                    </div>
+                
+              </div>
+            </div>
+            <!-- <div class="form-row">
+              <div class="form-field">
+                <mat-label>Fax number</mat-label>
+                <div class="d-flex gap-2">
+                  <mat-form-field class="volume-field w-25"
+                    appearance="outline">
+                    <input type="text" placeholder="+44"
+                      [formControl]="prefixfax" matInput
+                      (keyup)="getCountryCodeFilter($event)"
+                      [matAutocomplete]="auto2">
+                    <mat-autocomplete #auto2="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredFax | async"
+                        [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="volume-field w-75">
+                    <input matInput formControlName="faxNumber" placeholder
+                      appNumberOnly />
+                  </mat-form-field>
+                </div>
+                
+              </div>
+
+            </div> -->
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="homeAddContainer  mt-3">
+
+        <div>
+          <h4 class="mb-0">Work address</h4>
+        </div>
+
+        <div class="addconsignor-bodyContent mt-0">
+          <div class="form-container">
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Address line 1 <span
+                    class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="address1" placeholder
+                    required />
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Address line 2</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="address2" placeholder />
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>City <span class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="city" placeholder readonly />
+                </mat-form-field>
+              </div>
+              <div class="form-field">
+                <mat-label>County</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="state" placeholder
+                    readonly />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Zip/Postal code <span
+                    class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput (keyup)="getZipCode($event)"
+                    [matAutocomplete]="auto" formControlName="pincode" />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let item of zipCodes" [value]="item.postalCode"
+                      (click)="getStateCountryCity(item)">
+                      {{item.postalCode}}  | {{item.city}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="form-field">
+                <mat-label>Country <span class="text-dange">*</span></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="country" placeholder
+                    readonly />
+                  <!-- <mat-select formControlName="country" required>
+                    <mat-option *ngFor="let country of countries" [value]="country.code">
+                      {{ country.countryName }}
+                    </mat-option>
+                  </mat-select> -->
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>

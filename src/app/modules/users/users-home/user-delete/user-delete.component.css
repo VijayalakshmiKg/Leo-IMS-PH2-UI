@@ -1,0 +1,49 @@
+.delBtn{
+    padding: 4px 20px;
+    border-radius: 6px;
+background: var(--Status-Not-Interested, #E81C28);
+color: var(--Background-White, #FFF);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 17px; /* 121.429% */
+border: none;
+}
+
+.CanBtn{
+    padding: 4px 20px;
+    border-radius: 6px;
+border: 1px solid var(--Slate-700, #334155);
+color: var(--Slate-700, #334155);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 17px; /* 121.429% */
+}
+
+.user-delete{
+    padding: 20px;
+}
+
+
+.user-delete h4{
+    color: var(--menu, #464855);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 17px; /* 106.25% */
+margin-bottom: 0px;
+border: none;
+}
+
+.user-delete p{
+    color: var(--Slate-700, #334155);
+font-size: 14.69px;
+font-style: normal;
+font-weight: 400;
+line-height: 22.048px; /* 150.089% */
+margin-bottom: 0px;
+
+}

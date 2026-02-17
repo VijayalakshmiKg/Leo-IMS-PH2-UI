@@ -1,0 +1,39 @@
+.settings-header{
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--White, #FFF);
+z-index: 1000;
+position: sticky;
+top: 0;
+padding: 6px 12px;
+display: flex;
+align-items: center;
+gap: 18px;
+}
+
+.settings-header-btn{
+    color: var(--Slate-700, #334155);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+padding: 5px 16px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.settings-header-btn.active{
+    border-radius: 4px;
+    background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30));
+    color: #283892;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.settings-header-btn:hover{
+    border-radius: 4px !important;
+    background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30))  !important;
+    color: #283892 !important;
+}

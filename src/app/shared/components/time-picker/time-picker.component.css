@@ -1,0 +1,72 @@
+
+.time-picker-cls {
+    height: 100%;
+}
+
+.btn-cls {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    color: #007AFF;
+    border: none;
+    background: none;
+
+}
+
+.btn-container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+::ng-deep .time-picker-container mat-dialog-container{
+    border-radius: 20px;
+}
+
+::ng-deep input{
+    flex: auto !important;
+}
+
+::ng-deep .time-picker-cls .ngx-material-timepicker-toggle{
+    display: none !important;
+}
+
+::ng-deep .time-picker-cls .ngx-timepicker-control__input{
+    /* background: #F2F2F7 !important; */
+    font-size: 1.5rem !important;
+    margin: 0 3px 0 0 !important;
+}
+
+::ng-deep .time-picker-cls .period-control__button{
+    font-size: 1.5rem !important;
+    margin-left: 10px;
+}
+::ng-deep .time-picker-cls .ngx-timepicker-control__arrow  , ::ng-deep .time-picker-cls .period-control__arrow{
+    color: #007AFF !important;
+}
+
+::ng-deep .time-picker-cls .ngx-timepicker-control__arrow{
+    font-size: 12px !important;
+}
+
+::ng-deep .time-picker-cls .ngx-timepicker-control__arrows{
+    right: -5px !important;
+    top: -4px  !important;
+}
+
+::ng-deep .time-picker-cls .ngx-timepicker{
+    border: none !important;
+    justify-content: center !important;
+}
+
+::ng-deep .time-picker-cls .ngx-timepicker__time-colon{
+    font-size: 24px !important;
+}
+
+::ng-deep .time-picker-cls .period-selector{
+    top: calc(50% - 50px) !important;
+    right: calc(-10% + -50px) !important;
+    width: auto !important;
+}

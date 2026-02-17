@@ -1,0 +1,132 @@
+.gap-12{
+    gap: 12px;
+}
+
+.CustomerLocations-header{
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--White, #FFF);
+z-index: 1000;
+position: sticky;
+top: 0;
+}
+
+.CustomerLocations-header span{
+    color: var(--Slate-700, #334155);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.sortedByCls{
+    color: var(--Slate-600, #475569);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-bottom: 0px;
+}
+.status-btn{
+    margin-right: 26px;
+}
+
+.isActive{
+    background: #129D5226;
+    border-radius: 22px;
+font-size: 13px;
+font-weight: 400;
+line-height: 15.51px;
+text-align: left;
+color: #129D52;
+padding: 4px 16px;
+}
+
+.notrActive{
+    background: #FEE2E2;
+    border-radius: 22px;
+font-size: 13px;
+font-weight: 400;
+line-height: 15.51px;
+text-align: left;
+color: #DC2626;
+padding: 4px 16px;
+}
+
+.activeTh{
+    width: 52px;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: -5px;
+}
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 4PX;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-prefix .mat-icon {
+    font-size: 140%;
+    line-height: 1.125;
+    color: #686777;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #F1F5F9;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+    border-right-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+    border-left-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 I !important;
+}
+
+::ng-deep .CustomerLocations-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0;
+    margin-bottom: 4px;
+    margin-top: -1px;
+}
+
+.addBtnCls{
+    border-radius: 4px;
+padding: 4px 16px 4px 12px;
+color: var(--White, #FFF);
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+@media (max-width: 800px) {
+    .hide-col {
+      display: none;
+    }
+    .activeTh{
+        width: 0px;
+        display: none;
+    }
+}
+
+.noRecordText{
+    color: var(--primary-col, #006CB7);
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}

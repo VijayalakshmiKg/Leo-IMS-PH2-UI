@@ -1,0 +1,131 @@
+.profile-home-header {
+    border-bottom: 1px solid #E2E8F0;
+    background: #F9F9FB;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    padding: 6px 12px;
+    gap: 12px;
+}
+
+.edit-btn {
+
+    border-radius: 4px;
+    padding: 5px 16px;
+    /* font-family: 'BlinkMacSystemFont Regular'; */
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.32px;
+    text-align: left;
+    color: #FFFFFF;
+    border: none;
+}
+
+.profile-content {
+    padding: 16px 20px;
+}
+
+.profile-content h4 {
+    /* font-family: 'BlinkMacSystemFont SemiBold'; */
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 22px;
+    text-align: left;
+    color: #334155;
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 10px;
+}
+
+.profile-text-contents {
+    padding: 16px 0px 20px 0px;
+}
+
+.profile-text-contents label {
+    width: 126px;
+    color: #475569;
+    /* font-family: 'BlinkMacSystemFont Regular'; */
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.51px;
+    text-align: left;
+    margin-bottom: 0px;
+
+}
+
+.profile-text-contents p {
+    color: #1E293B;
+    /* font-family: 'BlinkMacSystemFont Medium'; */
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 17px;
+    text-align: left;
+
+}
+
+.profile-text-contents div {
+    padding-bottom: 12px;
+}
+
+.profile-text-contents div:last-of-type {
+    padding-bottom: 0px !important;
+}
+
+.noProfile {
+
+    border-radius: 4px;
+    width: 47.88px;
+    height: 47.88px;
+    background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30));
+    color: #283892;
+    /* font-family: 'BlinkMacSystemFont SemiBold'; */
+    font-size: 17.47px;
+    font-weight: 600;
+    line-height: 23.05px;
+    letter-spacing: 0.01em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    text-transform: uppercase !important;
+}
+
+.nameProfile {
+    color: #1E293B;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    text-transform: capitalize !important;
+}
+
+.profile-text-contents img {
+    border-radius: 4px;
+    width: 47.88px;
+    height: 47.88px;
+    object-fit: cover;
+}
+
+
+.gap-12 {
+    gap: 12px;
+}
+
+.blue-indication {
+    border-radius: 4px;
+    background: var(--Leo-Light, #EFEBFE);
+    padding: 6px 12px;
+    padding-bottom: 6px !important;
+    color: #5253AE;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 450px;
+    margin-bottom: 12px;
+}

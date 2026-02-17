@@ -1,0 +1,30 @@
+
+<div class="user-delete">
+    <div class="user-del-header d-flex align-items-center justify-content-between ">
+        <h4>Remove venders</h4>
+
+        <button class="common-btn" type="button" (click)="close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_680_13088)">
+                  <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_680_13088">
+                    <rect width="24" height="24" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
+        </button>
+    </div>
+
+    <div class="del-content mt-3">
+        <p>Do you wish to remove this Role? All the Role data will be deleted and cannot be restored again.</p>
+    </div>
+
+
+    <div class="footer mt-3">
+        <button type="button" class="delBtn" (click)="delete()">Delete</button>
+        <button type="button" class="CanBtn ml-2" (click)="close()">Cancle</button>
+    </div>
+</div>

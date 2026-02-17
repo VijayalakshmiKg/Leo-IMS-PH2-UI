@@ -1,0 +1,143 @@
+<div class="addVehicles-container">
+    <form [formGroup]="vehicleForm" >
+        <div class="addVehicles-header d-flex justify-content-between align-items-center  ">
+            <button class="cancel-btn common-btn" type="button" (click)="back()">
+                Cancel
+            </button>
+
+            <h4 class="mb-0">{{this.VehiclesServ.editVehicleRecord ? 'Edit':'New'}} vehicle</h4>
+
+            <button class="addBtn-users bgColorCls" type="button" [matMenuTriggerFor]="menu" *ngIf="this.VehiclesServ.editVehicleRecord == null else Edit" 
+            [disabled]="vehicleNumberExists">
+               <div class="saveText">
+                {{saveBtnText}}
+               </div>
+
+               <div class="dropDownIcon">
+                <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+               </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="button" (click)="onSubmitandClose()">Add and close</button>
+                <button mat-menu-item type="button" (click)="onSubmitandAddAnother()">Save and add another</button>
+              </mat-menu>
+
+              <ng-template #Edit>
+                <button class="addBtn-users bgColorCls" type="button" mat-button  (click)="onSubmitandClose()" >
+                    Update
+                </button>
+            </ng-template>
+        </div>
+
+
+        <div class="container">
+
+            <div class="homeAddContainer  mt-3">
+                <div class="addVehicles-bodyContent mt-0">
+                    <div class="form-container">
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <mat-label>Vehicle number <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                        fill="#FF1F00" />
+                                </svg></span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="" formControlName="vechicleNumber" (input)="vehicleNumber()">
+                                    <mat-error *ngIf="vehicleNumberExists">
+                                        Vehicle number already exists!
+                                    </mat-error>
+                                </mat-form-field>
+                                
+                            </div>
+                            <div class="form-field">
+
+                                <mat-label>Vehicle model  <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                        fill="#FF1F00" />
+                                </svg>
+                            </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select  formControlName="vehicleModel">
+                                        <mat-option *ngFor="let item of vehicleModels" [value]="item">{{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+
+                                <mat-label>Vehicle make <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                        fill="#FF1F00" />
+                                </svg></span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select  formControlName="vehicleMake">
+                                        <mat-option *ngFor="let item of vehicleMakes" [value]="item">{{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-field">
+
+                                <mat-label>Vehicle type <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                        fill="#FF1F00" />
+                                </svg></span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select  formControlName="vechicleType">
+                                        <mat-option *ngFor="let item of vehicleTypes" [value]="item.vehicleTypeName">{{item.vehicleTypeName}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <!-- <div class="form-field">
+                                <mat-label>Engine number </mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder=""  formControlName="engineNumber">
+                                </mat-form-field>
+                            </div> -->
+                            <div class="form-field">
+                                <mat-label>Chassis number  <sup><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6.192 1.27951L6.768 2.31951L4.544 3.24751L6.784 4.15951L6.176 5.23151L4.24 3.82351L4.496 6.23951H3.296L3.536 3.82351L1.6 5.24751L0.976 4.15951L3.2 3.23151L0.976 2.33551L1.568 1.26351L3.552 2.68751L3.296 0.255511H4.512L4.24 2.68751L6.192 1.27951Z"
+                                        fill="#FF1F00" />
+                                </svg>
+                            </sup></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder=""  formControlName="chassisNumber">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <!-- <div class="form-field">
+
+                                <mat-label>Trailer number</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder=""  formControlName="trailerNumber">
+                                </mat-form-field>
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+
+
+
+::ng-deep .add-categoryType .mat-dialog-container 
+{
+  padding: 0px;
+}
+
+
+
+/* Customize the overlay container positioning and sizing */
+/* Customize the overlay container positioning and sizing */
+::ng-deep .add-categoryType .mat-dialog-container {
+position: fixed;
+top: 40px;
+right: 0px;
+height: 100vh;
+width: calc(100% - 112px); /* Calculate width based on right position (right: 56px * 2) */
+max-width: 700px;
+min-width: 300px;
+box-shadow: -11px 5px 22px 1px #00000026;
+overflow-y: auto; /* Ensure scrolling for overflowing content */
+overflow-x: hidden; /* Prevent horizontal overflow */
+border-radius: 0px;
+}
+
+@media (max-width: 768px) {
+::ng-deep .add-categoryType .mat-dialog-container {
+  right: 0px; /* Adjust right for smaller screens */
+  width: 100vw; /* Full viewport width on mobile */
+  left: 0; /* Remove extra gap on smaller screens */
+}
+}
+
+/* Ensure pointer events are allowed */
+::ng-deep .add-categoryType .cdk-overlay-pane {
+pointer-events: all !important; /* Allow interaction */
+}

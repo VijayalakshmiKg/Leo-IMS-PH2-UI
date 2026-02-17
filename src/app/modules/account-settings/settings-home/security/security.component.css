@@ -1,0 +1,125 @@
+.security-container {
+    padding: 16px 20px 0px 20px;
+}
+
+.Password h6 {
+    color: var(--Slate-700, #334155);
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    margin-bottom: 12;
+}
+
+.Password {
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.password-content {
+    margin-top: 12px;
+}
+
+.sub-title h6 {
+    color: var(--Slate-600, #475569);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.sub-content h6 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 17px;
+    margin-bottom: 0;
+}
+
+.change-password {
+    color: var(--primary-col, #006CB7);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+
+
+
+.Mfa-title {
+    margin-top: 12px;
+}
+
+.Mfa-title h6 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 16px;
+}
+
+.toggleBtn {
+    margin-bottom: 7px;
+}
+
+.toggle-content {
+    margin-top: 12px;
+}
+
+
+::ng-deep .user-popup .mat-dialog-container {
+    display: block;
+    padding: 0 !important;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+}
+
+
+/* toggle button customize css */
+::ng-deep .toggle-content .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background: var(--Colors-Green, #34C759);
+    border-radius: 70.588px;
+    width: 36px;
+    height: 21.882px;
+    padding: 1.412px 15.529px 1.412px 1.412px;
+}
+
+::ng-deep .toggle-content .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    width: 19.059px;
+    height: 19.059px;
+    margin-top: 3px;
+    border-radius: 70.588px !important;
+    background: var(--white, #FFF) !important;
+    box-shadow: 0px 0px 0px 0.706px rgba(0, 0, 0, 0.04), 0px 2.118px 5.647px 0px rgba(0, 0, 0, 0.15), 0px 2.118px 0.706px 0px rgba(0, 0, 0, 0.06) !important;
+}
+
+::ng-deep .toggle-content .mat-slide-toggle-bar {
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 8px;
+    width: 36px !important;
+    height: 21.882px !important;
+    padding: 1.412px 15.529px 1.412px 1.412px !important;
+    border-radius: 70.588px !important;
+    background: var(--Fills-Secondary, rgba(120, 120, 128, 0.16));
+}
+
+::ng-deep .toggle-content .mat-slide-toggle-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    margin-top: 3px;
+}
+
+/* ----------------------------------------------------- */

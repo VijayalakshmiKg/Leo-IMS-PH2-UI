@@ -1,0 +1,215 @@
+<div class="custom-paginator-container">
+    <div class="custom-paginator">
+      <!-- Material Paginator -->
+      <mat-paginator 
+        #paginator
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [showFirstLastButtons]="showFirstLastButtons"
+        (page)="pageChange.emit($event)">
+      </mat-paginator>
+  
+      <!-- Custom Paginator UI -->
+      <ng-container *ngTemplateOutlet="customPaginator; context: { paginator: paginator }"></ng-container>
+  
+      <ng-template #customPaginator let-paginator="paginator">
+        <div class="customPaginatorAbsolute">
+          <!-- Combined Footer Layout -->
+          <div class="footer-layout">
+            <!-- Left Side: Sheet Management -->
+            <div class="sheet-management-left">
+              <!-- Plus Button to Add Sheet -->
+              <button class="add-sheet-btn" (click)="addSheet()" title="Add New Sheet">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 1V13M1 7H13" stroke="#64748B" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              
+              <!-- Left Navigation Button -->
+              <button class="nav-button nav-left" 
+                      [disabled]="activeSheetIndex === 0" 
+                      (click)="navigateSheet('left')"
+                      title="Previous Sheet">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              
+              <!-- Sheet Tabs -->
+              <div class="sheet-tabs-container">
+                <div class="sheet-tab" 
+                     *ngFor="let sheet of sheets; let i = index; trackBy: trackBySheet" 
+                     [class.active]="activeSheetIndex === i"
+                     [attr.data-sheet-index]="i">
+                  <button class="sheet-tab-button" 
+                          (click)="selectSheet(i)"
+                          [title]="sheet.name">
+                    <span>{{sheet.name}}</span>
+                  </button>
+                  
+                  <button mat-icon-button [matMenuTriggerFor]="sheetContextMenu" 
+                          (click)="setSheetIndex(i, $event)" class="sheet-dropdown-btn">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                  </button>
+
+                </div>
+                
+                <!-- No Sheets Added Button (when no sheets) -->
+                <button class="no-sheets-btn" *ngIf="sheets.length === 0" disabled>
+                  No Sheets added
+                </button>
+              </div>
+              
+              <!-- Right Navigation Button -->
+              <button class="nav-button nav-right" 
+                      [disabled]="activeSheetIndex === sheets.length - 1 || sheets.length === 0" 
+                      (click)="navigateSheet('right')"
+                      title="Next Sheet">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Sheet Context Menu -->
+            <mat-menu #sheetContextMenu="matMenu" class="sheet-context-menu" [hasBackdrop]="false">
+              <button mat-menu-item (click)="duplicateSheet(selectedSheetIndex)" class="sheet-menu-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                  <path d="M13.3333 6H7.33333C6.59695 6 6 6.59695 6 7.33333V13.3333C6 14.0697 6.59695 14.6667 7.33333 14.6667H13.3333C14.0697 14.6667 14.6667 14.0697 14.6667 13.3333V7.33333C14.6667 6.59695 14.0697 6 13.3333 6Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3.33333 10H2.66667C2.31305 10 1.97391 9.85952 1.72386 9.60948C1.47381 9.35943 1.33333 9.02029 1.33333 8.66667V2.66667C1.33333 2.31305 1.47381 1.97391 1.72386 1.72386C1.97391 1.47381 2.31305 1.33333 2.66667 1.33333H8.66667C9.02029 1.33333 9.35943 1.47381 9.60948 1.72386C9.85952 1.97391 10 2.31305 10 2.66667V3.33333" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Duplicate</span>
+              </button>
+              
+              <button mat-menu-item (click)="showRenamePopup(selectedSheetIndex, $event)" class="sheet-menu-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                  <path d="M11.3333 2.0004C11.5084 1.82531 11.7163 1.68642 11.9451 1.59165C12.1738 1.49689 12.419 1.44812 12.6666 1.44812C12.9143 1.44812 13.1595 1.49689 13.3882 1.59165C13.617 1.68642 13.8249 1.82531 14 2.0004C14.1751 2.1755 14.314 2.38337 14.4087 2.61214C14.5035 2.84092 14.5523 3.08612 14.5523 3.33374C14.5523 3.58136 14.5035 3.82656 14.4087 4.05533C14.314 4.28411 14.1751 4.49198 14 4.66707L4.99998 13.6671L1.33331 14.6671L2.33331 11.0004L11.3333 2.0004Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Rename</span>
+              </button>
+              
+              <button mat-menu-item (click)="deleteSheet(selectedSheetIndex)" class="sheet-menu-item" *ngIf="sheets.length > 1">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                  <path d="M2 4H14M6 4V2.66667C6 2.31305 6.14048 1.97391 6.39052 1.72386C6.64057 1.47381 6.97971 1.33333 7.33333 1.33333H8.66667C9.02029 1.33333 9.35943 1.47381 9.60948 1.72386C9.85952 1.97391 10 2.31305 10 2.66667V4M12.6667 4V13.3333C12.6667 13.687 12.5262 14.0261 12.2761 14.2761C12.0261 14.5262 11.687 14.6667 11.3333 14.6667H4.66667C4.31305 14.6667 3.97391 14.5262 3.72386 14.2761C3.47381 14.0261 3.33333 13.687 3.33333 13.3333V4H12.6667Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Delete</span>
+              </button>
+              
+            <!--  <mat-divider></mat-divider>
+              
+              <button mat-menu-item (click)="saveSheet(selectedSheetIndex)" class="sheet-menu-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                  <path d="M13.3333 14.6667H2.66667C2.31305 14.6667 1.97391 14.5262 1.72386 14.2761C1.47381 14.0261 1.33333 13.687 1.33333 13.3333V2.66667C1.33333 2.31305 1.47381 1.97391 1.72386 1.72386C1.97391 1.47381 2.31305 1.33333 2.66667 1.33333H10L14.6667 6V13.3333C14.6667 13.687 14.5262 14.0261 14.2761 14.2761C14.0261 14.5262 13.687 14.6667 13.3333 14.6667Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M11.3333 14.6667V9.33333H4.66667V14.6667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4.66667 1.33333V6H10" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Save</span>
+              </button>
+              -->
+              <mat-divider></mat-divider>
+              
+              <button mat-menu-item (click)="moveSheetLeft(selectedSheetIndex)" class="sheet-menu-item" [disabled]="selectedSheetIndex === 0">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                  <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Move Left</span>
+              </button>
+              
+              <button mat-menu-item (click)="moveSheetRight(selectedSheetIndex)" class="sheet-menu-item" [disabled]="selectedSheetIndex === sheets.length - 1">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                  <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Move Right</span>
+              </button>
+            </mat-menu>
+            </div>
+
+            <!-- Right Side: Pagination Navigation -->
+            <div class="pagination-navigation-right" style="display:none;">
+              <div class="customPaginatorBtns d-flex gap-45" [ngClass]="{'gap-55': (paginator?.pageIndex + 1) >= 10}">
+  
+                <div class="d-flex gap-16">
+                  <button   (click)="paginator?.firstPage()" [disabled]="!paginator?.hasPreviousPage()" [ngClass]="{disable:!paginator?.hasPreviousPage()}">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_6517_92346)">
+                      <path d="M9.71564 2.06815L3.73571 5.56815C3.66042 5.61217 3.59796 5.67522 3.55454 5.75102C3.51113 5.82682 3.48828 5.91272 3.48828 6.00015C3.48828 6.08757 3.51113 6.17347 3.55454 6.24927C3.59796 6.32508 3.66042 6.38813 3.73571 6.43215L9.71564 9.93215C9.79137 9.97649 9.87742 9.99999 9.9651 10.0003C10.0528 10.0006 10.139 9.97767 10.215 9.93385C10.2911 9.89003 10.3542 9.82685 10.3981 9.7507C10.442 9.67455 10.4651 9.58813 10.4651 9.50015V2.50015C10.4651 2.41217 10.442 2.32574 10.3981 2.2496C10.3542 2.17345 10.2911 2.11027 10.215 2.06645C10.139 2.02262 10.0528 1.9997 9.9651 2C9.87742 2.0003 9.79137 2.02381 9.71564 2.06815Z" fill="#64748B"/>
+                      <path d="M1.99442 2C2.11648 2.00002 2.23429 2.04498 2.3255 2.12636C2.41671 2.20774 2.47498 2.31987 2.48926 2.4415L2.49275 2.5V9.5C2.49261 9.62744 2.44397 9.75002 2.35678 9.84268C2.26959 9.93535 2.15042 9.99112 2.02363 9.99859C1.89683 10.0061 1.77198 9.96466 1.67458 9.88287C1.57718 9.80107 1.51458 9.68505 1.49958 9.5585L1.49609 9.5V2.5C1.49609 2.36739 1.5486 2.24021 1.64205 2.14645C1.73551 2.05268 1.86226 2 1.99442 2Z" fill="#64748B"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_6517_92346">
+                      <rect width="11.9599" height="12" fill="white"/>
+                      </clipPath>
+                      </defs>
+                      </svg>
+                      
+                      
+                      
+                  </button>
+              
+                  <button   (click)="paginator?.previousPage()" [disabled]="!paginator?.hasPreviousPage()" [ngClass]="{disable:!paginator?.hasPreviousPage()}">
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7.1297 0.0681483L1.14977 3.56815C1.07448 3.61217 1.01202 3.67522 0.968605 3.75102C0.925191 3.82682 0.902344 3.91272 0.902344 4.00015C0.902344 4.08757 0.925191 4.17347 0.968605 4.24927C1.01202 4.32508 1.07448 4.38813 1.14977 4.43215L7.1297 7.93215C7.20543 7.97649 7.29148 7.99999 7.37917 8.00029C7.46685 8.00059 7.55306 7.97767 7.62909 7.93385C7.70512 7.89003 7.76828 7.82685 7.81219 7.7507C7.8561 7.67455 7.87921 7.58813 7.87919 7.50015V0.500148C7.87921 0.412171 7.8561 0.325745 7.81219 0.249596C7.76828 0.173447 7.70512 0.110271 7.62909 0.0664472C7.55306 0.0226237 7.46685 -0.000295772 7.37917 2.8818e-06C7.29148 0.000301536 7.20543 0.0238079 7.1297 0.0681483Z" fill="#64748B"/>
+                      </svg>
+                      
+                  </button>
+                </div>
+        
+                
+            
+                <div class="d-flex gap-16">
+                  <button  (click)="paginator?.nextPage()" [disabled]="!paginator?.hasNextPage()" [ngClass]="{disable:!paginator?.hasNextPage()}">
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1.54217 0.0681483L7.52211 3.56815C7.59739 3.61217 7.65986 3.67522 7.70327 3.75102C7.74668 3.82682 7.76953 3.91272 7.76953 4.00015C7.76953 4.08757 7.74668 4.17347 7.70327 4.24927C7.65986 4.32508 7.59739 4.38813 7.52211 4.43215L1.54217 7.93215C1.46644 7.97649 1.38039 7.99999 1.29271 8.00029C1.20503 8.00059 1.11882 7.97767 1.04279 7.93385C0.966757 7.89003 0.903597 7.82685 0.859685 7.7507C0.815773 7.67455 0.792663 7.58813 0.792689 7.50015V0.500148C0.792663 0.412171 0.815773 0.325745 0.859685 0.249596C0.903597 0.173447 0.966757 0.110271 1.04279 0.0664472C1.11882 0.0226237 1.20503 -0.000295772 1.29271 2.8818e-06C1.38039 0.000301536 1.46644 0.0238079 1.54217 0.0681483Z" fill="#64748B"/>
+                      </svg>
+                      
+                  </button>
+              
+                  <button  (click)="paginator?.lastPage()" [disabled]="!paginator?.hasNextPage()" [ngClass]="{disable:!paginator?.hasNextPage()}">
+                    <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_6517_92355)">
+                      <path d="M3.01483 2.06815L8.99476 5.56815C9.07005 5.61217 9.13251 5.67522 9.17593 5.75102C9.21934 5.82682 9.24219 5.91272 9.24219 6.00015C9.24219 6.08757 9.21934 6.17347 9.17593 6.24927C9.13251 6.32508 9.07005 6.38813 8.99476 6.43215L3.01483 9.93215C2.9391 9.97649 2.85305 9.99999 2.76536 10.0003C2.67768 10.0006 2.59147 9.97767 2.51544 9.93385C2.43941 9.89003 2.37625 9.82685 2.33234 9.7507C2.28843 9.67455 2.26532 9.58813 2.26535 9.50015V2.50015C2.26532 2.41217 2.28843 2.32574 2.33234 2.2496C2.37625 2.17345 2.43941 2.11027 2.51544 2.06645C2.59147 2.02262 2.67768 1.9997 2.76536 2C2.85305 2.0003 2.9391 2.02381 3.01483 2.06815Z" fill="#64748B"/>
+                      <path d="M10.736 2C10.614 2.00002 10.4962 2.04498 10.405 2.12636C10.3138 2.20774 10.2555 2.31987 10.2412 2.4415L10.2377 2.5V9.5C10.2379 9.62744 10.2865 9.75002 10.3737 9.84268C10.4609 9.93535 10.58 9.99112 10.7068 9.99859C10.8336 10.0061 10.9585 9.96466 11.0559 9.88287C11.1533 9.80107 11.2159 9.68505 11.2309 9.5585L11.2344 9.5V2.5C11.2344 2.36739 11.1819 2.24021 11.0884 2.14645C10.995 2.05268 10.8682 2 10.736 2Z" fill="#64748B"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_6517_92355">
+                      <rect width="11.9599" height="12" fill="white" transform="matrix(-1 0 0 1 12.7305 0)"/>
+                      </clipPath>
+                      </defs>
+                      </svg>
+                      
+                  </button>
+                </div>
+        
+               
+                <div class="custom-page-number">
+                  {{(paginator?.pageIndex || 0) + 1}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+    </div>
+  </div>
+  
+  <!-- Rename Popup -->
+  <div class="rename-popup-overlay" *ngIf="showRenameDialog" (click)="cancelRename()">
+    <div class="rename-popup" (click)="$event.stopPropagation()" [style.left.px]="renamePopupPosition.x" [style.top.px]="renamePopupPosition.y">
+      <div class="rename-popup-header">
+        <h4>Rename Sheet</h4>
+      </div>
+      <div class="rename-popup-content">
+        <input type="text" 
+               [(ngModel)]="newSheetName" 
+               (keyup.enter)="saveRename()"
+               (keyup.escape)="cancelRename()"
+               #renameInput
+               placeholder="Enter sheet name"
+               class="rename-input">
+      </div>
+      <div class="rename-popup-actions">
+        <button class="btn-cancel" (click)="cancelRename()">Cancel</button>
+        <button class="btn-save" (click)="saveRename()" [disabled]="!newSheetName?.trim()">Save</button>
+      </div>
+    </div>
+  </div>
+  

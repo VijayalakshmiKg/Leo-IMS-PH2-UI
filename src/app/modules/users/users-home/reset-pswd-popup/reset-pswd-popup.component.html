@@ -1,0 +1,24 @@
+<div class="resetPswdContainer">
+    <header>
+        <h1>Reset password</h1>
+        <button class="common-btn" type="button" (click)="close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32"
+                viewBox="0 0 33 32" fill="none">
+                <path
+                    d="M10.3678 21.6354L21.6678 10.3353M21.6747 21.6286L10.361 10.3422"
+                    stroke="#64748B" stroke-width="1.49909"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+    </header>
+    <p class="contentMsg">John Paul will receive an email with instructions for
+        accessing a new password.</p>
+    <div class="d-flex gap-3">
+        <label for> Reset email address: </label> &nbsp;
+        <p class="emailAddress">{{data.email}}</p>
+    </div>
+    <div class="btnClass">
+        <button type="button" class="cancelBtn" (click)="close()">Cancel</button>
+        <button type="button" class="resetBtn bgColorCls" (click)="resetPswd()">Reset password</button>
+    </div>
+</div>

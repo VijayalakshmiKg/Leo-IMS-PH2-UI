@@ -1,0 +1,299 @@
+
+.generateBtn {
+    border-radius: 4px;
+    background: var(--Leo-Color, #2D2E83);
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border: none;
+    padding: 4px 16px 4px 12px;
+}
+.dash-header {
+    padding: 6px 2px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 1000;
+    position: sticky;
+    top: 40px;
+}
+
+::ng-deep .time-picker .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    padding-left: 10px !important;
+    width: 96px !important;
+}
+
+/* ::ng-deep  .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 2em !important;
+} */
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px !important;
+}
+
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon {
+    /* width: 1em; */
+    /* margin-top: -1px; */
+    width: 24px !important;
+}
+
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon,
+.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 2em;
+}
+
+/* ::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 10px !important;
+} */
+
+::ng-deep .time-picker .mat-form-field-flex {
+    display: inline-flex;
+    align-items: flex-end;
+    box-sizing: border-box;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+::ng-deep .time-picker .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    padding-left: 18px !important;
+    width: 75px !important;
+}
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+::ng-deep .time-picker .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0px;
+}
+
+.count-card {
+    display: flex;
+    /* width: 366.5px; */
+    height: 88px;
+    padding: 20px 16px 20px 20px;
+cursor: pointer;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    margin-right: 12px;
+}
+
+.count-card-last {
+    display: flex;
+    /* width: 380.5px; */
+    height: 88px;
+    padding: 20px 16px 20px 20px;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+}
+
+
+.card-heading {
+    color: var(--Slate-500, #64748B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.card-total {
+    color: var(--Slate-800, #1E293B);
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.overview-count {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+}
+.table-status-card {
+    display: flex;
+    height: 376px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+    background: #FFF;
+}
+.table-status-card-custom {
+    display: flex;
+    max-height: 376px;
+    overflow: auto;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    border: 0.8px solid #CBD5E1;
+    background: #FFF;
+}
+::ng-deep .table-search .mat-form-field-flex {
+    height: 21px;
+}
+
+::ng-deep .table-search .mat-form-field-appearance-legacy .mat-form-field-infix {
+    border-top: 0px !important;
+}
+::ng-deep .table-search mat-label {
+    color: var(--Slate-700, #334155); 
+    color: var(--Slate-600, #475569);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.plant-table-cards h4{
+    color: var(--Slate-800, #1E293B);
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 0.5px;
+  }
+
+  .clalanter-text {
+    color: var(--Slate-600, #475569);
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+cursor: pointer;
+}
+.exprt-btn {
+        padding: 4px 16px 4px 12px;
+       
+        border-radius: 4px;
+        background: var(--linear-Color, #283892);
+        color: var(--White, #FFF);
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        border-style: none;
+        height: 27px;
+
+}
+::ng-deep .quality-dashboard .mat-paginator-page-size {
+    display: none;
+    align-items: baseline;
+    margin-right: 8px;
+}
+::ng-deep .quality-dashboard .mat-paginator-icon {
+    width: 28px;
+    fill: currentColor;
+    border: 0.8px solid #CBD5E1;
+    border-radius: 4px;
+}
+.no-data-text {
+    color: #283892;
+font-family: BlinkMacSystemFont;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+}
+::ng-deep  .date-time-picker {
+    margin-top: -0.0625em;
+    color: var(--Slate-600, #475569);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    width: 0px;
+    visibility: hidden !important;
+    line-height: 22px;
+}
+::ng-deep .dashboard_title_dropdown .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0px;
+}
+
+.dashCards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    /* Adjust as needed for spacing between dashCardss */
+    justify-content: center;
+    /* Center the dashCardss horizontally */
+    margin-bottom: 12px;
+}
+
+.dashCards {
+    flex: 1 1 calc(25% - 16px);
+    /* Allow dashCardss to grow/shrink with a base width of 25% minus the gap */
+    /* max-width: 273.5px; */
+    min-width: 160px;
+    /* Minimum width for a dashCards */
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    padding: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+}
+.plant-table-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    /* Adjust as needed for spacing between dashCardss */
+    justify-content: center;
+    /* Center the dashCardss horizontally */
+    margin-bottom: 12px;
+}
+.plant-table-cards {
+    flex: 1 1 calc(25% - 16px);
+    /* Allow dashCardss to grow/shrink with a base width of 25% minus the gap */
+    /* max-width: 273.5px; */
+    height: 430px;
+    /* Minimum width for a dashCards */
+    border-radius: 4px;
+    border: 0.8px solid var(--Slate-300, #CBD5E1);
+    background: #FFF;
+    padding: 20px;
+    
+}
+.drowdown-search {
+    margin-left: 10px;
+    /* border-radius: 0 8px 8px 0; */
+    border-radius: 3px;
+    padding: 5px;
+    border-style: none;
+    border-radius: 6px;
+border: 1px solid var(--Slate-200, #E2E8F0);
+background: var(--Slate-100, #F1F5F9);
+}
+/* ::ng-deep .drowdown-search  {
+    position: absolute;
+} */
+ .search-icon {
+    position: relative !important;
+    /* left: -10px; */
+    right: 25px !important;
+}
+.table-status-card h4 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+

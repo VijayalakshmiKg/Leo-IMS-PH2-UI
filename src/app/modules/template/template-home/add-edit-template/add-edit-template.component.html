@@ -1,0 +1,725 @@
+<div class="addtemplate-container">
+  <form [formGroup]="templateForm">
+    <div
+      class="addtemplate-header d-flex justify-content-between align-items-center  ">
+      <div class="d-flex d-flex justify-content-between w-50  ">
+        <button class="cancel-btn common-btn" type="button" (click)="back()">
+          Cancel
+        </button>
+
+        <h4 class="mb-0">{{this.templateServ.editTemplateRecord ? 'Edit' :
+          'New'}} template</h4>
+      </div>
+
+      <!-- <button class="addBtn-users bgColorCls" type="button" mat-button [matMenuTriggerFor]="menu" *ngIf="this.templateServ.editTemplateRecord == null else Edit">
+               <div class="saveText">
+                {{saveBtnText}}
+               </div>
+
+               <div class="dropDownIcon">
+                <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+               </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="submit" (click)="onSubmitandClose()">Add and close</button>
+                <button mat-menu-item type="submit" (click)="onSubmitandAddAnother()">Save and add another</button>
+              </mat-menu>
+              <ng-template #Edit>
+                <button class="addBtn-users bgColorCls" type="button" mat-button  (click)="onSubmitandClose()" >
+                    Update
+                </button>
+            </ng-template> -->
+
+      <div class="d-flex gap-24">
+        <!-- <button class="addBtn-users bgColorCls" (click)="onSubmitandClose()"><svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
+                <path d="M0.621289 9.81285L4.11161 12.0919V15.901C4.09037 16.5863 4.9935 16.9688 5.47161 16.4641L7.57537 14.3603L10.5185 16.2835C10.6513 16.3685 10.8001 16.4163 10.9541 16.4163C11.2835 16.4163 11.5916 16.2038 11.7032 15.8957L16.6916 2.37003C16.7288 2.26381 16.7447 2.15224 16.7288 2.04598C16.7076 1.49349 16.0966 1.14816 15.5972 1.3766L0.716914 8.42629C0.164424 8.66536 0.105992 9.49942 0.621289 9.81285ZM12.1229 4.78724L5.68944 11.2207L2.68254 9.25504L12.1229 4.78724Z" fill="white"/>
+              </svg>  Save & Assign to driver</button> -->
+        <button class="addBtn-users bgColorCls"
+          (click)="saveUpdateTemplates()">{{saveBtnText}}</button>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="homeAddContainer  mt-3">
+
+        <div>
+          <h4 class="mb-0">Template details</h4>
+        </div>
+
+        <div class="addtemplate-bodyContent timeAndDateCls mt-0">
+          <div class="form-container">
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Template name <svg width="7" height="7"
+                    viewBox="0 0 7 7" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="templateName" placeholder />
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Date <svg width="7" height="7" viewBox="0 0 7 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <!-- <mat-select >
+                                      <mat-option *ngFor="let category of productCategories" [value]="category">
+                                        {{ category }}
+                                      </mat-option>
+                                    </mat-select> -->
+                  <input matInput [matDatepicker]="picker"
+                    formControlName="date" [min]="minDate">
+                  <mat-datepicker-toggle matSuffix
+                    [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="form-field">
+                <mat-label>Time <svg width="7" height="7" viewBox="0 0 7 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="time" [value]="formattedTime"
+                    (click)="openTimePicker('time')" readonly
+                    aria-label="select time">
+                  <mat-icon matSuffix
+                    (click)="openTimePicker('time')">access_time</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- <div class="form-row indicationContainer">
+              <div
+                class="d-flex justify-content-between align-items-center w-100">
+                <h4 class="mb-0">Repeat order</h4>
+
+                <mat-slide-toggle
+                  formControlName="repeatMode"></mat-slide-toggle>
+              </div>
+              <div class="w-100 indicationRepeat"
+                *ngIf="!templateForm.value.repeatMode ; else noRepeat">
+                <div>
+                  <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <rect y="0.615234" width="20" height="20" rx="10"
+                      fill="#5253AE" />
+                    <rect x="1.25" y="1.86523" width="17.5" height="17.5"
+                      rx="8.75" fill="black"
+                      fill-opacity="0.0241" />
+                    <rect x="0.625" y="1.24023" width="18.75" height="18.75"
+                      rx="9.375" stroke="black"
+                      stroke-opacity="0.0241" stroke-width="1.25" />
+                    <path
+                      d="M8.43994 5.61279C8.43994 5.40283 8.48145 5.20264 8.56445 5.01221C8.64746 4.82178 8.75977 4.65576 8.90137 4.51416C9.04297 4.37256 9.20654 4.26025 9.39209 4.17725C9.58252 4.09424 9.78516 4.05273 10 4.05273C10.21 4.05273 10.4102 4.09424 10.6006 4.17725C10.791 4.26025 10.957 4.37256 11.0986 4.51416C11.2402 4.65576 11.3525 4.82178 11.4355 5.01221C11.5186 5.20264 11.5601 5.40283 11.5601 5.61279C11.5601 5.82764 11.5186 6.03027 11.4355 6.2207C11.3525 6.41113 11.2402 6.57715 11.0986 6.71875C10.957 6.86035 10.791 6.97266 10.6006 7.05566C10.415 7.13867 10.2148 7.18018 10 7.18018C9.78516 7.18018 9.58252 7.13867 9.39209 7.05566C9.20654 6.97266 9.04297 6.86035 8.90137 6.71875C8.75977 6.57715 8.64746 6.41113 8.56445 6.2207C8.48145 6.03027 8.43994 5.82764 8.43994 5.61279ZM8.74756 15.6177V10.6152C8.74756 10.4443 8.7793 10.2832 8.84277 10.1318C8.91113 9.98047 9.00146 9.84863 9.11377 9.73633C9.23096 9.61914 9.36523 9.52881 9.5166 9.46533C9.66797 9.39697 9.8291 9.36279 10 9.36279C10.1709 9.36279 10.332 9.39697 10.4834 9.46533C10.6348 9.52881 10.7666 9.61914 10.8789 9.73633C10.9961 9.84863 11.0864 9.98047 11.1499 10.1318C11.2183 10.2832 11.2524 10.4443 11.2524 10.6152V15.6177C11.2524 15.7886 11.2183 15.9497 11.1499 16.1011C11.0864 16.2524 10.9961 16.3843 10.8789 16.4966C10.7666 16.6089 10.6348 16.6992 10.4834 16.7676C10.332 16.8311 10.1709 16.8628 10 16.8628C9.8291 16.8628 9.66797 16.8311 9.5166 16.7676C9.36523 16.6992 9.23096 16.6089 9.11377 16.4966C9.00146 16.3843 8.91113 16.2524 8.84277 16.1011C8.7793 15.9497 8.74756 15.7886 8.74756 15.6177Z"
+                      fill="white" />
+                  </svg>
+
+                </div>
+
+                <p class="mb-0">
+                  The scheduled template will continue to repeat until you turn
+                  off the repeat order option for this
+                  specific template
+                </p>
+
+              </div>
+
+              <ng-template #noRepeat>
+                <div>
+                  <mat-label>Repeat on</mat-label>
+
+                  <div class="days-container">
+                    <div *ngFor="let day of days" class="day"
+                      [class.selected]="isDaySelected(day.index)"
+                      (click)="toggleDaySelection(day.index)">
+                      {{ day.name }}
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+            </div> -->
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="homeAddContainer mt-3">
+        <div>
+          <h4 class="mb-0"> Movement document </h4>
+        </div>
+
+        <div class="addtemplate-bodyContent mt-0">
+          <div class="form-container">
+            <div class="form-row">
+
+              <div class="form-field">
+                <mat-label>Supplier <svg width="7" height="7" viewBox="0 0 7 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <!-- <mat-select formControlName="consigner">
+                    <mat-option *ngFor="let category of consigners" [value]="category.consignorName">
+                      {{ category.consignorName }}
+                    </mat-option>
+                  </mat-select> -->
+                  <input type="text" placeholder aria-label="Number" matInput
+                    formControlName="consigner"
+                    [matAutocomplete]="auto"
+                    (keyup)="getConsignorDetailsBySearch($event.target)">
+                  <mat-autocomplete autoActiveFirstOption
+                    #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of consigners "
+                      [value]="option.consignorName"
+                      (click)="onConsignorSelect(option)">
+                      {{option.consignorName}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon matSuffix><svg xmlns="http://www.w3.org/2000/svg"
+                      width="20" height="21" viewBox="0 0 20 21" fill="none">
+                      <path
+                        d="M9.16724 16.4497C12.8495 16.4497 15.8345 13.4647 15.8345 9.78247C15.8345 6.10026 12.8495 3.11523 9.16724 3.11523C5.48502 3.11523 2.5 6.10026 2.5 9.78247C2.5 13.4647 5.48502 16.4497 9.16724 16.4497Z"
+                        stroke="#6B6B6B" stroke-width="1.66678"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M17.5007 18.1179L13.875 14.4922" stroke="#6B6B6B"
+                        stroke-width="1.66678" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg></mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <p *ngIf="consignorAddress">{{consignorAddress?.address1 || ''}}
+              <span *ngIf="consignorAddress.city">, </span>
+              {{consignorAddress?.city || ''}}<span
+                *ngIf="consignorAddress.city">, </span>{{consignorAddress?.state
+              || ''}} {{consignorAddress?.pincode || ''}}<span
+                *ngIf="consignorAddress.pincode">,
+              </span>{{consignorAddress?.country || ''}}</p>
+
+            <div class="form-row">
+
+              <div class="form-field">
+                <mat-label>Consignee <svg width="7" height="7" viewBox="0 0 7 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <!-- <mat-select formControlName="consignee" >
+                                  <mat-option *ngFor="let category of consignees" [value]="category.consigneeName">
+                                    {{ category.consigneeName }}
+                                  </mat-option>
+                                </mat-select> -->
+                  <input type="text" placeholder aria-label="Number" matInput
+                    formControlName="consignee"
+                    [matAutocomplete]="auto1"
+                    (keyup)="getConsigneeDetailsBySearch($event.target)">
+                  <mat-autocomplete autoActiveFirstOption
+                    #auto1="matAutocomplete">
+                    <mat-option *ngFor="let option of consignees "
+                      [value]="option.consigneeName"
+                      (click)="onConsigneeSelect(option)">
+                      {{option.consigneeName}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon matSuffix><svg xmlns="http://www.w3.org/2000/svg"
+                      width="20" height="21" viewBox="0 0 20 21" fill="none">
+                      <path
+                        d="M9.16724 16.4497C12.8495 16.4497 15.8345 13.4647 15.8345 9.78247C15.8345 6.10026 12.8495 3.11523 9.16724 3.11523C5.48502 3.11523 2.5 6.10026 2.5 9.78247C2.5 13.4647 5.48502 16.4497 9.16724 16.4497Z"
+                        stroke="#6B6B6B" stroke-width="1.66678"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M17.5007 18.1179L13.875 14.4922" stroke="#6B6B6B"
+                        stroke-width="1.66678" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg></mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <p *ngIf="consigneeAddress">{{consigneeAddress?.address1 || ''}}
+              <span *ngIf="consigneeAddress.city">, </span>
+              {{consigneeAddress?.city || ''}}<span
+                *ngIf="consigneeAddress.state">,
+              </span>{{consigneeAddress?.state || ''}}
+              {{consigneeAddress?.pincode || ''}}<span
+                *ngIf="consigneeAddress.country">,
+              </span>{{consigneeAddress?.country || ''}}</p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="homeAddContainer  mt-3">
+
+        <div>
+          <h4 class="mb-0">Product</h4>
+        </div>
+
+        <div class="addtemplate-bodyContent mt-0">
+          <div class="form-container">
+
+            <div class="form-row">
+
+              <div class="form-field">
+                <mat-label>Product name <svg width="7" height="7"
+                    viewBox="0 0 7 7" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <!-- <mat-select formControlName="materialTYpe">
+                    <mat-option *ngFor="let category of materialTypes" [value]="category.productCategory">
+                      {{ category.productCategory }}
+                    </mat-option>
+                  </mat-select> -->
+                  <input type="text" placeholder aria-label="Number" matInput
+                    formControlName="materialTYpe"
+                    [matAutocomplete]="auto2"
+                    (keyup)="getMaterialDetailsBySearch($event.target)">
+                  <mat-autocomplete autoActiveFirstOption
+                    #auto2="matAutocomplete">
+                    <mat-option *ngFor="let option of materialTypes "
+                      [value]="option.materialType"
+                      (click)="onMaterialSelect(option)">
+                      {{option.materialName}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon matSuffix><svg xmlns="http://www.w3.org/2000/svg"
+                      width="20" height="21" viewBox="0 0 20 21" fill="none">
+                      <path
+                        d="M9.16724 16.4497C12.8495 16.4497 15.8345 13.4647 15.8345 9.78247C15.8345 6.10026 12.8495 3.11523 9.16724 3.11523C5.48502 3.11523 2.5 6.10026 2.5 9.78247C2.5 13.4647 5.48502 16.4497 9.16724 16.4497Z"
+                        stroke="#6B6B6B" stroke-width="1.66678"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M17.5007 18.1179L13.875 14.4922" stroke="#6B6B6B"
+                        stroke-width="1.66678" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <!-- <div class="form-field">
+                <mat-label>Quantity</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="quantity" placeholder="" appNumberOnly />
+                  <div class="suffixTextCls" matSuffix>pieces</div>
+                </mat-form-field>
+              </div> -->
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <mat-label>Product Quantity <svg width="7" height="7"
+                    viewBox="0 0 7 7" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                      fill="#FF1F00" />
+                  </svg></mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="trailerQuantity" placeholder
+                    appNumberOnly />
+                  <div class="suffixTextCls" matSuffix>kg</div>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <mat-label>Notes</mat-label>
+              <mat-form-field appearance="outline"
+                class="description-field w-100">
+                <textarea matInput formControlName="notes"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- <div class="homeAddContainer  mt-3">
+
+        <div>
+          <h4 class="mb-0">Vehicle & driver <svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+              fill="#FF1F00" />
+          </svg></h4>
+        </div>
+
+        <div class="addtemplate-bodyContent mt-0">
+          <div class="form-container">
+
+            <div class="form-row">
+              <button type="button" class="inputLikeBtn" (click)="addVicheclsAndDrivers()"><svg width="20" height="20"
+                  viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_2650_5066)">
+                    <path
+                      d="M17.1349 5.48206H12.6328V13.7941H14.3715H14.3928L14.3949 13.8152C14.4896 14.791 15.3122 15.5532 16.3127 15.5532C17.3131 15.5532 18.1351 14.791 18.2298 13.8152L18.2319 13.794H18.2531H19.206C19.6313 13.794 19.9785 13.4456 19.9785 13.0215H20.002L19.9785 13.0215V13.0214V13.0214V13.0212V13.0211V13.0209V13.0207V13.0205V13.0203V13.02V13.0197V13.0193V13.0189V13.0185V13.0181V13.0176V13.0171V13.0166V13.0161V13.0155V13.0149V13.0142V13.0136V13.0129V13.0122V13.0114V13.0106V13.0098V13.009V13.0081V13.0072V13.0063V13.0054V13.0044V13.0034V13.0024V13.0013V13.0003V12.9991V12.998V12.9969V12.9957V12.9945V12.9932V12.992V12.9907V12.9894V12.988V12.9867V12.9853V12.9838V12.9824V12.9809V12.9794V12.9779V12.9764V12.9748V12.9732V12.9716V12.97V12.9683V12.9666V12.9649V12.9632V12.9614V12.9596V12.9578V12.956V12.9541V12.9522V12.9503V12.9484V12.9465V12.9445V12.9425V12.9405V12.9385V12.9364V12.9343V12.9322V12.9301V12.9279V12.9258V12.9236V12.9213V12.9191V12.9169V12.9146V12.9123V12.91V12.9076V12.9052V12.9029V12.9005V12.898V12.8956V12.8931V12.8906V12.8881V12.8856V12.883V12.8805V12.8779V12.8753V12.8727V12.87V12.8674V12.8647V12.862V12.8592V12.8565V12.8537V12.851V12.8482V12.8454V12.8425V12.8397V12.8368V12.8339V12.831V12.8281V12.8251V12.8222V12.8192V12.8162V12.8132V12.8102V12.8071V12.8041V12.801V12.7979V12.7948V12.7917V12.7885V12.7854V12.7822V12.779V12.7758V12.7725V12.7693V12.766V12.7628V12.7595V12.7562V12.7529V12.7495V12.7462V12.7428V12.7394V12.7361V12.7327V12.7292V12.7258V12.7223V12.7189V12.7154V12.7119V12.7084V12.7049V12.7014V12.6978V12.6943V12.6907V12.6871V12.6835V12.6799V12.6763V12.6726V12.669V12.6653V12.6616V12.658V12.6543V12.6505V12.6468V12.6431V12.6393V12.6356V12.6318V12.628V12.6242V12.6204V12.6166V12.6128V12.609V12.6051V12.6013V12.5974V12.5935V12.5896V12.5857V12.5818V12.5779V12.574V12.57V12.5661V12.5621V12.5582V12.5542V12.5502V12.5462V12.5422V12.5382V12.5342V12.5301V12.5261V12.522V12.518V12.5139V12.5099V12.5058V12.5017V12.4976V12.4935V12.4894V12.4853V12.4811V12.477V12.4729V12.4687V12.4646V12.4604V12.4562V12.4521V12.4479V12.4437V12.4395V12.4353V12.4311V12.4269V12.4227V12.4184V12.4142V12.41V12.4057V12.4015V12.3972V12.393V12.3887V12.3845V12.3802V12.3759V12.3716V12.3673V12.3631V12.3588V12.3545V12.3502V12.3459V12.3416V12.3372V12.3329V12.3286V12.3243V12.32V12.3156V12.3113V12.307V12.3026V12.2983V12.2939V12.2896V12.2852V12.2809V12.2765V12.2722V12.2678V12.2635V12.2591V12.2548V12.2504V12.246V12.2417V12.2373V12.2329V12.2286V12.2242V12.2198V12.2154V12.2111V12.2067V12.2023V12.198V12.1936V12.1892V12.1848V12.1805V12.1761V12.1717V12.1674V12.163V12.1586V12.1542V12.1499V12.1455V12.1411V12.1368V12.1324V12.1281V12.1237V12.1193V12.115V12.1106V12.1063V12.1019V12.0976V12.0932V12.0889V12.0845V12.0802V12.0759V12.0715V12.0672V12.0629V12.0586V12.0542V12.0499V12.0456V12.0413V12.037V12.0327V12.0284V12.0241V12.0198V12.0155V12.0113V12.007V12.0027V11.9984V11.9942V11.9899V11.9857V11.9814V11.9772V11.973V11.9687V11.9645V11.9603V11.9561V11.9519V11.9477V11.9435V11.9393V11.9351V11.9309V11.9268V11.9226V11.9184V11.9143V11.9102V11.906V11.9019V11.8978V11.8937V11.8896V11.8855V11.8814V11.8773V11.8732V11.8692V11.8651V11.8611V11.857V11.853V11.849V11.845V11.841V11.837V11.833V11.829V11.825V11.8211V11.8171V11.8132V11.8093V11.8053V11.8014V11.7975V11.7936V11.7898V11.7859V11.782V11.7782V11.7743V11.7705V11.7667V11.7629V11.7591V11.7553V11.7516V11.7478V11.7441V11.7403V11.7366V11.7329V11.7292V11.7255V11.7218V11.7182V11.7145V11.7109V11.7073V11.7036V11.7V11.6965V11.6929V11.6893V11.6858V11.6822V11.6787V11.6752V11.6717V11.6682V11.6648V11.6613V11.6579V11.6545V11.6511V11.6477V11.6443V11.6409V11.6376V11.6343V11.6309V11.6276V11.6243V11.6211V11.6178V11.6146V11.6113V11.6081V11.6049V11.6018V11.5986V11.5955V11.5923V11.5892V11.5861V11.583V11.58V11.5769V11.5739V11.5709V11.5679V11.5649V11.562V11.559V11.5561V11.5532V11.5503V11.5474V11.5446V11.5417V11.5389V11.5361V11.5333V11.5306V11.5278V11.5251V11.5224V11.5197V11.5171V11.5144V11.5118V11.5092V11.5066V11.504V11.5015V11.499V11.4964V11.494V11.4915V11.489V11.4866V11.4842V11.4818V11.4795V11.4771V11.4748V11.4725V11.4702V11.468V11.4657V11.4635V11.4613V11.4591V11.457V11.4549V11.4527V11.4507V11.4486V11.4466V11.4445V11.4426V11.4406V11.4386V11.4367V11.4348V11.4329V11.4311V11.4292V11.4274V11.4256V11.4239V11.4221V11.4204V11.4187V11.4171V11.4154V11.4138V11.4122V11.4107C19.9785 11.148 19.885 10.5932 19.7417 10.2521L19.7417 10.2521L19.7412 10.2508L18.2891 6.16772C18.187 5.98066 18.0064 5.80919 17.7965 5.68432C17.5861 5.55909 17.3485 5.48206 17.1349 5.48206ZM13.5015 6.49632V6.47289L13.525 6.47289L16.7387 6.47293C16.8284 6.47293 16.9425 6.51556 17.0429 6.57525C17.1433 6.63495 17.2353 6.71483 17.2782 6.79406L17.2785 6.79387L17.2799 6.79794L18.193 9.59541L18.203 9.62612H18.1707H13.525H13.5015V9.60268V6.49632ZM17.3115 13.6258C17.3115 14.1771 16.864 14.6247 16.3127 14.6247C15.7607 14.6247 15.3138 14.1771 15.3138 13.6258C15.3138 13.0744 15.7607 12.6281 16.3127 12.6281C16.8639 12.6281 17.3115 13.0745 17.3115 13.6258Z"
+                      fill="#475569" stroke="#6B6B6B" stroke-width="0.046875" />
+                    <path
+                      d="M5.72338 13.8152L5.72542 13.794H5.74672H11.4702V4.44678H0.0238018V13.794H1.86517H1.88642L1.8885 13.8152C1.98437 14.7909 2.80577 15.5532 3.80686 15.5532C4.80735 15.5532 5.62991 14.7909 5.72338 13.8152ZM4.8057 13.6258C4.8057 14.1771 4.35813 14.6246 3.80682 14.6246C3.25492 14.6246 2.80795 14.1771 2.80795 13.6258C2.80795 13.0744 3.25492 12.6281 3.80682 12.6281C4.3581 12.6281 4.8057 13.0744 4.8057 13.6258Z"
+                      fill="#475569" stroke="#6B6B6B" stroke-width="0.046875" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_2650_5066">
+                      <rect width="20.0017" height="20.0017" fill="white"
+                        transform="matrix(-1 0 0 1 20.002 -0.000854492)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                {{this.templateForm.get('vechile')?.value?.vechicleNumber || ''}}
+              </button>
+              <button type="button" class="inputLikeBtn" (click)="addVicheclsAndDrivers()">
+                <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="1.72357" cy="1.72357" r="1.32858" transform="matrix(-1 0 0 1 10.1104 11.6586)"
+                    stroke="#475569" stroke-width="0.789968" />
+                  <circle cx="1.72357" cy="1.72357" r="1.32858" transform="matrix(-1 0 0 1 5.49268 11.6586)"
+                    stroke="#475569" stroke-width="0.789968" />
+                  <path d="M17.8501 0.999146V9.8253H0.333582V0.999146H17.8501Z" fill="#475569" />
+                  <path
+                    d="M0.333582 10.7758H17.8501V13.1521H10.4497L10.4231 12.9394C10.3958 12.7205 10.3331 12.5075 10.2377 12.3087C9.56754 10.9125 7.64825 10.7405 6.74054 11.9953L6.66959 12.0934C6.52042 12.2996 6.40969 12.531 6.34272 12.7766L6.24031 13.1521H5.90085L5.62927 12.4052C4.90944 10.8548 2.72247 10.8076 1.93641 12.3255L1.89513 12.4052L1.62356 13.0842H0.333582V10.7758Z"
+                    fill="#475569" />
+                  <path d="M17.8501 0.999146V9.8253H0.333582V0.999146H17.8501Z" stroke="#475569"
+                    stroke-width="0.135787" />
+                  <path
+                    d="M0.333582 10.7758H17.8501V13.1521H10.4497L10.4231 12.9394C10.3958 12.7205 10.3331 12.5075 10.2377 12.3087C9.56754 10.9125 7.64825 10.7405 6.74054 11.9953L6.66959 12.0934C6.52042 12.2996 6.40969 12.531 6.34272 12.7766L6.24031 13.1521H5.90085L5.62927 12.4052C4.90944 10.8548 2.72247 10.8076 1.93641 12.3255L1.89513 12.4052L1.62356 13.0842H0.333582V10.7758Z"
+                    stroke="#475569" stroke-width="0.135787" />
+                </svg>
+                {{this.templateForm.get('triler')?.value?.trailerNumber || ''}}
+              </button>
+              <button type="button" class="inputLikeBtn" (click)="addVicheclsAndDrivers()">
+                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M13.5012 6.66638C13.5012 8.23135 12.2326 9.5 10.6676 9.5C9.10264 9.5 7.83398 8.23135 7.83398 6.66638C7.83398 5.10142 9.10264 3.83276 10.6676 3.83276C12.2326 3.83276 13.5012 5.10142 13.5012 6.66638Z"
+                    fill="#475569" stroke="#475569" />
+                  <path
+                    d="M16.8345 15.8338V16.6672C16.8345 16.7556 16.7993 16.8404 16.7368 16.903C16.6743 16.9655 16.5895 17.0006 16.5011 17.0006H4.8334C4.74498 17.0006 4.66018 16.9655 4.59765 16.903C4.53513 16.8404 4.5 16.7556 4.5 16.6672V15.8338C4.5 14.6402 4.97415 13.4955 5.81815 12.6515C6.66214 11.8075 7.80684 11.3334 9.00043 11.3334H12.334C13.5276 11.3334 14.6723 11.8075 15.5163 12.6515C16.3603 13.4955 16.8345 14.6402 16.8345 15.8338Z"
+                    fill="#475569" stroke="#475569" />
+                </svg>
+                {{this.templateForm.get('driver')?.value?.firstName || ''}} {{this.templateForm.get('driver')?.value?.lastName || ''}}
+              </button>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+      </div> -->
+      <!-- <div class="homeAddContainer  mt-3">
+
+              <div>
+                  <h4 class="mb-0">Weight</h4>
+              </div>
+
+              <div class="addtemplate-bodyContent mt-0">
+                  <div class="form-container">
+
+                          <div class="form-row">
+                            
+                            
+                            <div class="col-5 d-flex flex-column">
+                              <mat-label>Gross weight <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input matInput formControlName="grossWeight" placeholder="" type="number" appNumberOnly  />
+                              <div class="suffixTextCls" matSuffix>Kg</div>
+                            </mat-form-field>
+                          </div>
+                            
+                            <div class="col-5 d-flex flex-column">
+                              <mat-label>Template date & time <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input matInput formControlName="grossDateTime" placeholder=""  />
+                            </mat-form-field>
+                          </div>
+                            <div class="col-2 text-right d-flex align-items-end justify-content-end">
+                                <div class="wieght-texts-lable">{{this.templateForm.value.grossWeight ||  '0.00'}}</div>
+                          </div>
+                            </div>
+                          <div class="form-row">
+                            
+                            
+                            <div class="col-5 d-flex flex-column">
+                              <mat-label>Tare weight <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input matInput formControlName="tareWeight" placeholder="" type="number"  appNumberOnly />
+                              <div class="suffixTextCls" matSuffix>Kg</div>
+                            </mat-form-field>
+                          </div>
+                            
+                            <div class="col-5 d-flex flex-column">
+                              <mat-label>Template date & time <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span></mat-label>
+                            <mat-form-field appearance="outline" class="w-100">
+                              <input matInput formControlName="tareWeightDateTime" placeholder=""  />
+                            </mat-form-field>
+                          </div>
+                            <div class="col-2 text-right d-flex align-items-end justify-content-end">
+                                <div class="wieght-texts-lable">{{this.templateForm.value.tareWeight || '0.00'}}</div>
+                          </div>
+                            </div>
+                          
+                         
+                          
+                      
+                         
+                      
+                         
+                  </div>
+              </div>
+
+              <div class="homeAddContainer-footer">
+                <h3 class="mb-0">Net weight</h3>
+                <p>{{(this.templateForm.value.grossWeight) + (this.templateForm.value.tareWeight) || '0.00'}}</p>
+            </div>
+
+          </div> -->
+
+      <!-- <div class="homeAddContainer  mt-3">
+
+            <div>
+                <h4 class="mb-0">Temperature & Water</h4>
+            </div>
+
+            <div class="addtemplate-bodyContent mt-0">
+                <div class="form-container">
+
+                        <div class="form-row">
+                          
+                          <div class="form-field">
+                            <mat-label>Temperature</mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="temperature" placeholder=""  />
+                            <div class="suffixTextCls" matSuffix>°C</div>
+                          </mat-form-field>
+                        </div>
+                          <div class="form-field">
+                            <mat-label>Water</mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="water" placeholder=""  />
+                            <div class="suffixTextCls" matSuffix>%</div>
+                          </mat-form-field>
+                        </div>
+                          </div>
+                        <div class="form-row">
+                          
+                          <div class="form-field">
+                            <mat-label>Total water</mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="totalWater" placeholder=""  />
+                            <div class="suffixTextCls" matSuffix>pieces</div>
+                          </mat-form-field>
+                        </div>
+                          <div class="form-field">
+                            <mat-label>Net without water</mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="netWater" placeholder=""  />
+                            <div class="suffixTextCls" matSuffix>pieces</div>
+                          </mat-form-field>
+                        </div>
+                          </div>
+
+                        <div class="form-row">
+                            <mat-label>Notes</mat-label>
+                            <mat-form-field appearance="outline" class="description-field w-100">
+                            <textarea matInput formControlName="temperatureNotes" ></textarea>
+                          </mat-form-field>
+                        </div>
+                </div>
+            </div>
+
+        </div> -->
+      <!-- <div class="homeAddContainer  mt-3">
+
+            <div>
+                <h4 class="mb-0">Shunter driver</h4>
+            </div>
+
+            <div class="addtemplate-bodyContent mt-0">
+                <div class="form-container">
+
+                        <div class="form-row">
+                          
+                          <div class="form-field">
+                            <mat-label>Name  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                            <mat-form-field appearance="outline">
+                              <mat-select formControlName="shuntDriverName" >
+                                <mat-option *ngFor="let category of shunterDrivers" [value]="category.name" (click)="selectedShunterDriver(category)">
+                                  {{ category.name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                          <div class="form-field">
+                            <mat-label>Reg no  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                            <mat-form-field appearance="outline">
+                              <mat-select formControlName="regNo" >
+                                <mat-option *ngFor="let category of shunterDrivers" [value]="category.regNo">
+                                  {{ category.regNo }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                          </div>
+                        <div class="form-row">
+                          
+                          <div class="form-field">
+                            <mat-label>Vehicle type  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                            <mat-form-field appearance="outline">
+                              <mat-select formControlName="vehicleType" >
+                                <mat-option *ngFor="let category of shunterDrivers" [value]="category.vehicleType">
+                                  {{ category.vehicleType }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                          <div class="form-field">
+                            <mat-label>Vehicle no  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                            <mat-form-field appearance="outline">
+                              <mat-select formControlName="vehicleNo" >
+                                <mat-option *ngFor="let category of shunterDrivers" [value]="category.vehicleNumber">
+                                  {{ category.vehicleNumber }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                          </div>
+                        <div class="form-row">
+                          
+                          <div class="form-field">
+                            <mat-label>Bin no  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="binNo" placeholder=""  />
+                          </mat-form-field>
+                        </div>
+                          <div class="form-field">
+                            <mat-label>Bin name  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="binName" placeholder=""  />
+                          </mat-form-field>
+                        </div>
+                          </div>
+                        <div class="form-row">
+                          <div class="form-field">
+                            <mat-label>Pickup point  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                          <mat-form-field appearance="outline">
+                            <input matInput formControlName="pickupPoint" placeholder=""  />
+                          </mat-form-field>
+                        </div>
+                          </div>
+
+                        <div class="form-row">
+                            <mat-label>Add pickup information to Shunter Driver  <span><svg width="7" height="7" viewBox="0 0 7 7" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.192 1.28L6.768 2.32L4.544 3.248L6.784 4.16L6.176 5.232L4.24 3.824L4.496 6.24H3.296L3.536 3.824L1.6 5.248L0.976 4.16L3.2 3.232L0.976 2.336L1.568 1.264L3.552 2.688L3.296 0.256H4.512L4.24 2.688L6.192 1.28Z"
+                                fill="#FF1F00" />
+                        </svg>
+                    </span> </mat-label>
+                            <mat-form-field appearance="outline" class="description-field w-100">
+                            <textarea matInput formControlName="infoShunterDriver" ></textarea>
+                          </mat-form-field>
+                        </div>
+                </div>
+            </div>
+
+        </div> -->
+    </div>
+  </form>
+</div>

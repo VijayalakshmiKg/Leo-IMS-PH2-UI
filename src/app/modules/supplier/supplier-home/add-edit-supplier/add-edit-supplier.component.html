@@ -1,0 +1,154 @@
+<div class="addsupplier-container">
+    <form [formGroup]="supplierForm" >
+        <div class="addsupplier-header d-flex justify-content-between align-items-center  ">
+            <button class="cancel-btn common-btn" type="button" (click)="back()">
+                Cancel
+            </button>
+
+            <h4 class="mb-0">New supplier</h4>
+
+            <button class="addBtn-users bgColorCls" type="button" mat-button [matMenuTriggerFor]="menu" *ngIf="this.supplierServ.editSupplierRecord == null else Edit">
+               <div class="saveText">
+                {{saveBtnText}}
+               </div>
+
+               <div class="dropDownIcon">
+                <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.5 1L5.5 5L9.5 1" stroke="white" stroke-width="1.12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+               </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="submit" (click)="onSubmitandClose()">Add and close</button>
+                <button mat-menu-item type="submit" (click)="onSubmitandAddAnother()">Save and add another</button>
+              </mat-menu>
+              <ng-template #Edit>
+                <button class="addBtn-users bgColorCls" type="button" mat-button  (click)="onSubmitandClose()" >
+                    Update
+                </button>
+            </ng-template>
+        </div>
+
+
+        <div class="container">
+            
+
+            <div class="homeAddContainer  mt-3">
+
+                <div>
+                    <h4 class="mb-0">Supplier details</h4>
+                </div>
+
+                <div class="addsupplier-bodyContent mt-0">
+                    <div class="form-container">
+
+                            <div class="form-row">
+                              <div class="form-field">
+                                  <mat-label>Supplier name</mat-label>
+                                <mat-form-field appearance="outline">
+                                  <input matInput formControlName="supplierName" placeholder="" required />
+                                </mat-form-field>
+                              </div>
+                        
+                            </div>
+                       
+                    
+                        
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <mat-label>Mobile number</mat-label>
+                                  <mat-form-field appearance="outline" class="volume-field">
+                                    <input matInput formControlName="mobileNumber" placeholder="" appNumberOnly />
+                                  </mat-form-field>
+                                </div>
+                              <div class="form-field">
+                                  <mat-label>Email address</mat-label>
+                                <mat-form-field appearance="outline" class="volume-field">
+                                  <input matInput formControlName="email" placeholder="" type="email" />
+                                </mat-form-field>
+                              </div>
+                             
+                            </div>
+                            <div class="form-row">
+                              <div class="form-field">
+                                  <mat-label>VAT no</mat-label>
+                                <mat-form-field appearance="outline" class="volume-field">
+                                  <input matInput formControlName="vatNo" placeholder="" type="email" />
+                                </mat-form-field>
+                              </div>
+                              <div class="form-field">
+                                  <mat-label>UTR no</mat-label>
+                                <mat-form-field appearance="outline" class="volume-field">
+                                  <input matInput formControlName="utrNO" placeholder="" appNumberOnly />
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-field">
+                                  <mat-label>Opening balance (to pay)</mat-label>
+                                <mat-form-field appearance="outline" class="volume-field">
+                                  <input matInput formControlName="balancePay" placeholder="" type="email" />
+                                </mat-form-field>
+                              </div>
+                              <div class="form-field">
+                                  <mat-label>Opening balance date</mat-label>
+                                <mat-form-field appearance="outline" class="volume-field">
+                                  <!-- <input matInput formControlName="balanceDate" placeholder="" appNumberOnly /> -->
+                                  <input matInput [matDatepicker]="picker" formControlName="balanceDate">
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            
+                        
+                           
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="homeAddContainer  mt-3">
+
+                <div>
+                    <h4 class="mb-0">Address details</h4>
+                </div>
+
+                <div class="addsupplier-bodyContent mt-0">
+                    <div class="form-container">
+
+                            <div class="form-row">
+                              <div class="form-field">
+                                  <mat-label>Supplier address</mat-label>
+                                <mat-form-field appearance="outline">
+                                  <input matInput formControlName="supplierAddress" placeholder="" required />
+                                </mat-form-field>
+                              </div>
+                             
+                            </div>
+
+                            <div class="d-flex gap-8  ">
+                  <mat-checkbox formControlName="sameAsBillingAddress"></mat-checkbox>
+
+                               <!-- <input type="checkbox" formControlName="sameAsBillingAddress"> -->
+                               <span>Copy supplier address</span>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-field">
+                                  <mat-label>Billing address</mat-label>
+                                <mat-form-field appearance="outline">
+                                  <input matInput formControlName="billingAddress" placeholder=""  />
+                                </mat-form-field>
+                              </div>
+                             
+                            </div>
+                        
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

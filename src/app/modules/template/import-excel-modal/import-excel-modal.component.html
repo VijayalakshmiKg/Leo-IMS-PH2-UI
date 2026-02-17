@@ -1,0 +1,138 @@
+<div class="import-modal-overlay" (click)="closeModal()">
+  <div class="import-modal-container" (click)="$event.stopPropagation()">
+    <!-- Modal Header -->
+    <div class="import-modal-header">
+      <h3 class="modal-title">Import template</h3>
+      <button class="close-btn" (click)="closeModal()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1L1 13M1 1L13 13" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="import-modal-body">
+      <!-- Loading Overlay -->
+      <div class="loading-overlay" *ngIf="isProcessing">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p class="loading-message">{{processingMessage}}</p>
+        </div>
+      </div>
+
+      <!-- Load Existing Template Section -->
+      <div class="load-template-section" *ngIf="availableTemplates && availableTemplates.length > 0">
+        <div class="section-header">
+          <p class="section-title">Load existing template</p>
+          <p class="section-subtitle">Select a saved template to load into the grid</p>
+        </div>
+        
+        <div class="template-select-container">
+          <select 
+            [(ngModel)]="selectedTemplateId" 
+            (change)="onExistingTemplateSelect()"
+            class="template-select"
+            [disabled]="isProcessing">
+            <option value="">-- Select a template --</option>
+            <option *ngFor="let template of availableTemplates" [value]="template.value">
+              {{template.name}}
+            </option>
+          </select>
+        </div>
+        
+        <div class="divider-with-text">
+          <span>OR</span>
+        </div>
+      </div>
+
+      <!-- File Upload Area -->
+      <div class="upload-area" 
+           [class.dragover]="isDragOver"
+           [class.disabled]="isProcessing"
+           (dragover)="onDragOver($event)" 
+           (dragleave)="onDragLeave($event)" 
+           (drop)="onDrop($event)"
+           style="cursor: pointer;">
+        
+        <div class="upload-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 20L24 16M24 16L20 20M24 16V32M40 24C40 32.8366 32.8366 40 24 40C15.1634 40 8 32.8366 8 24C8 15.1634 15.1634 8 24 8C32.8366 8 40 15.1634 40 24Z" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        
+        <div class="upload-text" (click)="triggerFileInput()" style="cursor: pointer;">
+          <p class="drag-text">Drag and drop files</p>
+          <p class="upload-instruction">Upload the Excel template you downloaded here</p>
+        </div>
+        
+        <button type="button" class="upload-btn" (click)="triggerFileInput()">
+          Upload file
+        </button>
+        
+        <input 
+          #fileInput 
+          type="file" 
+          hidden 
+          accept=".xlsx,.xls,.csv" 
+          (change)="onFileSelect($event)"
+          multiple="false">
+      </div>
+
+      <!-- File Format Warning -->
+      <div class="format-warning">
+        <div class="warning-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 1.33337L14.6667 14.6667H1.33337L8 1.33337Z" stroke="#F59E0B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 6V8.66667" stroke="#F59E0B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 11.3333H8.00667" stroke="#F59E0B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="warning-text">Please note that you are allowed to upload just a single file at any given moment.</p>
+      </div>
+
+      <!-- Uploaded File Display -->
+      <div class="uploaded-file" *ngIf="uploadedFile">
+        <div class="file-info">
+          <div class="file-details">
+            <p class="file-name">{{uploadedFile.name}}</p>
+            <p class="file-size">{{getFileSize(uploadedFile.size)}}</p>
+            <p class="file-sheets" *ngIf="totalSheets > 0">
+              <span class="sheets-badge">{{totalSheets}} sheet(s) detected</span>
+              <span class="sheets-names" *ngIf="allSheets.length > 0"> - {{getSheetNames()}}</span>
+            </p>
+          </div>
+          <button class="delete-file-btn" (click)="removeFile()">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Template Name Input -->
+      <div class="template-name-section">
+        <p class="section-title">Please provide a name for this template before importing it.</p>
+        <div class="name-input-container">
+          <input 
+            type="text" 
+            [(ngModel)]="templateName" 
+            placeholder="Enter template name"
+            class="template-name-input">
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="import-modal-footer">
+      <button type="button" class="cancel-btn" (click)="closeModal()">
+        Cancel
+      </button>
+      <button 
+        type="button" 
+        class="import-btn" 
+        [disabled]="!uploadedFile || !templateName.trim() || isProcessing"
+        (click)="importTemplate()">
+        <span *ngIf="!isProcessing">Import</span>
+        <span *ngIf="isProcessing">Processing...</span>
+      </button>
+    </div>
+  </div>
+</div>

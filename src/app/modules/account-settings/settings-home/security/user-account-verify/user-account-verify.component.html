@@ -1,0 +1,92 @@
+<div class="userAccount-container">
+    <div class="user-header d-flex justify-content-between align-items-center">
+        <h6>Enable 2-step verification</h6>
+        <div (click)="close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_1897_31892)">
+                    <path d="M18 6L6 18" stroke="#334155" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6 6L18 18" stroke="#334155" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_1897_31892">
+                        <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+    </div>
+
+    <form [formGroup]="verifyAccountForm">
+        <div class="verify-content">
+            <div class="border-content">
+                <div class="verify-input-content">
+                    <div class="inputField w-100">
+                        <mat-label class="inputLabel">Email address</mat-label>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <input autofocus matInput autocomplete="off" type="text"
+                                placeholder="Enter your valid email" aria-label="Enter your Email"
+                                formControlName="username">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="border-content">
+                <div class="verify-input-content">
+                    <div class="inputField w-100">
+                        <mat-label class="inputLabel">Mobile number</mat-label>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <input autofocus matInput autocomplete="off" type="text" placeholder="Mobile number" maxlength="10"
+                                aria-label="Enter your Email" formControlName="mobile" (keypress)="numberOnly($event)">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttonCls">
+            <div class="button-card d-flex justify-content-start align-items-center">
+                <button type="button" class="enableBtn bgColorCls common-btn" (click)="enableBtn()">Enable</button>
+                <button type="button" class="cancelBtn common-btn" (click)="close()">Cancel</button>
+            </div>
+        </div>
+    </form>
+    <div class="information-content">
+        <div class="d-flex info-content">
+            <div class="mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                        d="M10.0013 6.66406V10.8307M10.0013 18.3307C14.5846 18.3307 18.3346 14.5807 18.3346 9.99739C18.3346 5.41406 14.5846 1.66406 10.0013 1.66406C5.41797 1.66406 1.66797 5.41406 1.66797 9.99739C1.66797 14.5807 5.41797 18.3307 10.0013 18.3307Z"
+                        stroke="#334155" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M10 13.3281H10.01" stroke="#334155" stroke-width="1.66667" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="information-text">
+                <h6>Information</h6>
+
+                <div class="d-flex">
+                    <div>
+                        <svg width="4" height="3" viewBox="0 0 4 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="2" cy="1.5" r="1.5" fill="#64748B" />
+                        </svg>
+                    </div>
+                    <div class="notes">
+                        <h6>You will be getting the OTP in your registered email and mobile.</h6>
+                    </div>
+                </div>
+                <div class="d-flex ">
+                    <div>
+                        <svg width="4" height="3" viewBox="0 0 4 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="2" cy="1.5" r="1.5" fill="#64748B" />
+                        </svg>
+                    </div>
+                    <div class="notes">
+                        <h6>After enabling it, you will need to complete two-step verification every time you log in.</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

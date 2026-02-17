@@ -1,0 +1,295 @@
+.viewDrivers-container {
+    display: flex;
+    /* background-color: #E2E8F0; */
+
+}
+
+
+.viewDrivers-container .driversList {
+    max-width: 268px;
+    min-width: 220px;
+}
+
+.driversList h4 {
+    color: var(--Slate-700, #334155);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 16px 20px;
+}
+
+.drivers-header span {
+    color: var(--Slate-700, #334155);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.noProfile {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    /* background: #E3DEF6; */
+    border-radius: 33px;
+    /* color: var(--primary-col, #006CB7); */
+    text-align: center;
+    font-feature-settings: 'liga' off;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 132%;
+    /* 18.48px */
+    letter-spacing: 0.14px;
+    /* opacity: 0.5; */
+    /* background: rgba(0, 108, 183, 0.30); */
+    background: var(--Menu-Higlight, rgba(127, 151, 241, 0.30));
+    color: #283892;
+    object-fit: cover;
+}
+
+.driversList h3 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.driversList p {
+    color: var(--Slate-600, #475569);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    /* 141.667% */
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+.driverListCls {
+    padding: 16px 20px;
+}
+
+.activeCls {
+    background: #E3DEF6;
+}
+
+.driversViewDeatils {
+    width: 100%;
+    background: #FFFFFF;
+    border-left: 1px solid #E2E8F0;
+    box-shadow: 0px 7px 20px 0px #28293D14;
+    height: 95vh;
+}
+
+.editBtn {
+    border-radius: 4px;
+
+    padding: 4px 12px;
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    color: var(--White, #FFF);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-right: 12px;
+    border: none;
+}
+
+.moreBtn {
+    border-radius: 4px;
+    border: 0.5px solid var(--Slate-300, #CBD5E1);
+    background: var(--Slate-100, #F1F5F9);
+    padding: 4px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.view-head {
+    padding: 20px;
+}
+
+mat-menu span {
+    color: var(--Slate-700, #334155);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.driversViewDeatils h3 {
+    color: var(--Slate-800, #1E293B);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    /* 111.111% */
+    text-transform: capitalize;
+}
+
+.driversViewDeatils p {
+    color: var(--Slate-600, #475569);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.basicActivityDetails-container {
+    padding: 12px 20px;
+}
+
+.basicActivityDetails-container label {
+    width: 140px;
+    color: var(--Slate-600, #475569);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.basicActivityDetails-container span {
+    color: var(--Slate-800, #1E293B);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 17px;
+    /* 130.769% */
+}
+
+.basicActivityDetails-container div {
+    margin-bottom: 8px;
+}
+
+.basicActivityDetails-container div:last-of-type {
+    margin-bottom: 0px !important;
+}
+
+.driversViewDeatils h4 {
+    color: var(--Slate-700, #334155);
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    /* 129.412% */
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 4px !important;
+
+    margin-left: 20px;
+}
+
+.textCls-p {
+    color: var(--Slate-700, #334155);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.link {
+    color: var(--primary-col, #006CB7);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px;
+    /* 76.923% */
+    letter-spacing: -0.065px;
+}
+
+.viewDrivers-header {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--Slate-200, #E2E8F0);
+    background: var(--White, #FFF);
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+}
+
+
+::ng-deep .viewDrivers-header .search .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: -5px;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 4PX;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-prefix .mat-icon {
+    font-size: 140%;
+    line-height: 1.125;
+    color: #686777;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #F1F5F9;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+    border-right-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+    border-left-style: none;
+    background: #F1F5F9;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 I !important;
+}
+
+::ng-deep .viewDrivers-header .search .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0;
+    margin-bottom: 4px;
+    margin-top: -1px;
+}
+
+.search {
+    width: 260px;
+}
+
+.noData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+/* --------------------------- */
+.activeStatus h6 {
+    padding: 2px 16px;
+    border-radius: 2px;
+    background: rgba(18, 157, 82, 0.15);
+    color: #129D52;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 15px;
+}
+
+.inActivestatus h6 {
+    background: rgba(232, 28, 40, 0.15);
+    color: #E81C28;
+    margin-bottom: 15px;
+}

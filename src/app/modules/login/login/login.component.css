@@ -1,0 +1,294 @@
+.login-container {
+    background: var(--Background-White, #FFF);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+.screen-content {
+    
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px 124px 30px;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen-line-content {
+    /* min-width: 448px; */
+}
+
+
+.screen-content h6 {
+    color: var(--Background-White, #FFF);
+    text-align: center;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 52px;
+    white-space: pre-line;
+}
+
+.screen-content p {
+    color: var(--Background-White, #FFF);
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 35px;
+    white-space: pre-line;
+    margin-bottom: 44px;
+}
+
+.banner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-content {
+    background: var(--Background-White, #FFF);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 65%;
+}
+
+.logo h6 {
+    color: #000;
+    font-size: 27.87px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.input-content {
+    width: 432px;
+}
+
+.input-content h6 {
+    color: var(--Slate-800, #1E293B);
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 52px;
+    margin-bottom: 44px;
+}
+
+a {
+    color: #007AFF;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    /* 123.077% */
+}
+
+/* input field and css modify */
+::ng-deep .input-content .mat-form-field-flex>.mat-form-field-infix {
+    padding: 10px 0px !important;
+    border-top: 0px !important;
+}
+
+::ng-deep .input-content .mat-form-field-label-wrapper {
+    top: -1.5em;
+}
+
+::ng-deep .input-content .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+
+::ng-deep .input-content input.mat-input-element {
+    margin-top: -0.0625em;
+    font-family: BlinkMacSystemFont;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #334155;
+}
+
+::ng-deep .input-content .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+::ng-deep .input-content .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: inherit;
+    width: 2.5em;
+    height: 40px !important;
+}
+::ng-deep .input-content .mat-form-field-flex {
+    display: inline-flex;
+    align-items: baseline;
+    box-sizing: border-box;
+    width: 100%;
+    height: 43px;
+}
+
+.input-content .inputField {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.inputLabel {
+    color: var(--Slate-700, #334155);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.remember {
+    color: var(--Slate-400, #94A3B8);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* checkbox */
+::ng-deep .remember .mat-checkbox-frame {
+    border-radius: 4px;
+    border: 1px solid var(--Grey-Grey_50, #B3B3B3);
+    background-color: var(--Grey-Grey_10, #F9F9F9);
+}
+
+.active_link h6 {
+    color: #007AFF;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-decoration: underline;
+}
+
+.btn-group button {
+    border-radius: 6px;
+    
+    color: var(--Background-White, #FFF);
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 40px;
+    text-align: center;
+    padding: 6.5px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+::ng-deep .inputField .mat-error {
+    color: var(--Slate-400, #f44336);
+    font-family: BlinkMacSystemFont !important;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* media query */
+
+@media only screen and (max-width: 1255) {
+    .screen-content {
+        width: 46% !important;
+    }
+
+    .screen-line-content {
+        min-width: none;
+    }
+}
+
+@media only screen and (max-width: 880px) {
+    .screen-content {
+        width: 46%;
+        height: 100vh;
+        /* background-image: url(screen-banner.svg); */
+        background-repeat: no-repeat;
+        background-size: cover;
+        float: left;
+        position: relative;
+        margin-left: -1%;
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .login-content {
+        background: var(--Background-White, #FFF);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 65%;
+        height: 100vh;
+    }
+}
+
+::ng-deep .MFApop-up .mat-dialog-container {
+    display: block;
+    padding: 0 !important;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+}
+/* ------------------------------------------ */
+.custom-icon-button {
+    width: 32px; /* Adjust the width */
+    height: 32px; /* Adjust the height */
+  }
+  
+  .custom-icon-button mat-icon {
+    font-size: 24px; /* Adjust the icon size */
+    line-height: 32px; /* Center the icon vertically */
+  }
+  /* loader */
+  /* .spinLoader {
+    width: 22px;
+    height: 22px;
+    border: 5px dotted #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: rotation 2s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }  */
+  .spinLoader {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #FFF;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 

@@ -1,0 +1,297 @@
+<div class="container-fluid quality-dashboard pb-3">
+    <div class="dash-header d-flex justify-content-end align-items-center ">
+        <button class="generateBtn mt-1">
+            Generate report
+        </button>
+    </div>
+    <div class="dashCards-grid mt-2">
+        <div class="dashCards" (click)="navigateToMenu('tasks')">
+            <div>
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="24" fill="#AF52DE"/>
+                    <g clip-path="url(#clip0_6053_262033)">
+                    <path d="M21 17H19C18.4696 17 17.9609 17.2107 17.5858 17.5858C17.2107 17.9609 17 18.4696 17 19V31C17 31.5304 17.2107 32.0391 17.5858 32.4142C17.9609 32.7893 18.4696 33 19 33H29C29.5304 33 30.0391 32.7893 30.4142 32.4142C30.7893 32.0391 31 31.5304 31 31V19C31 18.4696 30.7893 17.9609 30.4142 17.5858C30.0391 17.2107 29.5304 17 29 17H27" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 17C21 16.4696 21.2107 15.9609 21.5858 15.5858C21.9609 15.2107 22.4696 15 23 15H25C25.5304 15 26.0391 15.2107 26.4142 15.5858C26.7893 15.9609 27 16.4696 27 17C27 17.5304 26.7893 18.0391 26.4142 18.4142C26.0391 18.7893 25.5304 19 25 19H23C22.4696 19 21.9609 18.7893 21.5858 18.4142C21.2107 18.0391 21 17.5304 21 17Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 24H27" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 28H27" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_6053_262033">
+                    <rect width="24" height="24" fill="white" transform="translate(12 12)"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+            </div>
+            <div>
+                <div class="card-heading">Total Tasks</div>
+                <div class="card-total mt-2">{{overview?.totalTask}}</div>
+            </div>
+        </div>
+        <div class="dashCards" (click)="navigateToMenu('Orders')">
+            <div>
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="24" fill="#52AC56"/>
+                    <g clip-path="url(#clip0_6053_262049)">
+                    <path d="M24 15L32 19.5V28.5L24 33L16 28.5V19.5L24 15Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 24L32 19.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 24V33" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 24L16 19.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_6053_262049">
+                    <rect width="24" height="24" fill="white" transform="translate(12 12)"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+            </div>
+            <div>
+                <div class="card-heading">Total Movement documents</div>
+                <div class="card-total mt-2">{{overview?.totalOrder}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="plant-table-section">
+        <div class="plant-table-cards">
+            <div class="d-flex justify-content-between ">
+                <h4 class="mb-0 mt-1">Tasks</h4>
+                <div class="d-flex ">
+                    <div class="mr-4 table-search">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Search order no, material</mat-label>
+                            <input matInput  (keyup)="tableSearch($event,'task')">
+                            <mat-icon matPrefix><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14.3496 14.3563C14.2563 14.4483 14.1306 14.4999 13.9996 14.5001C13.8668 14.4995 13.7393 14.4481 13.6434 14.3563L10.9434 11.6501C9.80622 12.6052 8.34425 13.0845 6.86236 12.9879C5.38046 12.8913 3.99306 12.2264 2.98951 11.1317C1.98596 10.0371 1.44375 8.59729 1.47597 7.1126C1.50818 5.62791 2.11233 4.21298 3.16241 3.1629C4.21249 2.11282 5.62743 1.50867 7.11212 1.47645C8.59681 1.44424 10.0366 1.98645 11.1313 2.99C12.2259 3.99355 12.8908 5.38095 12.9874 6.86285C13.084 8.34474 12.6047 9.80671 11.6496 10.9438L14.3496 13.6438C14.3969 13.6904 14.4344 13.7458 14.46 13.807C14.4856 13.8681 14.4988 13.9338 14.4988 14.0001C14.4988 14.0664 14.4856 14.132 14.46 14.1932C14.4344 14.2544 14.3969 14.3098 14.3496 14.3563ZM7.24961 12.0001C8.18907 12.0001 9.10743 11.7215 9.88857 11.1996C10.6697 10.6776 11.2785 9.93579 11.638 9.06784C11.9976 8.19989 12.0916 7.24483 11.9083 6.32342C11.7251 5.40201 11.2727 4.55564 10.6084 3.89134C9.94407 3.22704 9.0977 2.77465 8.17629 2.59137C7.25488 2.40809 6.29981 2.50215 5.43186 2.86167C4.56391 3.22119 3.82206 3.83001 3.30013 4.61114C2.77819 5.39227 2.49961 6.31064 2.49961 7.2501C2.50126 8.50937 3.00224 9.71659 3.89268 10.607C4.78312 11.4975 5.99034 11.9984 7.24961 12.0001Z"
+                                        fill="#475569" />
+                                </svg>
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="taskTableList?.length > 0">
+                <ag-grid-angular style="width: 100%; height: 300px;" class="ag-theme-material"
+                    [rowData]="taskTableList" [columnDefs]="taskHeaders">
+                </ag-grid-angular>
+                <div class="d-flex justify-content-end ">
+                    <mat-paginator [length]="taskList?.totalCount" [pageSize]="pageSize"
+                        (page)="onPageChanged($event,'task')">
+                    </mat-paginator>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center h-75" *ngIf="taskTableList?.length == 0">
+                <div class="text-center">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#D4D7E9" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+                            fill="#283892" />
+                    </svg>
+
+                    <div class="no-data-text mt-1">No data found</div>
+                </div>
+            </div>
+        </div>
+        <div class="plant-table-cards">
+            <div class="d-flex justify-content-between ">
+                <h4 class="mb-0 mt-1">Movement documents</h4>
+                <div class="d-flex ">
+                    <div class="mr-4 table-search">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Search mov doc no</mat-label>
+                            <input matInput  (keyup)="tableSearch($event,'orders')">
+                            <mat-icon matPrefix><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14.3496 14.3563C14.2563 14.4483 14.1306 14.4999 13.9996 14.5001C13.8668 14.4995 13.7393 14.4481 13.6434 14.3563L10.9434 11.6501C9.80622 12.6052 8.34425 13.0845 6.86236 12.9879C5.38046 12.8913 3.99306 12.2264 2.98951 11.1317C1.98596 10.0371 1.44375 8.59729 1.47597 7.1126C1.50818 5.62791 2.11233 4.21298 3.16241 3.1629C4.21249 2.11282 5.62743 1.50867 7.11212 1.47645C8.59681 1.44424 10.0366 1.98645 11.1313 2.99C12.2259 3.99355 12.8908 5.38095 12.9874 6.86285C13.084 8.34474 12.6047 9.80671 11.6496 10.9438L14.3496 13.6438C14.3969 13.6904 14.4344 13.7458 14.46 13.807C14.4856 13.8681 14.4988 13.9338 14.4988 14.0001C14.4988 14.0664 14.4856 14.132 14.46 14.1932C14.4344 14.2544 14.3969 14.3098 14.3496 14.3563ZM7.24961 12.0001C8.18907 12.0001 9.10743 11.7215 9.88857 11.1996C10.6697 10.6776 11.2785 9.93579 11.638 9.06784C11.9976 8.19989 12.0916 7.24483 11.9083 6.32342C11.7251 5.40201 11.2727 4.55564 10.6084 3.89134C9.94407 3.22704 9.0977 2.77465 8.17629 2.59137C7.25488 2.40809 6.29981 2.50215 5.43186 2.86167C4.56391 3.22119 3.82206 3.83001 3.30013 4.61114C2.77819 5.39227 2.49961 6.31064 2.49961 7.2501C2.50126 8.50937 3.00224 9.71659 3.89268 10.607C4.78312 11.4975 5.99034 11.9984 7.24961 12.0001Z"
+                                        fill="#475569" />
+                                </svg>
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button class="common-btn d-flex  mr-3 mt-1 " [matMenuTriggerFor]="menu4">
+                            <div class="pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
+                                    fill="none">
+                                    <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z"
+                                        stroke="#464855" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="clalanter-text pr-1 mt-1" >
+                                {{SelectedDateRange == '' ? "Day" : SelectedDateRange}}
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                    fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="#475569" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </button>
+                        <mat-menu #menu4="matMenu" class="dateMenu">
+                            <button mat-menu-item (click)="switchMode('Day','order')">
+                                <span>Day</span>
+                            </button>
+                            <button mat-menu-item (click)="switchMode('Week','order')">
+                                <span>Week</span>
+                            </button>
+                            <button mat-menu-item (click)="switchMode('Month','order')">
+                                <span>Month</span>
+                            </button>
+                            <button mat-menu-item (click)="pickers.open()">
+                                <mat-datepicker #pickers></mat-datepicker>
+                                <span>
+                                    <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+                                    Select Date
+                                </span>
+                                <input class="date-time-picker" autocomplete="nope" [matDatepicker]="pickers"
+                                    (dateChange)="changeDateEvent($event,'order')">
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="ordersTableList?.length > 0">
+                <ag-grid-angular style="width: 100%; height: 249px;" class="ag-theme-material"
+                    [rowData]="ordersTableList" [columnDefs]="taskHeaders">
+                </ag-grid-angular>
+                <div class="d-flex justify-content-end ">
+                    <mat-paginator [length]="ordersList?.totalCount" [pageSize]="pageSize"
+                        (page)="onPageChanged($event,'order')">
+                    </mat-paginator>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center h-75" *ngIf="ordersTableList?.length == 0">
+                <div class="text-center">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#D4D7E9" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+                            fill="#283892" />
+                    </svg>
+
+                    <div class="no-data-text mt-1">No data found</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pr-2">
+        <div class="col-lg-12 pr-1">
+            <div class="table-status-card ">
+                <div class="d-flex justify-content-between ">
+                    <h4 class="mb-0 mt-1">Intake sheets</h4>
+                    <div class="d-flex ">
+                        <button class="common-btn d-flex  mr-3 mt-1 " [matMenuTriggerFor]="menu6">
+                            <div class="pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
+                                    fill="none">
+                                    <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z"
+                                        stroke="#464855" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="clalanter-text pr-1 mt-1" >
+                                {{SelectedDateRangeForIntake == '' ? "Day" : SelectedDateRangeForIntake}}
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                    fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="#475569" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </button>
+                        <mat-menu #menu6="matMenu" class="dateMenu">
+                            <button mat-menu-item (click)="switchMode('Day','intake')">
+                                <span>Day</span>
+                            </button>
+                            <button mat-menu-item (click)="switchMode('Week','intake')">
+                                <span>Week</span>
+                            </button>
+                            <button mat-menu-item (click)="switchMode('Month','intake')">
+                                <span>Month</span>
+                            </button>
+                            <button mat-menu-item (click)="pickers1.open()">
+                                <mat-datepicker #pickers1></mat-datepicker>
+                                <span>
+                                    <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+                                    Select Date
+                                </span>
+                                <input class="date-time-picker" autocomplete="nope" [matDatepicker]="pickers1"
+                                    (dateChange)="changeDateEvent($event,'intake')">
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div *ngIf="isAvailable">
+                    <apx-chart 
+                    [series]="ChartOptions?.series" 
+                    [chart]="ChartOptions?.chart"
+                    [dataLabels]="ChartOptions?.dataLabels" 
+                    [stroke]="ChartOptions?.stroke"
+                    [grid]="ChartOptions?.grid" 
+                    [xaxis]="ChartOptions?.xaxis"
+                    [yaxis]="ChartOptions?.yaxis"
+                    [fill]="ChartOptions?.fill"
+                    [plotOptions] = "ChartOptions?.plotOptions"
+                    [tooltip]="ChartOptions?.tooltip">
+                  </apx-chart>
+                </div>
+                <div class="d-flex justify-content-center align-items-center h-75"
+                    *ngIf="!isAvailable">
+                    <div class="text-center">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#D4D7E9" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+                                fill="#283892" />
+                        </svg>
+
+                        <div class="no-data-text mt-1">No data found</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

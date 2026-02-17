@@ -1,0 +1,103 @@
+<div class="CustomerTrailerInTypes-header d-flex justify-content-between align-items-center">
+    <div class="CustomerTrailerInType-head-left d-flex gap-24 align-items-center">
+      <span>
+          {{totalCustomerTrailerInType}} Customer Trailer In Type(s) in List
+      </span>
+      <div class="search ml-3">
+          <mat-form-field class="searchCls w-100" appearance="outline" aria-label="Search customer trailer in type">
+              <input type="search" matInput placeholder="Search customer trailer in type"
+                   aria-label="Search" (keyup)="searchCustomerTrailerInType($event)" [(ngModel)]="searchValue">
+              <mat-icon matPrefix>search</mat-icon>
+              <button class="common-btn" *ngIf="searchValue" matSuffix aria-label="Clear" (click)="clear()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M12 4L4 12" stroke="#1E293B" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 4L12 12" stroke="#1E293B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+          </mat-form-field>
+      </div>
+  </div>
+  <div class="CustomerTrailerInType-head-right d-flex align-items-center gap-24">
+    <div class="border-less-input">
+      <button type="button" class="common-btn status-btn mr-2 d-flex justify-content-between align-items-center" [matMenuTriggerFor]="filter2">
+        <p class="sortedByCls">{{ avalStatus }}</p>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    
+      <mat-menu #filter2="matMenu">
+        <button mat-menu-item (click)="statusSetoption('')">All</button>
+        <button mat-menu-item (click)="statusSetoption('Active')">Active</button>
+        <button mat-menu-item (click)="statusSetoption('Inactive')">Inactive</button>
+      </mat-menu>
+    </div>
+      <button class="filter-btn mr-2 d-flex justify-content-between align-items-center common-btn" [matMenuTriggerFor]="filter" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <g clip-path="url(#clip0_478_6335)">
+                  <path
+                      d="M2.5 15H7.5V13.3333H2.5V15ZM2.5 5V6.66667H17.5V5H2.5ZM2.5 10.8333H12.5V9.16667H2.5V10.8333Z"
+                      fill="#475569" />
+              </g>
+              <defs>
+                  <clipPath id="clip0_478_6335">
+                      <rect width="20" height="20" fill="white" />
+                  </clipPath>
+              </defs>
+          </svg>
+          <p class="m-0 sortedByCls ml-2">Sort by</p>
+      </button>
+      <mat-menu #filter="matMenu">
+          <div *ngFor="let sortby of sortList">
+            <button mat-menu-item (click)="sortByValue(sortby.sortCode)">{{sortby.sortName}}</button>
+          </div>
+      </mat-menu>
+      <button type="button" class="addBtnCls bgColorCls d-flex justify-content-between align-items-center common-btn"
+       (click)="addCustomerTrailerInType()" *ngIf="permissions?.createAccess">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="mr-1">
+              <path d="M10 4.1665V15.8332" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              <path d="M4.16602 10H15.8327" stroke="white" stroke-width="1.4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+          Add Customer Trailer In Type</button>
+  </div>
+</div>
+<div class="masterScreen-content-table">
+
+  <div class="customerTrailerInType-body">
+      <table class="customerTrailerInType-table">
+        <thead>
+          <tr>
+              <th>Customer name</th>
+              <th>Trailer number</th>
+              <th>Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customerTrailerInType of customerTrailerInTypeList; let i = index"
+              (click)="viewCustomerTrailerInType(customerTrailerInType, i)">
+              <td>{{customerTrailerInType.customerName}}</td>
+              <td>{{customerTrailerInType.trailerNumber}}</td>
+              <td>
+                  <div class="status-badge" [ngClass]="customerTrailerInType.deleted === false ? 'status-active' : 'status-inactive'">
+                      <div class="status-indicator"></div>
+                      <span>{{customerTrailerInType.deleted === false ? 'Active' : 'Inactive' }}</span>
+                  </div>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="noMasterRecords d-flex flex-column align-items-center" *ngIf="customerTrailerInTypeList?.length === 0">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                  d="M9.33301 16.3333V11.6666C9.33301 10.4289 9.82467 9.24221 10.6998 8.36703C11.575 7.49185 12.7617 6.99997 13.9997 6.99997H41.9997C43.2376 6.99997 44.4243 7.49185 45.2995 8.36703C46.1747 9.24221 46.6663 10.4289 46.6663 11.6666V44.3333C46.6663 45.5712 46.1747 46.7579 45.2995 47.6331C44.4243 48.5083 43.2376 49 41.9997 49H13.9997C12.7617 49 11.575 48.5083 10.6998 47.6331C9.82467 46.7579 9.33301 45.5712 9.33301 44.3333V39.6666M9.33301 16.3333H6.99967C5.76175 16.3333 4.57484 16.8251 3.69966 17.7003C2.82448 18.5755 2.33301 19.7624 2.33301 21V35C2.33301 36.2379 2.82448 37.4248 3.69966 38.3C4.57484 39.1752 5.76175 39.6666 6.99967 39.6666H9.33301M9.33301 16.3333V39.6666"
+                  stroke="#8A8A8A" stroke-width="2.33333" stroke-linecap="round" stroke-linejoin="round"
+                  fill="#8A8A8A" />
+          </svg>
+          <p class="noRecordText">No customer trailer in types added yet</p>
+      </div>
+      <app-custom-paginator [length]="totalPages" (pageChange)="onPageChange($event)">
+      </app-custom-paginator>
+  </div>
+</div>

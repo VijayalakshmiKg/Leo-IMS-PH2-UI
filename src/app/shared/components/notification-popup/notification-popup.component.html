@@ -1,0 +1,39 @@
+<div class="notificationContainer">
+    <header>
+        <div class="d-flex align-items-center">
+            <h1>Notifications</h1>
+            <span class="notifyCount">{{unreadList.length}}</span>
+        </div>
+        <button class="common-btn" type="button" (click)="close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_2873_17930)">
+                    <path d="M18 6L6 18" stroke="black" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M6 6L18 18" stroke="black" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clippath id="clip0_2873_17930">
+                        <rect width="24" height="24" fill="white" />
+                    </clippath>
+                </defs>
+            </svg>
+        </button>
+    </header>
+    <div class="notifyBar">
+        <button class="notifyBarButtons common-btn" type="button"
+            [ngClass]="{'active':unread}" (click)="toggle()">Unread</button>
+        <button class="notifyBarButtons common-btn" type="button"
+            [ngClass]="{'active':!unread}" (click)="toggle()">All</button>
+    </div>
+    <div class="notificationList" *ngIf="notificationList.length > 0">
+        <button class="common-btn notificationCard" *ngFor="let notification of notificationList" (click)="notification.read = true">
+            <p class="notificationMsg" [ngClass]="{'read':notification.read}">{{notification.message}}</p>
+            <p class="notifyTime">{{notification.time | date:'dd/MM/y hh:mm a'}}</p>
+        </button>
+    </div>
+    <div class="noNotificationList" *ngIf="notificationList.length == 0">
+        You don't have any notifications!
+    </div>
+</div>

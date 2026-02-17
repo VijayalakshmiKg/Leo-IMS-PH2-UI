@@ -1,0 +1,732 @@
+<div class="container-fluid transport-container">
+
+    <div class="dash-header d-flex justify-content-end align-items-center ">
+        <button class="common-btn d-flex align-items-center mr-3 " [matMenuTriggerFor]="menu">
+            <div class="pr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                    <path d="M5.82751 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M11.1608 1.33334V3.33334" stroke="#334155" stroke-miterlimit="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2.82751 6.06H14.1608" stroke="#464855" stroke-miterlimit="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path
+                        d="M14.4941 5.66667V11.3333C14.4941 13.3333 13.4941 14.6667 11.1608 14.6667H5.82747C3.49414 14.6667 2.49414 13.3333 2.49414 11.3333V5.66667C2.49414 3.66667 3.49414 2.33334 5.82747 2.33334H11.1608C13.4941 2.33334 14.4941 3.66667 14.4941 5.66667Z"
+                        stroke="#464855" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M10.9572 9.13334H10.9632" stroke="#464855" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M10.9572 11.1333H10.9632" stroke="#464855" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M8.49117 9.13334H8.49716" stroke="#464855" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M8.49117 11.1333H8.49716" stroke="#464855" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6.02364 9.13334H6.02963" stroke="#464855" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6.02364 11.1333H6.02963" stroke="#464855" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="clalanter-text pr-1">
+                {{SelectedDateRange}}
+            </div>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                    <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </button>
+        <mat-menu #menu="matMenu" class="dateMenu">
+            <button mat-menu-item (click)="switchMode('Day')">
+                <span>Day</span>
+            </button>
+            <button mat-menu-item (click)="switchMode('Week')">
+                <span>Week</span>
+            </button>
+            <button mat-menu-item (click)="switchMode('Month')">
+                <span>Month</span>
+            </button>
+            <button mat-menu-item (click)="pickers.open()">
+                <mat-datepicker #pickers></mat-datepicker>
+                <span>
+                    <mat-datepicker-toggle matPrefix></mat-datepicker-toggle>
+                    Select Date
+                </span>
+                <input class="date-time-picker" autocomplete="nope" [matDatepicker]="pickers"
+                    (dateChange)="changeDateEvent($event)">
+            </button>
+        </mat-menu>
+        <button class="generateBtn" >
+            Generate report
+        </button>
+    </div>
+    <div class="">
+        <div class="overview-count row justify-content-between">
+            <div class="col count-card crs-pointer" (click)="navigateToMenu('Orders')">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24.5" cy="24" r="24" fill="#AF52DE" />
+                            <g clip-path="url(#clip0_129_135290)">
+                                <path d="M24.5 15L32.5 19.5V28.5L24.5 33L16.5 28.5V19.5L24.5 15Z" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M24.5 24L32.5 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M24.5 24V33" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M24.5 24L16.5 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135290">
+                                    <rect width="24" height="24" fill="white" transform="translate(12.5 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Movement documents</div>
+                        <div class="card-total mt-2">{{overviewList?.combinedVehicleStatistics.totalOrders}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col count-card crs-pointer" (click)="navigateToMenu('Drivers')">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="24" fill="#2CB6B8" />
+                            <g clip-path="url(#clip0_4589_330915)">
+                                <path
+                                    d="M20 19C20 20.0609 20.4214 21.0783 21.1716 21.8284C21.9217 22.5786 22.9391 23 24 23C25.0609 23 26.0783 22.5786 26.8284 21.8284C27.5786 21.0783 28 20.0609 28 19C28 17.9391 27.5786 16.9217 26.8284 16.1716C26.0783 15.4214 25.0609 15 24 15C22.9391 15 21.9217 15.4214 21.1716 16.1716C20.4214 16.9217 20 17.9391 20 19Z"
+                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M18 33V31C18 29.9391 18.4214 28.9217 19.1716 28.1716C19.9217 27.4214 20.9391 27 22 27H26C27.0609 27 28.0783 27.4214 28.8284 28.1716C29.5786 28.9217 30 29.9391 30 31V33"
+                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_4589_330915">
+                                    <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Drivers</div>
+                        <div class="card-total mt-2">{{overviewList?.combinedVehicleStatistics.totalDrivers}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col count-card" (click)="navigateToMenu('transitTrucks')">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24.5" cy="24" r="24" fill="#FF9500" />
+                            <g clip-path="url(#clip0_129_135264)">
+                                <path
+                                    d="M17.5 29C17.5 29.5304 17.7107 30.0391 18.0858 30.4142C18.4609 30.7893 18.9696 31 19.5 31C20.0304 31 20.5391 30.7893 20.9142 30.4142C21.2893 30.0391 21.5 29.5304 21.5 29C21.5 28.4696 21.2893 27.9609 20.9142 27.5858C20.5391 27.2107 20.0304 27 19.5 27C18.9696 27 18.4609 27.2107 18.0858 27.5858C17.7107 27.9609 17.5 28.4696 17.5 29Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M27.5 29C27.5 29.5304 27.7107 30.0391 28.0858 30.4142C28.4609 30.7893 28.9696 31 29.5 31C30.0304 31 30.5391 30.7893 30.9142 30.4142C31.2893 30.0391 31.5 29.5304 31.5 29C31.5 28.4696 31.2893 27.9609 30.9142 27.5858C30.5391 27.2107 30.0304 27 29.5 27C28.9696 27 28.4609 27.2107 28.0858 27.5858C27.7107 27.9609 27.5 28.4696 27.5 29Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M17.5 29H15.5V25M14.5 17H25.5V29M21.5 29H27.5M31.5 29H33.5V23M33.5 23H25.5M33.5 23L30.5 18H25.5"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15.5 21H19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135264">
+                                    <rect width="24" height="24" fill="white" transform="translate(12.5 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                    </div>
+                    <div>
+                        <div class="card-heading">In Transit Trucks</div>
+                        <div class="card-total mt-2">{{overviewList?.combinedVehicleStatistics.inTransitTrucks}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col count-card mt-sm-2 mt-md-0 crs-pointer" (click)="navigateToMenu('Trucks')">
+                <div class="d-flex">
+                    <div class="pr-3 ">
+                        <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24.5" cy="24" r="24" fill="#3A91E1" />
+                            <g clip-path="url(#clip0_129_135264)">
+                                <path
+                                    d="M17.5 29C17.5 29.5304 17.7107 30.0391 18.0858 30.4142C18.4609 30.7893 18.9696 31 19.5 31C20.0304 31 20.5391 30.7893 20.9142 30.4142C21.2893 30.0391 21.5 29.5304 21.5 29C21.5 28.4696 21.2893 27.9609 20.9142 27.5858C20.5391 27.2107 20.0304 27 19.5 27C18.9696 27 18.4609 27.2107 18.0858 27.5858C17.7107 27.9609 17.5 28.4696 17.5 29Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M27.5 29C27.5 29.5304 27.7107 30.0391 28.0858 30.4142C28.4609 30.7893 28.9696 31 29.5 31C30.0304 31 30.5391 30.7893 30.9142 30.4142C31.2893 30.0391 31.5 29.5304 31.5 29C31.5 28.4696 31.2893 27.9609 30.9142 27.5858C30.5391 27.2107 30.0304 27 29.5 27C28.9696 27 28.4609 27.2107 28.0858 27.5858C27.7107 27.9609 27.5 28.4696 27.5 29Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M17.5 29H15.5V25M14.5 17H25.5V29M21.5 29H27.5M31.5 29H33.5V23M33.5 23H25.5M33.5 23L30.5 18H25.5"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15.5 21H19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_129_135264">
+                                    <rect width="24" height="24" fill="white" transform="translate(12.5 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Trucks</div>
+                        <div class="card-total mt-2">{{overviewList?.combinedVehicleStatistics.totalTrucks}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col count-card-last mt-md-2 mr-md-2 mt-lg-0 mr-lg-0 crs-pointer" (click)="navigateToMenu('Trailers')">
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="24" cy="24" r="24" fill="#52AC56" />
+                            <g clip-path="url(#clip0_4589_330941)">
+                                <path
+                                    d="M14 15H15C15.5304 15 16.0391 15.2107 16.4142 15.5858C16.7893 15.9609 17 16.4696 17 17V27C17 27.5304 17.2107 28.0391 17.5858 28.4142C17.9609 28.7893 18.4696 29 19 29H34"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M21 21C21 20.2044 21.3161 19.4413 21.8787 18.8787C22.4413 18.3161 23.2044 18 24 18H28C28.7956 18 29.5587 18.3161 30.1213 18.8787C30.6839 19.4413 31 20.2044 31 21V23C31 23.7956 30.6839 24.5587 30.1213 25.1213C29.5587 25.6839 28.7956 26 28 26H24C23.2044 26 22.4413 25.6839 21.8787 25.1213C21.3161 24.5587 21 23.7956 21 23V21Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M19 31C19 31.5304 19.2107 32.0391 19.5858 32.4142C19.9609 32.7893 20.4696 33 21 33C21.5304 33 22.0391 32.7893 22.4142 32.4142C22.7893 32.0391 23 31.5304 23 31C23 30.4696 22.7893 29.9609 22.4142 29.5858C22.0391 29.2107 21.5304 29 21 29C20.4696 29 19.9609 29.2107 19.5858 29.5858C19.2107 29.9609 19 30.4696 19 31Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M28 31C28 31.5304 28.2107 32.0391 28.5858 32.4142C28.9609 32.7893 29.4696 33 30 33C30.5304 33 31.0391 32.7893 31.4142 32.4142C31.7893 32.0391 32 31.5304 32 31C32 30.4696 31.7893 29.9609 31.4142 29.5858C31.0391 29.2107 30.5304 29 30 29C29.4696 29 28.9609 29.2107 28.5858 29.5858C28.2107 29.9609 28 30.4696 28 31Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_4589_330941">
+                                    <rect width="24" height="24" fill="white" transform="translate(12 12)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+
+
+                    </div>
+                    <div>
+                        <div class="card-heading">Total Trailers</div>
+                        <div class="card-total mt-2">{{overviewList?.combinedVehicleStatistics.totalTrailers}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="status-section">
+        <div class="status-cards" *ngIf="isVehicleStatusAvailable">
+            <div class="Vehicle-status">Vehicle status</div>
+            <div class="" id="VehicleChart">
+                <apx-chart [series]="VehicleChartOptions?.series" [chart]="VehicleChartOptions?.chart"
+                    [dataLabels]="VehicleChartOptions?.dataLabels" [plotOptions]="VehicleChartOptions?.plotOptions"
+                    [grid]="VehicleChartOptions?.grid" [responsive]="VehicleChartOptions?.responsive"
+                    [legend]="VehicleChartOptions?.legend" [colors]="VehicleChartOptions?.colors"
+                    [labels]="VehicleChartOptions?.labels"></apx-chart>
+            </div>
+        </div>
+        <div class="status-cards" *ngIf="!(isVehicleStatusAvailable) && overviewList?.dashboardStatus?.vehicleStatus == null">
+            <div class="Vehicle-status">Vehicle status</div>
+           <div class="p-5">
+            <div class="no-data-section">
+                <div class="total-des">Total Count</div>
+                <div class="total-no">0</div>
+            </div>
+            <div class="no-data-legents">
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">Available</div>
+                </div>
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">In Transit</div>
+                </div>
+
+            </div>
+           </div>
+        </div>
+        <div class="status-cards" *ngIf="isTrailerStatusAvailable">
+            <div class="Vehicle-status">Trailer status</div>
+            <div id="TrailerChart">
+                <apx-chart [series]="trailerOptions.series" [chart]="trailerOptions.chart"
+                    [dataLabels]="trailerOptions.dataLabels" [plotOptions]="trailerOptions.plotOptions"
+                    [grid]="trailerOptions.grid" [responsive]="trailerOptions.responsive"
+                    [legend]="trailerOptions.legend" [colors]="trailerOptions.colors"
+                    [labels]="trailerOptions.labels"></apx-chart>
+            </div>
+        </div>
+        <div class="status-cards" *ngIf="!isTrailerStatusAvailable || overviewList.dashboardStatus.trailerStatus == null">
+            <div class="Vehicle-status">Trailer status</div>
+          <div class="p-5">
+            <div class="no-data-section">
+                <div class="total-des">Total Count</div>
+                <div class="total-no">0</div>
+            </div>
+            <div class="no-data-legents">
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">Available</div>
+                </div>
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">In Transit</div>
+                </div>
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.81399" cy="6.99999" rx="6.18509" ry="6.01367" fill="#3A91E1" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">Washing</div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="status-cards" *ngIf="isDriverAvailable">
+            <div class="Vehicle-status">Driver status</div>
+            <div id="DriverChart">
+                <apx-chart [series]="DriverChartOptions.series" [chart]="DriverChartOptions.chart"
+                    [dataLabels]="DriverChartOptions.dataLabels" [labels]="DriverChartOptions.labels"
+                    [responsive]="DriverChartOptions.responsive" [legend]="DriverChartOptions.legend"
+                    [colors]="DriverChartOptions.colors"></apx-chart>
+            </div>
+        </div>
+        <div class="status-cards" *ngIf="!isDriverAvailable || overviewList.dashboardStatus.driverStatus == null">
+            <div class="Vehicle-status">Driver status</div>
+           <div class="p-5">
+            <div class="no-data-section">
+                <div class="total-des">Total Count</div>
+                <div class="total-no">0</div>
+            </div>
+            <div class="no-data-legents">
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">Available</div>
+                </div>
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">In Transit</div>
+                </div>
+
+            </div>
+           </div>
+        </div>
+        <div class="status-cards" *ngIf="isOrderAvailable">
+            <div class="Vehicle-status">Movement documents Status</div>
+            <div id="OrderChart">
+                <apx-chart [series]="OrderChartOptions.series" [chart]="OrderChartOptions.chart"
+                    [dataLabels]="OrderChartOptions.dataLabels" [labels]="OrderChartOptions.labels"
+                    [responsive]="OrderChartOptions.responsive" [legend]="OrderChartOptions.legend"
+                    [colors]="OrderChartOptions.colors"></apx-chart>
+            </div>
+        </div>
+        <div class="status-cards" *ngIf="!isOrderAvailable || overviewList.dashboardStatus.orderStatus == null">
+            <div class="Vehicle-status">Movement Document Status</div>
+           <div class="p-5">
+            <div class="no-data-section">
+                <div class="total-des">Total Count</div>
+                <div class="total-no">0</div>
+            </div>
+            <div class="no-data-legents">
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">Completed</div>
+                </div>
+                <div class="d-flex pr-2">
+                    <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                        </svg></div>
+                    <div class="legents-text mt-1 ml-1">Pending</div>
+                </div>
+
+            </div>
+           </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col pb-sm-2   pb-md-2 ">
+            <div class="Vehicle-status-card semi-donet" *ngIf="isVehicleStatusAvailable">
+                <div class="Vehicle-status">Vehicle status</div>
+                <div  class="" id="VehicleChart">
+                    <apx-chart [series]="VehicleChartOptions.series" [chart]="VehicleChartOptions.chart"
+                        [dataLabels]="VehicleChartOptions.dataLabels" [plotOptions]="VehicleChartOptions.plotOptions"
+                        [grid]="VehicleChartOptions.grid" [responsive]="VehicleChartOptions.responsive"
+                        [legend]="VehicleChartOptions.legend" [colors]="VehicleChartOptions.colors"
+                        [labels]="VehicleChartOptions.labels"></apx-chart>
+                </div>
+            </div>
+            <div class="Vehicle-status-card" *ngIf="!isVehicleStatusAvailable" >
+                <div class="Vehicle-status">Vehicle status</div>
+                <div class="no-data-section">
+                    <div class="total-des">Total Count</div>
+                    <div class="total-no">0</div>
+                </div>
+                <div class="no-data-legents">
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">Available</div>
+                    </div>
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">In Transit</div>
+                    </div>
+               
+                </div>
+            </div>
+        </div>
+        <div class="col  pb-sm-2 pl-lg-0 pb-md-2 ">
+            <div class="Vehicle-status-card semi-donet" *ngIf="isTrailerStatusAvailable">
+                <div class="Vehicle-status">Trailer status</div>
+                <div id="TrailerChart" >
+                    <apx-chart [series]="trailerOptions.series" [chart]="trailerOptions.chart"
+                        [dataLabels]="trailerOptions.dataLabels" [plotOptions]="trailerOptions.plotOptions"
+                        [grid]="trailerOptions.grid" [responsive]="trailerOptions.responsive"
+                        [legend]="trailerOptions.legend" [colors]="trailerOptions.colors"
+                        [labels]="trailerOptions.labels"></apx-chart>
+                </div>
+            </div>
+            <div class="Vehicle-status-card" *ngIf="!isTrailerStatusAvailable" >
+                <div class="Vehicle-status">Trailer status</div>
+                <div class="no-data-section">
+                    <div class="total-des">Total Count</div>
+                    <div class="total-no">0</div>
+                </div>
+                <div class="no-data-legents">
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">Available</div>
+                    </div>
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">In Transit</div>
+                    </div>
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                            <ellipse cx="6.81399" cy="6.99999" rx="6.18509" ry="6.01367" fill="#3A91E1"/>
+                          </svg></div>
+                        <div class="legents-text mt-1 ml-1">Washing</div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col pb-sm-2 pl-lg-0 pb-md-2 drive-res">
+            <div class="Vehicle-status-card pie" *ngIf="isDriverAvailable">
+                <div class="Vehicle-status">Haulier status</div>
+                <div id="DriverChart">
+                    <apx-chart [series]="DriverChartOptions.series" [chart]="DriverChartOptions.chart"
+                        [dataLabels]="DriverChartOptions.dataLabels" [labels]="DriverChartOptions.labels"
+                        [responsive]="DriverChartOptions.responsive" [legend]="DriverChartOptions.legend"
+                        [colors]="DriverChartOptions.colors"></apx-chart>
+                </div>
+           
+            </div>
+            <div class="Vehicle-status-card" *ngIf="!isDriverAvailable" >
+                <div class="Vehicle-status">Haulier status</div>
+                <div class="no-data-section">
+                    <div class="total-des">Total Count</div>
+                    <div class="total-no">0</div>
+                </div>
+                <div class="no-data-legents">
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">Available</div>
+                    </div>
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">In Transit</div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col  pb-sm-2  pl-lg-0 pb-md-2 ord-res">
+            <div class="Vehicle-status-card pie" *ngIf="isOrderAvailable">
+                <div class="Vehicle-status">Order status</div>
+                <div id="OrderChart">
+                    <apx-chart [series]="OrderChartOptions.series" [chart]="OrderChartOptions.chart"
+                        [dataLabels]="OrderChartOptions.dataLabels" [labels]="OrderChartOptions.labels"
+                        [responsive]="OrderChartOptions.responsive" [legend]="OrderChartOptions.legend"
+                        [colors]="OrderChartOptions.colors"></apx-chart>
+                </div>
+            </div>
+            <div class="Vehicle-status-card" *ngIf="!isOrderAvailable" >
+                <div class="Vehicle-status">Order status</div>
+                <div class="no-data-section">
+                    <div class="total-des">Total Count</div>
+                    <div class="total-no">0</div>
+                </div>
+                <div class="no-data-legents">
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.18509" cy="6.99999" rx="6.18509" ry="6.01367" fill="#52AC56" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">Completed</div>
+                    </div>
+                    <div class="d-flex pr-2">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14"
+                                fill="none">
+                                <ellipse cx="6.50149" cy="6.99999" rx="6.18509" ry="6.01367" fill="#FF9900" />
+                            </svg></div>
+                        <div class="legents-text mt-1 ml-1">Pending</div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>  -->
+
+    <div class="row mt-1  ">
+        <div class=" col-lg-6 pr-sm-3 pb-sm-3  pb-lg-0 pr-lg-1">
+            <div class="Vehicle-status-card-two ">
+                <div class="d-flex justify-content-between align-items-center mr-3 ">
+                    <div class="Vehicle-status">Drafts</div>
+                    <div class="mr-4 table-search">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Search Supplier, Consignee, Movement doc no</mat-label>
+                            <input matInput  (keyup)="tableSearch($event,'Draft')">
+                            <mat-icon matPrefix><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14.3496 14.3563C14.2563 14.4483 14.1306 14.4999 13.9996 14.5001C13.8668 14.4995 13.7393 14.4481 13.6434 14.3563L10.9434 11.6501C9.80622 12.6052 8.34425 13.0845 6.86236 12.9879C5.38046 12.8913 3.99306 12.2264 2.98951 11.1317C1.98596 10.0371 1.44375 8.59729 1.47597 7.1126C1.50818 5.62791 2.11233 4.21298 3.16241 3.1629C4.21249 2.11282 5.62743 1.50867 7.11212 1.47645C8.59681 1.44424 10.0366 1.98645 11.1313 2.99C12.2259 3.99355 12.8908 5.38095 12.9874 6.86285C13.084 8.34474 12.6047 9.80671 11.6496 10.9438L14.3496 13.6438C14.3969 13.6904 14.4344 13.7458 14.46 13.807C14.4856 13.8681 14.4988 13.9338 14.4988 14.0001C14.4988 14.0664 14.4856 14.132 14.46 14.1932C14.4344 14.2544 14.3969 14.3098 14.3496 14.3563ZM7.24961 12.0001C8.18907 12.0001 9.10743 11.7215 9.88857 11.1996C10.6697 10.6776 11.2785 9.93579 11.638 9.06784C11.9976 8.19989 12.0916 7.24483 11.9083 6.32342C11.7251 5.40201 11.2727 4.55564 10.6084 3.89134C9.94407 3.22704 9.0977 2.77465 8.17629 2.59137C7.25488 2.40809 6.29981 2.50215 5.43186 2.86167C4.56391 3.22119 3.82206 3.83001 3.30013 4.61114C2.77819 5.39227 2.49961 6.31064 2.49961 7.2501C2.50126 8.50937 3.00224 9.71659 3.89268 10.607C4.78312 11.4975 5.99034 11.9984 7.24961 12.0001Z"
+                                        fill="#475569" />
+                                </svg>
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="draftList?.length > 0">
+                    <ag-grid-angular style="width: 100%; height: 305px;" class="ag-theme-material" [rowData]="draftList"
+                        [pagination]="false" [paginationPageSize]="paginationPageSize" [columnDefs]="DraftHeaders">
+                    </ag-grid-angular>
+                    <div class="d-flex justify-content-end">
+                        <mat-paginator [length]="draftTotalList?.totalRecords > 0 ? draftTotalList?.totalRecords : 0 "
+                            [pageSize]="pageSize" (page)="onPageChanged($event,'draft')">
+                        </mat-paginator>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center m-auto" *ngIf="draftList?.length == 0">
+                    <div class="text-center">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#D4D7E9" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+                                fill="#283892" />
+                        </svg>
+
+                        <div class="no-data-text mt-1">No data found</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" col-md-12 col-lg-6 pl-lg-2">
+            <div class="Vehicle-status-card-two ">
+                <div class="d-flex justify-content-between ">
+                    <div class="Vehicle-status">Movement documents</div>
+                    <div class="d-flex ">
+                        <div class="mr-4 table-search">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Search Movement doc no, Driver, Vehicle, Trailer</mat-label>
+                                <input matInput  (keyup)="tableSearch($event,'Orders')">
+                                <mat-icon matPrefix><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M14.3496 14.3563C14.2563 14.4483 14.1306 14.4999 13.9996 14.5001C13.8668 14.4995 13.7393 14.4481 13.6434 14.3563L10.9434 11.6501C9.80622 12.6052 8.34425 13.0845 6.86236 12.9879C5.38046 12.8913 3.99306 12.2264 2.98951 11.1317C1.98596 10.0371 1.44375 8.59729 1.47597 7.1126C1.50818 5.62791 2.11233 4.21298 3.16241 3.1629C4.21249 2.11282 5.62743 1.50867 7.11212 1.47645C8.59681 1.44424 10.0366 1.98645 11.1313 2.99C12.2259 3.99355 12.8908 5.38095 12.9874 6.86285C13.084 8.34474 12.6047 9.80671 11.6496 10.9438L14.3496 13.6438C14.3969 13.6904 14.4344 13.7458 14.46 13.807C14.4856 13.8681 14.4988 13.9338 14.4988 14.0001C14.4988 14.0664 14.4856 14.132 14.46 14.1932C14.4344 14.2544 14.3969 14.3098 14.3496 14.3563ZM7.24961 12.0001C8.18907 12.0001 9.10743 11.7215 9.88857 11.1996C10.6697 10.6776 11.2785 9.93579 11.638 9.06784C11.9976 8.19989 12.0916 7.24483 11.9083 6.32342C11.7251 5.40201 11.2727 4.55564 10.6084 3.89134C9.94407 3.22704 9.0977 2.77465 8.17629 2.59137C7.25488 2.40809 6.29981 2.50215 5.43186 2.86167C4.56391 3.22119 3.82206 3.83001 3.30013 4.61114C2.77819 5.39227 2.49961 6.31064 2.49961 7.2501C2.50126 8.50937 3.00224 9.71659 3.89268 10.607C4.78312 11.4975 5.99034 11.9984 7.24961 12.0001Z"
+                                            fill="#475569" />
+                                    </svg>
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="d-flex mt-1" [matMenuTriggerFor]="menu2">
+
+                            <div class="clalanter-text pr-1 mt-1">
+                                {{SelectedDateRangeForOrder == '' ? "All" : SelectedDateRangeForOrder}}
+                            </div>
+                            <div class="mr-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
+                                    fill="none">
+                                    <path d="M4.49414 6L8.49414 10L12.4941 6" stroke="#04021D" stroke-width="1.3"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <mat-menu #menu2="matMenu">
+                             <div class=""  *ngFor="let data of driverStatusList">
+                                <button mat-menu-item (click)="switchModeForOrders( data.statusName == 'All' ? '':data.statusName)">
+                                    <span>{{data.statusName}}</span>
+                                </button>
+                             </div>
+                               
+
+
+                            </mat-menu>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div *ngIf="ordersList?.length > 0">
+                    <ag-grid-angular style="width: 100%; height: 325px;" class="ag-theme-material"
+                        [rowData]="ordersList" [pagination]="false" [paginationPageSize]="paginationPageSize"
+                        [columnDefs]="OrdersHeaders"   >
+                    </ag-grid-angular>
+                    <div class="d-flex justify-content-end">
+                        <mat-paginator [length]="ordersTotalList?.totalRecords > 0 ? ordersTotalList?.totalRecords : 0"
+                            [pageSize]="pageSize" (page)="onPageChanged($event,'orders')">
+                        </mat-paginator>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center m-auto" *ngIf="ordersList?.length == 0">
+                    <div class="text-center">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#D4D7E9" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+                                fill="#283892" />
+                        </svg>
+
+                        <div class="no-data-text mt-1">No data found</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div class="row mt-3">
+        <div class="col  pb-sm-2   pb-md-2 ">
+            <div class="Vehicle-status-card pie">
+                <div class="Vehicle-status">On time delivery rate</div>
+                <div id="deliveryChart">
+                    <apx-chart [series]="deliveryChartOptions.series" [chart]="deliveryChartOptions.chart"
+                        [dataLabels]="deliveryChartOptions.dataLabels" [tooltip]="deliveryChartOptions.tooltip"
+                        [plotOptions]="deliveryChartOptions.plotOptions" [legend]="deliveryChartOptions.legend"
+                        [title]="deliveryChartOptions.title" [responsive]="deliveryChartOptions.responsive"
+                        [colors]="deliveryChartOptions.colors"></apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col pb-sm-2 pl-lg-0 pb-md-2">
+            <div class="Vehicle-status-card pie">
+                <div class="Vehicle-status">Order cycle time</div>
+                <div id="OrderCycleChart">
+                    <apx-chart [series]="OrderCycleChartOptions.series" [chart]="OrderCycleChartOptions.chart"
+                        [tooltip]="OrderCycleChartOptions.tooltip" [dataLabels]="OrderCycleChartOptions.dataLabels"
+                        [plotOptions]="OrderCycleChartOptions.plotOptions" [legend]="OrderCycleChartOptions.legend"
+                        [title]="OrderCycleChartOptions.title" [responsive]="OrderCycleChartOptions.responsive"
+                        [colors]="OrderCycleChartOptions.colors"></apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col pb-sm-2 pl-lg-0 pb-md-2 acc-res">
+            <div class="Vehicle-status-card pie">
+                <div class="Vehicle-status">Order accuracy rate</div>
+                <div id="OrderAccuracyChart">
+                    <apx-chart [series]="OrderAccuracyChartOptions.series" [chart]="OrderAccuracyChartOptions.chart"
+                        [dataLabels]="OrderAccuracyChartOptions.dataLabels"
+                        [plotOptions]="OrderAccuracyChartOptions.plotOptions"
+                        [legend]="OrderAccuracyChartOptions.legend" [title]="OrderAccuracyChartOptions.title"
+                        [tooltip]="OrderAccuracyChartOptions.tooltip"
+                        [responsive]="OrderAccuracyChartOptions.responsive"
+                        [colors]="OrderAccuracyChartOptions.colors"></apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col pb-sm-2  pl-lg-0 pb-md-2 fill-res">
+            <div class="Vehicle-status-card pie">
+                <div class="Vehicle-status">Fill rate</div>
+                <div id="FillChart">
+                    <apx-chart [series]="FillChartOptions.series" [chart]="FillChartOptions.chart"
+                        [dataLabels]="FillChartOptions.dataLabels" [tooltip]="FillChartOptions.tooltip"
+                        [plotOptions]="FillChartOptions.plotOptions" [legend]="FillChartOptions.legend"
+                        [title]="FillChartOptions.title" [responsive]="FillChartOptions.responsive"
+                        [colors]="FillChartOptions.colors"></apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>  -->
+    <div class="map-section ">
+        <div class="map-cards">
+            <div class="Vehicle-status">On time delivery rate</div>
+            <div id="deliveryChart">
+                <apx-chart [series]="deliveryChartOptions.series" [chart]="deliveryChartOptions.chart"
+                    [dataLabels]="deliveryChartOptions.dataLabels" [tooltip]="deliveryChartOptions.tooltip"
+                    [plotOptions]="deliveryChartOptions.plotOptions" [legend]="deliveryChartOptions.legend"
+                    [title]="deliveryChartOptions.title" [responsive]="deliveryChartOptions.responsive"
+                    [colors]="deliveryChartOptions.colors"></apx-chart>
+            </div>
+        </div>
+        <div class="map-cards">
+            <div class="Vehicle-status">Order cycle time</div>
+            <div id="OrderCycleChart">
+                <apx-chart [series]="OrderCycleChartOptions.series" [chart]="OrderCycleChartOptions.chart"
+                    [tooltip]="OrderCycleChartOptions.tooltip" [dataLabels]="OrderCycleChartOptions.dataLabels"
+                    [plotOptions]="OrderCycleChartOptions.plotOptions" [legend]="OrderCycleChartOptions.legend"
+                    [title]="OrderCycleChartOptions.title" [responsive]="OrderCycleChartOptions.responsive"
+                    [colors]="OrderCycleChartOptions.colors"></apx-chart>
+            </div>
+        </div>
+        <div class="map-cards">
+            <div class="Vehicle-status">Order accuracy rate</div>
+            <div id="OrderAccuracyChart">
+                <apx-chart [series]="OrderAccuracyChartOptions.series" [chart]="OrderAccuracyChartOptions.chart"
+                    [dataLabels]="OrderAccuracyChartOptions.dataLabels"
+                    [plotOptions]="OrderAccuracyChartOptions.plotOptions" [legend]="OrderAccuracyChartOptions.legend"
+                    [title]="OrderAccuracyChartOptions.title" [tooltip]="OrderAccuracyChartOptions.tooltip"
+                    [responsive]="OrderAccuracyChartOptions.responsive"
+                    [colors]="OrderAccuracyChartOptions.colors"></apx-chart>
+            </div>
+        </div>
+        <div class="map-cards">
+            <div class="Vehicle-status">Fill rate</div>
+            <div id="FillChart">
+                <apx-chart [series]="FillChartOptions.series" [chart]="FillChartOptions.chart"
+                    [dataLabels]="FillChartOptions.dataLabels" [tooltip]="FillChartOptions.tooltip"
+                    [plotOptions]="FillChartOptions.plotOptions" [legend]="FillChartOptions.legend"
+                    [title]="FillChartOptions.title" [responsive]="FillChartOptions.responsive"
+                    [colors]="FillChartOptions.colors"></apx-chart>
+            </div>
+
+        </div>
+    </div>
+
+</div>
