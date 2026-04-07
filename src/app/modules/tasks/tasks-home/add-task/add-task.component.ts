@@ -102,7 +102,7 @@ export class AddTaskComponent implements OnInit,CanComponentDeactivate {
     // this.materialTypes = materialServ.materialList
     // //console.log(this.materialTypes, 'materialList');
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -170,7 +170,7 @@ export class AddTaskComponent implements OnInit,CanComponentDeactivate {
 
 
     this.ordersForm.get('ordersId')?.disable()
-    let Data: any = localStorage.getItem("userData");
+    let Data: any = sessionStorage.getItem("userData");
     this.userProfile = JSON.parse(Data);
 
     if (this.taskServ.editTaskRecord) {
@@ -180,7 +180,7 @@ export class AddTaskComponent implements OnInit,CanComponentDeactivate {
 
     }
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

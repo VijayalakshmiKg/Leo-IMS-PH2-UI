@@ -117,7 +117,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
         // Load planner sheet options from API
         async loadPlannerSheetOptions() {
           try {
-            let user: any = localStorage.getItem('loggedInUser');
+            let user: any = sessionStorage.getItem('loggedInUser');
       if (!user) {
         console.warn('⚠️ No logged in user found');
         return;
@@ -459,8 +459,8 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
               productEstWeight: productEstWeight,
               productEstWeightValue: productEstWeightValue,
               weightUnit: weightUnit,
-              productType: detail.productType || detail.ProductType || '',
-              productTypeId: detail.productTypeID || detail.ProductTypeID || null,
+              productType: (detail.product || detail.Product) ? (detail.productType || detail.ProductType || '') : '',
+              productTypeId: (detail.product || detail.Product) ? (detail.productTypeID || detail.ProductTypeID || null) : null,
               trailerInType: detail.trailerInType || detail.TrailerInType || '',
               trailerInTypeId: detail.trailerInTypeID || detail.TrailerInTypeID || null,
               changeoverLocation: detail.changeoverLocation || detail.ChangeoverLocation || '',
@@ -472,8 +472,8 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
               trailerOutId: detail.trailerOutID || detail.TrailerOutID || null,
               trailerOutType: detail.trailerOutType || detail.TrailerOutType || '',
               trailerOutTypeId: detail.trailerOutTypeID || detail.TrailerOutTypeID || null,
-              scheduledTime: detail.scheduledTime || detail.ScheduledTime || '',
-              collectionTime: detail.collectionTime || detail.CollectionTime || '',
+              scheduledTime: this.normalizeToDateTimeLocal(detail.scheduledTime || detail.ScheduledTime || ''),
+              collectionTime: this.normalizeToDateTimeLocal(detail.collectionTime || detail.CollectionTime || ''),
               collectedTime: detail.collectedTime || detail.CollectedTime || '',
               notes: detail.notes || detail.Notes || '',
               checked: false
@@ -782,6 +782,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
   existingPlannerSheetNames: string[] = [];
   isValidatingSheetName: boolean = false;
   sheetNameValidationPassed: boolean = false;
+  isSavingPlanner: boolean = false;
   
   // Refresh state
   isRefreshing: boolean = false;
@@ -837,6 +838,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
     { key: 'customer', label: 'Customer', fullLabel: 'Customer', visible: true, width: 90, filterable: true, sortable: true },
     { key: 'pickupLocation', label: 'Pickup', fullLabel: 'Pickup Location', visible: true, width: 80, filterable: true, sortable: true },
     { key: 'product', label: 'Product', fullLabel: 'Product', visible: true, width: 80, filterable: true, sortable: true },
+    { key: 'changeoverLocation', label: 'Changeover', fullLabel: 'Changeover Location', visible: true, width: 90, filterable: true, sortable: true },
     { key: 'productType', label: 'Prod Type', fullLabel: 'Product Type', visible: true, width: 75, filterable: true, sortable: true, editable: false },
     { key: 'collectionTime', label: 'Coll Time', fullLabel: 'Collection Time', visible: true, width: 80, filterable: true, sortable: true },
     { key: 'deliveryLocation', label: 'Delivery', fullLabel: 'Delivery Location', visible: true, width: 80, filterable: true, sortable: true },
@@ -848,7 +850,6 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
     { key: 'trailerIn', label: 'Trailer In', fullLabel: 'Trailer In', visible: true, width: 75, filterable: true, sortable: true },
     { key: 'status', label: 'Status', fullLabel: 'Status', visible: true, width: 70, filterable: true, sortable: true },
     { key: 'productEstWeight', label: 'Est Weight', fullLabel: 'Product Estimated Weight', visible: false, width: 80, filterable: true, sortable: true },
-    { key: 'changeoverLocation', label: 'Changeover', fullLabel: 'Changeover Location', visible: false, width: 90, filterable: true, sortable: true },
     { key: 'changeoverMessage', label: 'Change Msg', fullLabel: 'Changeover Message', visible: false, width: 90, filterable: true, sortable: true },
     { key: 'notes', label: 'Notes', fullLabel: 'Notes', visible: false, width: 80, filterable: true, sortable: true }
   ];
@@ -938,7 +939,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
   };
 
   get logedInUser() {
-    let user: any = localStorage.getItem('userData');
+    let user: any = sessionStorage.getItem('userData');
     return JSON.parse(user)?.roleType;
   }
 
@@ -986,6 +987,11 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
     // Check if click is outside column filter popup
     if (this.showColumnFilterPopup && !target.closest('.column-filter-popup') && !target.closest('.filter-btn')) {
       this.showColumnFilterPopup = null;
+    }
+
+    // Check if click is outside column manager panel
+    if (this.showColumnManager && !target.closest('.column-manager-panel') && !target.closest('.manage-columns-btn')) {
+      this.showColumnManager = false;
     }
   }
 
@@ -1235,6 +1241,12 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       console.log('❌ Validation failed: Empty name');
       return false;
     }
+
+    if (name.trim().length > 50) {
+      this.plannerSheetNameError = 'Sheet name cannot exceed 50 characters';
+      console.log('❌ Validation failed: Name exceeds 50 characters');
+      return false;
+    }
     
     const normalizedName = name.toLowerCase().trim();
     console.log('🔄 Normalized name:', normalizedName);
@@ -1369,15 +1381,15 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
         status: detail.status || detail.Status || '',
         trailerIn: detail.trailerIn || detail.TrailerIn || '',
         productEstWeight: productEstWeight,
-        productType: detail.productType || detail.ProductType || '',
+        productType: (detail.product || detail.Product) ? (detail.productType || detail.ProductType || '') : '',
         trailerInType: detail.trailerInType || detail.TrailerInType || '',
         changeoverLocation: detail.changeoverLocation || detail.ChangeoverLocation || '',
         changeoverMessage: detail.changeoverMessage || detail.ChangeoverMessage || '',
         deliveryLocation: detail.deliveryLocation || detail.DeliveryLocation || '',
         trailerOut: detail.trailerOut || detail.TrailerOut || '',
         trailerOutType: detail.trailerOutType || detail.TrailerOutType || '',
-        scheduledTime: detail.scheduledTime || detail.ScheduledTime || '',
-        collectionTime: detail.collectionTime || detail.CollectionTime || '',
+        scheduledTime: this.normalizeToDateTimeLocal(detail.scheduledTime || detail.ScheduledTime || ''),
+        collectionTime: this.normalizeToDateTimeLocal(detail.collectionTime || detail.CollectionTime || ''),
         collectedTime: detail.collectedTime || detail.CollectedTime || '',
         notes: detail.notes || detail.Notes || '',
         checked: false
@@ -1804,7 +1816,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
     console.log('✓ Cell drag ended');
   }
 
-  onCellDrop(targetRowIndex: number, targetColumnKey: string, event: DragEvent): void {
+  async onCellDrop(targetRowIndex: number, targetColumnKey: string, event: DragEvent): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
     
@@ -1840,11 +1852,10 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       return;
     }
     
-    // Move the value from source to target (copy then clear source)
+    // Store the source value before clearing
     const sourceValue = sourceTask[targetColumnKey];
-    targetTask[targetColumnKey] = sourceValue;
-    
-    // Also copy related ID fields if they exist
+
+    // ID field mapping for dropdown columns
     const idFieldMap: { [key: string]: string } = {
       'customer': 'customerId',
       'product': 'productId',
@@ -1861,42 +1872,233 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       'deliveryLocation': 'deliveryLocationId',
       'planner': 'plannerId'
     };
-    
+
     const idField = idFieldMap[targetColumnKey];
-    if (idField && sourceTask[idField] !== undefined) {
-      targetTask[idField] = sourceTask[idField];
-      console.log(`📋 Also moved ${idField}: ${sourceTask[idField]}`);
-      // Clear the source ID field
-      sourceTask[idField] = null;
+    const isDropdownColumn = !!idField;
+
+    // === VALIDATION: Check if the dragged value is valid for the target row ===
+    if (isDropdownColumn) {
+      const isValid = await this.validateDragDropValue(targetTask, targetColumnKey, sourceValue, sourceTask);
+      if (!isValid) {
+        this.onCellDragEnd(event);
+        return;
+      }
     }
-    
-    // Special handling for weight column
-    if (targetColumnKey === 'productEstWeight') {
+
+    // Set value on target task
+    targetTask[targetColumnKey] = sourceValue;
+
+    if (isDropdownColumn) {
+      // Copy source ID to target
+      if (sourceTask[idField] !== undefined) {
+        targetTask[idField] = sourceTask[idField];
+        console.log(`📋 Moved ${idField}: ${sourceTask[idField]}`);
+        // Clear source ID field
+        sourceTask[idField] = null;
+      }
+
+      // Clear source display value
+      sourceTask[targetColumnKey] = '';
+
+      // If product was moved away from source, clear source productType too
+      if (targetColumnKey === 'product') {
+        sourceTask.productType = '';
+        sourceTask.productTypeId = null;
+        console.log('✅ Source product cleared — source productType also cleared');
+      }
+
+      // Run the same validation & cascade logic as dropdown selection
+      this.onDropdownChange(targetTask, targetColumnKey, sourceValue);
+      console.log(`✅ Drag-drop validation applied for column: ${targetColumnKey}`);
+
+    } else if (targetColumnKey === 'productEstWeight') {
+      // Special handling for weight column
       targetTask.productEstWeightValue = sourceTask.productEstWeightValue;
       targetTask.weightUnit = sourceTask.weightUnit;
       // Clear source weight fields
       sourceTask.productEstWeightValue = '';
       sourceTask.weightUnit = '';
+      sourceTask[targetColumnKey] = '';
+
+    } else {
+      // Simple value columns (time, text, etc.) — just move the value
+      sourceTask[targetColumnKey] = '';
     }
-    
-    // Clear the source cell value (move operation)
-    sourceTask[targetColumnKey] = '';
-    
+
     // Sync with active sheet
     this.syncWithActiveSheet();
-    
+
     // Force change detection
     this.cdr.detectChanges();
-    
+
     // Reset drag state
     this.onCellDragEnd(event);
-    
+
     this.utilServ.toaster.next({ 
       type: customToaster.successToast, 
       message: `Cell value moved to row ${targetRowIndex + 1}` 
     });
-    
+
     console.log('✅ Cell value moved successfully');
+  }
+
+  /**
+   * Validates whether a dragged value is valid for the target row.
+   * For customer-dependent columns (product, pickupLocation), loads the
+   * target customer's valid options and checks if the dragged value exists.
+   * For global dropdown columns, checks against the loaded options list.
+   * Returns true if valid, false (with toast error) if not.
+   */
+  private async validateDragDropValue(
+    targetTask: any,
+    columnKey: string,
+    sourceValue: string,
+    sourceTask: any
+  ): Promise<boolean> {
+
+    // Columns that depend on the target row's customer
+    const customerDependentColumns = ['product', 'pickupLocation'];
+
+    if (customerDependentColumns.includes(columnKey)) {
+      const targetCustomerId = targetTask.customerId || targetTask.CustomerID || targetTask.customerID;
+      const targetCustomerName = targetTask.customer || '';
+
+      // 1. Target row must have a customer assigned
+      if (!targetCustomerId && !targetCustomerName) {
+        this.utilServ.toaster.next({
+          type: customToaster.errorToast,
+          message: `Cannot move ${this.getColumnLabel(columnKey)} — target row has no customer assigned.`
+        });
+        return false;
+      }
+
+      // 2. Resolve targetCustomerId from name if needed
+      let resolvedCustomerId = targetCustomerId;
+      if (!resolvedCustomerId && targetCustomerName) {
+        if (this.customerOptions.length === 0) {
+          await this.loadCustomerOptions();
+        }
+        const match = this.customerOptions.find((c: any) =>
+          (c.name || '').toLowerCase().trim() === targetCustomerName.toLowerCase().trim()
+        );
+        if (match) {
+          resolvedCustomerId = match.value;
+          targetTask.customerId = resolvedCustomerId;
+        }
+      }
+
+      if (!resolvedCustomerId) {
+        this.utilServ.toaster.next({
+          type: customToaster.errorToast,
+          message: `Cannot move ${this.getColumnLabel(columnKey)} — customer "${targetCustomerName}" not recognized.`
+        });
+        return false;
+      }
+
+      // 3. If source and target share the same customer, value is automatically valid
+      const sourceCustomerId = sourceTask.customerId || sourceTask.CustomerID || sourceTask.customerID;
+      if (sourceCustomerId && String(sourceCustomerId) === String(resolvedCustomerId)) {
+        console.log(`✅ Same customer (${resolvedCustomerId}), skipping option check.`);
+        return true;
+      }
+
+      // 4. Load the target customer's valid options and validate
+      if (columnKey === 'product') {
+        await this.loadProductOptions(resolvedCustomerId);
+        const isValid = this.productOptions.some((opt: any) =>
+          (opt.name || '').toLowerCase().trim() === (sourceValue || '').toLowerCase().trim()
+        );
+        if (!isValid) {
+          this.utilServ.toaster.next({
+            type: customToaster.errorToast,
+            message: `"${sourceValue}" is not a valid product for customer "${targetCustomerName}".`
+          });
+          return false;
+        }
+      } else if (columnKey === 'pickupLocation') {
+        await this.loadLocationOptions(resolvedCustomerId);
+        const isValid = this.pickupLocationOptions.some((opt: any) =>
+          (opt.name || '').toLowerCase().trim() === (sourceValue || '').toLowerCase().trim()
+        );
+        if (!isValid) {
+          this.utilServ.toaster.next({
+            type: customToaster.errorToast,
+            message: `"${sourceValue}" is not a valid pickup location for customer "${targetCustomerName}".`
+          });
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    // Global dropdown columns — validate against currently loaded options
+    const globalColumnOptionsMap: { [key: string]: { options: any[], loadFn: (() => Promise<void>) | null } } = {
+      'customer':           { options: this.customerOptions,           loadFn: () => this.loadCustomerOptions() },
+      'vehicle':            { options: this.vehicleOptions,            loadFn: () => this.loadVehicleOptions() },
+      'driverName':         { options: this.driverOptions,             loadFn: () => this.loadDriverOptions() },
+      'trailerIn':          { options: this.trailerInOptions,          loadFn: () => this.loadTrailerOptions() },
+      'trailerOut':         { options: this.trailerOutOptions,         loadFn: () => this.loadTrailerOptions() },
+      'trailerInType':      { options: this.trailerTypeOptions,        loadFn: () => this.loadTrailerTypeOptions() },
+      'trailerOutType':     { options: this.trailerOutTypeOptions,     loadFn: null },
+      'productType':        { options: this.productTypeOptions,        loadFn: () => this.loadProductTypeOptions() },
+      'changeoverLocation': { options: this.changeoverLocationOptions, loadFn: () => this.loadChangeoverLocationOptions() },
+      'deliveryLocation':   { options: this.deliveryLocationOptions,   loadFn: () => this.loadDeliveryLocationOptions() },
+      'status':             { options: this.statusOptions,             loadFn: () => this.loadStatusOptions() },
+      'planner':            { options: this.plannerOptions,            loadFn: () => this.loadPlannerOptions() }
+    };
+
+    const mapping = globalColumnOptionsMap[columnKey];
+    if (mapping) {
+      // Load options if not yet loaded
+      if (mapping.options.length === 0 && mapping.loadFn) {
+        await mapping.loadFn();
+        // Re-read options after loading (since load mutates the class property)
+        mapping.options = (globalColumnOptionsMap[columnKey] as any).options =
+          (this as any)[this.getOptionsPropertyName(columnKey)] || [];
+      }
+
+      // Re-read from the actual class property (since the reference may have changed after load)
+      const currentOptions: any[] = (this as any)[this.getOptionsPropertyName(columnKey)] || [];
+
+      if (currentOptions.length > 0) {
+        const isValid = currentOptions.some((opt: any) =>
+          (opt.name || '').toLowerCase().trim() === (sourceValue || '').toLowerCase().trim()
+        );
+        if (!isValid) {
+          this.utilServ.toaster.next({
+            type: customToaster.errorToast,
+            message: `"${sourceValue}" is not a valid option for ${this.getColumnLabel(columnKey)}.`
+          });
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Maps a column key to its corresponding options array property name on the component.
+   */
+  private getOptionsPropertyName(columnKey: string): string {
+    const map: { [key: string]: string } = {
+      'customer': 'customerOptions',
+      'product': 'productOptions',
+      'pickupLocation': 'pickupLocationOptions',
+      'vehicle': 'vehicleOptions',
+      'driverName': 'driverOptions',
+      'status': 'statusOptions',
+      'trailerIn': 'trailerInOptions',
+      'trailerOut': 'trailerOutOptions',
+      'productType': 'productTypeOptions',
+      'trailerInType': 'trailerTypeOptions',
+      'trailerOutType': 'trailerOutTypeOptions',
+      'changeoverLocation': 'changeoverLocationOptions',
+      'deliveryLocation': 'deliveryLocationOptions',
+      'planner': 'plannerOptions'
+    };
+    return map[columnKey] || '';
   }
 
   // Check if cell is the current drop target
@@ -2126,7 +2328,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       console.log('🔄 Loading template options...');
       
       // Get logged in user's employee ID
-      let user: any = localStorage.getItem('loggedInUser');
+      let user: any = sessionStorage.getItem('loggedInUser');
       if (!user) {
         console.warn('⚠️ No logged in user found');
         return;
@@ -2249,7 +2451,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
             trailerIn: detail.trailerIn || detail.TrailerIn || '',
             productEstWeight: productEstWeight,
             weightUnit: weightUnit,
-            productType: detail.productType || detail.ProductType || '',
+            productType: (detail.product || detail.Product) ? (detail.productType || detail.ProductType || '') : '',
             trailerInType: detail.trailerInType || detail.TrailerInType || '',
             changeoverLocation: detail.changeoverLocation || detail.ChangeoverLocation || '',
             trailerOut: detail.trailerOut || detail.TrailerOut || '',
@@ -2736,10 +2938,37 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
+  // Check if selected tasks can be assigned (no TaskID and status is Draft)
+  canAssignSelectedTasks(): boolean {
+    const checked = this.getCheckedTasks();
+    if (checked.length === 0) return false;
+    return checked.every(task => {
+      const hasNoTaskID = !task.taskID || task.taskID === 0;
+      const isDraft = (task.status || '').toLowerCase().trim() === 'draft' || !(task.status || '').trim();
+      return hasNoTaskID && isDraft;
+    });
+  }
+
   async assignSelectedTasks() {
     const checkedTasks = this.getCheckedTasks();
     if (checkedTasks.length === 0) return;
-    
+
+    // Validate that selected tasks have no TaskID and are Draft
+    const ineligibleTasks = checkedTasks.filter((task: any) => {
+      const hasTaskID = task.taskID && task.taskID !== 0;
+      const status = (task.status || '').toLowerCase().trim();
+      const isNotDraft = status !== 'draft' && status !== '';
+      return hasTaskID || isNotDraft;
+    });
+    if (ineligibleTasks.length > 0) {
+      const taskNumbers = ineligibleTasks.map((t: any) => t.no || 'Unknown').join(', ');
+      this.utilServ.toaster.next({
+        type: customToaster.errorToast,
+        message: `Task(s) ${taskNumbers} cannot be assigned. Only Draft tasks without a Task ID can be assigned.`
+      });
+      return;
+    }
+
     // Validate that all selected tasks have a driver assigned
     const tasksWithoutDriver = checkedTasks.filter((task: any) => 
       !task.driverName || task.driverName.trim() === ''
@@ -2840,8 +3069,8 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
           ChangeoverLocation: task.changeoverLocation || '',
           TrailerOut: task.trailerOut || '',
           TrailerOutType: task.trailerOutType || '',
-          ScheduledTime: task.scheduledTime || '',
-          CollectionTime: task.collectionTime || '',
+          ScheduledTime: this.normalizeToDateTimeLocal(task.scheduledTime || ''),
+          CollectionTime: this.normalizeToDateTimeLocal(task.collectionTime || ''),
           CollectedTime: task.collectedTime || '',
           DeliveryLocation: task.deliveryLocation || ''
         };
@@ -3061,6 +3290,11 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
         this.plannerTaskList.splice(originalIndex + 1, 0, duplicateTask);
       });
       
+      // Renumber all tasks sequentially so the "No" column stays in order
+      this.plannerTaskList.forEach((task, index) => {
+        task.no = this.formatTaskNumber(index + 1);
+      });
+
       // Uncheck original tasks
       checkedTasks.forEach((task: any) => task.checked = false);
       this.allChecked = false;
@@ -3278,6 +3512,18 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
     
     // If product changed, auto-populate product type
     if (columnKey === 'product') {
+      // If product is cleared, also clear product type
+      if (!selectedValue || selectedValue.trim() === '') {
+        task.product = '';
+        task.productId = null;
+        task.productType = '';
+        task.productTypeId = null;
+        console.log('✅ Product cleared — productType also cleared');
+        this.syncWithActiveSheet();
+        console.log('📋 Task after dropdown change:', JSON.stringify(task, null, 2));
+        return;
+      }
+
       console.log('🔄 Product changed, looking for productType...');
       console.log('📦 Available productOptions:', this.productOptions);
       
@@ -3354,13 +3600,13 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
 
   // Check if column is a time input field
   isTimeColumn(columnKey: string): boolean {
-    const timeColumns = ['collectionTime'];
+    const timeColumns: string[] = [];
     return timeColumns.includes(columnKey);
   }
 
   // Check if column is a datetime input field (date + time)
   isDateTimeColumn(columnKey: string): boolean {
-    const dateTimeColumns = ['scheduledTime'];
+    const dateTimeColumns = ['scheduledTime', 'collectionTime'];
     return dateTimeColumns.includes(columnKey);
   }
 
@@ -3399,6 +3645,49 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   // Helper method to format datetime-local value for display
+  // Normalize any datetime string to YYYY-MM-DDTHH:mm format (for datetime-local input and consistent API payload)
+  normalizeToDateTimeLocal(value: string): string {
+    if (!value || !value.trim()) return '';
+    try {
+      let date: Date | null = null;
+
+      // Handle DD-MM-YYYY HH:mm or DD/MM/YYYY HH:mm format
+      const ddmmyyyyMatch = value.match(/^(\d{2})[\-\/](\d{2})[\-\/](\d{4})\s+(\d{2}):(\d{2})/);
+      if (ddmmyyyyMatch) {
+        const [, day, month, year, hours, minutes] = ddmmyyyyMatch;
+        date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hours), parseInt(minutes));
+      }
+
+      // Handle DD/MM/YYYY, H:mm AM/PM format
+      if (!date || isNaN(date.getTime())) {
+        const ampmMatch = value.match(/^(\d{2})[\-\/](\d{2})[\-\/](\d{4}),?\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+        if (ampmMatch) {
+          const [, day, month, year, rawHours, minutes, ampm] = ampmMatch;
+          let hours = parseInt(rawHours);
+          if (ampm.toUpperCase() === 'PM' && hours !== 12) hours += 12;
+          if (ampm.toUpperCase() === 'AM' && hours === 12) hours = 0;
+          date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hours, parseInt(minutes));
+        }
+      }
+
+      // Handle ISO / datetime-local format (already correct or parseable by Date)
+      if (!date || isNaN(date.getTime())) {
+        date = new Date(value);
+      }
+
+      if (!date || isNaN(date.getTime())) return value;
+
+      const y = date.getFullYear();
+      const m = (date.getMonth() + 1).toString().padStart(2, '0');
+      const d = date.getDate().toString().padStart(2, '0');
+      const h = date.getHours().toString().padStart(2, '0');
+      const min = date.getMinutes().toString().padStart(2, '0');
+      return `${y}-${m}-${d}T${h}:${min}`;
+    } catch (e) {
+      return value;
+    }
+  }
+
   formatDateTime(dateTimeValue: string): string {
     if (!dateTimeValue) return '-';
     
@@ -3888,6 +4177,12 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
   // Save Planner functionality
   async savePlannerWithDetails(sheetName?: string, plannerSheetId?: number) {
     try {
+      // Prevent double save
+      if (this.isSavingPlanner) {
+        console.log('⚠️ Save already in progress, skipping');
+        return;
+      }
+
       // Validate that we have data to save
       if (!this.plannerPaginator || !this.plannerPaginator.sheets || this.plannerPaginator.sheets.length === 0) {
         this.utilServ.toaster.next({ 
@@ -3898,7 +4193,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       }
 
       // Get logged in user data
-      let user: any = localStorage.getItem('loggedInUser');
+      let user: any = sessionStorage.getItem('loggedInUser');
       if (!user) {
         this.utilServ.toaster.next({ 
           type: customToaster.errorToast, 
@@ -3921,39 +4216,14 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       // Skip name popup if updating existing planner sheet
       if (!plannerSheetName && !plannerSheetId) {
         // Show custom dialog instead of prompt only for new sheets
-        return new Promise<void>((resolve) => {
-          this.newPlannerSheetName = '';
-          this.isPlannerSheetActive = false;
-          this.sheetNameValidationPassed = false;
-          this.plannerSheetNameError = '';
-          this.showSavePlannerDialog = true;
-          
-          console.log('📋 Dialog opened, waiting for user input...');
-          
-          // Wait for user to confirm or cancel
-          const checkDialog = setInterval(() => {
-            if (!this.showSavePlannerDialog) {
-              clearInterval(checkDialog);
-              console.log('📋 Dialog closed, checking validation...');
-              console.log('📋 sheetNameValidationPassed:', this.sheetNameValidationPassed);
-              console.log('📋 newPlannerSheetName:', this.newPlannerSheetName);
-              
-              // Only proceed with save if validation passed
-              if (this.sheetNameValidationPassed && this.newPlannerSheetName && this.newPlannerSheetName.trim() !== '') {
-                console.log('✅ Proceeding with save...');
-                // Continue with save using the provided name and isActive flag
-                this.savePlannerWithDetails(this.newPlannerSheetName).then(resolve);
-              } else {
-                console.log('❌ Save cancelled - validation not passed or name empty');
-                this.utilServ.toaster.next({ 
-                  type: customToaster.infoToast, 
-                  message: 'Save cancelled' 
-                });
-                resolve();
-              }
-            }
-          }, 100);
-        });
+        // The actual save will be triggered by confirmSavePlannerSheet()
+        this.newPlannerSheetName = '';
+        this.isPlannerSheetActive = false;
+        this.sheetNameValidationPassed = false;
+        this.plannerSheetNameError = '';
+        this.showSavePlannerDialog = true;
+        console.log('📋 Dialog opened, waiting for user input...');
+        return;
       }
       
       // If no name provided but has plannerSheetId, it means updating existing sheet
@@ -3971,6 +4241,7 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
       console.log('✍️ Created By:', createdBy);
 
       // Show loading indicator
+      this.isSavingPlanner = true;
       this.utilServ.toaster.next({ 
         type: customToaster.infoToast, 
         message: 'Saving planner...' 
@@ -4060,12 +4331,13 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
             TrailerOut: task.trailerOut || '',
             TrailerOutId: task.trailerOutId || null,
             TrailerOutType: task.trailerOutType || '',
-            ScheduledTime: task.scheduledTime || '',
-            CollectionTime: task.collectionTime || '',
+            ScheduledTime: this.normalizeToDateTimeLocal(task.scheduledTime || ''),
+            CollectionTime: this.normalizeToDateTimeLocal(task.collectionTime || ''),
             CollectedTime: task.collectedTime || '',
             Notes: task.notes || ''
           };
 
+          console.log(`⏰ Task ${task.no} - ScheduledTime: "${detail.ScheduledTime}", CollectionTime: "${detail.CollectionTime}"`);
           plannerSheetDetails.push(detail);
         });
 
@@ -4129,12 +4401,14 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
             const currentSheet = this.plannerPaginator.getActiveSheet();
             if (currentSheet) {
               currentSheet.plannerSheetId = returnedPlannerSheetId;
+              currentSheet.originalName = plannerSheetName?.trim() || currentSheet.name;
               console.log('✅ Sheet updated with new plannerSheetId:', returnedPlannerSheetId);
               
               // Also update in sheets array to ensure persistence
               const activeIndex = this.plannerPaginator.activeSheetIndex;
               if (activeIndex >= 0 && this.plannerPaginator.sheets[activeIndex]) {
                 this.plannerPaginator.sheets[activeIndex].plannerSheetId = returnedPlannerSheetId;
+                this.plannerPaginator.sheets[activeIndex].originalName = plannerSheetName?.trim() || this.plannerPaginator.sheets[activeIndex].name;
               }
             }
           } else {
@@ -4152,8 +4426,36 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
         this.isPlannerSheetActive = false;
         this.plannerSheetNameError = '';
 
-        // Optionally clear the data after successful save
-        // this.clearAllSheets();
+        // Refresh data from API after save to ensure consistency
+        const savedSheetId = plannerSheetId || (this.plannerPaginator.getActiveSheet()?.plannerSheetId);
+        if (savedSheetId) {
+          try {
+            console.log('🔄 Post-save refresh: fetching latest data for sheet ID:', savedSheetId);
+            const refreshRes: any = await this.templateService.getPlannerSheetById(savedSheetId);
+            if (refreshRes && refreshRes.result) {
+              const plannerResult = refreshRes.result;
+              const plannerDetails = plannerResult.plannerSheetDetails || plannerResult.PlannerSheetDetails || 
+                                     (Array.isArray(plannerResult) ? plannerResult : [plannerResult]);
+              if (Array.isArray(plannerDetails) && plannerDetails.length > 0) {
+                const refreshedTasks = this.convertPlannerSheetDetailsToTasks(plannerDetails);
+                // Log the fetched scheduledTime and collectionTime for debugging
+                refreshedTasks.forEach((t: any) => {
+                  console.log(`🔄 Fetched Task ${t.no} - scheduledTime: "${t.scheduledTime}", collectionTime: "${t.collectionTime}"`);
+                });
+                this.plannerTaskList = refreshedTasks;
+                this.length = refreshedTasks.length;
+                const refreshedSheet = this.plannerPaginator.getActiveSheet();
+                if (refreshedSheet) {
+                  refreshedSheet.data = JSON.parse(JSON.stringify(refreshedTasks));
+                }
+                this.cdr.detectChanges();
+                console.log('✅ Post-save refresh completed with', refreshedTasks.length, 'tasks');
+              }
+            }
+          } catch (refreshError) {
+            console.warn('⚠️ Post-save refresh failed:', refreshError);
+          }
+        }
       } else {
         throw new Error(res?.message || 'Failed to save planner');
       }
@@ -4167,6 +4469,8 @@ export class PlannerDashboardComponent implements OnInit, AfterViewInit, OnDestr
         type: customToaster.errorToast, 
         message: `Failed to save planner: ${errorMessage}` 
       });
+    } finally {
+      this.isSavingPlanner = false;
     }
   }
 

@@ -32,7 +32,7 @@ export class ViewConsignorComponent implements OnInit {
     // this.consignorServ.editconsignorRecord = null
   }
   get loggedInUser() {
-    let user:any = localStorage.getItem('loggedInUser')
+    let user:any = sessionStorage.getItem('loggedInUser')
     return JSON.parse(user)
   }
   ngOnInit(): void {

@@ -70,8 +70,8 @@ export class RecordsComponent implements OnInit {
   tableColumns = [
     { key: 'checkbox', label: '', visible: true, width: 50, filterable: false, sortable: false },
     { key: 'no', label: 'No', visible: true, width: 60, filterable: false, sortable: true },
-    { key: 'weighbridgeRecordID', label: 'Record ID', visible: true, width: 100, filterable: true, sortable: true },
-    { key: 'taskID', label: 'Task ID', visible: true, width: 100, filterable: true, sortable: true },
+    { key: 'weighbridgeRecordID', label: 'Record ID', visible: false, width: 100, filterable: true, sortable: true },
+    { key: 'taskID', label: 'Task ID', visible: false, width: 100, filterable: true, sortable: true },
     { key: 'customer', label: 'Customer', visible: true, width: 180, filterable: true, sortable: true },
     { key: 'product', label: 'Product', visible: true, width: 150, filterable: true, sortable: true },
     { key: 'location', label: 'Location', visible: true, width: 180, filterable: true, sortable: true },
@@ -124,7 +124,7 @@ export class RecordsComponent implements OnInit {
         pageSize: this.pageSize,
         searchText: this.searchText
       };
-      let user: any = localStorage.getItem('loggedInUser');
+      let user: any = sessionStorage.getItem('loggedInUser');
       if (!user) {
         console.warn('⚠️ No logged in user found');
         return;
@@ -154,16 +154,16 @@ export class RecordsComponent implements OnInit {
           vehicle: item.vehicle || item.Vehicle || '-',
           driver: item.driver || item.Driver || '-',
           status: item.status || item.Status || '-',
-          grossWeight: item.grossWeight || item.GrossWeight || '-',
+          grossWeight: item.grossWeight ?? item.GrossWeight ?? '-',
           grossWeightDateTime: this.formatDateTime(item.grossWeightDateTime || item.GrossWeightDateTime),
-          moistureDeduction: item.moistureDetuction || item.MoistureDetuction || item.moistureDeduction || item.MoistureDeduction || '-',
+          moistureDeduction: item.moistureDetuction ?? item.MoistureDetuction ?? item.moistureDeduction ?? item.MoistureDeduction ?? '-',
           moistureDeductionDateTime: this.formatDateTime(item.moistureDetuctionDateTime || item.MoistureDetuctionDateTime || item.moistureDeductionDateTime || item.MoistureDeductionDateTime),
-          tareWeight: item.tareWeight || item.TareWeight || '-',
+          tareWeight: item.tareWeight ?? item.TareWeight ?? '-',
           tareWeightDateTime: this.formatDateTime(item.tareWeightDateTime || item.TareWeightDateTime),
-          netWeight: item.netWeight || item.NetWeight || '-',
+          netWeight: item.netWeight ?? item.NetWeight ?? '-',
           raiseIssued: item.raiseIssued || item.RaiseIssued || false,
-          trailerLeaking: item.trailerLeaking || item.TrailerLeaking || false,
-          trailerHavingOdours: item.trailerHavingOdours || item.TrailerHavingOdours || false
+          trailerLeaking: (item.trailerLeaking ?? item.TrailerLeaking) === 1 || (item.trailerLeaking ?? item.TrailerLeaking) === true,
+          trailerHavingOdours: (item.trailerHavingOdours ?? item.TrailerHavingOdours) === 1 || (item.trailerHavingOdours ?? item.TrailerHavingOdours) === true
         }));
         this.length = response.totalCount || dataArray.length;
         this.totalPages = Math.ceil(this.length / this.pageSize);
@@ -567,12 +567,12 @@ export class RecordsComponent implements OnInit {
           transactionType: res.transactionType || res.TransactionType || 'General',
           weighbridgeRecordID: res.weighbridgeRecordID || res.WeighbridgeRecordID || recordData?.weighbridgeRecordID || '-',
           // Pre-fill existing weigh data if available
-          grossWeight: res.grossWeight || res.GrossWeight || recordData?.grossWeight || null,
-          grossWeighedDateTime: res.grossWeighedDateTime || res.GrossWeighedDateTime || '',
-          moistureDeduction: res.moistureDeduction || res.MoistureDeduction || res.moistureDetuction || res.MoistureDetuction || recordData?.moistureDeduction || null,
-          moistureDateTime: res.moistureDateTime || res.MoistureDateTime || res.moistureDetuctionDateTime || res.MoistureDetuctionDateTime || '',
-          tareWeight: res.tareWeight || res.TareWeight || recordData?.tareWeight || null,
-          tareWeighedDateTime: res.tareWeighedDateTime || res.TareWeighedDateTime || ''
+          grossWeight: res.grossWeight ?? res.GrossWeight ?? recordData?.grossWeight ?? null,
+          grossWeighedDateTime: res.grossWeightDateTime || res.GrossWeightDateTime || '',
+          moistureDeduction: res.moistureDeduction ?? res.MoistureDeduction ?? res.moistureDetuction ?? res.MoistureDetuction ?? recordData?.moistureDeduction ?? null,
+          moistureDateTime: res.moistureDetuctionDateTime || res.MoistureDateTime || res.moistureDetuctionDateTime || res.MoistureDetuctionDateTime || '',
+          tareWeight: res.tareWeight ?? res.TareWeight ?? recordData?.tareWeight ?? null,
+          tareWeighedDateTime: res.tareWeightDateTime || res.TareWeighedDateTime || ''
         };
         
         // Pre-fill form data with existing values
@@ -598,18 +598,18 @@ export class RecordsComponent implements OnInit {
           ticketNo: '-',
           transactionType: 'General',
           weighbridgeRecordID: recordData?.weighbridgeRecordID || '-',
-          grossWeight: recordData?.grossWeight || null,
-          moistureDeduction: recordData?.moistureDeduction || null,
-          tareWeight: recordData?.tareWeight || null
+          grossWeight: recordData?.grossWeight ?? null,
+          moistureDeduction: recordData?.moistureDeduction ?? null,
+          tareWeight: recordData?.tareWeight ?? null
         };
         
         // Set current date/time for tare weight
         this.weighFormData = {
-          grossWeight: recordData?.grossWeight || null,
+          grossWeight: recordData?.grossWeight ?? null,
           grossWeighedDateTime: '',
-          moistureDeduction: recordData?.moistureDeduction || null,
+          moistureDeduction: recordData?.moistureDeduction ?? null,
           moistureDateTime: '',
-          tareWeight: recordData?.tareWeight || null,
+          tareWeight: recordData?.tareWeight ?? null,
           tareWeighedDateTime: this.getCurrentDateTime()
         };
       }
@@ -686,20 +686,20 @@ export class RecordsComponent implements OnInit {
   
   // Calculate moisture deduction weight
   calculateMoistureDeductionWeight(): string {
-    const gross = this.weighFormData.grossWeight || 0;
-    const moisturePercent = this.weighFormData.moistureDeduction || 0;
+    const gross = parseFloat(this.weighFormData.grossWeight) || 0;
+    const moisturePercent = parseFloat(this.weighFormData.moistureDeduction) || 0;
     const deduction = (gross * moisturePercent) / 100;
-    return deduction.toFixed(2);
+    return isNaN(deduction) ? '0.00' : deduction.toFixed(2);
   }
   
   // Calculate net weight
   calculateNetWeight(): string {
-    const gross = this.weighFormData.grossWeight || 0;
-    const tare = this.weighFormData.tareWeight || 0;
-    const moisturePercent = this.weighFormData.moistureDeduction || 0;
+    const gross = parseFloat(this.weighFormData.grossWeight) || 0;
+    const tare = parseFloat(this.weighFormData.tareWeight) || 0;
+    const moisturePercent = parseFloat(this.weighFormData.moistureDeduction) || 0;
     const moistureDeduction = (gross * moisturePercent) / 100;
     const netWeight = gross - tare - moistureDeduction;
-    return netWeight.toFixed(2);
+    return isNaN(netWeight) ? '0.00' : netWeight.toFixed(2);
   }
   
   // Save Weigh Trailer Data
@@ -732,7 +732,7 @@ export class RecordsComponent implements OnInit {
         MoistureDetuctionDateTime: this.weighFormData.moistureDateTime || null,
         TareWeight: this.weighFormData.tareWeight || 0,
         TareWeightDateTime: this.weighFormData.tareWeighedDateTime,
-        NetWeight: parseFloat(this.calculateNetWeight()),
+        NetWeight: parseFloat(this.calculateNetWeight()) || 0,
         CreatedBy: "User"
       };
       

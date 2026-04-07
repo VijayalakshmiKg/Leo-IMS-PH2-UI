@@ -110,14 +110,14 @@ export class OrdersService {
   editOrdersRecord:any ;
   editOrdersIndex:any | any[] = []
   constructor(public http:CustomHttpService) {
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       let parsed = JSON.parse(data)
       this.empID =parsed.employeeId ; // Parse the JSON string into an object or array
       //console.log(this.empID);
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
  
    }

@@ -18,7 +18,7 @@ export class ProfileHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const data = localStorage.getItem("userData");
+    const data = sessionStorage.getItem("userData");
     this.userProfile = data ? JSON.parse(data) : null;
   
     if (this.userProfile) {

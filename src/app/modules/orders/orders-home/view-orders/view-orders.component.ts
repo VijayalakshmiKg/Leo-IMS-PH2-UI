@@ -42,7 +42,7 @@ export class ViewOrdersComponent implements OnInit {
     // this.ordersList = this.ordersServ.getOrders()
 
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -197,13 +197,13 @@ export class ViewOrdersComponent implements OnInit {
   }
 
   getAllRecords() {
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
 
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.ordersServ.getAllOrders(parsed.employeeId, this.filter, this.sortCode, this.pageNumber, this.pageSize).then(res => {
       //console.log(res);
@@ -226,13 +226,13 @@ export class ViewOrdersComponent implements OnInit {
 
   getAllQualityCheckRecords() {
     //console.log(this.filter);
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
 
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.ordersServ.getQualityCheckOrdersRecord(parsed.employeeId, this.filter, this.pageNumber, this.pageSize).then(res => {
       //console.log(res);
@@ -254,13 +254,13 @@ export class ViewOrdersComponent implements OnInit {
   getAllWieghBridgeRecords() {
     //console.log('slfjksjfkasjf');
 
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
 
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.ordersServ.getAllWeighbridgeRecords(parsed.employeeId, this.sortCode, this.filter, this.pageNumber, this.pageSize).then(res => {
       //console.log(res);
@@ -279,13 +279,13 @@ export class ViewOrdersComponent implements OnInit {
   getAllPlantSiteRecords() {
     //console.log('aslfdjaksjfdkaj');
 
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
 
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.ordersServ.getAllPlantSiteRecords(parsed.employeeId, this.sortCode, this.pageNumber, this.pageSize).then(res => {
       //console.log(res);
@@ -303,13 +303,13 @@ export class ViewOrdersComponent implements OnInit {
   getAllAdminRecords() {
     //console.log('aslfdjaksjfdkaj');
 
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
 
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.ordersServ.getAllAdminRecords(parsed.roleId, this.filter, this.sortCode, this.pageNumber, this.pageSize).then(res => {
       //console.log(res);

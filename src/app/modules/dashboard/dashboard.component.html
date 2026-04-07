@@ -19,3 +19,6 @@
 <div *ngIf="loggedInUser?.roleName == 'Weighbridge Operator' || loggedInUser?.roleName == 'Weighbridge Operator'" class="dashborad-container">
   <app-weighbridge-dashboard></app-weighbridge-dashboard>
 </div>
+<div *ngIf="loggedInUser?.roleName == 'Production Manager'" class="dashborad-container">
+  <app-production-dashboard></app-production-dashboard>
+</div>

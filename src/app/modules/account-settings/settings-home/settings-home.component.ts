@@ -36,7 +36,7 @@ export class SettingsHomeComponent implements OnInit {
     this.title.setTitle("Leo Group Ltd | Settings");}
 
   ngOnInit(): void {
-    let menus:any = localStorage.getItem('loggedInUser')
+    let menus:any = sessionStorage.getItem('loggedInUser')
     //console.log(menus);
    let parsedMenu = JSON.parse(menus)
    //console.log(parsedMenu.settings);

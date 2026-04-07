@@ -68,7 +68,7 @@ export class PendingColumn {
     logedInUser: any;
   permissions: any;
     constructor(public router: Router, public dashboardService:DashboardService, public utilServ:UtilityService,public ordersServ:OrdersService) {
-    let user:any = localStorage.getItem('loggedInUser')
+    let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

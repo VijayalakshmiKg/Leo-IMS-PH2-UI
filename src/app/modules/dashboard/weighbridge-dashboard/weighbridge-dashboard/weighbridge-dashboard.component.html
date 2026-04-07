@@ -121,10 +121,64 @@
         </svg>
         <span>Refresh</span>
       </button>
+
+      <!-- Auto Refresh Toggle -->
+      <div class="auto-refresh-toggle">
+        <label class="toggle-switch" for="wbAutoRefreshToggle">
+          <input type="checkbox" id="wbAutoRefreshToggle" [checked]="autoRefreshEnabled" (change)="toggleAutoRefresh()">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="auto-refresh-label" [class.active]="autoRefreshEnabled">Auto Refresh (1 min)</span>
+      </div>
     </ng-container>
   </div>
   
   <div class="template-head-right d-flex align-items-center gap-24" *ngIf="!showActionButtons()">
+    
+    <!-- Date Range Filter -->
+    <div class="date-filter-wrapper" (click)="$event.stopPropagation()">
+      <button type="button" class="date-filter-btn" (click)="openDateRangePopup()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="2" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.3" fill="none"/>
+          <path d="M1 6h14M5 1v2M11 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <span>{{getFormattedHeaderDate()}}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+          <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- Date Range Popup -->
+      <div class="date-range-popup" *ngIf="showDateRangePopup">
+        <div class="date-range-popup-header">
+          <h4>Date Range</h4>
+          <button type="button" class="date-range-close-btn" (click)="closeDateRangePopup()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <p class="date-range-subtitle">Please provide a date range to filter the tasks</p>
+        <div class="date-range-inputs">
+          <div class="date-range-field">
+            <label>From</label>
+            <input type="date" [(ngModel)]="dateRangeFrom" class="date-range-input">
+          </div>
+          <div class="date-range-field">
+            <label>To</label>
+            <input type="date" [(ngModel)]="dateRangeTo" class="date-range-input">
+          </div>
+        </div>
+        <div class="date-range-actions">
+          <button type="button" class="date-range-cancel-btn" (click)="closeDateRangePopup()">Cancel</button>
+          <button type="button" class="date-range-apply-btn" (click)="applyDateRangeFilter()" [disabled]="isApplyingDateFilter">
+            <span *ngIf="!isApplyingDateFilter" style="color: white;">Apply filter</span>
+            <span *ngIf="isApplyingDateFilter">Applying...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Export Button -->
     <button type="button" class="exportBtnCls" [matMenuTriggerFor]="exportMenu" *ngIf="taskList.length > 0">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -346,15 +400,17 @@
         <!-- Gross Weight Row -->
         <div class="form-row">
           <div class="form-group">
-            <label>Gross weight</label>
-            <div class="input-with-suffix">
-              <input type="number" [(ngModel)]="weighFormData.grossWeight" placeholder="0" class="weight-input">
+            <label>Gross weight <span class="required">*</span></label>
+            <div class="input-with-suffix" [ngClass]="{'input-error': weighFormTouched.grossWeight && !weighFormData.grossWeight}">
+              <input type="number" [(ngModel)]="weighFormData.grossWeight" placeholder="0" class="weight-input" (blur)="onWeighFieldTouched('grossWeight')">
               <span class="input-suffix">kg</span>
             </div>
+            <span class="error-msg" *ngIf="weighFormTouched.grossWeight && !weighFormData.grossWeight">Gross weight is required</span>
           </div>
           <div class="form-group">
             <label>Weighed date & time <span class="required">*</span></label>
-            <input type="datetime-local" [(ngModel)]="weighFormData.grossWeighedDateTime" class="datetime-input">
+            <input type="datetime-local" [(ngModel)]="weighFormData.grossWeighedDateTime" class="datetime-input" [ngClass]="{'input-error': weighFormTouched.grossWeighedDateTime && !weighFormData.grossWeighedDateTime}" (blur)="onWeighFieldTouched('grossWeighedDateTime')">
+            <span class="error-msg" *ngIf="weighFormTouched.grossWeighedDateTime && !weighFormData.grossWeighedDateTime">Date & time is required</span>
           </div>
           <div class="form-group weight-display">
             <span class="weight-value">{{weighFormData.grossWeight || '0.00'}}</span>
@@ -371,7 +427,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Date & time <span class="required">*</span></label>
+            <label>Date & time</label>
             <input type="datetime-local" [(ngModel)]="weighFormData.moistureDateTime" class="datetime-input">
           </div>
           <div class="form-group weight-display">
@@ -382,11 +438,12 @@
         <!-- Tare Weight Row -->
         <div class="form-row">
           <div class="form-group">
-            <label>Tare weight</label>
-            <div class="input-with-suffix">
-              <input type="number" [(ngModel)]="weighFormData.tareWeight" placeholder="0" class="weight-input">
+            <label>Tare weight <span class="required">*</span></label>
+            <div class="input-with-suffix" [ngClass]="{'input-error': weighFormTouched.tareWeight && !weighFormData.tareWeight}">
+              <input type="number" [(ngModel)]="weighFormData.tareWeight" placeholder="0" class="weight-input" (blur)="onWeighFieldTouched('tareWeight')">
               <span class="input-suffix">kg</span>
             </div>
+            <span class="error-msg" *ngIf="weighFormTouched.tareWeight && !weighFormData.tareWeight">Tare weight is required</span>
           </div>
           <div class="form-group">
             <label>Weighed date & time <span class="required">*</span></label>
@@ -415,7 +472,7 @@
   <!-- Popup Footer -->
   <div class="popup-footer">
     <button type="button" class="cancel-btn" (click)="closeWeighTrailerPopup()">Cancel</button>
-    <button type="button" class="save-btn" (click)="saveWeighTrailerData()" [disabled]="isSavingWeighData">
+    <button type="button" class="save-btn" (click)="saveWeighTrailerData()" [disabled]="isSavingWeighData || !isWeighFormValid()">
       <span *ngIf="!isSavingWeighData">Save changes</span>
       <span *ngIf="isSavingWeighData">Saving...</span>
     </button>

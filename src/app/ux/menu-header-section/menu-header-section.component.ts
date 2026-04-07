@@ -8,6 +8,8 @@ import { AccountSettingsService } from 'src/app/modules/account-settings/account
 import { OrdersService } from 'src/app/modules/orders/orders.service';
 import { NotificationPopupComponent } from 'src/app/shared/components/notification-popup/notification-popup.component';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { SignalRService } from 'src/app/shared/services/signalr.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-menu-header-section',
@@ -49,7 +51,7 @@ export class MenuHeaderSectionComponent implements OnInit {
   logedInUser: any;
   userDetails: any
   userDetailsdata: any
-  constructor(public orderServ:OrdersService ,private cdr: ChangeDetectorRef, public route: Router, public AuthSvc: AuthService, public accServ: AccountSettingsService, public dialog: MatDialog, public utilServ: UtilityService) { }
+  constructor(public orderServ:OrdersService ,private cdr: ChangeDetectorRef, public route: Router, public AuthSvc: AuthService, public accServ: AccountSettingsService, public dialog: MatDialog, public utilServ: UtilityService, private signalRService: SignalRService, private notificationServ: NotificationService) { }
   elem: any
 
 
@@ -58,8 +60,8 @@ export class MenuHeaderSectionComponent implements OnInit {
   ngOnInit() {
     // this.updateMenuItems();
 
-    let user: any = localStorage.getItem('loggedInUser')
-    let userCred: any = localStorage.getItem('userDetails')
+    let user: any = sessionStorage.getItem('loggedInUser')
+    let userCred: any = sessionStorage.getItem('userDetails')
     this.userDetails = JSON.parse(userCred);
     this.getUserDetails();
     let parsedData = JSON.parse(user)
@@ -68,13 +70,13 @@ export class MenuHeaderSectionComponent implements OnInit {
     this.logedInUser = parsedData.roleName
 
     // this.elem = this.document.documentElement;
-    // Retrieve the menu items from localStorage
-    const storedMenuItems: any = localStorage.getItem('loggedInUser');
+    // Retrieve the menu items from sessionStorage
+    const storedMenuItems: any = sessionStorage.getItem('loggedInUser');
     //console.log(storedMenuItems);
     this.currentUser = JSON.parse(storedMenuItems).roleName;
     //console.log(this.currentUser);
 
-    // Check if the data exists in localStorage
+    // Check if the data exists in sessionStorage
     if (storedMenuItems) {
       // Parse the JSON data into an object (not array) and assign it to menuItems
       const parsedStoredMenuItems = JSON.parse(storedMenuItems);
@@ -102,9 +104,9 @@ export class MenuHeaderSectionComponent implements OnInit {
       this.getUserDetails();
     })
     //console.log(this.profileData);
-    setInterval(() => {
-      this.getNotify();
-    }, 10000)
+
+    // Load persisted notifications from backend on init
+    this.notificationServ.loadNotifications();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -190,33 +192,15 @@ export class MenuHeaderSectionComponent implements OnInit {
   }
   logout() {
     //console.log('logout');
+    this.signalRService.stopConnection();
     this.orderServ.ordersList = []
-    this.AuthSvc.logout();
-    localStorage.clear();
+    this.AuthSvc.logout(); // This now clears all session keys for this tab
     this.route.navigate(['/login']);
   }
 
   getNotify() {
-    // //console.log(this.currentUser);
-
-    if (this.currentUser === "Transportation Manager") {
-      this.notificationMsg.message = "Driver Alex Venus has started collecting the order. You will get notifications regarding the order status.!";
-    }
-    if (this.currentUser === "Weighbridge operator") {
-      this.notificationMsg.message = "Driver Alex Venus has collected the order. Please ready for weighing.";
-    }
-    if (this.currentUser === "Plant Site Manager") {
-      this.notificationMsg.message = "Driver Alex Venus has reached the site. Please avail the shunter driver.!";
-    }
-    if (this.currentUser === "Production Manager") {
-      this.notificationMsg.message = "Driver John Paul has finished the tipping. The bin is ready for quality checking.!";
-    }
-    // //console.log(this.notificationMsg.message);
-
-    this.notificationMsg.time = new Date();
-    this.notificationMsg.read = false;
-    // this.utilServ.unreadList.push(this.notificationMsg);
-    // this.utilServ.notificationToaster.next({ message: this.notificationMsg.message });
+    // Notifications are now loaded from the backend via NotificationService
+    // and delivered in real-time via SignalR. No polling needed.
   }
 
   // Full screen

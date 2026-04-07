@@ -114,3 +114,32 @@ h1 {
     font-weight: 400;
     margin-bottom: 0;
 }
+
+.markAllBtn {
+    color: #283892;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.markAllBtn:hover {
+    background: rgba(127, 151, 241, 0.30);
+}
+
+.notifyMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.notifySender {
+    color: #283892;
+    font-size: 11px;
+    font-weight: 500;
+    background: rgba(127, 151, 241, 0.15);
+    padding: 1px 6px;
+    border-radius: 3px;
+}

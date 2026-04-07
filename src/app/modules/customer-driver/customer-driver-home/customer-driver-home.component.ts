@@ -29,7 +29,7 @@ export class CustomerDriverHomeComponent implements OnInit {
   constructor(public route: Router, public customerDriverServ: CustomerDriverService, public ultiSer: UtilityService) { }
 
   ngOnInit(): void {
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
     let childmenu = parsedData.rootMenu[parsedData.rootMenu.length - 1];

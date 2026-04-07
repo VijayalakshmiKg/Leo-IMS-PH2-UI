@@ -19,7 +19,7 @@ export class NotificationToasterComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    // this.listenToast()
+    this.listenToast()
   }
 
   // it will listen the toast activity

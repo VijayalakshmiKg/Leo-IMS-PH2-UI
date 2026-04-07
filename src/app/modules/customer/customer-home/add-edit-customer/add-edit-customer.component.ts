@@ -49,7 +49,7 @@ export class AddEditCustomerComponent implements OnInit {
       country: ['', [Validators.required]]
     });
 
-    var user: any = localStorage.getItem("userData");
+    var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
 
     this.getCountry();

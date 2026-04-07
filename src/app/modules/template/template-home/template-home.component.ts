@@ -178,7 +178,7 @@ export class TemplateHomeComponent implements OnInit, AfterViewInit, CanComponen
 
   ngOnInit(): void {
 
-     let user:any = localStorage.getItem('loggedInUser')
+     let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -786,7 +786,7 @@ duplicateRow() {
 
   saveTemplateToBackend(templateName: string) {
     // Get logged in user details
-    let user: any = localStorage.getItem('loggedInUser');
+    let user: any = sessionStorage.getItem('loggedInUser');
     let parsedData = JSON.parse(user);
     
     // Try multiple possible property names for employee ID
@@ -2137,7 +2137,7 @@ duplicateRow() {
   // Initialize dropdown options
   async loadTemplatesByPlannerID() {
     // Get planner ID from logged in user
-    let user: any = localStorage.getItem('loggedInUser');
+    let user: any = sessionStorage.getItem('loggedInUser');
     
     if (user) {
       let parsedData = JSON.parse(user);

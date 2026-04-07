@@ -67,7 +67,7 @@ export class OrdersHomeComponent implements OnInit,OnDestroy {
 this.ordersList = this.orderserv.ordersList
     //console.log(this.orderKeys);
     
-    let user:any = localStorage.getItem('loggedInUser')
+    let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -380,13 +380,13 @@ if(parsedData.rootMenu[i].rootMenuName.toLowerCase() == 'movement documents'){
 
   getAllRecords(){
     //console.log(this.filter);
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
      
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     
     this.orderserv.getAllOrders(parsed.employeeId,this.filter,this.sort,this.pageNumber,this.pageSize).then(res => {
@@ -406,13 +406,13 @@ if(parsedData.rootMenu[i].rootMenuName.toLowerCase() == 'movement documents'){
 
    getAllQualityCheckRecords(){
     //console.log(this.filter);
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
      
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.orderserv.getQualityCheckOrdersRecord(parsed.employeeId,this.sort,this.pageNumber,this.pageSize).then(res => {
       //console.log(res);
@@ -430,13 +430,13 @@ if(parsedData.rootMenu[i].rootMenuName.toLowerCase() == 'movement documents'){
    }
 
    getAllWieghBridgeRecords(){
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
      
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.orderserv.getAllWeighbridgeRecords(parsed.employeeId,this.sort,this.filter,this.pageNumber,this.pageSize).then(res =>{
       //console.log(res);
@@ -454,13 +454,13 @@ if(parsedData.rootMenu[i].rootMenuName.toLowerCase() == 'movement documents'){
    }
 
    getAllPlantSiteRecords(){
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
      
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.orderserv.getAllPlantSiteRecords(parsed.employeeId,this.sort,this.pageNumber,this.pageSize).then(res =>{
       //console.log(res);
@@ -476,14 +476,14 @@ if(parsedData.rootMenu[i].rootMenuName.toLowerCase() == 'movement documents'){
     })
    }
    getAllAdminRecords(){
-    let data = localStorage.getItem('userData');
+    let data = sessionStorage.getItem('userData');
     if (data) {
       //console.log(data);
       var parsed = JSON.parse(data)
      //console.log(parsed);
      
     } else {
-      console.error('No userData found in localStorage');
+      console.error('No userData found in sessionStorage');
     }
     this.orderserv.getAllAdminRecords(parsed.roleId,this.filter,this.sort,this.pageNumber,this.pageSize).then(res =>{
       //console.log(res);

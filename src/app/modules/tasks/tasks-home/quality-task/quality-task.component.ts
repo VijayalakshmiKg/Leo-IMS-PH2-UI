@@ -109,7 +109,7 @@ export class QualityTaskComponent implements OnInit {
 
     }
 
-    let Data: any = localStorage.getItem("userData");
+    let Data: any = sessionStorage.getItem("userData");
     this.userProfile = JSON.parse(Data);
     this.getAllMaterials()
 

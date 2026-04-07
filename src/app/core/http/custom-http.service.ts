@@ -28,13 +28,13 @@ export class CustomHttpService {
     );
   }
   async postfile(url: string, data?: any): Promise<any> {
-    // this.getDbName(localStorage.getItem('DatabaseName'));
+    // this.getDbName(sessionStorage.getItem('DatabaseName'));
     return this.getBaseUrl().then
       (res => {
         this.baseUrl = this.appConfig.ApplicationConfig.ApiEndPoint;
 
         // Get the token and create headers with Authorization
-        const jwtToken = localStorage.getItem('token');
+        const jwtToken = sessionStorage.getItem('token');
         let fileHeaders = new HttpHeaders({
           'Access-Control-Allow-Origin': '*',
           'Cache-Control': 'no-cache',
@@ -52,7 +52,10 @@ export class CustomHttpService {
         
         return this.http.post(this.baseUrl + url, data, this.httpOptions).toPromise()
           .catch((err): any => { if (err.ErrorCode === 401) { 
-            localStorage.clear();
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('userDetails');
+            sessionStorage.removeItem('userData');
+            sessionStorage.removeItem('loggedInUser');
             this.router.navigate(['login']); } else { return Promise.reject(err); } });
       }
       );
@@ -100,7 +103,7 @@ export class CustomHttpService {
 
 
   addUserToken(): void {
-    const jwtToken = localStorage.getItem('token');
+    const jwtToken = sessionStorage.getItem('token');
     if (jwtToken) {
       // HttpHeaders is immutable, so we need to reassign the result of .set()
       this.httpHeaders = this.httpHeaders.set('Authorization', 'Bearer ' + jwtToken);

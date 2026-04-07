@@ -8,6 +8,7 @@ import { RoleGuard } from './shared/guard/role.guard';
 import { CanDeactivateGuard } from './core/guards/can-deactivate.guard';
 import { NotAuthorizedComponent } from './shared/components/not-authorized/not-authorized.component';
 import { RecordsComponent } from './modules/dashboard/records/records.component';
+import { PmrecordsComponent } from './modules/dashboard/pmrecords/pmrecords.component';
 
 const routes: Routes = [
   {
@@ -51,7 +52,9 @@ const routes: Routes = [
       { path: 'customerTrailerOutType', loadChildren: () => import('./modules/customer-trailer-out-type/customer-trailer-out-type.module').then(m => m.CustomerTrailerOutTypeModule), canActivate: [RoleGuard] },
       { path: 'customerDriver', loadChildren: () => import('./modules/customer-driver/customer-driver.module').then(m => m.CustomerDriverModule), canActivate: [RoleGuard] },
       { path: 'customerLocation', loadChildren: () => import('./modules/customer-location/customer-location.module').then(m => m.CustomerLocationModule), canActivate: [RoleGuard] },
+      { path: 'productBin', loadChildren: () => import('./modules/product-bin/product-bin.module').then(m => m.ProductBinModule), canActivate: [RoleGuard] },
       { path: 'records', component: RecordsComponent, canActivate: [RoleGuard] },
+      { path: 'pmrecords', component: PmrecordsComponent, canActivate: [RoleGuard] },
       
     ]
   },

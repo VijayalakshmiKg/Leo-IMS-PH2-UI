@@ -38,7 +38,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   addToken(req: HttpRequest<any>): HttpRequest<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return req.clone({ setHeaders: { Authorization: 'Bearer ' + token } });
   }
 

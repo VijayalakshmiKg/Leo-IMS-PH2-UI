@@ -1331,6 +1331,28 @@ thead .checkbox-column {
   -moz-appearance: textfield;
 }
 
+/* Validation error styles */
+.input-error {
+  border-color: #E44424 !important;
+}
+
+.input-error .weight-input,
+input.input-error {
+  border-color: #E44424 !important;
+}
+
+.error-msg {
+  color: #E44424;
+  font-size: 11px;
+  margin-top: 2px;
+  display: block;
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ===== Raise Issues Popup Styles ===== */
 
 /* Issues Section */
@@ -1466,3 +1488,250 @@ thead .checkbox-column {
     width: 56px;
     height: 50px;
 }
+
+/* Auto Refresh Toggle */
+.auto-refresh-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CBD5E1;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: #16a34a;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(16px);
+}
+
+.auto-refresh-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748B;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.auto-refresh-label.active {
+    color: #16a34a;
+}
+
+/* ========================================
+   DATE RANGE FILTER STYLES
+   ======================================== */
+
+/* Date Filter Wrapper - needed for absolute popup positioning */
+.date-filter-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Date Filter Button */
+.date-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  height: 34px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.date-filter-btn:hover {
+  border-color: #283892;
+  color: #283892;
+}
+
+.date-filter-btn svg {
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+.date-filter-btn span {
+  color: inherit;
+}
+
+/* Date Range Popup */
+.date-range-popup {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 380px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+  padding: 20px;
+  border: 1px solid #E2E8F0;
+}
+
+/* Date Range Popup Header */
+.date-range-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.date-range-popup-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.date-range-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #6b7280;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.date-range-close-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* Subtitle */
+.date-range-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+/* Date Inputs Row */
+.date-range-inputs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.date-range-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-range-field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.date-range-input {
+  width: 100%;
+  height: 36px;
+  padding: 6px 10px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.date-range-input:focus {
+  border-color: #283892;
+  box-shadow: 0 0 0 3px rgba(40, 56, 146, 0.08);
+}
+
+/* Action Buttons */
+.date-range-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.date-range-cancel-btn {
+  padding: 8px 20px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.date-range-cancel-btn:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.date-range-apply-btn {
+  padding: 8px 20px;
+  background: #283892;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff !important;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.date-range-apply-btn:hover:not(:disabled) {
+  background: #1e2a6e;
+  box-shadow: 0 2px 8px rgba(40, 56, 146, 0.3);
+}
+
+.date-range-apply-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+

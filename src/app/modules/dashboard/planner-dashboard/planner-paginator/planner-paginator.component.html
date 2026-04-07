@@ -180,7 +180,11 @@
              (keyup.escape)="cancelRename()"
              #renameInput
              placeholder="Enter sheet name"
+             maxlength="50"
              class="planner-rename-input">
+      <div class="char-count" [class.char-limit]="(newSheetName?.length || 0) >= 50">
+        {{newSheetName?.length || 0}}/50
+      </div>
     </div>
     <div class="planner-rename-popup-actions">
       <button class="planner-btn-cancel" (click)="cancelRename()">Cancel</button>

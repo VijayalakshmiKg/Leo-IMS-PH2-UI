@@ -37,7 +37,7 @@ export class AddEditTrailerTypeComponent implements OnInit {
       capacity: ['', [Validators.required, Validators.min(0)]]
     });
 
-    var loggedInUser: any = localStorage.getItem("loggedInUser");
+    var loggedInUser: any = sessionStorage.getItem("loggedInUser");
     if (loggedInUser) {
       var parsedUser = JSON.parse(loggedInUser);
       this.loggedInUserName = parsedUser.userName || parsedUser.username || '';

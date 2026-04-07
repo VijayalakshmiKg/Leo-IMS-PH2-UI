@@ -28,7 +28,7 @@ export class ConsignorHomeComponent implements OnInit {
   constructor(public route:Router,public consignorerv:ConsignorService, public utilServ:UtilityService) { }
   
   ngOnInit(): void {
-    let user:any = localStorage.getItem('loggedInUser')
+    let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.loggedInUser = parsedData.roleName

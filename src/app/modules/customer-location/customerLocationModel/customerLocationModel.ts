@@ -1,5 +1,5 @@
 export class CustomerLocation {
-    cP_Mapping_ID?: number;
+    cL_Mapping_ID?: number;
     customerID?: number;
     customerName?: string;
     locationID?: number;

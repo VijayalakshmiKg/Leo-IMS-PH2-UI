@@ -52,7 +52,7 @@ export class AddEditTrailerWasherComponent implements OnInit {
     this.selectedFileProfile = null;
     this.selectedProfileFile = null;
     this.imageUrlProfile = null;
-    let userCred: any = localStorage.getItem('userDetails')
+    let userCred: any = sessionStorage.getItem('userDetails')
     this.userDetails = JSON.parse(userCred);
     this.getUserDetails();
     this.trailerWasherForm = this.fb.group({

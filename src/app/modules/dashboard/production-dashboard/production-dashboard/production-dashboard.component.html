@@ -1,0 +1,1261 @@
+<!-- Overview Cards Section -->
+<div class="overview-cards-container">
+  <div class="overview-card card-transit" (click)="openInTransitPopup()" style="cursor: pointer;">
+    <div class="card-icon-wrapper icon-yellow">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 17.5H1V9.5C1 8.96957 1.21071 8.46086 1.58579 8.08579C1.96086 7.71071 2.46957 7.5 3 7.5H14V17.5M2 17.5H5M2 17.5V9.5M5 17.5H14M5 17.5C5 18.0304 5.21071 18.5391 5.58579 18.9142C5.96086 19.2893 6.46957 19.5 7 19.5C7.53043 19.5 8.03914 19.2893 8.41421 18.9142C8.78929 18.5391 9 18.0304 9 17.5M5 17.5C5 16.9696 5.21071 16.4609 5.58579 16.0858C5.96086 15.7107 6.46957 15.5 7 15.5C7.53043 15.5 8.03914 15.7107 8.41421 16.0858C8.78929 16.4609 9 16.9696 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.0304 17.2107 18.5391 17.5858 18.9142C17.9609 19.2893 18.4696 19.5 19 19.5C19.5304 19.5 20.0391 19.2893 20.4142 18.9142C20.7893 18.5391 21 18.0304 21 17.5M17 17.5C17 16.9696 17.2107 16.4609 17.5858 16.0858C17.9609 15.7107 18.4696 15.5 19 15.5C19.5304 15.5 20.0391 15.7107 20.4142 16.0858C20.7893 16.4609 21 16.9696 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <span class="card-label">Trailers In Transit</span>
+      <span class="card-value">{{trailerCardCounts.trailersInTransit || '—'}}</span>
+    </div>
+  </div>
+
+  <div class="overview-card card-untipped" (click)="openUntippedTrailersPopup()" style="cursor: pointer;">
+    <div class="card-icon-wrapper icon-green">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 17.5H1V9.5C1 8.96957 1.21071 8.46086 1.58579 8.08579C1.96086 7.71071 2.46957 7.5 3 7.5H14V17.5M2 17.5H5M2 17.5V9.5M5 17.5H14M5 17.5C5 18.0304 5.21071 18.5391 5.58579 18.9142C5.96086 19.2893 6.46957 19.5 7 19.5C7.53043 19.5 8.03914 19.2893 8.41421 18.9142C8.78929 18.5391 9 18.0304 9 17.5M5 17.5C5 16.9696 5.21071 16.4609 5.58579 16.0858C5.96086 15.7107 6.46957 15.5 7 15.5C7.53043 15.5 8.03914 15.7107 8.41421 16.0858C8.78929 16.4609 9 16.9696 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.0304 17.2107 18.5391 17.5858 18.9142C17.9609 19.2893 18.4696 19.5 19 19.5C19.5304 19.5 20.0391 19.2893 20.4142 18.9142C20.7893 18.5391 21 18.0304 21 17.5M17 17.5C17 16.9696 17.2107 16.4609 17.5858 16.0858C17.9609 15.7107 18.4696 15.5 19 15.5C19.5304 15.5 20.0391 15.7107 20.4142 16.0858C20.7893 16.4609 21 16.9696 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <span class="card-label">Trailers Untipped</span>
+      <span class="card-value">{{getUntippedTrailersCount() || '—'}}</span>
+    </div>
+  </div>
+
+  <div class="overview-card card-over2hrs" (click)="openViewTrailersPopup()" style="cursor: pointer;">
+    <div class="card-icon-wrapper icon-red">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 17.5H1V9.5C1 8.96957 1.21071 8.46086 1.58579 8.08579C1.96086 7.71071 2.46957 7.5 3 7.5H14V17.5M2 17.5H5M2 17.5V9.5M5 17.5H14M5 17.5C5 18.0304 5.21071 18.5391 5.58579 18.9142C5.96086 19.2893 6.46957 19.5 7 19.5C7.53043 19.5 8.03914 19.2893 8.41421 18.9142C8.78929 18.5391 9 18.0304 9 17.5M5 17.5C5 16.9696 5.21071 16.4609 5.58579 16.0858C5.96086 15.7107 6.46957 15.5 7 15.5C7.53043 15.5 8.03914 15.7107 8.41421 16.0858C8.78929 16.4609 9 16.9696 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.0304 17.2107 18.5391 17.5858 18.9142C17.9609 19.2893 18.4696 19.5 19 19.5C19.5304 19.5 20.0391 19.2893 20.4142 18.9142C20.7893 18.5391 21 18.0304 21 17.5M17 17.5C17 16.9696 17.2107 16.4609 17.5858 16.0858C17.9609 15.7107 18.4696 15.5 19 15.5C19.5304 15.5 20.0391 15.7107 20.4142 16.0858C20.7893 16.4609 21 16.9696 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <span class="card-label">Trailers Over 2 hrs</span>
+      <span class="card-value">{{getTrailersOver2HrsCount() || '—'}}</span>
+    </div>
+  </div>
+
+  <div class="overview-card card-dirty" (click)="openDirtyTrailersPopup()" style="cursor: pointer;">
+    <div class="card-icon-wrapper icon-dark">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 17.5H1V9.5C1 8.96957 1.21071 8.46086 1.58579 8.08579C1.96086 7.71071 2.46957 7.5 3 7.5H14V17.5M2 17.5H5M2 17.5V9.5M5 17.5H14M5 17.5C5 18.0304 5.21071 18.5391 5.58579 18.9142C5.96086 19.2893 6.46957 19.5 7 19.5C7.53043 19.5 8.03914 19.2893 8.41421 18.9142C8.78929 18.5391 9 18.0304 9 17.5M5 17.5C5 16.9696 5.21071 16.4609 5.58579 16.0858C5.96086 15.7107 6.46957 15.5 7 15.5C7.53043 15.5 8.03914 15.7107 8.41421 16.0858C8.78929 16.4609 9 16.9696 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.0304 17.2107 18.5391 17.5858 18.9142C17.9609 19.2893 18.4696 19.5 19 19.5C19.5304 19.5 20.0391 19.2893 20.4142 18.9142C20.7893 18.5391 21 18.0304 21 17.5M17 17.5C17 16.9696 17.2107 16.4609 17.5858 16.0858C17.9609 15.7107 18.4696 15.5 19 15.5C19.5304 15.5 20.0391 15.7107 20.4142 16.0858C20.7893 16.4609 21 16.9696 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <span class="card-label">Trailers Dirty</span>
+      <span class="card-value">{{trailerCardCounts.trailersDirty || '—'}}</span>
+    </div>
+  </div>
+
+  <div class="overview-card card-clean" (click)="openCleanTrailersPopup()" style="cursor: pointer;">
+    <div class="card-icon-wrapper icon-green">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 17.5H1V9.5C1 8.96957 1.21071 8.46086 1.58579 8.08579C1.96086 7.71071 2.46957 7.5 3 7.5H14V17.5M2 17.5H5M2 17.5V9.5M5 17.5H14M5 17.5C5 18.0304 5.21071 18.5391 5.58579 18.9142C5.96086 19.2893 6.46957 19.5 7 19.5C7.53043 19.5 8.03914 19.2893 8.41421 18.9142C8.78929 18.5391 9 18.0304 9 17.5M5 17.5C5 16.9696 5.21071 16.4609 5.58579 16.0858C5.96086 15.7107 6.46957 15.5 7 15.5C7.53043 15.5 8.03914 15.7107 8.41421 16.0858C8.78929 16.4609 9 16.9696 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.0304 17.2107 18.5391 17.5858 18.9142C17.9609 19.2893 18.4696 19.5 19 19.5C19.5304 19.5 20.0391 19.2893 20.4142 18.9142C20.7893 18.5391 21 18.0304 21 17.5M17 17.5C17 16.9696 17.2107 16.4609 17.5858 16.0858C17.9609 15.7107 18.4696 15.5 19 15.5C19.5304 15.5 20.0391 15.7107 20.4142 16.0858C20.7893 16.4609 21 16.9696 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <span class="card-label">Trailers Clean</span>
+      <span class="card-value">{{trailerCardCounts.trailersClean || '—'}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="template-header d-flex justify-content-between align-items-center">
+  <div class="template-head-left d-flex gap-24 align-items-center">
+    <!-- Show when action buttons are visible (rows selected) -->
+    <ng-container *ngIf="showActionButtons()">
+      <span class="selected-count-badge">
+        <span class="count-dot"></span>
+        {{getSelectedCount()}} Selected
+      </span>
+
+      <!-- Validation message when different status tasks are selected -->
+      <span class="mixed-status-warning" *ngIf="hasMultipleStatuses()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 5.33334V8.00001M8 10.6667H8.00667M14.6667 8.00001C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.31811 14.6667 1.33334 11.6819 1.33334 8.00001C1.33334 4.31811 4.31811 1.33334 8 1.33334C11.6819 1.33334 14.6667 4.31811 14.6667 8.00001Z" stroke="#DC2626" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Different status task should not check
+      </span>
+
+      <!-- Weighed status actions -->
+      <ng-container *ngIf="!hasMultipleStatuses() && areAllSelectedTasksWeighed()">
+        <button class="action-btn assign-btn" (click)="onAssign()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.667 14v-1.333A2.667 2.667 0 008 10H4a2.667 2.667 0 00-2.667 2.667V14M6 7.333A2.667 2.667 0 106 2a2.667 2.667 0 000 5.333zM12.667 5.333v4M10.667 7.333h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Assign</span>
+        </button>
+        <button class="action-btn reassign-btn" (click)="onReAssign()" [disabled]="areAllSelectedTasksWeighed()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.333 6l2.667-2.667L6.667 6M14.667 10l-2.667 2.667L9.333 10M4 3.333h9.333a1.333 1.333 0 011.334 1.334V6M12 12.667H2.667a1.333 1.333 0 01-1.334-1.334V10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Re-assign</span>
+        </button>
+        <button class="action-btn edit-btn" (click)="onEditTask()" [disabled]="areAllSelectedTasksWeighed()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.333 2A1.886 1.886 0 0114 4.667L5.333 13.333 1.333 14.333l1-4L11.333 2z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Edit</span>
+        </button>
+        <button class="action-btn approve-btn" (click)="onApprove()" [disabled]="areAllSelectedTasksWeighed()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.333 4L6 11.333 2.667 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Approve</span>
+        </button>
+      </ng-container>
+
+      <!-- Pending status actions - only Re-assign -->
+      <ng-container *ngIf="!hasMultipleStatuses() && areAllSelectedTasksPending()">
+        <button class="action-btn reassign-btn" (click)="onReAssign()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.333 6l2.667-2.667L6.667 6M14.667 10l-2.667 2.667L9.333 10M4 3.333h9.333a1.333 1.333 0 011.334 1.334V6M12 12.667H2.667a1.333 1.333 0 01-1.334-1.334V10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Re-assign</span>
+        </button>
+      </ng-container>
+
+      <!-- On Hold status actions - only Approve -->
+      <ng-container *ngIf="!hasMultipleStatuses() && areAllSelectedTasksOnHold()">
+        <button class="action-btn approve-btn" (click)="onApprove()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.333 4L6 11.333 2.667 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Approve</span>
+        </button>
+      </ng-container>
+
+      <!-- Untipped status actions - only Re-assign -->
+      <ng-container *ngIf="!hasMultipleStatuses() && areAllSelectedTasksUntipped()">
+        <button class="action-btn reassign-btn" (click)="onReAssign()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.333 6l2.667-2.667L6.667 6M14.667 10l-2.667 2.667L9.333 10M4 3.333h9.333a1.333 1.333 0 011.334 1.334V6M12 12.667H2.667a1.333 1.333 0 01-1.334-1.334V10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Re-assign</span>
+        </button>
+      </ng-container>
+
+      <!-- Default actions (non-Weighed, non-Pending, non-OnHold, non-Untipped, non-Accepted/Tipping) -->
+      <ng-container *ngIf="!hasMultipleStatuses() && !areAllSelectedTasksWeighed() && !areAllSelectedTasksPending() && !areAllSelectedTasksOnHold() && !areAllSelectedTasksUntipped() && !areAllSelectedTasksAcceptedOrTipping()">
+        <button class="action-btn weigh-btn" (click)="onWeighTrailer()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 14h12M4 14V8h8v6M6 8V6a2 2 0 114 0v2M8 11v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Weigh trailer</span>
+        </button>
+        <button class="action-btn raise-issue-btn" (click)="onRaiseIssues()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5.33334V8.00001M8 10.6667H8.00667M14.6667 8.00001C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.31811 14.6667 1.33334 11.6819 1.33334 8.00001C1.33334 4.31811 4.31811 1.33334 8 1.33334C11.6819 1.33334 14.6667 4.31811 14.6667 8.00001Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Raise issues</span>
+        </button>
+      </ng-container>
+    </ng-container>
+    
+    <!-- Show when no action buttons (normal header) -->
+    <ng-container *ngIf="!showActionButtons()">
+      <span>{{taskList.length}} task(s) in List</span>
+      
+      <!-- Search Box -->
+      <div class="search-customers">
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            class="search-customers-input" 
+            placeholder="Search by order no, driver, vehicle..."
+            [(ngModel)]="searchText"
+            (keyup.enter)="onSearch()">
+          <svg class="search-input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.0001 14.0001L11.1001 11.1001" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <button *ngIf="searchText" class="clear-search-btn" (click)="clearSearch()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Filter Dropdown -->
+      <div class="filter-dropdown" style="display:none;">
+        <button type="button" class="importBtnCls" [matMenuTriggerFor]="filterMenu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 2h14l-6 7v4l-2 1V9L1 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{{filterStatus}}</span>
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <mat-menu #filterMenu="matMenu">
+          <button mat-menu-item (click)="filterByStatus('All')">
+            <span>All</span>
+          </button>
+          <button mat-menu-item (click)="filterByStatus('Load in transit')">
+            <span>Loads in transit</span>
+          </button>
+          <button mat-menu-item (click)="filterByStatus('Load weighed')">
+            <span>Loads weighed</span>
+          </button>
+          <button mat-menu-item (click)="filterByStatus('Weighed')">
+            <span>Weighed</span>
+          </button>
+        </mat-menu>
+      </div>
+      
+      <!-- Manage Columns -->
+      <div class="manage-columns-container">
+        <button class="importBtnCls manage-columns-btn" (click)="toggleColumnManager()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Manage Columns</span>
+        </button>
+        
+        <!-- Column Manager Panel -->
+        <div class="column-manager-panel" *ngIf="showColumnManager">
+          <div class="column-manager-header">
+            <h4>Manage Columns</h4>
+            <button type="button" class="close-btn" (click)="toggleColumnManager()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="column-list">
+            <div class="column-item" *ngFor="let col of tableColumns; let i = index"
+                 draggable="true" 
+                 (dragstart)="onColumnDragStart(col.key, $event)"
+                 (dragover)="onColumnDragOver($event)"
+                 (drop)="onColumnDrop(i, $event)">
+              <input type="checkbox" 
+                     [checked]="col.visible" 
+                     (change)="toggleColumnVisibility(col.key)">
+              <span class="column-name">{{col.label}}</span>
+              <div class="drag-handle">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <circle cx="3" cy="3" r="1" fill="#9ca3af"/>
+                  <circle cx="9" cy="3" r="1" fill="#9ca3af"/>
+                  <circle cx="3" cy="9" r="1" fill="#9ca3af"/>
+                  <circle cx="9" cy="9" r="1" fill="#9ca3af"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Refresh Button -->
+      <button class="importBtnCls" (click)="refreshData()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 8a6 6 0 11-1.5-4M14 2v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Refresh</span>
+      </button>
+
+      <!-- Auto Refresh Toggle -->
+      <div class="auto-refresh-toggle">
+        <label class="toggle-switch" for="autoRefreshToggle">
+          <input type="checkbox" id="autoRefreshToggle" [checked]="autoRefreshEnabled" (change)="toggleAutoRefresh()">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="auto-refresh-label" [class.active]="autoRefreshEnabled">Auto Refresh (1 min)</span>
+      </div>
+    </ng-container>
+  </div>
+  
+
+  <div class="template-head-right d-flex align-items-center gap-24" *ngIf="!showActionButtons()">
+    <!-- Export Button -->
+    <button type="button" class="exportBtnCls" [matMenuTriggerFor]="exportMenu" *ngIf="taskList.length > 0">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 10v2a2 2 0 002 2h8a2 2 0 002-2v-2M8 2v8m0 0l3-3m-3 3L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Export Report</span>
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <mat-menu #exportMenu="matMenu">
+      <button mat-menu-item (click)="exportToExcel()">
+        <span>Export as Excel</span>
+      </button>
+      <button mat-menu-item (click)="exportToCSV()">
+        <span>Export as CSV</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+
+
+<!-- Table Section -->
+<div class="masterScreen-content-table templateTable" [class.empty-table]="taskList?.length === 0">
+  
+  <!-- Loading Indicator -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Data Table -->
+  <table class="table advanced-table">
+    <thead>
+      <tr>
+        <th class="checkbox-column">
+          <input type="checkbox" 
+                 [checked]="selectAll"
+                 (change)="toggleSelectAll()">
+        </th>
+        <th *ngFor="let col of getVisibleColumns()" 
+            class="advanced-header"
+            [style.width.px]="col.width">
+          
+          <!-- Column Header Content -->
+          <div class="header-content">
+            <span class="column-title">{{col.label}}</span>
+            
+            <!-- Sort Indicator and Filter Icon -->
+            <div class="header-controls">
+              <div class="sort-controls" *ngIf="col.sortable">
+                <button class="sort-btn" (click)="toggleColumnSort(col.key)">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                       [class.sort-asc]="columnSorts[col.key] === 'asc'"
+                       [class.sort-desc]="columnSorts[col.key] === 'desc'">
+                    <path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Filter Icon -->
+              <div class="column-filter-icon" 
+                   *ngIf="col.filterable" 
+                   (click)="toggleColumnFilterPopup(col.key, $event)"
+                   #filterTrigger>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" 
+                     [class.active]="activeColumnFilters && activeColumnFilters[col.key] && activeColumnFilters[col.key].length > 0">
+                  <path d="M0 1h12L7.5 5.5V9.5L4.5 7.5V5.5L0 1z" 
+                        stroke="currentColor" stroke-width="1" 
+                        fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            
+            <!-- Column Resize Handle -->
+            <div class="resize-handle" 
+                 (mousedown)="startResize(col.key, $event)">
+            </div>
+          </div>
+          
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of getFilteredAndSortedTasks(); index as i" [class.row-selected]="isRowSelected(task.taskID)">
+        <td class="checkbox-column">
+          <input type="checkbox" 
+                 [checked]="isRowSelected(task.taskID)"
+                 (change)="toggleRowSelection(task.taskID)">
+        </td>
+        
+        <!-- Dynamic Column Cells -->
+        <td *ngFor="let col of getVisibleColumns()"
+            class="dynamic-cell"
+            [class.shunter-editable]="col.key === 'shunter' && isEditableStatus(task)"
+            [class.bin-editable]="col.key === 'binNo' && isEditableStatus(task)"
+            [class.scheduledtime-editable]="col.key === 'scheduledTime' && isEditableStatus(task)"
+            [style.width.px]="col.width"
+            [title]="(col.key !== 'shunter' && col.key !== 'binNo' && col.key !== 'scheduledTime') ? (task[col.key] || '-') : ''"
+            (dblclick)="col.key === 'shunter' && isEditableStatus(task) ? onShunterDblClick(task) : col.key === 'binNo' && isEditableStatus(task) ? onBinDblClick(task) : col.key === 'scheduledTime' && isEditableStatus(task) ? onScheduledTimeDblClick(task) : null">
+          <!-- Status Column with Badge -->
+          <div *ngIf="col.key === 'status'" style="text-align: center;">
+            <span [ngClass]="getStatusClass(task[col.key])">
+              {{task[col.key] || '-'}}
+            </span>
+          </div>
+          <!-- Shunter Column - Editable -->
+          <div *ngIf="col.key === 'shunter'" style="text-align: center;">
+            <!-- Inline dropdown when editing -->
+            <select *ngIf="editingShunterTaskId === task.taskID"
+                    class="shunter-dropdown"
+                    (change)="onShunterChange(task, $event)">
+              <option value="">-- Select Shunter --</option>
+              <option *ngIf="isLoadingShunters" disabled>Loading...</option>
+              <option *ngFor="let s of shunterList" [value]="s.id">{{s.name}}</option>
+            </select>
+            <!-- Display text when not editing -->
+            <span *ngIf="editingShunterTaskId !== task.taskID" class="shunter-text" [title]="task[col.key] || '-'">
+              {{task[col.key] || '-'}}
+            </span>
+          </div>
+          <!-- Bin No Column - Editable -->
+          <div *ngIf="col.key === 'binNo'" style="text-align: center;">
+            <!-- Inline dropdown when editing -->
+            <select *ngIf="editingBinTaskId === task.taskID"
+                    class="bin-dropdown"
+                    (change)="onBinChange(task, $event)">
+              <option value="">-- Select Bin --</option>
+              <option *ngIf="isLoadingBins" disabled>Loading...</option>
+              <option *ngFor="let b of binList" [value]="b.id">{{b.name}}</option>
+            </select>
+            <!-- Display text when not editing -->
+            <span *ngIf="editingBinTaskId !== task.taskID" class="bin-text" [title]="task[col.key] || '-'">
+              {{task[col.key] || '-'}}
+            </span>
+          </div>
+          <!-- Scheduled Time Column - Editable -->
+          <div *ngIf="col.key === 'scheduledTime'" style="text-align: center;">
+            <!-- Inline datetime picker when editing -->
+            <div *ngIf="editingScheduledTimeTaskId === task.taskID" class="scheduledtime-edit-wrapper">
+              <input type="datetime-local" class="scheduledtime-input" [(ngModel)]="tempScheduledTime" />
+              <button class="scheduledtime-ok-btn" (click)="onScheduledTimeConfirm(task)" title="OK">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="scheduledtime-cancel-btn" (click)="onScheduledTimeCancel()" title="Cancel">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+            <!-- Display text when not editing -->
+            <span *ngIf="editingScheduledTimeTaskId !== task.taskID" class="scheduledtime-text" [title]="task[col.key] || '-'">
+              {{task[col.key] || '-'}}
+            </span>
+          </div>
+          <!-- Wait Time Column -->
+          <div *ngIf="col.key === 'waitTime'" style="text-align: center;">
+            <span [class.wait-time-over]="isWaitTimeOver2Hrs(task)">{{task[col.key] || '-'}}</span>
+          </div>
+          <!-- Other Columns -->
+          <div *ngIf="col.key !== 'status' && col.key !== 'shunter' && col.key !== 'binNo' && col.key !== 'scheduledTime' && col.key !== 'waitTime'" style="text-align: center;">
+            <span>{{task[col.key] || '-'}}</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Column Filter Popup -->
+  <div class="column-filter-popup" *ngIf="showColumnFilterPopup">
+    <div class="filter-popup-header">
+      <h5>Filter by {{getColumnLabel(showColumnFilterPopup)}}</h5>
+      <button type="button" class="close-filter-btn" (click)="closeColumnFilterPopup()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="filter-search">
+      <input type="text" 
+             placeholder="Search..." 
+             [(ngModel)]="columnFilterSearch[showColumnFilterPopup]"
+             class="filter-search-input">
+      <svg class="filter-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    
+    <div class="filter-actions-top">
+      <button class="select-all-btn" (click)="selectAllFilterValues(showColumnFilterPopup)">Select All</button>
+      <button class="clear-all-btn" (click)="clearAllFilterValues(showColumnFilterPopup)">Clear All</button>
+    </div>
+    
+    <div class="filter-values-list">
+      <div class="filter-value-item" *ngFor="let value of getFilteredDistinctValues(showColumnFilterPopup)">
+        <input type="checkbox" 
+               [id]="'filter_' + showColumnFilterPopup + '_' + value"
+               [checked]="isValueSelected(showColumnFilterPopup, value)"
+               (change)="toggleFilterValue(showColumnFilterPopup, value)">
+        <label [for]="'filter_' + showColumnFilterPopup + '_' + value">{{value}}</label>
+      </div>
+      <div class="no-filter-values" *ngIf="getFilteredDistinctValues(showColumnFilterPopup).length === 0">
+        No values found
+      </div>
+    </div>
+    
+    <div class="filter-actions-bottom">
+      <button class="cancel-filter-btn" (click)="closeColumnFilterPopup()">Cancel</button>
+      <button class="apply-filter-btn" (click)="applyColumnFilters()">Apply</button>
+    </div>
+  </div>
+  
+  <!-- No Data Message -->
+  <div class="no-data" *ngIf="taskList.length === 0 && !isLoading">
+    <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.5" width="47" height="47" rx="23.5" fill="#EFEBFE" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+            fill="#283892" />
+    </svg>
+    <p>No tasks found</p>
+  </div>
+</div>
+
+<!-- Weigh Trailer Popup Overlay -->
+<div class="popup-overlay" *ngIf="showWeighTrailerPopup" (click)="closeWeighTrailerPopup()"></div>
+
+<!-- Weigh Trailer Slide-in Popup -->
+<div class="weigh-trailer-popup" [class.open]="showWeighTrailerPopup">
+  <div class="popup-header">
+    <h3>Weigh trailer</h3>
+    <button type="button" class="popup-close-btn" (click)="closeWeighTrailerPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="popup-content" *ngIf="weighTrailerData">
+    <!-- Task Info Section -->
+    <div class="task-info-section">
+      <div class="task-info-left">
+        <h4 class="customer-name">{{weighTrailerData.customer || '-'}}</h4>
+        <p class="product-info">{{weighTrailerData.product || '-'}} • {{weighTrailerData.productCategory || '-'}} • ({{weighTrailerData.productEstWeight || '0'}} kg)</p>
+        <p class="driver-name">{{weighTrailerData.driverName || '-'}}</p>
+      </div>
+      <div class="task-info-right">
+        <span class="status-badge" [ngClass]="getStatusClass(weighTrailerData.status)">{{weighTrailerData.status || '-'}}</span>
+      </div>
+    </div>
+    
+    <!-- Document Info -->
+    <div class="document-info-row">
+      <div class="doc-item">
+        <label>Movement Doc No</label>
+        <span>{{weighTrailerData.movementDocNo || weighTrailerData.taskID || '-'}}</span>
+      </div>
+      <div class="doc-item">
+        <label>Ticket No</label>
+        <span>{{weighTrailerData.ticketNo || '-'}}</span>
+      </div>
+      <div class="doc-item">
+        <label>Transaction Type</label>
+        <span>{{weighTrailerData.transactionType || 'General'}}</span>
+      </div>
+    </div>
+    
+    <!-- Weight Form Section -->
+    <div class="weight-form-section">
+      <h5>Enter the weights given below</h5>
+      
+      <div class="weight-form-grid">
+        <!-- Gross Weight Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Gross weight</label>
+            <div class="input-with-suffix">
+              <input type="number" [(ngModel)]="weighFormData.grossWeight" placeholder="0" class="weight-input">
+              <span class="input-suffix">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weighed date & time <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.grossWeighedDateTime" class="datetime-input">
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{weighFormData.grossWeight || '0.00'}}</span>
+          </div>
+        </div>
+        
+        <!-- Moisture Deduction Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Moisture deduction</label>
+            <div class="input-with-suffix">
+              <input type="number" [(ngModel)]="weighFormData.moistureDeduction" placeholder="0" class="weight-input">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Date & time <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.moistureDateTime" class="datetime-input">
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{calculateMoistureDeductionWeight()}}</span>
+          </div>
+        </div>
+        
+        <!-- Tare Weight Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tare weight</label>
+            <div class="input-with-suffix">
+              <input type="number" [(ngModel)]="weighFormData.tareWeight" placeholder="0" class="weight-input">
+              <span class="input-suffix">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weighed date & time <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.tareWeighedDateTime" class="datetime-input" readonly>
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{weighFormData.tareWeight || '0.00'}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Net Weight -->
+      <div class="net-weight-row">
+        <label>Net weight</label>
+        <span class="net-weight-value">{{calculateNetWeight()}}</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="popup-loading" *ngIf="isLoadingWeighData">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Popup Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeWeighTrailerPopup()">Cancel</button>
+    <button type="button" class="save-btn" (click)="saveWeighTrailerData()" [disabled]="isSavingWeighData">
+      <span *ngIf="!isSavingWeighData">Save changes</span>
+      <span *ngIf="isSavingWeighData">Saving...</span>
+    </button>
+  </div>
+</div>
+
+<!-- Raise Issues Popup Overlay -->
+<div class="popup-overlay" *ngIf="showRaiseIssuesPopup" (click)="closeRaiseIssuesPopup()"></div>
+
+<!-- Raise Issues Slide-in Popup -->
+<div class="weigh-trailer-popup raise-issues-popup" [class.active]="showRaiseIssuesPopup">
+  <!-- Popup Header -->
+  <div class="popup-header">
+    <h3>Raise Issues</h3>
+    <button type="button" class="close-popup-btn" (click)="closeRaiseIssuesPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Popup Content -->
+  <div class="popup-content" *ngIf="raiseIssuesData && !isLoadingRaiseIssues">
+    <!-- Task Info Card -->
+    <div class="task-info-card">
+      <div class="task-info-header">
+        <div class="task-info-details">
+          <h4 class="customer-name">{{raiseIssuesData.customer || 'N/A'}}</h4>
+          <p class="product-info">{{raiseIssuesData.productCategory || ''}} <span *ngIf="raiseIssuesData.product">› {{raiseIssuesData.product}}</span> <span *ngIf="raiseIssuesData.productEstWeight">› ({{raiseIssuesData.productEstWeight}})</span></p>
+          <p class="location-info">{{raiseIssuesData.pickupLocation || ''}}</p>
+        </div>
+        <div class="task-status-badge" [ngClass]="getStatusClass(raiseIssuesData.status)">
+          {{raiseIssuesData.status || 'N/A'}}
+        </div>
+      </div>
+      
+      <!-- Task Details Row -->
+      <div class="task-details-row">
+        <div class="detail-item">
+          <label>Supplier</label>
+          <span>{{raiseIssuesData.supplier || 'N/A'}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Vehicle Registration</label>
+          <span>{{raiseIssuesData.vehicle || 'N/A'}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Trailer number</label>
+          <span>{{raiseIssuesData.trailerIn || 'N/A'}}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Issues Section -->
+    <div class="issues-section">
+      <!-- Trailer Leaking -->
+      <div class="issue-row">
+        <label class="issue-label">Trailer Leaking</label>
+        <div class="issue-toggle-group">
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerLeaking === true"
+                  (click)="setTrailerLeaking(true)">Yes</button>
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerLeaking === false"
+                  (click)="setTrailerLeaking(false)">No</button>
+        </div>
+      </div>
+      
+      <!-- Trailer Contains Strong Odours -->
+      <div class="issue-row">
+        <label class="issue-label">Trailer contains strong odours</label>
+        <div class="issue-toggle-group">
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerContainsStrongOdours === true"
+                  (click)="setTrailerOdours(true)">Yes</button>
+          <button type="button" class="toggle-btn" 
+                  [class.active]="raiseIssuesFormData.trailerContainsStrongOdours === false"
+                  (click)="setTrailerOdours(false)">No</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Warning Message -->
+    <div class="warning-message">
+      <div class="warning-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="9" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+          <path d="M10 6V10.5M10 13.5V14" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p>The Planner will receive an email notification regarding the trailer issues once the fields above have been updated.</p>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="popup-loading" *ngIf="isLoadingRaiseIssues">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Popup Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeRaiseIssuesPopup()">Cancel</button>
+    <button type="button" class="save-btn send-report-btn" (click)="saveRaiseIssuesData()" [disabled]="isSavingRaiseIssues">
+      <span *ngIf="!isSavingRaiseIssues">Send report</span>
+      <span *ngIf="isSavingRaiseIssues">Sending...</span>
+    </button>
+  </div>
+</div>
+
+<!-- View Trailers In Transit Popup -->
+<div class="popup-overlay" *ngIf="showInTransitPopup" (click)="closeInTransitPopup()"></div>
+<div class="weigh-trailer-popup view-trailers-popup" [class.open]="showInTransitPopup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h3>View Trailers in Transit</h3>
+    <button class="popup-close-btn" (click)="closeInTransitPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search & Clear -->
+  <div class="vt-search-row">
+    <div class="vt-search-box">
+      <svg class="vt-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Search trailer number" [(ngModel)]="inTransitSearch">
+    </div>
+    <button class="vt-clear-btn" (click)="clearInTransitSearch()">Clear all</button>
+  </div>
+
+  <!-- Date Picker with Search -->
+  <div class="vt-date-nav">
+    <div class="vt-date-input-wrapper">
+      <input type="date" class="vt-date-input" [(ngModel)]="inTransitSelectedDate">
+    </div>
+    <button class="vt-filter-btn" (click)="onInTransitDateSearch()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#fff" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Search
+    </button>
+  </div>
+
+  <!-- Trailer List -->
+  <div class="vt-list-container">
+    <!-- Loading -->
+    <div class="popup-loading" *ngIf="isLoadingInTransit">
+      <div class="spinner"></div>
+      <span>Loading...</span>
+    </div>
+
+    <!-- Table Header -->
+    <div class="vt-table-header" *ngIf="!isLoadingInTransit">
+      <div class="vt-col-icon"></div>
+      <div class="vt-col-trailer">Trailer</div>
+      <div class="vt-col-driver">Shunter</div>
+      <div class="vt-col-arrived">Scheduled time</div>
+      <div class="vt-col-status">Status</div>
+    </div>
+
+    <!-- Rows -->
+    <div class="vt-table-row" *ngFor="let t of getFilteredInTransitTrailers()">
+      <div class="vt-col-icon">
+        <div class="vt-trailer-icon">
+          <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
+            <path d="M2 17.5H1V9.5C1 8.97 1.21 8.46 1.59 8.09C1.96 7.71 2.47 7.5 3 7.5H14V17.5M2 17.5H5M5 17.5C5 18.03 5.21 18.54 5.59 18.91C5.96 19.29 6.47 19.5 7 19.5C7.53 19.5 8.04 19.29 8.41 18.91C8.79 18.54 9 18.03 9 17.5M5 17.5C5 16.97 5.21 16.46 5.59 16.09C5.96 15.71 6.47 15.5 7 15.5C7.53 15.5 8.04 15.71 8.41 16.09C8.79 16.46 9 16.97 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.03 17.21 18.54 17.59 18.91C17.96 19.29 18.47 19.5 19 19.5C19.53 19.5 20.04 19.29 20.41 18.91C20.79 18.54 21 18.03 21 17.5M17 17.5C17 16.97 17.21 16.46 17.59 16.09C17.96 15.71 18.47 15.5 19 15.5C19.53 15.5 20.04 15.71 20.41 16.09C20.79 16.46 21 16.97 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="vt-col-trailer">{{t.trailer}}</div>
+      <div class="vt-col-driver">{{t.shunter}}</div>
+      <div class="vt-col-arrived">{{formatTrailerDateTime(t.scheduledTime)}}</div>
+      <div class="vt-col-status">
+        <span class="vt-status-badge-transit">In Transit</span>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div class="vt-no-data" *ngIf="!isLoadingInTransit && getFilteredInTransitTrailers().length === 0">
+      <span>No trailers found</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeInTransitPopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- View Trailers Over 2 hrs Popup -->
+<div class="popup-overlay" *ngIf="showViewTrailersPopup" (click)="closeViewTrailersPopup()"></div>
+<div class="weigh-trailer-popup view-trailers-popup over2hrs-popup" [class.open]="showViewTrailersPopup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h3>View Trailers</h3>
+    <button class="popup-close-btn" (click)="closeViewTrailersPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search & Clear -->
+  <div class="vt-search-row">
+    <div class="vt-search-box">
+      <svg class="vt-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Search trailer number" [(ngModel)]="viewTrailersSearch">
+    </div>
+    <button class="vt-clear-btn" (click)="clearViewTrailersSearch()">Clear all</button>
+  </div>
+
+  <!-- Trailer List -->
+  <div class="vt-list-container">
+    <!-- Table Header -->
+    <div class="vt-table-header">
+      <div class="vt-col-icon"></div>
+      <div class="vt-col-trailer">Trailer</div>
+      <div class="vt-col-driver">Shunter</div>
+      <div class="vt-col-arrived">Arrived Time</div>
+      <div class="vt-col-status">Status</div>
+      <div class="vt-col-waittime">Wait Time</div>
+    </div>
+
+    <!-- Rows -->
+    <div class="vt-table-row" *ngFor="let t of getFilteredViewTrailers()">
+      <div class="vt-col-icon">
+        <div class="vt-trailer-icon">
+          <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
+            <path d="M2 17.5H1V9.5C1 8.97 1.21 8.46 1.59 8.09C1.96 7.71 2.47 7.5 3 7.5H14V17.5M2 17.5H5M5 17.5C5 18.03 5.21 18.54 5.59 18.91C5.96 19.29 6.47 19.5 7 19.5C7.53 19.5 8.04 19.29 8.41 18.91C8.79 18.54 9 18.03 9 17.5M5 17.5C5 16.97 5.21 16.46 5.59 16.09C5.96 15.71 6.47 15.5 7 15.5C7.53 15.5 8.04 15.71 8.41 16.09C8.79 16.46 9 16.97 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.03 17.21 18.54 17.59 18.91C17.96 19.29 18.47 19.5 19 19.5C19.53 19.5 20.04 19.29 20.41 18.91C20.79 18.54 21 18.03 21 17.5M17 17.5C17 16.97 17.21 16.46 17.59 16.09C17.96 15.71 18.47 15.5 19 15.5C19.53 15.5 20.04 15.71 20.41 16.09C20.79 16.46 21 16.97 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="vt-col-trailer">{{t.trailer}}</div>
+      <div class="vt-col-driver">{{t.driver}}</div>
+      <div class="vt-col-arrived">{{formatTrailerDateTime(t.arrivedOnSite)}}</div>
+      <div class="vt-col-status">
+        <span class="vt-status-badge">{{t.status}}</span>
+      </div>
+      <div class="vt-col-waittime">
+        <span class="vt-waittime-value">{{t.waitTime}}</span>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div class="vt-no-data" *ngIf="!isLoadingTrailers && getFilteredViewTrailers().length === 0">
+      <span>No trailers found</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeViewTrailersPopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- View Dirty Trailers Popup -->
+<div class="popup-overlay" *ngIf="showDirtyTrailersPopup" (click)="closeDirtyTrailersPopup()"></div>
+<div class="weigh-trailer-popup view-trailers-popup" [class.open]="showDirtyTrailersPopup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h3>View Trailers</h3>
+    <button class="popup-close-btn" (click)="closeDirtyTrailersPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search & Clear -->
+  <div class="vt-search-row">
+    <div class="vt-search-box">
+      <svg class="vt-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Search trailer number" [(ngModel)]="dirtyTrailersSearch">
+    </div>
+    <button class="vt-clear-btn" (click)="clearDirtyTrailersSearch()">Clear all</button>
+  </div>
+
+  <!-- Date Picker with Search -->
+  <div class="vt-date-nav">
+    <div class="vt-date-input-wrapper">
+      <input type="date" class="vt-date-input" [(ngModel)]="dirtyTrailersSelectedDate">
+    </div>
+    <button class="vt-filter-btn" (click)="onFilterDirtyTrailers()" [disabled]="isLoadingDirtyTrailers">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#fff" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Search
+    </button>
+  </div>
+
+  <!-- Trailer List -->
+  <div class="vt-list-container">
+    <!-- Loading -->
+    <div class="popup-loading" *ngIf="isLoadingDirtyTrailers">
+      <div class="spinner"></div>
+      <span>Loading...</span>
+    </div>
+
+    <!-- Table Header -->
+    <div class="vt-table-header" *ngIf="!isLoadingDirtyTrailers">
+      <div class="vt-col-icon"></div>
+      <div class="vt-col-trailer">Trailer</div>
+      <div class="vt-col-driver">Shunter</div>
+      <div class="vt-col-arrived">Scheduled time</div>
+      <div class="vt-col-status">Status</div>
+    </div>
+
+    <!-- Rows -->
+    <div class="vt-table-row" *ngFor="let t of getFilteredDirtyTrailers()">
+      <div class="vt-col-icon">
+        <div class="vt-trailer-icon">
+          <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
+            <path d="M2 17.5H1V9.5C1 8.97 1.21 8.46 1.59 8.09C1.96 7.71 2.47 7.5 3 7.5H14V17.5M2 17.5H5M5 17.5C5 18.03 5.21 18.54 5.59 18.91C5.96 19.29 6.47 19.5 7 19.5C7.53 19.5 8.04 19.29 8.41 18.91C8.79 18.54 9 18.03 9 17.5M5 17.5C5 16.97 5.21 16.46 5.59 16.09C5.96 15.71 6.47 15.5 7 15.5C7.53 15.5 8.04 15.71 8.41 16.09C8.79 16.46 9 16.97 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.03 17.21 18.54 17.59 18.91C17.96 19.29 18.47 19.5 19 19.5C19.53 19.5 20.04 19.29 20.41 18.91C20.79 18.54 21 18.03 21 17.5M17 17.5C17 16.97 17.21 16.46 17.59 16.09C17.96 15.71 18.47 15.5 19 15.5C19.53 15.5 20.04 15.71 20.41 16.09C20.79 16.46 21 16.97 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="vt-col-trailer">{{t.trailer}}</div>
+      <div class="vt-col-driver">{{t.shunter}}</div>
+      <div class="vt-col-arrived">{{formatTrailerDateTime(t.scheduledTime)}}</div>
+      <div class="vt-col-status">
+        <span class="vt-status-badge-dirty">Dirty</span>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div class="vt-no-data" *ngIf="!isLoadingDirtyTrailers && getFilteredDirtyTrailers().length === 0">
+      <span>No trailers found</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeDirtyTrailersPopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- View Clean Trailers Popup -->
+<div class="popup-overlay" *ngIf="showCleanTrailersPopup" (click)="closeCleanTrailersPopup()"></div>
+<div class="weigh-trailer-popup view-trailers-popup view-clean-popup" [class.open]="showCleanTrailersPopup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h3>View Trailers</h3>
+    <button class="popup-close-btn" (click)="closeCleanTrailersPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search & Clear -->
+  <div class="vt-search-row">
+    <div class="vt-search-box">
+      <svg class="vt-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Search trailer number" [(ngModel)]="cleanTrailersSearch">
+    </div>
+    <button class="vt-clear-btn" (click)="clearCleanTrailersSearch()">Clear all</button>
+  </div>
+
+  <!-- Date Filter -->
+  <div class="vt-date-nav">
+    <div class="vt-date-input-wrapper">
+      <input type="date" class="vt-date-input" [(ngModel)]="cleanTrailersSelectedDate">
+    </div>
+    <button class="vt-filter-btn" (click)="onFilterCleanTrailers()" [disabled]="isLoadingCleanTrailers">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#fff" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Search
+    </button>
+  </div>
+
+  <!-- Trailer List -->
+  <div class="vt-list-container">
+    <!-- Loading -->
+    <div class="popup-loading" *ngIf="isLoadingCleanTrailers">
+      <div class="spinner"></div>
+      <span>Loading...</span>
+    </div>
+
+    <!-- Table Header -->
+    <div class="vt-table-header" *ngIf="!isLoadingCleanTrailers">
+      <div class="vt-col-icon"></div>
+      <div class="vt-col-trailer">Trailer</div>
+      <div class="vt-col-driver">Cleaner</div>
+      <div class="vt-col-arrived">Completed time</div>
+      <div class="vt-col-status">Status</div>
+    </div>
+
+    <!-- Rows -->
+    <div class="vt-table-row" *ngFor="let t of getFilteredCleanTrailers()">
+      <div class="vt-col-icon">
+        <div class="vt-trailer-icon">
+          <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
+            <path d="M2 17.5H1V9.5C1 8.97 1.21 8.46 1.59 8.09C1.96 7.71 2.47 7.5 3 7.5H14V17.5M2 17.5H5M5 17.5C5 18.03 5.21 18.54 5.59 18.91C5.96 19.29 6.47 19.5 7 19.5C7.53 19.5 8.04 19.29 8.41 18.91C8.79 18.54 9 18.03 9 17.5M5 17.5C5 16.97 5.21 16.46 5.59 16.09C5.96 15.71 6.47 15.5 7 15.5C7.53 15.5 8.04 15.71 8.41 16.09C8.79 16.46 9 16.97 9 17.5M14 17.5H17M14 17.5V7.5M9 17.5H14M17 17.5C17 18.03 17.21 18.54 17.59 18.91C17.96 19.29 18.47 19.5 19 19.5C19.53 19.5 20.04 19.29 20.41 18.91C20.79 18.54 21 18.03 21 17.5M17 17.5C17 16.97 17.21 16.46 17.59 16.09C17.96 15.71 18.47 15.5 19 15.5C19.53 15.5 20.04 15.71 20.41 16.09C20.79 16.46 21 16.97 21 17.5M21 17.5H23V13.5L20 9.5H14" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="vt-col-trailer">{{t.trailer}}</div>
+      <div class="vt-col-driver">{{t.cleaner}}</div>
+      <div class="vt-col-arrived">{{formatTrailerDateTime(t.completedTime)}}</div>
+      <div class="vt-col-status">
+        <span class="vt-status-badge-clean">Clean</span>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div class="vt-no-data" *ngIf="!isLoadingCleanTrailers && getFilteredCleanTrailers().length === 0">
+      <span>No trailers found</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeCleanTrailersPopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- View Product Net Weight Popup -->
+<div class="popup-overlay" *ngIf="showUntippedTrailersPopup" (click)="closeUntippedTrailersPopup()"></div>
+<div class="weigh-trailer-popup view-trailers-popup pnw-popup" [class.open]="showUntippedTrailersPopup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h3>View product net weight</h3>
+    <button class="popup-close-btn" (click)="closeUntippedTrailersPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Summary Bar -->
+  <div class="pnw-summary-bar">
+    <span class="pnw-summary-label">Total Net Weight</span>
+    <span class="pnw-summary-count">{{getFilteredUntippedTrailers().length}} task(s)</span>
+    <span class="pnw-summary-weight">{{getTotalNetWeight()}} kg</span>
+  </div>
+
+  <!-- Search & Select All -->
+  <div class="pnw-filter-row">
+    <div class="pnw-search-box">
+      <svg class="vt-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+        <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Search customer, product, trailer..." [(ngModel)]="untippedTrailersSearch">
+    </div>
+    <label class="pnw-select-all">
+      <input type="checkbox" [checked]="pnwSelectAll" (change)="togglePnwSelectAll()">
+      <span>Select all</span>
+    </label>
+  </div>
+
+  <!-- Table Header -->
+  <div class="pnw-table-header">
+    <div class="pnw-row-checkbox"></div>
+    <div class="pnw-row-col"><span class="pnw-col-label">Customer</span></div>
+    <div class="pnw-row-col"><span class="pnw-col-label">Product</span></div>
+    <div class="pnw-row-col"><span class="pnw-col-label">Product Type</span></div>
+    <div class="pnw-row-col"><span class="pnw-col-label">Trailer No.</span></div>
+    <div class="pnw-row-col"><span class="pnw-col-label">Status</span></div>
+    <div class="pnw-row-col pnw-col-right"><span class="pnw-col-label">Net Weight (kg)</span></div>
+  </div>
+
+  <!-- List -->
+  <div class="vt-list-container">
+    <!-- Loading -->
+    <div class="popup-loading" *ngIf="isLoadingUntippedTrailers">
+      <div class="spinner"></div>
+      <span>Loading...</span>
+    </div>
+
+    <!-- Rows -->
+    <div class="pnw-row" *ngFor="let t of getFilteredUntippedTrailers()">
+      <div class="pnw-row-checkbox">
+        <input type="checkbox" [checked]="pnwSelectedItems.has(t.taskID)" (change)="togglePnwItem(t.taskID)">
+      </div>
+      <div class="pnw-row-col">
+        <span class="pnw-col-value">{{t.customer}}</span>
+      </div>
+      <div class="pnw-row-col">
+        <span class="pnw-col-value">{{t.product}}</span>
+      </div>
+      <div class="pnw-row-col">
+        <span class="pnw-col-value">{{t.productType}}</span>
+      </div>
+      <div class="pnw-row-col">
+        <span class="pnw-col-value">{{t.trailerNo}}</span>
+      </div>
+      <div class="pnw-row-col">
+        <span class="pnw-col-value">{{t.status}}</span>
+      </div>
+      <div class="pnw-row-col pnw-col-right">
+        <span class="pnw-col-value">{{t.netWeight}}</span>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div class="vt-no-data" *ngIf="!isLoadingUntippedTrailers && getFilteredUntippedTrailers().length === 0">
+      <span>No tasks found</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeUntippedTrailersPopup()">Cancel</button>
+    <button type="button" class="save-btn" (click)="exportUntippedReport()" [disabled]="pnwSelectedItems.size === 0">Export report</button>
+  </div>
+</div>
+
+<!-- Approve Task Popup Overlay -->
+<div class="popup-overlay" *ngIf="showApproveTaskPopup" (click)="closeApproveTaskPopup()"></div>
+
+<!-- Approve Task Slide-in Popup -->
+<div class="weigh-trailer-popup approve-task-popup" [class.active]="showApproveTaskPopup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h3>Approve task</h3>
+    <button type="button" class="popup-close-btn" (click)="closeApproveTaskPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="popup-content" *ngIf="!isLoadingApproveData">
+    <div class="approve-task-card" *ngFor="let task of approveTaskList">
+      <!-- Task Info Row -->
+      <div class="approve-task-info">
+        <div class="approve-task-no">{{task.no}}</div>
+        <div class="approve-task-details">
+          <div class="approve-task-name">{{task.customer}}</div>
+          <div class="approve-task-meta">
+            {{task.product}} &bull; {{task.productType}} &bull; ({{task.netWeight}}) &bull;
+            {{task.driver}} &bull; Trailer - {{task.trailerNo}} &bull; Bin - {{task.binNo}}
+          </div>
+        </div>
+      </div>
+
+      <!-- Change Details -->
+      <div class="approve-change-row">
+        <div class="approve-change-item">
+          <label>Product change</label>
+          <span>{{task.productChange}}</span>
+        </div>
+        <div class="approve-change-item">
+          <label>Product type change</label>
+          <span>{{task.productTypeChange}}</span>
+        </div>
+        <div class="approve-change-item">
+          <label>Bin no change</label>
+          <span>{{task.binNoChange}}</span>
+        </div>
+      </div>
+
+      <!-- Approve / Reject Row -->
+      <div class="approve-action-row">
+        <span class="approve-question">Do you want to approve these tasks?</span>
+        <div class="approve-action-btns" *ngIf="!task.isRejected && !task.isApproved">
+          <button class="reject-btn" (click)="markTaskRejected(task)">Reject</button>
+          <button class="approve-confirm-btn" (click)="markTaskApproved(task)">Approve</button>
+        </div>
+        <div class="rejected-badge" *ngIf="task.isRejected">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M9 3L3 9M3 3L9 9" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Rejected</span>
+        </div>
+        <div class="approved-badge" *ngIf="task.isApproved">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M10 3L4.5 8.5L2 6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Approved</span>
+        </div>
+      </div>
+
+      <!-- Rejection Warning Message -->
+      <div class="reject-warning-message" *ngIf="task.isRejected">
+        <svg class="reject-warning-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="7" fill="#3B82F6"/>
+          <path d="M8 5v3M8 10h.007" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>The product in this trailer has been rejected. A notification will be sent to the Quality Manager, who will take the necessary actions.</span>
+      </div>
+
+      <!-- Approved - Bin reassignment section -->
+      <div class="approve-bin-section" *ngIf="task.isApproved">
+        <div class="approve-bin-header">
+          <span class="approve-bin-label">Do you want to reassign the bin number for the changed product?</span>
+          <div class="approve-bin-search">
+            <input type="text" placeholder="Search Bin no" [(ngModel)]="approveBinSearch">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+              <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="approve-bin-list">
+          <label class="approve-bin-item" *ngFor="let bin of getFilteredApproveBinList()" (click)="selectApproveBin(task, bin)">
+            <input type="radio" [name]="'approveBin_' + task.taskId" [value]="bin.id" [checked]="task.selectedBinId === bin.id">
+            <span>{{bin.name}}</span>
+          </label>
+          <div *ngIf="getFilteredApproveBinList().length === 0" class="approve-bin-empty">No bins found</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div *ngIf="approveTaskList.length === 0" class="no-data">
+      <span>No task details found</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="popup-loading" *ngIf="isLoadingApproveData">
+    <div class="spinner"></div>
+    <span>Loading task details...</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeApproveTaskPopup()">Cancel</button>
+    <button type="button" class="save-btn" (click)="saveApproveTaskData()" [disabled]="isSavingApproveData || approveTaskList.length === 0">
+      <span *ngIf="!isSavingApproveData">Save</span>
+      <span *ngIf="isSavingApproveData">Saving...</span>
+    </button>
+  </div>
+</div>

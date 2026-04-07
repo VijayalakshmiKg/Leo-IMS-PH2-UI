@@ -17,7 +17,7 @@ export class AddNoteComponent implements OnInit {
   ngOnInit(): void {
   }
  get getLocalUserData() {
-  let local:any = localStorage.getItem("userData");
+  let local:any = sessionStorage.getItem("userData");
  return JSON.parse( local)
 }
   close(){

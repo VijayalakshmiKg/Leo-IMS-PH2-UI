@@ -132,7 +132,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let Data: any = localStorage.getItem("userData");
+    let Data: any = sessionStorage.getItem("userData");
     this.userData = JSON.parse(Data);
     //console.log(this.userData);
     this.profileData = this.accServ.editProfile;

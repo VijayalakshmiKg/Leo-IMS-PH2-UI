@@ -29,7 +29,7 @@ export class ProductTypeHomeComponent implements OnInit {
   constructor(public route: Router, public ProductTypeServ: ProductTypeService, public ultiSer: UtilityService) { }
 
   ngOnInit(): void {
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

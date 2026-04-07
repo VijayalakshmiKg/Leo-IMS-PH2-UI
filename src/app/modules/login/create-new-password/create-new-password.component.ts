@@ -27,7 +27,7 @@ export class CreateNewPasswordComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let Data: any = localStorage.getItem("userData");
+    let Data: any = sessionStorage.getItem("userData");
     this.userData = JSON.parse(Data);
     //console.log(this.userData);
     this.verifyEmail = this.loginSer.verifyMail

@@ -86,7 +86,7 @@ export class AddEditDriversComponent implements OnInit {
       selectedFileDriverLicense: ['']
     });
 
-    var user: any = localStorage.getItem("userData");
+    var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
     //console.log(this.driverServ.viewDriverId);
     this.getCountry();

@@ -40,10 +40,10 @@ export class AddEditCustomerTrailerInTypeComponent implements OnInit {
       trailerId: ['', [Validators.required]]
     });
 
-    var user: any = localStorage.getItem("userData");
+    var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
 
-    var loggedInUser: any = localStorage.getItem("loggedInUser");
+    var loggedInUser: any = sessionStorage.getItem("loggedInUser");
     if (loggedInUser) {
       var parsedUser = JSON.parse(loggedInUser);
       this.loggedInUserName = parsedUser.userName || parsedUser.username || '';

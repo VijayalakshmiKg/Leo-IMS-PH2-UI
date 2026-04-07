@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { customToaster } from 'src/app/shared/components/toaster/toaster.component';
@@ -10,17 +10,27 @@ import * as XLSX from 'xlsx';
   templateUrl: './weighbridge-dashboard.component.html',
   styleUrls: ['./weighbridge-dashboard.component.css']
 })
-export class WeighbridgeDashboardComponent implements OnInit {
+export class WeighbridgeDashboardComponent implements OnInit, OnDestroy {
   
+  // Auto-refresh toggle
+  autoRefreshEnabled: boolean = false;
+  private autoRefreshInterval: any = null;
+
   // Close filter popup on document click
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     const target = event.target as HTMLElement;
+
+    // Close column filter popup when clicking outside
     const filterPopup = document.querySelector('.column-filter-popup');
     const filterIcon = target.closest('.column-filter-icon');
-    
     if (this.showColumnFilterPopup && filterPopup && !filterPopup.contains(target) && !filterIcon) {
       this.showColumnFilterPopup = null;
+    }
+
+    // Close date range popup when clicking outside the wrapper
+    if (this.showDateRangePopup && !target.closest('.date-filter-wrapper')) {
+      this.showDateRangePopup = false;
     }
   }
   
@@ -36,6 +46,13 @@ export class WeighbridgeDashboardComponent implements OnInit {
     moistureDateTime: '',
     tareWeight: null,
     tareWeighedDateTime: ''
+  };
+  weighFormTouched: any = {
+    grossWeight: false,
+    grossWeighedDateTime: false,
+    moistureDeduction: false,
+    moistureDateTime: false,
+    tareWeight: false
   };
   
   // Raise Issues Popup properties
@@ -104,6 +121,13 @@ export class WeighbridgeDashboardComponent implements OnInit {
   // Sort state
   columnSorts: { [key: string]: 'asc' | 'desc' | null } = {};
   
+  // Date Range Filter
+  showDateRangePopup: boolean = false;
+  dateRangeFrom: string = '';
+  dateRangeTo: string = '';
+  activeDateFilter: { from: string; to: string } | null = null;
+  isApplyingDateFilter: boolean = false;
+
   // Logged in user
   loggedInUser: any;
   
@@ -116,7 +140,7 @@ export class WeighbridgeDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // Get logged in user
-    let user: any = localStorage.getItem('loggedInUser');
+    let user: any = sessionStorage.getItem('loggedInUser');
     if (user) {
       this.loggedInUser = JSON.parse(user);
     }
@@ -156,7 +180,7 @@ export class WeighbridgeDashboardComponent implements OnInit {
         this.pageSize
       );*/
       // Get logged in user's employee ID
-      let user: any = localStorage.getItem('loggedInUser');
+      let user: any = sessionStorage.getItem('loggedInUser');
       if (!user) {
         console.warn('⚠️ No logged in user found');
         return;
@@ -167,7 +191,9 @@ export class WeighbridgeDashboardComponent implements OnInit {
       
       let employeeId = parsedData?.employeeId || parsedData?.EmployeeId || parsedData?.empId || parsedData?.EmpId || parsedData?.id || parsedData?.Id;
       console.log('🔍 Employee ID:', employeeId);
-      const res: any = await this.weighbridgeService.getWeighBridgeTaskTableByEmpId(employeeId);
+      const res: any = this.activeDateFilter
+        ? await this.weighbridgeService.getWeighBridgeTaskTableByDateRange(employeeId, this.activeDateFilter.from, this.activeDateFilter.to)
+        : await this.weighbridgeService.getWeighBridgeTaskTableByEmpId(employeeId);
       if (res) {
         // Handle different response formats
         let dataArray = res.data || res.result || res.tasks || res || [];
@@ -185,7 +211,7 @@ export class WeighbridgeDashboardComponent implements OnInit {
           pickupLocation: item.pickupLocation || item.PickupLocation || '-',
           vehicle: item.registrationNo || item.RegistrationNo || item.vehicle || item.Vehicle || '-',
           driverName: item.driverName || item.DriverName || item.driver || '-',
-          status: item.status || item.Status || item.orderStatus || '-',
+          status: this.mapStatusLabel(item.status || item.Status || item.orderStatus || '-'),
           trailerIn: item.trailerIn || item.TrailerIn || item.trailerNumber || item.TrailerNumber || '-',
           productEstWeight: item.productEstWeight || item.ProductEstWeight || item.estWeight || item.EstWeight || '-',
           productCategory: item.productCategory || item.ProductCategory || item.category || '-',
@@ -244,6 +270,14 @@ export class WeighbridgeDashboardComponent implements OnInit {
   filterByStatus(status: string) {
     this.filterStatus = status;
     this.loadTaskList();
+  }
+
+  // Map API status to display label
+  mapStatusLabel(status: string): string {
+    if (!status) return '-';
+    const s = status.toLowerCase().trim();
+    if (s === 'completed') return 'Arrived';
+    return status;
   }
   
   // Get visible columns
@@ -525,8 +559,18 @@ export class WeighbridgeDashboardComponent implements OnInit {
       return;
     }
     
-    // Open popup for first selected task
+    // Only allow weighing for tasks with "Arrived" status
     const firstTask = selectedTasksList[0];
+    const status = (firstTask.status || '').toLowerCase();
+    if (!status.includes('arrived')) {
+      this.utilServ.toaster.next({ 
+        type: customToaster.warningToast, 
+        message: 'Only tasks with "Arrived" status can be weighed' 
+      });
+      return;
+    }
+    
+    // Open popup for first selected task
     this.openWeighTrailerPopup(firstTask.taskID);
   }
   
@@ -554,11 +598,11 @@ export class WeighbridgeDashboardComponent implements OnInit {
           ticketNo: res.ticketNo || res.TicketNo || '-',
           transactionType: res.transactionType || res.TransactionType || 'General',
           // Pre-fill existing weigh data if available
-          grossWeight: res.grossWeight || res.GrossWeight || null,
-          grossWeighedDateTime: res.grossWeighedDateTime || res.GrossWeighedDateTime || '',
-          moistureDeduction: res.moistureDeduction || res.MoistureDeduction || null,
+          grossWeight: res.grossWeight ?? res.GrossWeight ?? null,
+          grossWeighedDateTime: res.grossWeightDateTime || res.GrossWeightDateTime || '',
+          moistureDeduction: res.moistureDeduction ?? res.MoistureDeduction ?? null,
           moistureDateTime: res.moistureDateTime || res.MoistureDateTime || '',
-          tareWeight: res.tareWeight || res.TareWeight || null,
+          tareWeight: res.tareWeight ?? res.TareWeight ?? null,
           tareWeighedDateTime: res.tareWeighedDateTime || res.TareWeighedDateTime || ''
         };
         
@@ -630,6 +674,30 @@ export class WeighbridgeDashboardComponent implements OnInit {
       tareWeight: null,
       tareWeighedDateTime: ''
     };
+    this.weighFormTouched = {
+      grossWeight: false,
+      grossWeighedDateTime: false,
+      moistureDeduction: false,
+      moistureDateTime: false,
+      tareWeight: false
+    };
+  }
+
+  // Check if weigh form is valid (all required fields filled)
+  isWeighFormValid(): boolean {
+    return !!this.weighFormData.grossWeight &&
+      !!this.weighFormData.grossWeighedDateTime &&
+      !!this.weighFormData.tareWeight;
+  }
+
+  // Mark a weigh form field as touched
+  onWeighFieldTouched(field: string) {
+    this.weighFormTouched[field] = true;
+  }
+
+  // Mark all weigh form fields as touched
+  markAllWeighFieldsTouched() {
+    Object.keys(this.weighFormTouched).forEach(key => this.weighFormTouched[key] = true);
   }
   
   // Get current date time in format for datetime-local input
@@ -662,37 +730,32 @@ export class WeighbridgeDashboardComponent implements OnInit {
   
   // Calculate moisture deduction weight
   calculateMoistureDeductionWeight(): string {
-    const gross = this.weighFormData.grossWeight || 0;
-    const moisturePercent = this.weighFormData.moistureDeduction || 0;
+    const gross = parseFloat(this.weighFormData.grossWeight) || 0;
+    const moisturePercent = parseFloat(this.weighFormData.moistureDeduction) || 0;
     const deduction = (gross * moisturePercent) / 100;
-    return deduction.toFixed(2);
+    return isNaN(deduction) ? '0.00' : deduction.toFixed(2);
   }
   
   // Calculate net weight
   calculateNetWeight(): string {
-    const gross = this.weighFormData.grossWeight || 0;
-    const tare = this.weighFormData.tareWeight || 0;
-    const moisturePercent = this.weighFormData.moistureDeduction || 0;
+    const gross = parseFloat(this.weighFormData.grossWeight) || 0;
+    const tare = parseFloat(this.weighFormData.tareWeight) || 0;
+    const moisturePercent = parseFloat(this.weighFormData.moistureDeduction) || 0;
     const moistureDeduction = (gross * moisturePercent) / 100;
     const netWeight = gross - tare - moistureDeduction;
-    return netWeight.toFixed(2);
+    return isNaN(netWeight) ? '0.00' : netWeight.toFixed(2);
   }
   
   // Save Weigh Trailer Data
   async saveWeighTrailerData() {
-    // Validate required fields
-    if (!this.weighFormData.grossWeight) {
+    // Mark all fields as touched to show validation errors
+    this.markAllWeighFieldsTouched();
+
+    // Validate all required fields
+    if (!this.isWeighFormValid()) {
       this.utilServ.toaster.next({ 
         type: customToaster.warningToast, 
-        message: 'Please enter gross weight' 
-      });
-      return;
-    }
-    
-    if (!this.weighFormData.grossWeighedDateTime) {
-      this.utilServ.toaster.next({ 
-        type: customToaster.warningToast, 
-        message: 'Please select gross weighed date & time' 
+        message: 'Please fill all required fields' 
       });
       return;
     }
@@ -708,7 +771,7 @@ export class WeighbridgeDashboardComponent implements OnInit {
         MoistureDetuctionDateTime: this.weighFormData.moistureDateTime || null,
         TareWeight: this.weighFormData.tareWeight || 0,
         TareWeightDateTime: this.weighFormData.tareWeighedDateTime,
-        NetWeight: parseFloat(this.calculateNetWeight()),
+        NetWeight: parseFloat(this.calculateNetWeight()) || 0,
          CreatedBy: "User"
       };
       
@@ -1081,5 +1144,130 @@ export class WeighbridgeDashboardComponent implements OnInit {
   refreshData() {
     this.loadOverviewCount();
     this.loadTaskList();
+  }
+
+  // Auto-refresh toggle (1 minute interval)
+  toggleAutoRefresh() {
+    this.autoRefreshEnabled = !this.autoRefreshEnabled;
+    if (this.autoRefreshEnabled) {
+      this.startAutoRefresh();
+    } else {
+      this.stopAutoRefresh();
+    }
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.autoRefreshInterval = setInterval(() => {
+      this.refreshData();
+    }, 60000); // 1 minute
+  }
+
+  private stopAutoRefresh() {
+    if (this.autoRefreshInterval) {
+      clearInterval(this.autoRefreshInterval);
+      this.autoRefreshInterval = null;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopAutoRefresh();
+  }
+
+  // Date Range Filter methods
+  getFormattedHeaderDate(): string {
+    const date = this.activeDateFilter
+      ? new Date(this.activeDateFilter.from + 'T00:00:00')
+      : new Date();
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  private getCurrentDateForInput(): string {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  }
+
+  openDateRangePopup() {
+    const today = this.getCurrentDateForInput();
+    if (!this.dateRangeFrom) this.dateRangeFrom = today;
+    if (!this.dateRangeTo) this.dateRangeTo = today;
+    this.showDateRangePopup = true;
+  }
+
+  closeDateRangePopup() {
+    this.showDateRangePopup = false;
+  }
+
+  async applyDateRangeFilter() {
+    if (!this.dateRangeFrom || !this.dateRangeTo) {
+      this.utilServ.toaster.next({
+        type: customToaster.warningToast,
+        message: 'Please select both From and To dates'
+      });
+      return;
+    }
+    if (this.dateRangeFrom > this.dateRangeTo) {
+      this.utilServ.toaster.next({
+        type: customToaster.warningToast,
+        message: '"From" date cannot be after "To" date'
+      });
+      return;
+    }
+
+    this.activeDateFilter = { from: this.dateRangeFrom, to: this.dateRangeTo };
+    this.showDateRangePopup = false;
+    this.isApplyingDateFilter = true;
+    this.isLoading = true;
+
+    try {
+      const user: any = sessionStorage.getItem('loggedInUser');
+      if (!user) {
+        console.warn('⚠️ No logged in user found');
+        return;
+      }
+      const parsedData = JSON.parse(user);
+      const employeeId = parsedData?.employeeId || parsedData?.EmployeeId || parsedData?.empId || parsedData?.EmpId || parsedData?.id || parsedData?.Id;
+
+      console.log('📅 Applying date filter — empId:', employeeId, 'from:', this.dateRangeFrom, 'to:', this.dateRangeTo);
+
+      const res: any = await this.weighbridgeService.getWeighBridgeTaskTableByDateRange(
+        employeeId, this.dateRangeFrom, this.dateRangeTo
+      );
+
+      let dataArray = res?.data || res?.result || res?.tasks || res || [];
+      if (!Array.isArray(dataArray)) dataArray = [];
+
+      this.taskList = dataArray.map((item: any, index: number) => ({
+        no: index + 1,
+        taskID: item.taskID || item.TaskID || item.taskId || item.orderID || item.OrderID || null,
+        planner: item.planner || item.Planner || item.plannerName || item.PlannerName || '-',
+        customer: item.customer || item.Customer || item.customerName || '-',
+        product: item.product || item.Product || item.productName || '-',
+        pickupLocation: item.pickupLocation || item.PickupLocation || '-',
+        vehicle: item.registrationNo || item.RegistrationNo || item.vehicle || item.Vehicle || '-',
+        driverName: item.driverName || item.DriverName || item.driver || '-',
+        status: this.mapStatusLabel(item.status || item.Status || item.orderStatus || '-'),
+        trailerIn: item.trailerIn || item.TrailerIn || item.trailerNumber || item.TrailerNumber || '-',
+        productEstWeight: item.productEstWeight || item.ProductEstWeight || item.estWeight || item.EstWeight || '-',
+        productCategory: item.productCategory || item.ProductCategory || item.category || '-',
+        trailerInType: item.trailerInType || item.TrailerInType || item.trailerType || '-',
+        changeoverLocation: item.changeoverLocation || item.ChangeoverLocation || item.changeover || '-'
+      }));
+
+      this.selectedTasks.clear();
+      this.selectAll = false;
+      this.cdr.detectChanges();
+
+      console.log('✅ Date filter applied — rows returned:', this.taskList.length);
+    } catch (error) {
+      console.error('❌ Error applying date filter:', error);
+      this.utilServ.toaster.next({
+        type: customToaster.errorToast,
+        message: 'Failed to load data for selected date range'
+      });
+    } finally {
+      this.isLoading = false;
+      this.isApplyingDateFilter = false;
+    }
   }
 }

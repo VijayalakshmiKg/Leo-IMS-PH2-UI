@@ -18,7 +18,7 @@ export class AddEditCustomerLocationComponent implements OnInit {
   customerLocationForm!: FormGroup
   customerLocationStatus: any = 'Active'
   saveBtnText: any;
-  cpMappingId: number = 0;
+  clMappingId: number = 0;
   customerLocationModel: CustomerLocation = new CustomerLocation();
   employeeId: any;
   loggedInUserName: any;
@@ -40,30 +40,33 @@ export class AddEditCustomerLocationComponent implements OnInit {
       locationId: ['', [Validators.required]]
     });
 
-    var user: any = localStorage.getItem("userData");
+    var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
 
-    let loggedInUser: any = localStorage.getItem('loggedInUser');
+    let loggedInUser: any = sessionStorage.getItem('loggedInUser');
     if (loggedInUser) {
       let parsedUser = JSON.parse(loggedInUser);
       this.loggedInUserName = parsedUser.userName || parsedUser.username || parsedUser.name;
     }
 
-    this.loadClients();
-    this.loadLocations();
-
     console.log('editCustomerLocationRecord in ngOnInit:', this.customerLocationServ.editCustomerLocationRecord);
     if (this.customerLocationServ.editCustomerLocationRecord) {
       this.saveBtnText = 'Update';
-      this.cpMappingId = this.customerLocationServ.editCustomerLocationRecord.cP_Mapping_ID;
-      this.setCustomerLocationDetails();
+      this.clMappingId = this.customerLocationServ.editCustomerLocationRecord.cL_Mapping_ID
+        || this.customerLocationServ.editCustomerLocationRecord.cP_Mapping_ID;
     } else {
       this.saveBtnText = 'Add';
     }
+
+    Promise.all([this.loadClients(), this.loadLocations()]).then(() => {
+      if (this.customerLocationServ.editCustomerLocationRecord) {
+        this.setCustomerLocationDetails();
+      }
+    });
   }
 
   loadClients() {
-    this.customerLocationServ.getAllClients().then((res: any) => {
+    return this.customerLocationServ.getAllClients().then((res: any) => {
       this.clientList = res.data || res;
     }).catch((err: any) => {
       this.utilSer.toaster.next({ type: customToaster.errorToast, message: 'Failed to load clients!' });
@@ -71,7 +74,7 @@ export class AddEditCustomerLocationComponent implements OnInit {
   }
 
   loadLocations() {
-    this.customerLocationServ.getAllLocations().then((res: any) => {
+    return this.customerLocationServ.getAllLocations().then((res: any) => {
       this.locationList = res.data || res;
     }).catch((err: any) => {
       this.utilSer.toaster.next({ type: customToaster.errorToast, message: 'Failed to load locations!' });
@@ -108,12 +111,12 @@ export class AddEditCustomerLocationComponent implements OnInit {
   onSubmitandClose(): void {
     if (this.customerLocationForm.valid && !this.mappingExists) {
       let model = new CustomerLocation();
-      model.cP_Mapping_ID = this.cpMappingId ? Number(this.cpMappingId) : 0;
+      model.cL_Mapping_ID = this.clMappingId ? Number(this.clMappingId) : 0;
       model.customerID = this.customerLocationForm.value.clientId;
       model.locationID = this.customerLocationForm.value.locationId;
       model.status = this.customerLocationStatus;
       
-      if (this.cpMappingId) {
+      if (this.clMappingId) {
         model.modifiedBy = this.loggedInUserName;
         model.modifiedDate = new Date();
       } else {
@@ -121,7 +124,7 @@ export class AddEditCustomerLocationComponent implements OnInit {
         model.createdDate = new Date();
       }
 
-      let toastMessage = this.cpMappingId ? 'Customer location mapping edited successfully.' : 'Customer location mapping added successfully.';
+      let toastMessage = this.clMappingId ? 'Customer location mapping edited successfully.' : 'Customer location mapping added successfully.';
 
       this.customerLocationServ.addUpdateCustomerLocation(model).then(res => {
         if (res) {
@@ -143,7 +146,7 @@ export class AddEditCustomerLocationComponent implements OnInit {
   onSubmitandAddAnother(): void {
     if (this.customerLocationForm.valid && !this.mappingExists) {
       let model = new CustomerLocation();
-      model.cP_Mapping_ID = 0;
+      model.cL_Mapping_ID = 0;
       model.customerID = this.customerLocationForm.value.clientId;
       model.locationID = this.customerLocationForm.value.locationId;
       model.status = this.customerLocationStatus;
@@ -182,7 +185,7 @@ export class AddEditCustomerLocationComponent implements OnInit {
 
     // Skip validation if editing and values haven't changed
     if (this.customerLocationServ.editCustomerLocationRecord && 
-        clientId == this.customerLocationServ.editCustomerLocationRecord.clientID &&
+        clientId == this.customerLocationServ.editCustomerLocationRecord.customerID &&
         locationId == this.customerLocationServ.editCustomerLocationRecord.locationID) {
       this.mappingExists = false;
       return;

@@ -28,7 +28,7 @@ export class ChangePasswordComponent implements OnInit {
   constructor(public route: Router, public fb: FormBuilder, public accSer: AccountSettingsService, public authServ: AuthService, public dialogRef: MatDialogRef<ChangePasswordComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    let Data: any = localStorage.getItem("userData");
+    let Data: any = sessionStorage.getItem("userData");
     this.userData = JSON.parse(Data);
     //console.log(this.userData);
 

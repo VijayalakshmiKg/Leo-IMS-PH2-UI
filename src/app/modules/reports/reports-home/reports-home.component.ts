@@ -46,7 +46,7 @@ export class ReportsHomeComponent implements OnInit {
 
 ngOnInit(): void {
 
-   let user:any = localStorage.getItem('loggedInUser')
+   let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

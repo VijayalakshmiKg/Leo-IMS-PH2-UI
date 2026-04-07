@@ -153,7 +153,7 @@ overViewCardCount:any;
    })
   }
   get getLocalUserData() {
-    let local:any = localStorage.getItem("userData");
+    let local:any = sessionStorage.getItem("userData");
    return JSON.parse( local)
   }
 getToDoList(id:any,pageNo:any,pageSize:any) {

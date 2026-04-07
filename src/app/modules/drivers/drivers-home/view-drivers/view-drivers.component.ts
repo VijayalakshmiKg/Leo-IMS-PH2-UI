@@ -38,13 +38,14 @@ export class ViewDriversComponent implements OnInit, OnDestroy {
      
 
     // this.driverServ.editDriverRecord = null
-    sessionStorage.clear();
+    // Only clear driver-specific session data, not the entire session
+    sessionStorage.removeItem('activeDriverIndex');
 
   }
 
   ngOnInit(): void {
     // this.driversList = this.driverServ.driversList
-    let user:any = localStorage.getItem('loggedInUser')
+    let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

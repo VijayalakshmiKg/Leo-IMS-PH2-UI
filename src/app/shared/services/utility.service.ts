@@ -825,7 +825,7 @@ export class UtilityService {
   filteredOrders: any | any[] = [];
   constructor(public http: CustomHttpService) {
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData: any = null;
     try {
@@ -833,9 +833,9 @@ export class UtilityService {
         parsedData = JSON.parse(user);
       }
     } catch (error) {
-      console.warn('Invalid JSON in loggedInUser localStorage:', user);
+      console.warn('Invalid JSON in loggedInUser sessionStorage:', user);
       // Clear invalid data
-      localStorage.removeItem('loggedInUser');
+      sessionStorage.removeItem('loggedInUser');
     }
     
     this.logedInUser = parsedData?.roleName

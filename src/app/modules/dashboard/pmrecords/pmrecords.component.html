@@ -1,0 +1,588 @@
+<div class="records-container">
+  <!-- Header Section -->
+  <div class="template-header d-flex justify-content-between align-items-center">
+    <div class="template-head-left d-flex gap-24 align-items-center">
+      <!-- Selection Action Bar - shows when records are selected -->
+      <div class="selection-action-bar" *ngIf="selectedRecords.size > 0">
+        <span class="selected-count">
+          <span class="selected-dot"></span>
+          {{selectedRecords.size}} Selected
+        </span>
+        <button class="selection-action-btn edit" (click)="editWeighTrailer()" title="Edit Weigh Trailer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.333 2.00004C11.5081 1.82494 11.716 1.68605 11.9447 1.59129C12.1735 1.49653 12.4187 1.44775 12.6663 1.44775C12.914 1.44775 13.1592 1.49653 13.388 1.59129C13.6167 1.68605 13.8246 1.82494 13.9997 2.00004C14.1748 2.17513 14.3137 2.383 14.4084 2.61178C14.5032 2.84055 14.552 3.08575 14.552 3.33337C14.552 3.58099 14.5032 3.82619 14.4084 4.05497C14.3137 4.28374 14.1748 4.49161 13.9997 4.66671L4.99967 13.6667L1.33301 14.6667L2.33301 11L11.333 2.00004Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Edit Weigh Trailer</span>
+        </button>
+        <button class="selection-action-btn" (click)="viewWeighTrailer()" title="View Weigh Trailer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 8C1 8 3.5 3 8 3C12.5 3 15 8 15 8C15 8 12.5 13 8 13C3.5 13 1 8 1 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span>View Weigh Trailer</span>
+        </button>
+        <button class="selection-action-btn primary" (click)="viewMovDoc()" title="View Mov Doc">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 2H4C3.46957 2 2.96086 2.21071 2.58579 2.58579C2.21071 2.96086 2 3.46957 2 4V12C2 12.5304 2.21071 13.0391 2.58579 13.4142C2.96086 13.7893 3.46957 14 4 14H12C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 2V6C9 6.26522 9.10536 6.51957 9.29289 6.70711C9.48043 6.89464 9.73478 7 10 7H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>View Mov Doc</span>
+        </button>
+      </div>
+      
+      <!-- Normal header content - hide when records are selected -->
+      <span *ngIf="selectedRecords.size === 0">{{recordsList.length}} record(s) in List</span>
+      
+      <!-- Search Box -->
+      <div class="search-customers" *ngIf="selectedRecords.size === 0">
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            class="search-customers-input" 
+            placeholder="Search records..."
+            [(ngModel)]="searchText"
+            (keyup.enter)="onSearch()">
+          <svg class="search-input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.0001 14.0001L11.1001 11.1001" stroke="#9CA3AF" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <button *ngIf="searchText" class="clear-search-btn" (click)="clearSearch()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Manage Columns -->
+      <div class="manage-columns-container" *ngIf="selectedRecords.size === 0">
+        <button class="importBtnCls manage-columns-btn" (click)="toggleColumnManager()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Manage Columns</span>
+        </button>
+        
+        <!-- Column Manager Panel -->
+        <div class="column-manager-panel" *ngIf="showColumnManager">
+          <div class="column-manager-header">
+            <h4>Manage Columns</h4>
+            <button type="button" class="close-btn" (click)="toggleColumnManager()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="column-list">
+            <div class="column-item" *ngFor="let col of tableColumns; let i = index"
+                 draggable="true" 
+                 (dragstart)="onColumnDragStart(col.key, $event)"
+                 (dragover)="onColumnDragOver($event)"
+                 (drop)="onColumnDrop(i, $event)">
+              <input type="checkbox" 
+                     [checked]="col.visible" 
+                     (change)="toggleColumnVisibility(col.key)">
+              <span class="column-name">{{col.label}}</span>
+              <div class="drag-handle">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <circle cx="3" cy="3" r="1" fill="#9ca3af"/>
+                  <circle cx="9" cy="3" r="1" fill="#9ca3af"/>
+                  <circle cx="3" cy="9" r="1" fill="#9ca3af"/>
+                  <circle cx="9" cy="9" r="1" fill="#9ca3af"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Refresh Button -->
+      <button class="importBtnCls" (click)="refreshData()" *ngIf="selectedRecords.size === 0">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 8a6 6 0 11-1.5-4M14 2v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Refresh</span>
+      </button>
+    </div>
+    
+    <div class="template-head-right d-flex align-items-center gap-24" *ngIf="selectedRecords.size === 0">
+      <!-- Export Button -->
+      <button type="button" class="exportBtnCls" [matMenuTriggerFor]="exportMenu" *ngIf="recordsList.length > 0">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 10v2a2 2 0 002 2h8a2 2 0 002-2v-2M8 2v8m0 0l3-3m-3 3L5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Export Report</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <mat-menu #exportMenu="matMenu">
+        <button mat-menu-item (click)="exportToExcel()">
+          <span>Export as Excel</span>
+        </button>
+        <button mat-menu-item (click)="exportToCSV()">
+          <span>Export as CSV</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="masterScreen-content-table templateTable" [class.empty-table]="recordsList?.length === 0">
+    
+    <!-- Loading Indicator -->
+    <div class="loading-overlay" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <span>Loading...</span>
+    </div>
+    
+    <!-- Data Table -->
+    <table class="table advanced-table">
+      <thead>
+        <tr>
+          <th *ngFor="let col of getVisibleColumns()" 
+              class="advanced-header"
+              [style.width.px]="col.width"
+              [style.min-width.px]="col.width">
+            
+            <!-- Checkbox Column Header -->
+            <div *ngIf="col.key === 'checkbox'" class="header-content checkbox-header">
+              <input type="checkbox" 
+                     [checked]="selectAll" 
+                     (change)="toggleSelectAll()"
+                     class="record-checkbox">
+            </div>
+            
+            <!-- Regular Column Header Content -->
+            <div class="header-content" *ngIf="col.key !== 'checkbox'">
+              <span class="column-title">{{col.label}}</span>
+              
+              <!-- Sort Indicator and Filter Icon -->
+              <div class="header-controls">
+                <div class="sort-controls" *ngIf="col.sortable">
+                  <button class="sort-btn" (click)="toggleColumnSort(col.key)">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                         [class.sort-asc]="columnSorts[col.key] === 'asc'"
+                         [class.sort-desc]="columnSorts[col.key] === 'desc'">
+                      <path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+                
+                <!-- Filter Icon -->
+                <div class="column-filter-icon" 
+                     *ngIf="col.filterable" 
+                     (click)="toggleColumnFilterPopup(col.key, $event)"
+                     #filterTrigger>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" 
+                       [class.active]="activeColumnFilters && activeColumnFilters[col.key] && activeColumnFilters[col.key].length > 0">
+                    <path d="M0 1h12L7.5 5.5V9.5L4.5 7.5V5.5L0 1z" 
+                          stroke="currentColor" stroke-width="1" 
+                          fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              
+              <!-- Column Resize Handle -->
+              <div class="resize-handle" 
+                   (mousedown)="startResize(col.key, $event)">
+              </div>
+            </div>
+            
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of getFilteredAndSortedRecords(); index as i" 
+            [class.selected-row]="isSelected(record)">
+          <!-- Dynamic Column Cells -->
+          <td *ngFor="let col of getVisibleColumns()"
+              class="dynamic-cell"
+              [style.width.px]="col.width"
+              [style.min-width.px]="col.width">
+            
+            <!-- Checkbox Column -->
+            <div *ngIf="col.key === 'checkbox'" style="text-align: center;">
+              <input type="checkbox" 
+                     [checked]="isSelected(record)" 
+                     (change)="toggleSelection(record)"
+                     class="record-checkbox">
+            </div>
+            
+            <!-- Status Column with Badge -->
+            <div *ngIf="col.key !== 'checkbox'" style="text-align: center;">
+              <span *ngIf="col.key === 'status'" [ngClass]="getStatusClass(record[col.key])">
+                {{record[col.key] || '-'}}
+              </span>
+              <!-- Other Columns -->
+              <span *ngIf="col.key !== 'status'">
+                {{record[col.key] || '-'}}
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Column Filter Popup -->
+    <div class="column-filter-popup" *ngIf="showColumnFilterPopup">
+      <div class="filter-popup-header">
+        <h5>Filter by {{getColumnLabel(showColumnFilterPopup)}}</h5>
+        <button type="button" class="close-filter-btn" (click)="closeColumnFilterPopup()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="filter-search">
+        <input type="text" 
+               placeholder="Search..." 
+               [(ngModel)]="columnFilterSearch[showColumnFilterPopup]"
+               class="filter-search-input">
+        <svg class="filter-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M6.5 11C9.03757 11 11 9.03757 11 6.5C11 3.96243 9.03757 2 6.5 2C3.96243 2 2 3.96243 2 6.5C2 9.03757 3.96243 11 6.5 11Z" stroke="#9CA3AF" stroke-width="1.5"/>
+          <path d="M12 12L9.5 9.5" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <div class="filter-actions-top">
+        <button class="select-all-btn" (click)="selectAllFilterValues(showColumnFilterPopup)">Select All</button>
+        <button class="clear-all-btn" (click)="clearAllFilterValues(showColumnFilterPopup)">Clear All</button>
+      </div>
+      
+      <div class="filter-values-list">
+        <div class="filter-value-item" *ngFor="let value of getFilteredDistinctValues(showColumnFilterPopup)">
+          <input type="checkbox" 
+                 [id]="'filter_' + showColumnFilterPopup + '_' + value"
+                 [checked]="isValueSelected(showColumnFilterPopup, value)"
+                 (change)="toggleFilterValue(showColumnFilterPopup, value)">
+          <label [for]="'filter_' + showColumnFilterPopup + '_' + value">{{value}}</label>
+        </div>
+        <div class="no-filter-values" *ngIf="getFilteredDistinctValues(showColumnFilterPopup).length === 0">
+          No values found
+        </div>
+      </div>
+      
+      <div class="filter-actions-bottom">
+        <button class="cancel-filter-btn" (click)="closeColumnFilterPopup()">Cancel</button>
+        <button class="apply-filter-btn" (click)="applyColumnFilters()">Apply</button>
+      </div>
+    </div>
+    
+    <!-- No Data Message -->
+    <div class="no-data" *ngIf="recordsList.length === 0 && !isLoading">
+      <svg width="48" height="47" viewBox="0 0 48 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.5" width="47" height="47" rx="23.5" fill="#EFEBFE" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M19.9993 12.0918V17.6673H14.4238C14.5347 17.452 14.6783 17.2551 14.8497 17.084L19.416 12.5177C19.5871 12.3459 19.7839 12.203 19.9993 12.0918ZM22.3327 11.834V17.6673C22.3327 18.2862 22.0868 18.8796 21.6493 19.3172C21.2117 19.7548 20.6182 20.0007 19.9993 20.0007H14.166V32.834C14.166 33.4528 14.4118 34.0463 14.8494 34.4839C15.287 34.9215 15.8805 35.1673 16.4993 35.1673H30.4993C31.1182 35.1673 31.7117 34.9215 32.1493 34.4839C32.5868 34.0463 32.8327 33.4528 32.8327 32.834V14.1673C32.8327 13.5485 32.5868 12.955 32.1493 12.5174C31.7117 12.0798 31.1182 11.834 30.4993 11.834H22.3327Z"
+              fill="#283892" />
+      </svg>
+      <p>No records found</p>
+    </div>
+  </div>
+
+  <!-- Paginator -->
+  <div class="paginator-container" *ngIf="recordsList.length > 0">
+    <mat-paginator 
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="currentPage - 1"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
+
+<!-- Weigh Trailer Popup Overlay -->
+<div class="popup-overlay" *ngIf="showWeighTrailerPopup" (click)="closeWeighTrailerPopup()"></div>
+
+<!-- Weigh Trailer Slide-in Popup -->
+<div class="weigh-trailer-popup" [class.open]="showWeighTrailerPopup">
+  <div class="popup-header">
+    <h3>{{isViewMode ? 'View Weigh Trailer' : 'Edit Weigh Trailer'}}</h3>
+    <button type="button" class="popup-close-btn" (click)="closeWeighTrailerPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="popup-content" *ngIf="weighTrailerData">
+    <!-- Task Info Section -->
+    <div class="task-info-section">
+      <div class="task-info-left">
+        <h4 class="customer-name">{{weighTrailerData.customer || '-'}}</h4>
+        <p class="product-info">{{weighTrailerData.product || '-'}} • {{weighTrailerData.productCategory || '-'}} • ({{weighTrailerData.productEstWeight || '0'}} kg)</p>
+        <p class="driver-name">{{weighTrailerData.driverName || '-'}}</p>
+      </div>
+      <div class="task-info-right">
+        <span class="status-badge" [ngClass]="getStatusClass(weighTrailerData.status)">{{weighTrailerData.status || '-'}}</span>
+      </div>
+    </div>
+    
+    <!-- Document Info -->
+    <div class="document-info-row">
+      <div class="doc-item">
+        <label>Movement Doc No</label>
+        <span>{{weighTrailerData.movementDocNo || weighTrailerData.taskID || '-'}}</span>
+      </div>
+      <div class="doc-item">
+        <label>Ticket No</label>
+        <span>{{weighTrailerData.ticketNo || '-'}}</span>
+      </div>
+      <div class="doc-item">
+        <label>Transaction Type</label>
+        <span>{{weighTrailerData.transactionType || 'General'}}</span>
+      </div>
+    </div>
+    
+    <!-- Weight Form Section -->
+    <div class="weight-form-section">
+      <h5>{{isViewMode ? 'Weight details' : 'Enter the weights given below'}}</h5>
+      
+      <div class="weight-form-grid">
+        <!-- Gross Weight Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Gross weight</label>
+            <div class="input-with-suffix" *ngIf="!isViewMode">
+              <input type="number" [(ngModel)]="weighFormData.grossWeight" placeholder="0" class="weight-input">
+              <span class="input-suffix">kg</span>
+            </div>
+            <span class="view-value" *ngIf="isViewMode">{{weighFormData.grossWeight || '0'}} kg</span>
+          </div>
+          <div class="form-group">
+            <label>Weighed date & time <span class="required" *ngIf="!isViewMode">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.grossWeighedDateTime" class="datetime-input" *ngIf="!isViewMode">
+            <span class="view-value" *ngIf="isViewMode">{{weighFormData.grossWeighedDateTime ? (weighFormData.grossWeighedDateTime | date:'dd/MM/yyyy HH:mm') : '-'}}</span>
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{weighFormData.grossWeight || '0.00'}}</span>
+          </div>
+        </div>
+        
+        <!-- Moisture Deduction Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Moisture deduction</label>
+            <div class="input-with-suffix" *ngIf="!isViewMode">
+              <input type="number" [(ngModel)]="weighFormData.moistureDeduction" placeholder="0" class="weight-input">
+              <span class="input-suffix">%</span>
+            </div>
+            <span class="view-value" *ngIf="isViewMode">{{weighFormData.moistureDeduction || '0'}} %</span>
+          </div>
+          <div class="form-group">
+            <label>Date & time <span class="required" *ngIf="!isViewMode">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.moistureDateTime" class="datetime-input" *ngIf="!isViewMode">
+            <span class="view-value" *ngIf="isViewMode">{{weighFormData.moistureDateTime ? (weighFormData.moistureDateTime | date:'dd/MM/yyyy HH:mm') : '-'}}</span>
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{calculateMoistureDeductionWeight()}}</span>
+          </div>
+        </div>
+        
+        <!-- Tare Weight Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tare weight</label>
+            <div class="input-with-suffix" *ngIf="!isViewMode">
+              <input type="number" [(ngModel)]="weighFormData.tareWeight" placeholder="0" class="weight-input">
+              <span class="input-suffix">kg</span>
+            </div>
+            <span class="view-value" *ngIf="isViewMode">{{weighFormData.tareWeight || '0'}} kg</span>
+          </div>
+          <div class="form-group">
+            <label>Weighed date & time <span class="required" *ngIf="!isViewMode">*</span></label>
+            <input type="datetime-local" [(ngModel)]="weighFormData.tareWeighedDateTime" class="datetime-input" [readonly]="!isViewMode" *ngIf="!isViewMode">
+            <span class="view-value" *ngIf="isViewMode">{{weighFormData.tareWeighedDateTime ? (weighFormData.tareWeighedDateTime | date:'dd/MM/yyyy HH:mm') : '-'}}</span>
+          </div>
+          <div class="form-group weight-display">
+            <span class="weight-value">{{weighFormData.tareWeight || '0.00'}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Net Weight -->
+      <div class="net-weight-row">
+        <label>Net weight</label>
+        <span class="net-weight-value">{{calculateNetWeight()}}</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="popup-loading" *ngIf="isLoadingWeighData">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Popup Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeWeighTrailerPopup()">{{isViewMode ? 'Close' : 'Cancel'}}</button>
+    <button type="button" class="save-btn" (click)="saveWeighTrailerData()" [disabled]="isSavingWeighData" *ngIf="!isViewMode">
+      <span *ngIf="!isSavingWeighData">Save changes</span>
+      <span *ngIf="isSavingWeighData">Saving...</span>
+    </button>
+  </div>
+</div>
+
+<!-- View Mov Doc Popup Overlay -->
+<div class="popup-overlay" *ngIf="showMovDocPopup" (click)="closeMovDocPopup()"></div>
+
+<!-- View Mov Doc Slide-in Popup -->
+<div class="mov-doc-popup" [class.open]="showMovDocPopup">
+  <div class="popup-header">
+    <h3>View Mov Doc</h3>
+    <button type="button" class="popup-close-btn" (click)="closeMovDocPopup()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="popup-content mov-doc-content" *ngIf="movDocData && !isLoadingMovDoc">
+    <!-- Document Header -->
+    <div class="mov-doc-header">
+      <div class="doc-title-row">
+        <span class="doc-number">{{movDocData.documentNo}}</span>
+        <div class="doc-date-field">
+          <label>Date</label>
+          <span class="doc-date-value">{{movDocData.date}}</span>
+        </div>
+      </div>
+      
+      <!-- Category Badge -->
+      <div class="category-badge">
+        <span class="category-label">CATEGORY</span>
+        <span class="category-number">{{movDocData.category}}</span>
+        <span class="category-text">{{movDocData.categoryText}}</span>
+      </div>
+    </div>
+    
+    <!-- Section 1: Consignor -->
+    <div class="mov-doc-section">
+      <div class="section-header">
+        <span class="section-title">Section 1 (to be completed by Consignor)</span>
+      </div>
+      
+      <div class="form-field-row">
+        <label>Name of Consignor</label>
+        <span class="field-value">{{movDocData.consignorName || '-'}}</span>
+      </div>
+      
+      <div class="form-field-row">
+        <label>Lic / App / Reg No of Consignor</label>
+        <span class="field-value">{{movDocData.consignorLicNo || '-'}}</span>
+      </div>
+      
+      <div class="form-field-row">
+        <label>Address of Consignor</label>
+        <span class="field-value">{{movDocData.consignorAddress || '-'}}</span>
+      </div>
+      
+      <div class="form-field-row">
+        <label>Description of Material</label>
+        <span class="field-value">{{movDocData.materialDescription || '-'}}</span>
+      </div>
+      
+      <div class="form-field-row">
+        <label>Quantity of Material</label>
+        <span class="field-value">{{movDocData.quantity || '-'}}</span>
+      </div>
+      
+      <div class="form-field-row">
+        <label>Name of Haulier</label>
+        <span class="field-value">{{movDocData.haulierName || '-'}}</span>
+      </div>
+      
+      <div class="form-field-row signature-row">
+        <label>Signed for Consignor</label>
+        <div class="signature-field">
+          <span class="field-value">{{movDocData.consignorSignedBy || '-'}}</span>
+          <span class="name-label">Name</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 2: Haulier -->
+    <div class="mov-doc-section">
+      <div class="section-header">
+        <span class="section-title">Section 2 (to be completed by the Haulier)</span>
+      </div>
+      
+      <p class="section-statement">{{movDocData.haulierStatement}}</p>
+      
+      <div class="form-field-row">
+        <label>Haulier's Address:</label>
+        <span class="field-value haulier-address">{{movDocData.haulierAddress}}</span>
+      </div>
+      
+      <div class="form-field-row signature-row">
+        <label>Drivers Signature</label>
+        <div class="signature-field">
+          <span class="field-value">{{movDocData.driverSignedBy || '-'}}</span>
+          <span class="name-label">Name</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 3: Consignee/Receiver -->
+    <div class="mov-doc-section">
+      <div class="section-header">
+        <span class="section-title">Section 3 (to be completed by the Consignee / Receiver)</span>
+      </div>
+      
+      <div class="consignee-grid">
+        <div class="consignee-column" *ngFor="let consignee of movDocData.consignees">
+          <div class="consignee-header" *ngIf="!consignee.isOther">
+            <span class="consignee-name">{{consignee.name}}</span>
+          </div>
+          <div class="consignee-header" *ngIf="consignee.isOther">
+            <span class="consignee-name other-label">Other:</span>
+          </div>
+          
+          <div class="consignee-field">
+            <label>Name of Consignee:</label>
+            <span class="field-value">{{consignee.name || '-'}}</span>
+          </div>
+          
+          <div class="consignee-field">
+            <label>Approval / Registration<br>No of Consignee:</label>
+            <span class="field-value">{{consignee.approvalNo || '-'}}</span>
+          </div>
+          
+          <div class="consignee-field">
+            <label>Address of Consignee:</label>
+            <span class="field-value address-value">{{consignee.address || '-'}}</span>
+          </div>
+          
+          <div class="consignee-confirm">
+            <span class="confirm-label">Please tick (✓)</span>
+            <div class="confirm-checkbox">
+              <input type="checkbox" [checked]="consignee.confirmed" disabled>
+              <span>to confirm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <p class="section-footer-note">
+        I confirm that the material identified in section 1 above was received at the named Consignee's premises from the named haulier
+      </p>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="popup-loading" *ngIf="isLoadingMovDoc">
+    <div class="spinner"></div>
+    <span>Loading...</span>
+  </div>
+  
+  <!-- Popup Footer -->
+  <div class="popup-footer">
+    <button type="button" class="cancel-btn" (click)="closeMovDocPopup()">Cancel</button>
+  </div>
+</div>

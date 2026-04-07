@@ -48,7 +48,7 @@ export class ViewTaskComponent implements OnInit {
     // this.ordersList = this.ordersServ.getOrders()
 
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -77,7 +77,7 @@ export class ViewTaskComponent implements OnInit {
 
   sort:any
   getAllTask(){
-    let roleRecord:any | any[] = localStorage.getItem('userData')
+    let roleRecord:any | any[] = sessionStorage.getItem('userData')
     let role :any | any[] = JSON.parse(roleRecord)
     //console.log();
     // if(this.logedInUser == 'Weighbridge operator'){
@@ -117,7 +117,7 @@ export class ViewTaskComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       //console.log(res);
       if(res){
-        let roleRecord:any | any[] = localStorage.getItem('userData')
+        let roleRecord:any | any[] = sessionStorage.getItem('userData')
     let role :any | any[] = JSON.parse(roleRecord)
     this.taskServ.signOff(role.employeeId,this.viewOrdersRecord.orderID).then(res => {
       //console.log(res);

@@ -94,7 +94,7 @@ export class TasksHomeComponent implements OnInit ,OnDestroy{
     // this.orderKeys = Object.keys(this.tasksList[0]);
     // this.filteredTasksList = [...this.tasksList];
 
-    let user:any = localStorage.getItem('loggedInUser')
+    let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -305,7 +305,7 @@ this.filteredTasksList = this.taskServ.taskList
   }
 
   getAllTask(){
-    let roleRecord:any | any[] = localStorage.getItem('userData')
+    let roleRecord:any | any[] = sessionStorage.getItem('userData')
     let role :any | any[] = JSON.parse(roleRecord)
     //console.log();
     // if(this.logedInUser == 'Weighbridge operator'){

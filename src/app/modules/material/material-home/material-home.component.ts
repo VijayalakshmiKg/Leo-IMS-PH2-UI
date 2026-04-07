@@ -30,7 +30,7 @@ export class MaterialHomeComponent implements OnInit {
   constructor(public route: Router, public materialerv: MaterialService) { }
 
   ngOnInit(): void {
-     let user:any = localStorage.getItem('loggedInUser')
+     let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

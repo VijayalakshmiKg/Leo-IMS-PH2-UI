@@ -54,7 +54,7 @@ export class AddEditShunterDriversComponent implements OnInit {
     this.selectedProfileFile = null;
     this.licensePhoto = null;
     this.imageUrlProfile = null;
-    let userCred: any = localStorage.getItem('userDetails')
+    let userCred: any = sessionStorage.getItem('userDetails')
     this.userDetails = JSON.parse(userCred);
     this.getUserDetails();
     this.shunterDriverForm = this.fb.group({

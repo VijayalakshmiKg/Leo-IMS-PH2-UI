@@ -23,6 +23,11 @@ export class WeighbridgeDashboardService {
     return this.http.get('/WeighBridge/GetWeighbridgeTrailerByEmpId?employeeId=' + employeeId).then(res => res);
   }
 
+  // Get weighbridge task table by employee ID and date range
+  getWeighBridgeTaskTableByDateRange(employeeId: any, fromDate: string, toDate: string) {
+    return this.http.get('/WeighBridge/GetWeighBridgeTaskTableByDateRange?employeeId=' + employeeId + '&fromDate=' + fromDate + '&toDate=' + toDate).then(res => res);
+  }
+
   
 
   // Get weighbridge tracks list with pagination

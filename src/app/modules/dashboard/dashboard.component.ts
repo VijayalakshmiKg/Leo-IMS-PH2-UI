@@ -23,7 +23,7 @@ constructor(public title:Title){
   
 }
 get loggedInUser() {
-  let user:any = localStorage.getItem('loggedInUser')
+  let user:any = sessionStorage.getItem('loggedInUser')
   return JSON.parse(user)
 }
 

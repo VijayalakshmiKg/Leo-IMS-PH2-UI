@@ -291,7 +291,7 @@ export class AddOrdersComponent implements OnInit, CanComponentDeactivate {
     // this.materialTypes = materialServ.materialList
     // //console.log(this.materialTypes, 'materialList');
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName
@@ -474,7 +474,7 @@ export class AddOrdersComponent implements OnInit, CanComponentDeactivate {
     //console.log(this.ordersServ.viewOrdersIndex);
 
     this.ordersForm.get('ordersId')?.disable()
-    let Data: any = localStorage.getItem("userData");
+    let Data: any = sessionStorage.getItem("userData");
     this.userProfile = JSON.parse(Data);
     //console.log(this.ordersServ.editOrdersRecord)
 
@@ -524,7 +524,7 @@ export class AddOrdersComponent implements OnInit, CanComponentDeactivate {
 
 
 
-    let user: any = localStorage.getItem('loggedInUser')
+    let user: any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

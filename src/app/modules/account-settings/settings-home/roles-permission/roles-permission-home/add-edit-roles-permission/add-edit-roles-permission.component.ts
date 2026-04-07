@@ -25,7 +25,7 @@ export class AddEditRolesPermissionComponent implements OnInit {
   constructor(private fb: FormBuilder, public settingsServ: AccountSettingsService, public utilServ: UtilityService, public location: Location, public authServ: AuthService) { }
 
   ngOnInit(): void {
-let user:any = localStorage.getItem('loggedInUser')
+let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.loggedInUser = parsedData.roleName

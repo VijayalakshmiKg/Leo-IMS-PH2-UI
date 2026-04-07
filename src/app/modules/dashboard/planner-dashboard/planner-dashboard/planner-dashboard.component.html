@@ -232,7 +232,7 @@
     <!-- Row Actions (show when rows are checked) -->
     <div class="row-actions-container" *ngIf="getCheckedTasks().length > 0">
       <div class="action-buttons">
-        <button class="action-btn assign-btn" (click)="assignSelectedTasks()" *ngIf="!hasSelectedAssignedTasks()">
+        <button class="action-btn assign-btn" (click)="assignSelectedTasks()" *ngIf="canAssignSelectedTasks()">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM2 14c0-3 2.5-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -641,24 +641,36 @@
                  #cellInput>
           
           <!-- Time Input for time columns -->
-          <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isTimeColumn(col.key)" 
-                 type="time"
-                 [(ngModel)]="task[col.key]" 
-                 (blur)="stopEdit()" 
-                 (keyup.enter)="stopEdit()" 
-                 (keyup.escape)="cancelEdit()"
-                 class="cell-input"
-                 #cellInput>
+          <div *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isTimeColumn(col.key)" class="datetime-edit-container">
+            <input type="time"
+                   [(ngModel)]="task[col.key]" 
+                   (keyup.enter)="stopEdit()" 
+                   (keyup.escape)="cancelEdit()"
+                   class="cell-input"
+                   #cellInput>
+            <button type="button" class="datetime-ok-btn" (click)="stopEdit()" title="Confirm">OK</button>
+            <button type="button" class="datetime-cancel-btn" (click)="cancelEdit()" title="Cancel">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2L2 8M2 2L8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
           
           <!-- DateTime Input for scheduledTime column -->
-          <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isDateTimeColumn(col.key)" 
-                 type="datetime-local"
-                 [(ngModel)]="task[col.key]" 
-                 (change)="stopEdit()" 
-                 (keyup.enter)="stopEdit()" 
-                 (keyup.escape)="cancelEdit()"
-                 class="cell-input datetime-input"
-                 #cellInput>
+          <div *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isDateTimeColumn(col.key)" class="datetime-edit-container">
+            <input type="datetime-local"
+                   [(ngModel)]="task[col.key]" 
+                   (keyup.enter)="stopEdit()" 
+                   (keyup.escape)="cancelEdit()"
+                   class="cell-input datetime-input"
+                   #cellInput>
+            <button type="button" class="datetime-ok-btn" (click)="stopEdit()" title="Confirm">OK</button>
+            <button type="button" class="datetime-cancel-btn" (click)="cancelEdit()" title="Cancel">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2L2 8M2 2L8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
           
           <!-- Text Input for text columns (changeoverMessage, notes) -->
           <input *ngIf="editingCell.rowIndex === i && editingCell.field === col.key && isTextColumn(col.key)" 
@@ -746,8 +758,12 @@
             <span *ngIf="col.key === 'scheduledTime'">
               {{task[col.key] ? formatDateTime(task[col.key]) : '-'}}
             </span>
+            <!-- Collection Time Column - Show formatted date/time -->
+            <span *ngIf="col.key === 'collectionTime'">
+              {{task[col.key] ? formatDateTime(task[col.key]) : '-'}}
+            </span>
             <!-- Other Columns -->
-            <span *ngIf="col.key !== 'planner' && col.key !== 'status' && col.key !== 'productEstWeight' && col.key !== 'scheduledTime'">
+            <span *ngIf="col.key !== 'planner' && col.key !== 'status' && col.key !== 'productEstWeight' && col.key !== 'scheduledTime' && col.key !== 'collectionTime'">
               {{task[col.key] || '-'}}
             </span>
             <!-- Empty Planner -->
@@ -1189,7 +1205,11 @@
           placeholder="Enter planner sheet name"
           class="form-control"
           [class.input-error]="plannerSheetNameError"
+          maxlength="50"
           autofocus>
+        <div class="char-count" [class.char-limit]="(newPlannerSheetName?.length || 0) >= 50">
+          {{newPlannerSheetName?.length || 0}}/50
+        </div>
         <div class="error-message" *ngIf="plannerSheetNameError">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 4.5V7.5M7 9.5H7.005M13 7C13 10.3137 10.3137 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7Z" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

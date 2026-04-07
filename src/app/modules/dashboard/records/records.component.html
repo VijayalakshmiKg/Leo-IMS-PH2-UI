@@ -215,8 +215,12 @@
               <span *ngIf="col.key === 'status'" [ngClass]="getStatusClass(record[col.key])">
                 {{record[col.key] || '-'}}
               </span>
+              <!-- Boolean Columns -->
+              <span *ngIf="col.key === 'trailerLeaking' || col.key === 'trailerHavingOdours' || col.key === 'raiseIssued'">
+                {{record[col.key] ? 'True' : 'False'}}
+              </span>
               <!-- Other Columns -->
-              <span *ngIf="col.key !== 'status'">
+              <span *ngIf="col.key !== 'status' && col.key !== 'trailerLeaking' && col.key !== 'trailerHavingOdours' && col.key !== 'raiseIssued'">
                 {{record[col.key] || '-'}}
               </span>
             </div>

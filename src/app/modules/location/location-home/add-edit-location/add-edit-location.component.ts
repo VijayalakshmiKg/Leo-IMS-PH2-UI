@@ -39,7 +39,7 @@ export class AddEditLocationComponent implements OnInit {
       description: ['']
     });
 
-    var user: any = localStorage.getItem("userData");
+    var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
 
     if (this.locationServ.editLocationRecord) {

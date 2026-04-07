@@ -405,7 +405,7 @@
     margin-top: 0;
     border-radius: 0;
     border: none;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Editable Cell Styles */
@@ -549,6 +549,96 @@ input[type="datetime-local"] {
 .datetime-input {
     min-width: 180px;
     font-size: 13px;
+}
+
+/* DateTime edit container with OK/Cancel buttons */
+.datetime-edit-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 20;
+    background: white;
+    padding: 3px 4px;
+    border: 2px solid #3b82f6;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+}
+
+.datetime-edit-container .cell-input {
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 2px 4px !important;
+    font-size: 13px;
+}
+
+.datetime-edit-container .cell-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Ensure the cell allows overflow when editing datetime */
+.editable-cell:has(.datetime-edit-container) {
+    overflow: visible !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Allow row and table to show datetime popup */
+tr:has(.datetime-edit-container) {
+    overflow: visible !important;
+    position: relative;
+    z-index: 15;
+}
+
+tbody:has(.datetime-edit-container),
+table:has(.datetime-edit-container) {
+    overflow: visible !important;
+}
+
+.datetime-ok-btn {
+    flex-shrink: 0;
+    padding: 3px 10px;
+    background-color: #283892;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.datetime-ok-btn:hover {
+    background-color: #1e2d7d;
+}
+
+.datetime-cancel-btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.datetime-cancel-btn:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #dc2626;
 }
 
 /* Remove number input spinners */
@@ -3959,6 +4049,18 @@ input[type=checkbox] {
 .form-group .form-control.input-error:focus {
   border-color: #dc2626;
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.char-count {
+  text-align: right;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.char-count.char-limit {
+  color: #dc2626;
+  font-weight: 500;
 }
 
 .form-group .error-message {

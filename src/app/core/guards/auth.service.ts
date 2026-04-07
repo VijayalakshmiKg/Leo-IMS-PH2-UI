@@ -9,8 +9,8 @@ import { map } from 'rxjs/operators';
 })
 
 export class AuthService {
-loginStatus:boolean =false
-  private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject({});
+loginStatus:boolean = false;
+  private currentUserSubject: BehaviorSubject<any>;
   userDetails:any = {
     UserName:"blutrax@bmsmartware.com",
     Password:"Welcome@123",
@@ -796,7 +796,24 @@ loginStatus:boolean =false
   {userName:'', password:'', role:'', roleID:'', firstName:'', lastName:'', mobile:''}
  ]
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    // Restore session from this tab's sessionStorage (each tab has its own sessionStorage)
+    const storedUser = sessionStorage.getItem('loggedInUser');
+    const storedToken = sessionStorage.getItem('token');
+    if (storedUser && storedToken) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        this.currentUserSubject = new BehaviorSubject<any>(parsedUser);
+        this.loginStatus = true;
+      } catch (e) {
+        this.currentUserSubject = new BehaviorSubject<any>(null);
+        this.loginStatus = false;
+      }
+    } else {
+      this.currentUserSubject = new BehaviorSubject<any>(null);
+      this.loginStatus = false;
+    }
+  }
 
   public get currentUserValue(): any {
     return this.currentUserSubject.value;
@@ -812,7 +829,7 @@ loginStatus:boolean =false
 
   //       this.currentUserSubject.next(this.userModel$);  
         
-  //       localStorage.setItem('currentUser', JSON.stringify(this.userModel$));
+  //       sessionStorage.setItem('currentUser', JSON.stringify(this.userModel$));
   //     }
   //     else {
   //       this.currentUserSubject.next(null);
@@ -832,7 +849,7 @@ loginStatus:boolean =false
             // login successful if there's a jwt token in the response
             if (user && user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
             }
             return user;
@@ -844,13 +861,31 @@ loginStatus:boolean =false
 
 
   logout() {
-    //remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    // Clear only this tab's session data (sessionStorage is per-tab)
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userDetails');
+    sessionStorage.removeItem('userData');
+    sessionStorage.removeItem('loggedInUser');
     this.currentUserSubject.next(null);
-    this.loginStatus = false
+    this.loginStatus = false;
   }
 
-  isLoggedIn() {
-return this.loginStatus
+  isLoggedIn(): boolean {
+    // Check both in-memory flag and sessionStorage token for per-tab session support
+    if (this.loginStatus) {
+      return true;
+    }
+    // Restore from sessionStorage if token exists (handles page refresh)
+    const token = sessionStorage.getItem('token');
+    const user = sessionStorage.getItem('loggedInUser');
+    if (token && user) {
+      this.loginStatus = true;
+      try {
+        this.currentUserSubject.next(JSON.parse(user));
+      } catch (e) { }
+      return true;
+    }
+    return false;
   }
 }

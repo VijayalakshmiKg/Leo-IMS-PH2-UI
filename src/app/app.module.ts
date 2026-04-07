@@ -60,8 +60,11 @@ import { NotAuthorizedComponent } from './shared/components/not-authorized/not-a
 import { PlannerDashboardComponent } from './modules/dashboard/planner-dashboard/planner-dashboard/planner-dashboard.component';
 import { PlannerPaginatorComponent } from './modules/dashboard/planner-dashboard/planner-paginator/planner-paginator.component';
 import { WeighbridgeDashboardComponent } from './modules/dashboard/weighbridge-dashboard/weighbridge-dashboard/weighbridge-dashboard.component';
+import { ProductionDashboardComponent } from './modules/dashboard/production-dashboard/production-dashboard/production-dashboard.component';
 import { RecordsComponent } from './modules/dashboard/records/records.component';
 import { RecordsService } from './modules/dashboard/records/records.service';
+import { PmrecordsComponent } from './modules/dashboard/pmrecords/pmrecords.component';
+import { PmrecordsService } from './modules/dashboard/pmrecords/pmrecords.service';
 
 @NgModule({
   declarations: [
@@ -105,7 +108,9 @@ import { RecordsService } from './modules/dashboard/records/records.service';
     PlannerDashboardComponent,
     PlannerPaginatorComponent,
     WeighbridgeDashboardComponent,
-    RecordsComponent
+    ProductionDashboardComponent,
+    RecordsComponent,
+    PmrecordsComponent
 
   ],
   imports: [
@@ -130,6 +135,7 @@ import { RecordsService } from './modules/dashboard/records/records.service';
     LoginService,
     DashboardService,
     RecordsService,
+    PmrecordsService,
    { provide:HTTP_INTERCEPTORS,useClass:HttpErrorInterceptor,multi:true},
    {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' },},
    { provide:HTTP_INTERCEPTORS,useClass: LoadingScreenInterceptor, multi: true },

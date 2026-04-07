@@ -27,7 +27,7 @@ export class TrailerHomeComponent implements OnInit {
   constructor(public route:Router,public TrailerServ:TrailerService,public utilSer:UtilityService) { }
 
   ngOnInit(): void {
-     let user:any = localStorage.getItem('loggedInUser')
+     let user:any = sessionStorage.getItem('loggedInUser')
 
     let parsedData = JSON.parse(user)
     this.logedInUser = parsedData.roleName

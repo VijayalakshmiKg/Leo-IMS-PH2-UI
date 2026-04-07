@@ -158,9 +158,10 @@ export class PlannerPaginatorComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   addSheet() {
+    const sheetName = `Sheet ${this.sheets.length + 1}`.substring(0, 50);
     const newSheet: PlannerSheet = {
       id: 'planner-sheet-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
-      name: `Sheet ${this.sheets.length + 1}`,
+      name: sheetName,
       data: [] // Will be populated by parent component
     };
     
@@ -205,7 +206,7 @@ export class PlannerPaginatorComponent implements OnInit, OnDestroy, AfterViewIn
       const originalSheet = this.sheets[index];
       const newSheet: PlannerSheet = {
         id: 'planner-sheet-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
-        name: originalSheet.name + ' Copy',
+        name: (originalSheet.name + ' Copy').substring(0, 50),
         data: JSON.parse(JSON.stringify(originalSheet.data || {})) // Deep copy
       };
       
@@ -328,6 +329,9 @@ export class PlannerPaginatorComponent implements OnInit, OnDestroy, AfterViewIn
 
   saveRename() {
     if (this.newSheetName && this.newSheetName.trim() && this.selectedSheetIndex >= 0 && this.selectedSheetIndex < this.sheets.length) {
+      if (this.newSheetName.trim().length > 50) {
+        this.newSheetName = this.newSheetName.trim().substring(0, 50);
+      }
       const oldName = this.sheets[this.selectedSheetIndex].name;
       this.sheets[this.selectedSheetIndex].name = this.newSheetName.trim();
       

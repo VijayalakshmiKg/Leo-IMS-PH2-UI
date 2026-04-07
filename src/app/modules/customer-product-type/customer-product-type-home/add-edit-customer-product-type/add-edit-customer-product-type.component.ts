@@ -40,10 +40,10 @@ export class AddEditCustomerProductTypeComponent implements OnInit {
       productTypeId: ['', [Validators.required]]
     });
 
-    var user: any = localStorage.getItem("userData");
+    var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
 
-    let loggedInUser: any = localStorage.getItem('loggedInUser');
+    let loggedInUser: any = sessionStorage.getItem('loggedInUser');
     if (loggedInUser) {
       let parsedUser = JSON.parse(loggedInUser);
       this.loggedInUserName = parsedUser.userName || parsedUser.username || parsedUser.name;

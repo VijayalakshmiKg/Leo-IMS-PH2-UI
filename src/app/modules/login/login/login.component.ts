@@ -10,6 +10,7 @@ import { MFAPopUpComponent } from './mfapop-up/mfapop-up.component';
 import { AccountSettingsService } from '../../account-settings/account-settings.service';
 import { userModel } from '../loginModel/userLoginmodel';
 import { LoginService } from '../login.service';
+import { SignalRService } from 'src/app/shared/services/signalr.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   loginData: any;
   loading:boolean = false;
 
-  constructor(private fb: FormBuilder, public route: Router, public utilServ: UtilityService, public title: Title, public authServ: AuthService, public dialog: MatDialog, public accServ: AccountSettingsService, public loginSer: LoginService) {
+  constructor(private fb: FormBuilder, public route: Router, public utilServ: UtilityService, public title: Title, public authServ: AuthService, public dialog: MatDialog, public accServ: AccountSettingsService, public loginSer: LoginService, private signalRService: SignalRService) {
     // this.title.setTitle("Leo Group Ltd | Login");
   }
 
@@ -60,15 +61,15 @@ export class LoginComponent implements OnInit {
         if (resp.statusMessage === "Successful") {
           //console.log(this.loginForm.value.username);
           //console.log(resp.result.email);
-          localStorage.setItem('token', resp.result.token)
-          localStorage.setItem('userDetails', JSON.stringify(resp.result));
+          sessionStorage.setItem('token', resp.result.token)
+          sessionStorage.setItem('userDetails', JSON.stringify(resp.result));
           this.loginSer.userLogin(resp.result.email).then(res => {
             console.log('🔍 UserLogin API Response:', res);
             console.log('🔍 First user data:', res[0]);
             this.loginData = res
             
              
-            localStorage.setItem('userData', JSON.stringify(res[0]));
+            sessionStorage.setItem('userData', JSON.stringify(res[0]));
             if (res.length > 0) {
               this.loading = false;
               this.getRolemenuData();
@@ -96,7 +97,7 @@ export class LoginComponent implements OnInit {
                 };
                 
                 console.log('💾 Storing user data with employeeId:', userDataWithEmployeeId);
-                localStorage.setItem('loggedInUser', JSON.stringify(userDataWithEmployeeId));
+                sessionStorage.setItem('loggedInUser', JSON.stringify(userDataWithEmployeeId));
                 this.utilServ.toaster.next({ type: customToaster.successToast, message: 'Login successful' });
                 
                 // Role-based routing logic
@@ -111,6 +112,8 @@ export class LoginComponent implements OnInit {
                 }
                 
                 console.log('Redirecting to:', redirectUrl);
+                // Start SignalR connection after successful login
+                this.signalRService.startConnection();
                 this.route.navigateByUrl(redirectUrl);
               })
               //Viji
@@ -127,9 +130,9 @@ export class LoginComponent implements OnInit {
               //   //console.log(matchedRole);
               //   //console.log(matchedRole.rootMenu[0].pageurl || matchedRole.rootMenu[0].subMenus[0].pageurl);
                 
-              //   // Store the matched role in localStorage
+              //   // Store the matched role in sessionStorage
               //   this.authServ.loginStatus = true
-              //   localStorage.setItem('loggedInUser', JSON.stringify(matchedRole));
+              //   sessionStorage.setItem('loggedInUser', JSON.stringify(matchedRole));
               //   this.utilServ.toaster.next({ type: customToaster.successToast, message: 'Login successful' });
               //   let firstPage: any = matchedRole.rootMenu[0].pageurl || matchedRole.rootMenu[0].subMenus[0].pageurl
               //   // //console.log(matchedRole.rootMenu[0].subMenus[0].pageurl);

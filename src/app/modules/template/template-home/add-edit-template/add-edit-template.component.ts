@@ -302,7 +302,7 @@ export class AddEditTemplateComponent implements OnInit {
       vechile: [],
 
     });
-var user: any = localStorage.getItem("userData");
+var user: any = sessionStorage.getItem("userData");
     this.employeeId = JSON.parse(user);
     this.templateForm.get('templateName')?.valueChanges.subscribe(value => {
       if (value && value.startsWith(' ') && value.trim().length > 0) {

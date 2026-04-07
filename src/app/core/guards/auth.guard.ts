@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
 
       
            
-                  // if (localStorage.getItem('token') != null) {      
+                  // if (sessionStorage.getItem('token') != null) {      
                   //    return true;
                   //  }
                   //  else {      
@@ -23,17 +23,18 @@ export class AuthGuard implements CanActivate {
          
               
 
-        //Getting the CurrentUser Value From subject get method... in authservice
-
-        const currentUser = this.authenticationService.currentUserValue;
-
-        // //console.log(currentUser);
-
-        if (currentUser) {
-            // authorised so return true
-            // //console.log("AuthGuard Passed", "currentUser-" + currentUser.UserName);
+        // Check if user is logged in (check both in-memory state and sessionStorage)
+        if (this.authenticationService.isLoggedIn()) {
             return true;
         }
+
+        // Also check sessionStorage directly for token (handles page refresh)
+        const token = sessionStorage.getItem('token');
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (token && loggedInUser) {
+            return true;
+        }
+
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;

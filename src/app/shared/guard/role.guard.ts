@@ -8,7 +8,7 @@ export class RoleGuard implements CanActivate {
   constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const userRoleData = localStorage.getItem('loggedInUser');
+    const userRoleData = sessionStorage.getItem('loggedInUser');
 
     if (!userRoleData) {
       this.router.navigate(['/login']);
